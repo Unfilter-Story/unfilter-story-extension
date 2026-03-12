@@ -60,6 +60,46 @@ ul[data-type="taskList"] li > label {
   margin-top: 0.3rem;
 }
 
+/* Block Editor Styling */
+.tiptap.is-block-editor > * {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+  position: relative;
+}
+
+.tiptap.is-block-editor > *:hover {
+  outline: 1px solid #E5E7EB;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Callout Block */
+.callout-block {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-left: 4px solid #E94560;
+  padding: 1.25rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.callout-block::before {
+  content: "💡";
+  font-size: 1.25rem;
+}
+
+/* Drag Handle */
+#block-drag-handle {
+  display: none;
+  z-index: 100;
+}
+
+.tiptap.is-block-editor > *:hover #block-drag-handle {
+  display: block;
+}
+
 .tiptap table {
   border-collapse: collapse;
   margin: 1rem 0;

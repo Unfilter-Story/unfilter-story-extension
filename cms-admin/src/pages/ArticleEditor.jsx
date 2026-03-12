@@ -4,8 +4,7 @@ import {
   Save, ExternalLink, ArrowLeft, Bold, Italic, Strikethrough, Underline, Highlighter, 
   Link as LinkIcon, Unlink, List, ListOrdered, Quote, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6,
   Code, Copy, CheckCircle2, AlignLeft, AlignCenter, AlignRight, AlignJustify,
-  Table as TableIcon, CheckSquare, Minus, Image as ImageIcon, UploadCloud, Link2, Settings2, Trash2, Video, RefreshCw,
-  Type, Check, X, Languages, Eye, Send
+  Type, Check, X, Languages, Eye, Send, GripVertical, AlertCircle, Layout, List as ListIconNormal
 } from 'lucide-react'
 import { useParams } from 'react-router-dom'
 import { useEditor, EditorContent, ReactNodeViewRenderer, NodeViewWrapper, ReactRenderer } from '@tiptap/react'
@@ -98,6 +97,27 @@ const FONT_CATEGORIES = {
   'Handwriting': ["Dancing Script", "Great Vibes", "Caveat", "Indie Flower", "Patrick Hand", "Sacramento", "Shadows Into Light", "Kalam", "Architects Daughter", "Reenie Beanie", "Gloria Hallelujah"],
   'Monospace': ["Roboto Mono", "Source Code Pro", "Space Mono", "IBM Plex Mono", "Inconsolata", "JetBrains Mono", "Cousine", "PT Mono", "Anonymous Pro"]
 }
+
+const Callout = Node.create({
+  name: 'callout',
+  group: 'block',
+  content: 'block+',
+  draggable: true,
+  addAttributes() {
+    return {
+      type: { default: 'info' }
+    }
+  },
+  parseHTML() { return [{ tag: 'div[data-type="callout"]' }] },
+  renderHTML({ HTMLAttributes }) {
+    return ['div', mergeAttributes(HTMLAttributes, { 'data-type': 'callout', class: 'callout-block' }), 0]
+  },
+  addCommands() {
+    return {
+      toggleCallout: () => ({ commands }) => commands.toggleNode(this.name, 'paragraph')
+    }
+  }
+})
 
 // Removed GrammarChecker extension
 
@@ -209,6 +229,7 @@ const getSuggestionItems = ({ query }) => {
     { title: 'Heading 1', command: ({ editor, range }) => editor.chain().focus().deleteRange(range).setNode('heading', { level: 1 }).run() },
     { title: 'Heading 2', command: ({ editor, range }) => editor.chain().focus().deleteRange(range).setNode('heading', { level: 2 }).run() },
     { title: 'Bullet List', command: ({ editor, range }) => editor.chain().focus().deleteRange(range).toggleBulletList().run() },
+    { title: 'Callout', command: ({ editor, range }) => editor.chain().focus().deleteRange(range).toggleCallout().run() },
     { title: 'Image', command: ({ editor, range }) => { 
         editor.chain().focus().deleteRange(range).run()
         const url = window.prompt('Image URL')
@@ -223,10 +244,10 @@ export default function ArticleEditor() {
   const [headline, setHeadline] = useState('')
   const [localSize, setLocalSize] = useState('')
   const [updateCounter, setUpdateCounter] = useState(0)
-  const [isSaving, setIsSaving] = useState(false)
   const [status, setStatus] = useState('draft')
   const [lastSaved, setLastSaved] = useState(null)
   const [isAutoSaving, setIsAutoSaving] = useState(false)
+  const [editorMode, setEditorMode] = useState('normal') // 'normal' or 'block'
 
   const editor = useEditor({
     extensions: [
@@ -239,6 +260,7 @@ export default function ArticleEditor() {
       }),
       UnderlineExtension,
       HighlightExtension.configure({ multicolor: true }),
+      Callout,
       LinkExtension.configure({
         openOnClick: false,
         HTMLAttributes: {
@@ -295,7 +317,11 @@ export default function ArticleEditor() {
         }
       })
     ],
-    content: '',
+    editorProps: {
+      attributes: {
+        class: editorMode === 'block' ? 'tiptap is-block-editor' : 'tiptap',
+      },
+    },
     onTransaction: ({ editor }) => {
       // Force React to re-render to update counters
       setUpdateCounter(c => c + 1)
@@ -405,6 +431,39 @@ export default function ArticleEditor() {
     return () => clearTimeout(timer)
   }, [updateCounter, headline])
 
+  // Block Drag Handle positioning logic
+  useEffect(() => {
+    if (editorMode !== 'block') return
+
+    const handleMouseOver = (e) => {
+      const editorEl = document.querySelector('.is-block-editor')
+      if (!editorEl) return
+
+      const target = e.target.closest('.is-block-editor > *')
+      const handle = document.getElementById('block-drag-handle')
+      
+      if (target && handle) {
+        const rect = target.getBoundingClientRect()
+        const editorRect = editorEl.getBoundingClientRect()
+        
+        handle.style.opacity = '1'
+        handle.style.top = `${rect.top - editorRect.top + 8}px`
+        handle.style.left = `-40px`
+      } else if (handle) {
+        handle.style.opacity = '0'
+      }
+    }
+
+    const editorEl = document.querySelector('.is-block-editor')
+    if (editorEl) {
+      editorEl.addEventListener('mouseover', handleMouseOver)
+    }
+
+    return () => {
+      if (editorEl) editorEl.removeEventListener('mouseover', handleMouseOver)
+    }
+  }, [editorMode, updateCounter])
+
   if (!editor) return null
 
   const ToolbarButton = ({ onClick, isActive, children, tooltip }) => (
@@ -444,21 +503,38 @@ export default function ArticleEditor() {
               </p>
            </div>
         </div>
-        <div className="flex items-center gap-3">
-           <button 
-             onClick={handleSaveDraft}
-             disabled={isSaving}
-             className="flex items-center px-4 py-2 text-gray-700 font-semibold bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all shadow-sm disabled:opacity-50"
-           >
-              <Save className="mr-2 w-4 h-4" /> {isSaving ? 'Saving...' : 'Save Draft'}
-           </button>
-           <button 
-             onClick={handlePublish}
-             disabled={isSaving}
-             className="flex items-center px-5 py-2 text-white font-bold bg-[#E94560] rounded-lg hover:bg-[#d63d56] transition-all shadow-lg shadow-[#E94560]/20 disabled:opacity-50"
-           >
-              <span className="mr-2">{isSaving ? 'Sending...' : 'Publish Now'}</span> <Send className="w-4 h-4" />
-           </button>
+        <div className="flex items-center gap-6">
+           <div className="flex items-center bg-gray-50 p-1 rounded-lg border border-gray-100">
+              <button 
+                onClick={() => setEditorMode('normal')}
+                className={`flex items-center px-3 py-1.5 text-xs font-bold rounded-md transition-all ${editorMode === 'normal' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                <Type className="w-3.5 h-3.5 mr-1.5" /> Normal
+              </button>
+              <button 
+                onClick={() => setEditorMode('block')}
+                className={`flex items-center px-3 py-1.5 text-xs font-bold rounded-md transition-all ${editorMode === 'block' ? 'bg-[#E94560] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                <Layout className="w-3.5 h-3.5 mr-1.5" /> Block
+              </button>
+           </div>
+           
+           <div className="flex items-center gap-3">
+              <button 
+                onClick={handleSaveDraft}
+                disabled={isSaving}
+                className="flex items-center px-4 py-2 text-gray-700 font-semibold bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all shadow-sm disabled:opacity-50"
+              >
+                 <Save className="mr-2 w-4 h-4" /> {isSaving ? 'Saving...' : 'Save Draft'}
+              </button>
+              <button 
+                onClick={handlePublish}
+                disabled={isSaving}
+                className="flex items-center px-5 py-2 text-white font-bold bg-[#E94560] rounded-lg hover:bg-[#d63d56] transition-all shadow-lg shadow-[#E94560]/20 disabled:opacity-50"
+              >
+                 <span className="mr-2">{isSaving ? 'Sending...' : 'Publish Now'}</span> <Send className="w-4 h-4" />
+              </button>
+           </div>
         </div>
       </div>
 
@@ -573,6 +649,7 @@ export default function ArticleEditor() {
         <div className="flex items-center gap-1 pl-2">
           <ToolbarButton onClick={() => editor.chain().focus().toggleCodeBlock().run()} isActive={editor.isActive('codeBlock')} tooltip="Code Block"><Code size={18}/></ToolbarButton>
           <ToolbarButton onClick={() => editor.chain().focus().toggleBlockquote().run()} isActive={editor.isActive('blockquote')} tooltip="Blockquote"><Quote size={18}/></ToolbarButton>
+          <ToolbarButton onClick={() => editor.chain().focus().toggleCallout().run()} isActive={editor.isActive('callout')} tooltip="Callout"><AlertCircle size={18}/></ToolbarButton>
           <button 
             onClick={() => {
               const url = window.prompt('Enter Image URL')
@@ -601,6 +678,14 @@ export default function ArticleEditor() {
         </BubbleMenu>}
 
         <EditorContent editor={editor} className="prose prose-lg max-w-none outline-none min-h-[500px]" />
+        
+        {editorMode === 'block' && (
+          <div className="absolute left-[-40px] top-0 pointer-events-none transition-all duration-200 opacity-0 group/handle hover:opacity-100" id="block-drag-handle">
+            <button className="p-1 px-1.5 bg-white border border-gray-100 shadow-sm rounded-md text-gray-400 hover:text-gray-900 pointer-events-auto cursor-grab active:cursor-grabbing">
+               <GripVertical size={16} />
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="fixed bottom-6 right-6 bg-white/80 backdrop-blur-md border border-gray-100 px-6 py-2.5 rounded-full shadow-2xl text-sm font-semibold text-gray-600 flex items-center gap-4 z-40 transition-all hover:scale-105 border-b-2 border-b-[#E94560]">
