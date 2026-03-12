@@ -163,8 +163,8 @@ export default function Articles() {
         </Link>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white p-4 rounded-lg border border-[#E5E7EB] shadow-sm">
-        <div className="relative w-full sm:w-96">
+      <div className="flex flex-col xl:flex-row gap-4 justify-between items-start xl:items-center bg-white p-4 rounded-lg border border-[#E5E7EB] shadow-sm">
+        <div className="relative w-full xl:w-96 min-w-[300px]">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input 
             type="text" 
@@ -174,7 +174,7 @@ export default function Articles() {
             className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E94560]/20 focus:border-[#E94560]"
           />
         </div>
-        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+        <div className="flex flex-wrap items-center gap-3 w-full xl:w-auto justify-start xl:justify-end">
           {/* Quick Range Presets */}
           <div className="relative flex items-center bg-gray-50 border border-gray-200 rounded-md px-3 py-1">
             <History className="w-4 h-4 mr-2 text-gray-400" />
