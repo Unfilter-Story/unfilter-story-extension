@@ -31,6 +31,7 @@ export default function Articles() {
   const [allCategories, setAllCategories] = useState([])
   const [allTags, setAllTags] = useState([])
   const [confirmModal, setConfirmModal] = useState({ open: false, title: '', message: '', onConfirm: null, type: 'warning' })
+  const [republishModal, setRepublishModal] = useState({ open: false, articleId: null, mode: 'now', scheduleDate: '', scheduleTime: '', label: 'Republish' })
 
   const fetchArticles = () => {
     fetch('http://localhost:3000/cms/v1/articles')
@@ -106,30 +107,47 @@ export default function Articles() {
     })
   }
 
-  const handlePublishNow = async (id) => {
-    setConfirmModal({
+  const handlePublishNow = async (id, label = 'Republish') => {
+    setRepublishModal({
       open: true,
-      title: 'Publish Article',
-      message: 'This article will be published immediately and visible on the public site.',
-      type: 'success',
-      onConfirm: async () => {
-        try {
-          await fetch(`http://localhost:3000/cms/v1/articles/${id}`, { 
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              status: 'published',
-              publishedAt: new Date().toISOString()
-            })
-          })
-          setOpenDropdownId(null)
-          fetchArticles()
-        } catch(err) {
-          console.error("Failed to publish article", err)
-        }
-        setConfirmModal(prev => ({ ...prev, open: false }))
-      }
+      articleId: id,
+      mode: 'now',
+      scheduleDate: '',
+      scheduleTime: '',
+      label: label
     })
+  }
+
+  const executeRepublish = async () => {
+    const { articleId, mode, scheduleDate, scheduleTime } = republishModal
+    try {
+      if (mode === 'now') {
+        await fetch(`http://localhost:3000/cms/v1/articles/${articleId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            status: 'published',
+            publishedAt: new Date().toISOString()
+          })
+        })
+      } else {
+        if (!scheduleDate || !scheduleTime) return
+        const scheduledDateTime = new Date(`${scheduleDate}T${scheduleTime}`)
+        await fetch(`http://localhost:3000/cms/v1/articles/${articleId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            status: 'scheduled',
+            publishedAt: scheduledDateTime.toISOString()
+          })
+        })
+      }
+      setOpenDropdownId(null)
+      setRepublishModal(prev => ({ ...prev, open: false }))
+      fetchArticles()
+    } catch (err) {
+      console.error('Failed to update article', err)
+    }
   }
 
   const handleReschedule = async () => {
@@ -386,7 +404,7 @@ export default function Articles() {
                                 {article.status === 'scheduled' && (
                                    <>
                                       <button 
-                                         onClick={() => handlePublishNow(article.id)}
+                                         onClick={() => handlePublishNow(article.id, 'Publish')}
                                          className="w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-green-50 cursor-pointer font-medium"
                                       >
                                          Publish Now
@@ -404,23 +422,12 @@ export default function Articles() {
                                 )}
 
                                 {article.status === 'unpublished' && (
-                                   <>
                                       <button 
-                                         onClick={() => handlePublishNow(article.id)}
+                                         onClick={() => handlePublishNow(article.id, 'Republish')}
                                          className="w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-green-50 cursor-pointer font-medium"
                                       >
                                          Republish
                                       </button>
-                                      <button 
-                                         onClick={() => {
-                                           setDatePickerId(article.id)
-                                           setNewPublishDate(article.publishedAt ? article.publishedAt.split('T')[0] : '')
-                                         }}
-                                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
-                                      >
-                                         Schedule for republishing
-                                      </button>
-                                   </>
                                 )}
 
                                 <button 
@@ -498,25 +505,18 @@ export default function Articles() {
         </div>
       )}
 
-      {/* Confirmation Modal */}
+      {/* Confirmation Modal (for Unpublish) */}
       {confirmModal.open && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100] p-4" onClick={() => setConfirmModal(prev => ({ ...prev, open: false }))}>
           <div 
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in" 
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden" 
             onClick={(e) => e.stopPropagation()}
             style={{ animation: 'fadeInUp 0.2s ease-out' }}
           >
             <div className="p-6">
               <div className="flex items-start gap-4">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
-                  confirmModal.type === 'warning' 
-                    ? 'bg-amber-50 text-amber-500' 
-                    : 'bg-green-50 text-green-500'
-                }`}>
-                  {confirmModal.type === 'warning' 
-                    ? <AlertTriangle className="w-6 h-6" /> 
-                    : <Send className="w-6 h-6" />
-                  }
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-amber-50 text-amber-500">
+                  <AlertTriangle className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-900">{confirmModal.title}</h3>
@@ -533,13 +533,124 @@ export default function Articles() {
               </button>
               <button 
                 onClick={confirmModal.onConfirm}
-                className={`px-6 py-2.5 text-sm font-bold text-white rounded-xl transition-all shadow-lg active:scale-95 ${
-                  confirmModal.type === 'warning'
-                    ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/20'
-                    : 'bg-[#E94560] hover:bg-[#d63d56] shadow-[#E94560]/20'
+                className="px-6 py-2.5 text-sm font-bold text-white rounded-xl transition-all shadow-lg active:scale-95 bg-amber-500 hover:bg-amber-600 shadow-amber-500/20"
+              >
+                Yes, Unpublish
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Republish / Publish Modal */}
+      {republishModal.open && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100] p-4" onClick={() => setRepublishModal(prev => ({ ...prev, open: false }))}>
+          <div 
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden" 
+            onClick={(e) => e.stopPropagation()}
+            style={{ animation: 'fadeInUp 0.2s ease-out' }}
+          >
+            <div className="p-6">
+              <div className="flex items-start gap-4 mb-5">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-green-50 text-green-500">
+                  <Send className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900">{republishModal.label} Article</h3>
+                  <p className="text-sm text-gray-500 mt-1 leading-relaxed">Choose how you'd like to make this article live again.</p>
+                </div>
+              </div>
+
+              {/* Option Toggle */}
+              <div className="space-y-3">
+                <label 
+                  onClick={() => setRepublishModal(prev => ({ ...prev, mode: 'now' }))}
+                  className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                    republishModal.mode === 'now' 
+                      ? 'border-[#E94560] bg-[#E94560]/5' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                    republishModal.mode === 'now' ? 'border-[#E94560]' : 'border-gray-300'
+                  }`}>
+                    {republishModal.mode === 'now' && <div className="w-2.5 h-2.5 rounded-full bg-[#E94560]" />}
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-gray-900">{republishModal.label} Now</p>
+                    <p className="text-xs text-gray-500 mt-0.5">Publish immediately and make it visible on the public site.</p>
+                  </div>
+                </label>
+
+                <label 
+                  onClick={() => setRepublishModal(prev => ({ ...prev, mode: 'schedule' }))}
+                  className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                    republishModal.mode === 'schedule' 
+                      ? 'border-[#7C3AED] bg-[#7C3AED]/5' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                    republishModal.mode === 'schedule' ? 'border-[#7C3AED]' : 'border-gray-300'
+                  }`}>
+                    {republishModal.mode === 'schedule' && <div className="w-2.5 h-2.5 rounded-full bg-[#7C3AED]" />}
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-gray-900">Schedule for {republishModal.label === 'Republish' ? 'Republishing' : 'Publishing'}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">Set a future date & time for automatic publishing.</p>
+                  </div>
+                </label>
+              </div>
+
+              {/* Schedule Date & Time Picker */}
+              {republishModal.mode === 'schedule' && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3" style={{ animation: 'fadeInUp 0.15s ease-out' }}>
+                  <div>
+                    <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Date</label>
+                    <div className="relative">
+                      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <input 
+                        type="date"
+                        min={new Date().toISOString().split('T')[0]}
+                        value={republishModal.scheduleDate}
+                        onChange={(e) => setRepublishModal(prev => ({ ...prev, scheduleDate: e.target.value }))}
+                        className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 focus:outline-none focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Time</label>
+                    <div className="relative">
+                      <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <input 
+                        type="time"
+                        value={republishModal.scheduleTime}
+                        onChange={(e) => setRepublishModal(prev => ({ ...prev, scheduleTime: e.target.value }))}
+                        className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 focus:outline-none focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-end gap-3">
+              <button 
+                onClick={() => setRepublishModal(prev => ({ ...prev, open: false }))}
+                className="px-5 py-2.5 text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors rounded-xl hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={executeRepublish}
+                disabled={republishModal.mode === 'schedule' && (!republishModal.scheduleDate || !republishModal.scheduleTime)}
+                className={`px-6 py-2.5 text-sm font-bold text-white rounded-xl transition-all shadow-lg active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed ${
+                  republishModal.mode === 'now'
+                    ? 'bg-[#E94560] hover:bg-[#d63d56] shadow-[#E94560]/20'
+                    : 'bg-[#7C3AED] hover:bg-[#6D28D9] shadow-[#7C3AED]/20'
                 }`}
               >
-                {confirmModal.type === 'warning' ? 'Yes, Unpublish' : 'Yes, Publish'}
+                {republishModal.mode === 'now' ? `${republishModal.label} Now` : 'Schedule'}
               </button>
             </div>
           </div>
