@@ -569,20 +569,24 @@ export default function ArticleEditor() {
         </div>
 
         <div className="flex items-center gap-2 px-2 border-r border-gray-200">
-          <input 
-            className="w-12 border border-gray-200 rounded-md px-2 py-1 text-sm focus:border-[#E94560] outline-none" 
-            value={localSize} 
-            placeholder="Size"
+          <select 
+            className="w-[70px] border border-gray-200 rounded-md px-1 py-1 text-sm focus:border-[#E94560] outline-none h-[34px]"
+            value={localSize}
             onChange={e => {
-              setLocalSize(e.target.value)
-              if (e.target.value && !isNaN(e.target.value)) {
-                editor.chain().setFontSize(e.target.value + 'px').run()
-              } else if (!e.target.value) {
+              const val = e.target.value
+              setLocalSize(val)
+              if (val) {
+                editor.chain().focus().setFontSize(val + 'px').run()
+              } else {
                 editor.chain().unsetFontSize().run()
               }
             }}
-            onBlur={() => editor.chain().focus().run()}
-          />
+          >
+            <option value="">Size</option>
+            {Array.from({ length: 100 }, (_, i) => i + 1).map(size => (
+              <option key={size} value={size}>{size}px</option>
+            ))}
+          </select>
           <select 
             className="border border-gray-200 rounded-md text-sm px-2 py-1 h-[34px] focus:border-[#E94560] outline-none max-w-[140px]"
             onChange={e => editor.chain().focus().setFontFamily(e.target.value).run()}
@@ -636,9 +640,15 @@ export default function ArticleEditor() {
                 <Type size={18} style={{ color: editor.getAttributes('textStyle').color || 'inherit' }} />
                 <div className="w-4 h-4 rounded-sm border" style={{ backgroundColor: editor.getAttributes('textStyle').color || '#000' }}></div>
               </button>
-              <div className="hidden group-hover:grid grid-cols-5 gap-1 absolute top-full left-0 mt-1 bg-white p-2 border rounded shadow-xl z-50 w-32">
-                {['#000000', '#333333', '#666666', '#E94560', '#0f62fe', '#198038', '#d12771', '#8a3ffc', '#fa4d56', '#ff832b'].map(c => (
-                  <button key={c} onClick={() => editor.chain().focus().setColor(c).run()} className="w-5 h-5 rounded-sm border hover:scale-110" style={{ backgroundColor: c }}></button>
+              <div className="hidden group-hover:grid grid-cols-5 gap-1.5 absolute top-full left-0 mt-2 bg-white p-3 border border-gray-100 rounded-xl shadow-2xl z-50 w-44">
+                {[
+                  '#000000', '#333333', '#666666', '#999999', '#CCCCCC', // Monochromes
+                  '#E94560', '#C41E3A', '#8B0000', '#FF4D4D', '#FF8080', // Reds/Pinks
+                  '#005FB8', '#0078D4', '#2B579A', '#326690', '#4F9BC1', // Blues
+                  '#198038', '#24A148', '#0E6027', '#6FD195', '#B1EAB1', // Greens
+                  '#8A3FFC', '#6929C4', '#491D8B', '#A56EFF', '#BE95FF'  // Purples
+                ].map(c => (
+                  <button key={c} onClick={() => editor.chain().focus().setColor(c).run()} className="w-6 h-6 rounded-md border border-gray-100 hover:scale-125 transition-transform" style={{ backgroundColor: c }}></button>
                 ))}
               </div>
             </div>
@@ -647,9 +657,15 @@ export default function ArticleEditor() {
                 <Highlighter size={18} />
                 <div className="w-4 h-4 rounded-sm border" style={{ backgroundColor: editor.getAttributes('highlight').color || 'transparent' }}></div>
               </button>
-              <div className="hidden group-hover:grid grid-cols-5 gap-1 absolute top-full left-0 mt-1 bg-white p-2 border rounded shadow-xl z-50 w-32">
-                {['transparent', '#f1f1f0', '#fbbf24', '#86efac', '#93c5fd', '#f9a8d4', '#c4b5fd', '#fdba74', '#5eead4', '#cbd5e1'].map(c => (
-                  <button key={c} onClick={() => c === 'transparent' ? editor.chain().focus().unsetHighlight().run() : editor.chain().focus().toggleHighlight({ color: c }).run()} className="w-5 h-5 rounded-sm border hover:scale-110" style={{ backgroundColor: c }}></button>
+              <div className="hidden group-hover:grid grid-cols-5 gap-1.5 absolute top-full left-0 mt-2 bg-white p-3 border border-gray-100 rounded-xl shadow-2xl z-50 w-44">
+                {[
+                  'transparent', '#F1F1F0', '#E5E7EB', '#D1D5DB', '#9CA3AF',
+                  '#FEF9C3', '#FEF08A', '#FDE047', '#FACC15', '#EAB308', // Yellows
+                  '#DCFCE7', '#BBF7D0', '#86EFAC', '#4ADE80', '#22C55E', // Greens
+                  '#DBEAFE', '#BFDBFE', '#93C5FD', '#60A5FA', '#3B82F6', // Blues
+                  '#FCE7F3', '#FBCFE8', '#F9A8D4', '#F472B6', '#EC4899'  // Pinks
+                ].map(c => (
+                  <button key={c} onClick={() => c === 'transparent' ? editor.chain().focus().unsetHighlight().run() : editor.chain().focus().toggleHighlight({ color: c }).run()} className="w-6 h-6 rounded-md border border-gray-100 hover:scale-125 transition-transform" style={{ backgroundColor: c }}></button>
                 ))}
               </div>
             </div>
@@ -660,15 +676,40 @@ export default function ArticleEditor() {
           <ToolbarButton onClick={() => editor.chain().focus().toggleCodeBlock().run()} isActive={editor.isActive('codeBlock')} tooltip="Code Block"><Code size={18}/></ToolbarButton>
           <ToolbarButton onClick={() => editor.chain().focus().toggleBlockquote().run()} isActive={editor.isActive('blockquote')} tooltip="Blockquote"><Quote size={18}/></ToolbarButton>
           <ToolbarButton onClick={() => editor.chain().focus().toggleCallout().run()} isActive={editor.isActive('callout')} tooltip="Callout"><AlertCircle size={18}/></ToolbarButton>
-          <button 
-            onClick={() => {
-              const url = window.prompt('Enter Image URL')
-              if (url) editor.chain().focus().insertContent({ type: 'customImage', attrs: { src: url } }).run()
-            }}
-            className="p-2 rounded-md hover:bg-gray-100 text-gray-600 transition-colors"
-          >
-            <ImageIcon size={18} />
-          </button>
+          <div className="relative group">
+            <button className="p-2 rounded-md hover:bg-gray-100 text-gray-600 transition-colors" title="Add Image">
+              <ImageIcon size={18} />
+            </button>
+            <div className="hidden group-hover:flex flex-col gap-2 absolute bottom-full left-0 mb-2 bg-white p-2 border border-gray-100 rounded-lg shadow-2xl z-50 w-40">
+              <button 
+                onClick={() => {
+                  const url = window.prompt('Enter Image URL')
+                  if (url) editor.chain().focus().insertContent({ type: 'customImage', attrs: { src: url } }).run()
+                }}
+                className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold hover:bg-gray-50 rounded text-gray-700"
+              >
+                <LinkIcon size={14} /> From URL
+              </button>
+              <label className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold hover:bg-gray-50 rounded cursor-pointer text-gray-700">
+                <UploadCloud size={14} /> Upload File
+                <input 
+                  type="file" 
+                  className="hidden" 
+                  accept="image/*"
+                  onChange={e => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      const reader = new FileReader()
+                      reader.onload = (event) => {
+                        editor.chain().focus().insertContent({ type: 'customImage', attrs: { src: event.target.result } }).run()
+                      }
+                      reader.readAsDataURL(file)
+                    }
+                  }}
+                />
+              </label>
+            </div>
+          </div>
           <button 
             className="p-2 rounded-md hover:bg-gray-100 text-gray-600 transition-colors"
             onClick={() => editor.chain().focus().setHorizontalRule().run()}
