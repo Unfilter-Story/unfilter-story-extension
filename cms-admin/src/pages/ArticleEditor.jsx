@@ -327,6 +327,10 @@ export default function ArticleEditor() {
   const [availableCategories, setAvailableCategories] = useState([])
   const [availableTags, setAvailableTags] = useState([])
   const autoSaveTimerRef = useRef(null)
+  
+  // Sticky color state to persist marks across selection changes (clicks)
+  const pendingColorRef = useRef(null)
+  const pendingHighlightRef = useRef(null)
 
 
 
@@ -405,9 +409,26 @@ export default function ArticleEditor() {
         class: 'tiptap focus:outline-none',
       },
     },
-    onTransaction: ({ editor }) => {
+    onTransaction: ({ editor, transaction }) => {
       // Force React to re-render to update counters
       setUpdateCounter(c => c + 1)
+
+      // Apply sticky marks if selection is empty (re-applying after a click)
+      if (editor.state.selection.empty) {
+        if (pendingColorRef.current && !editor.isActive('textStyle', { color: pendingColorRef.current })) {
+          editor.commands.setMark('textStyle', { color: pendingColorRef.current })
+        }
+        if (pendingHighlightRef.current && !editor.isActive('highlight', { color: pendingHighlightRef.current })) {
+          editor.commands.toggleHighlight({ color: pendingHighlightRef.current })
+        }
+      }
+
+      // Clear sticky marks if document changed (user started typing)
+      if (transaction.docChanged) {
+        pendingColorRef.current = null
+        pendingHighlightRef.current = null
+      }
+
       const currentSize = editor.getAttributes('textStyle').fontSize?.replace('px', '') || ''
       setLocalSize(currentSize)
     }
@@ -902,7 +923,11 @@ export default function ArticleEditor() {
               <div className="hidden group-hover:flex flex-col absolute top-full left-0 pt-2 z-50">
                 <div className="bg-white p-4 border border-gray-100 rounded-xl shadow-2xl w-[300px]">
                   <button 
-                    onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().unsetColor().run(); }}
+                    onMouseDown={(e) => { 
+                      e.preventDefault(); 
+                      editor.chain().focus().unsetColor().run(); 
+                      pendingColorRef.current = null;
+                    }}
                     className="flex items-center gap-2 w-full px-2 py-1.5 hover:bg-gray-50 rounded-lg text-sm font-semibold text-gray-700 mb-3 transition-colors"
                   >
                     <Eraser size={14} className="text-gray-400" /> Reset Color
@@ -912,7 +937,11 @@ export default function ArticleEditor() {
                     {COLOR_PALETTE.flat().map(c => (
                       <button 
                         key={c} 
-                        onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().setColor(c).run(); }} 
+                        onMouseDown={(e) => { 
+                          e.preventDefault(); 
+                          editor.chain().focus().setColor(c).run(); 
+                          pendingColorRef.current = c;
+                        }} 
                         className={`w-5.5 h-5.5 rounded-full border border-gray-100 hover:scale-125 transition-all ${editor.isActive('textStyle', { color: c }) ? 'ring-2 ring-offset-1 ring-[#E94560]' : ''}`} 
                         style={{ backgroundColor: c }}
                         title={c}
@@ -926,7 +955,11 @@ export default function ArticleEditor() {
                       {STANDARD_COLORS.map(c => (
                         <button 
                           key={c} 
-                          onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().setColor(c).run(); }} 
+                          onMouseDown={(e) => { 
+                            e.preventDefault(); 
+                            editor.chain().focus().setColor(c).run(); 
+                            pendingColorRef.current = c;
+                          }} 
                           className="w-7 h-7 rounded-full border border-gray-100 hover:scale-110 shadow-sm" 
                           style={{ backgroundColor: c }}
                         ></button>
@@ -955,7 +988,11 @@ export default function ArticleEditor() {
               <div className="hidden group-hover:flex flex-col absolute top-full left-0 pt-2 z-50">
                 <div className="bg-white p-4 border border-gray-100 rounded-xl shadow-2xl w-[300px]">
                   <button 
-                    onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().unsetHighlight().run(); }}
+                    onMouseDown={(e) => { 
+                      e.preventDefault(); 
+                      editor.chain().focus().unsetHighlight().run(); 
+                      pendingHighlightRef.current = null;
+                    }}
                     className="flex items-center gap-2 w-full px-2 py-1.5 hover:bg-gray-50 rounded-lg text-sm font-semibold text-gray-700 mb-3 transition-colors"
                   >
                     <Eraser size={14} className="text-gray-400" /> Clear Highlight
@@ -965,7 +1002,11 @@ export default function ArticleEditor() {
                     {COLOR_PALETTE.flat().map(c => (
                       <button 
                         key={c} 
-                        onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleHighlight({ color: c }).run(); }} 
+                        onMouseDown={(e) => { 
+                          e.preventDefault(); 
+                          editor.chain().focus().toggleHighlight({ color: c }).run(); 
+                          pendingHighlightRef.current = c;
+                        }} 
                         className={`w-5.5 h-5.5 rounded-full border border-gray-100 hover:scale-125 transition-all ${editor.isActive('highlight', { color: c }) ? 'ring-2 ring-offset-1 ring-[#E94560]' : ''}`} 
                         style={{ backgroundColor: c }}
                         title={c}
@@ -979,7 +1020,11 @@ export default function ArticleEditor() {
                       {STANDARD_COLORS.map(c => (
                         <button 
                           key={c} 
-                          onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleHighlight({ color: c }).run(); }} 
+                          onMouseDown={(e) => { 
+                            e.preventDefault(); 
+                            editor.chain().focus().toggleHighlight({ color: c }).run(); 
+                            pendingHighlightRef.current = c;
+                          }} 
                           className="w-7 h-7 rounded-full border border-gray-100 hover:scale-110 shadow-sm" 
                           style={{ backgroundColor: c }}
                         ></button>
