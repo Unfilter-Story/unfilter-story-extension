@@ -33,11 +33,39 @@ fastify.get('/v1/articles', async (request, reply) => {
 // === CMS API ROUTES ===
 fastify.post('/cms/v1/articles', async (request, reply) => {
   try {
-    const { headline, body, categoryId, tags, status } = request.body
+    const { headline, body, categoryId, category, tags, status, publishedAt } = request.body
     
     // Slugify the headline. Fallback to generic if empty.
     const slugBasis = headline || 'untitled'
     const slug = slugBasis.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+
+    // Resolve categoryId if a name was sent
+    let finalCategoryId = categoryId
+    if (!finalCategoryId && category) {
+      const cat = await prisma.category.findFirst({ 
+        where: { name: { equals: category } } // SQLite is case-insensitive for some operations, but Prisma helps here
+      })
+      if (cat) finalCategoryId = cat.id
+    }
+
+    // Process Tags: find existing or create new ones
+    let finalTagIds = []
+    if (tags && Array.isArray(tags)) {
+      for (const t of tags) {
+        let tag = await prisma.tag.findFirst({ 
+          where: { OR: [
+            { id: t }, 
+            { name: { equals: t } }, 
+            { slug: t.toLowerCase().replace(/[^a-z0-9]+/g, '-') }
+          ] } 
+        })
+        if (!tag && typeof t === 'string' && t.trim()) {
+          const tagSlug = t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+          tag = await prisma.tag.create({ data: { name: t.trim(), slug: tagSlug } })
+        }
+        if (tag) finalTagIds.push(tag.id)
+      }
+    }
 
     const article = await prisma.article.create({
       data: {
@@ -45,28 +73,44 @@ fastify.post('/cms/v1/articles', async (request, reply) => {
         slug,
         body: body || '',
         status: status || 'draft',
-        categoryId: categoryId || null,
-        publishedAt: status === 'published' ? new Date() : null,
-        // Just hardcoding some mock data for the un-implemented relational fields
+        categoryId: finalCategoryId || null,
+        publishedAt: publishedAt ? new Date(publishedAt) : (status === 'published' ? new Date() : null),
         readingTimeMins: Math.ceil((body || '').split(' ').length / 200) || 1,
-        articleTags: tags && tags.length > 0 ? {
-          create: tags.map(tagId => ({ tagId }))
+        articleTags: finalTagIds.length > 0 ? {
+          create: finalTagIds.map(tagId => ({ tagId }))
         } : undefined
       }
     })
     return article
   } catch (error) {
     fastify.log.error(error)
-    reply.code(500).send({ error: 'Failed to create article' })
+    // Handle specific Prisma errors
+    if (error.code === 'P2002') {
+      return reply.code(400).send({ error: `An article with the headline "${headline}" already exists. Please choose a unique headline.` })
+    }
+    reply.code(500).send({ error: 'Failed to create article: ' + error.message })
   }
 })
 
 fastify.get('/cms/v1/articles', async (request, reply) => {
   try {
     const articles = await prisma.article.findMany({
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
+      include: {
+        category: true,
+        articleTags: {
+          include: {
+            tag: true
+          }
+        }
+      }
     })
-    return articles
+    // Flatten category and tags for easier frontend use
+    return articles.map(a => ({
+      ...a,
+      category: a.category?.name || null,
+      tags: a.articleTags?.map(at => at.tag.name) || []
+    }))
   } catch (error) {
     fastify.log.error(error)
     reply.code(500).send({ error: 'Failed to fetch cms articles' })
@@ -93,37 +137,66 @@ fastify.get('/cms/v1/articles/:id', async (request, reply) => {
 fastify.put('/cms/v1/articles/:id', async (request, reply) => {
   try {
     const { id } = request.params
-    const { headline, body, status, categoryId, tags } = request.body
+    const { headline, body, status, categoryId, category, tags, publishedAt } = request.body
     
     // Slugify the headline
-    const slug = headline.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+    const slug = headline ? headline.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : undefined
+
+    // Resolve category
+    let finalCategoryId = categoryId
+    if (!finalCategoryId && category) {
+      const cat = await prisma.category.findFirst({ where: { name: category } })
+      if (cat) finalCategoryId = cat.id
+    }
+
+    const updateData = {
+      headline,
+      body,
+      status: status || undefined,
+      categoryId: finalCategoryId !== undefined ? finalCategoryId : undefined,
+      publishedAt: publishedAt ? new Date(publishedAt) : undefined,
+      readingTimeMins: body ? (Math.ceil(body.split(' ').length / 200) || 1) : undefined
+    }
+    if (slug) updateData.slug = slug
 
     const article = await prisma.article.update({
       where: { id },
-      data: {
-        headline,
-        slug,
-        body,
-        status: status || 'draft',
-        categoryId: categoryId || null,
-        // Optional: reading time
-        readingTimeMins: Math.ceil(body.split(' ').length / 200) || 1
-      }
+      data: updateData
     })
     
     if (tags !== undefined) {
        await prisma.articleTag.deleteMany({ where: { articleId: id } })
-       if (tags && tags.length > 0) {
-          await prisma.articleTag.createMany({
-             data: tags.map(tagId => ({ articleId: id, tagId }))
-          })
+       if (tags && Array.isArray(tags) && tags.length > 0) {
+          let finalTagIds = []
+          for (const t of tags) {
+            let tag = await prisma.tag.findFirst({ 
+              where: { OR: [
+                { id: t }, 
+                { name: { equals: t } }, 
+                { slug: t.toLowerCase().replace(/[^a-z0-9]+/g, '-') }
+              ] } 
+            })
+            if (!tag && typeof t === 'string' && t.trim()) {
+              const tagSlug = t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+              tag = await prisma.tag.create({ data: { name: t.trim(), slug: tagSlug } })
+            }
+            if (tag) finalTagIds.push(tag.id)
+          }
+          if (finalTagIds.length > 0) {
+            await prisma.articleTag.createMany({
+               data: finalTagIds.map(tagId => ({ articleId: id, tagId }))
+            })
+          }
        }
     }
     
     return article
   } catch (error) {
     fastify.log.error(error)
-    reply.code(500).send({ error: 'Failed to update article' })
+    if (error.code === 'P2002') {
+      return reply.code(400).send({ error: `An article with the headline "${request.body.headline}" already exists.` })
+    }
+    reply.code(500).send({ error: 'Failed to update article: ' + error.message })
   }
 })
 

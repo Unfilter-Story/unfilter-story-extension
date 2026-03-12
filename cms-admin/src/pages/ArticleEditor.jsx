@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { 
-  Type, Check, X, Languages, Eye, Send, GripVertical, AlertCircle, Layout, Eraser, Settings2, ArrowLeft, Save, CheckCircle2, RefreshCw, Bold, Italic, Underline, Strikethrough, List, ListOrdered, CheckSquare, AlignLeft, AlignCenter, AlignRight, AlignJustify, Type as TypeIcon, Highlighter, Code, Quote, Image as ImageIcon, Link as LinkIcon, UploadCloud, Minus, Trash2, Plus, Hash, Tag
+  Type, Check, X, Languages, Eye, EyeOff, Send, GripVertical, AlertCircle, Layout, Eraser, Settings2, ArrowLeft, Save, CheckCircle2, RefreshCw, Bold, Italic, Underline, Strikethrough, List, ListOrdered, CheckSquare, AlignLeft, AlignCenter, AlignRight, AlignJustify, Type as TypeIcon, Highlighter, Code, Quote, Image as ImageIcon, Link as LinkIcon, UploadCloud, Minus, Trash2, Plus, Hash, Tag, Calendar, Rocket, CheckCircle, Info
 } from 'lucide-react'
 
 const COLOR_PALETTE = [
@@ -395,7 +395,11 @@ export default function ArticleEditor() {
   const [tagInput, setTagInput] = useState('')
   const [availableCategories, setAvailableCategories] = useState([])
   const [availableTags, setAvailableTags] = useState([])
+  const [publishedAt, setPublishedAt] = useState(new Date().toISOString().split('T')[0])
+  const [dialog, setDialog] = useState({ show: false, title: '', message: '', type: 'info', onConfirm: null, onCancel: null })
+  const [isDirty, setIsDirty] = useState(false)
   const autoSaveTimerRef = useRef(null)
+  const isMounted = useRef(false)
   
   // Sticky color state to persist marks across selection changes (clicks)
   const pendingColorRef = useRef(null)
@@ -513,7 +517,15 @@ export default function ArticleEditor() {
             setStatus(data.status || 'draft')
             setCategory(data.category || '')
             setTags(data.tags || [])
+            if (data.publishedAt) {
+              setPublishedAt(new Date(data.publishedAt).toISOString().split('T')[0])
+            }
             editor.commands.setContent(data.body || '')
+            // Reset dirty state after initial load
+            setTimeout(() => {
+               setIsDirty(false)
+               setLastSaved(new Date())
+            }, 500)
           }
         })
         .catch(err => console.error('Failed to fetch article', err))
@@ -521,15 +533,38 @@ export default function ArticleEditor() {
   }, [id, editor])
 
   const handlePublish = async () => {
-    if (!headline) return alert("Headline is required")
+    if (!headline) return setDialog({ show: true, type: 'error', title: 'Action Required', message: 'Article Headline is required.' })
+    if (!category) return setDialog({ show: true, type: 'error', title: 'Action Required', message: 'Please select a Category before publishing.' })
+    if (!tags || tags.length === 0) return setDialog({ show: true, type: 'error', title: 'Action Required', message: 'Please add at least one Tag before publishing.' })
+
+    setDialog({
+      show: true,
+      type: 'confirm',
+      title: 'Ready to Launch?',
+      message: 'This will make your article live immediately for all readers.',
+      onConfirm: async () => {
+        setDialog({ show: false })
+        executePublish()
+      },
+      onCancel: () => setDialog({ show: false })
+    })
+  }
+
+  const executePublish = async () => {
     setIsSaving(true)
     
+    // Determine status based on date
+    const today = new Date().toISOString().split('T')[0]
+    const selectedDate = publishedAt
+    const targetStatus = selectedDate > today ? 'scheduled' : 'published'
+
     const articleData = {
       headline,
       body: editor.getHTML(),
-      status: 'published',
+      status: targetStatus,
       category,
-      tags
+      tags,
+      publishedAt: publishedAt || new Date().toISOString()
     }
 
     try {
@@ -548,14 +583,82 @@ export default function ArticleEditor() {
       if (res.ok) {
         navigate('/articles')
       } else {
-        alert("Failed to save article")
+        const errorData = await res.json()
+        setDialog({ 
+          show: true, 
+          type: 'error', 
+          title: 'Publish Failed', 
+          message: errorData.error || 'The system was unable to publish the article. Please check all fields and try again.' 
+        })
       }
     } catch (err) {
-      alert("Error saving article")
+      setDialog({ show: true, type: 'error', title: 'Connection Error', message: 'Unable to reach the server. Please check your internet connection.' })
     } finally {
       setIsSaving(false)
+      setIsAutoSaving(false)
     }
   }
+
+  const handleUnpublish = async () => {
+    setDialog({
+      show: true,
+      type: 'confirm',
+      title: 'Unpublish Article?',
+      message: 'This will move the article back to drafts and remove it from the public site.',
+      onConfirm: async () => {
+        setDialog({ show: false })
+        setIsSaving(true)
+        try {
+          const res = await fetch(`http://localhost:3000/cms/v1/articles/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'unpublished' })
+          })
+          if (res.ok) {
+            setStatus('unpublished')
+          }
+        } catch (err) {
+          setDialog({ show: true, type: 'error', title: 'Action Failed', message: 'Unable to unpublish at this time.' })
+        } finally {
+          setIsSaving(false)
+        }
+      },
+      onCancel: () => setDialog({ show: false })
+    })
+  }
+
+  // Auto-save logic: triggers 1 second after the last change
+  useEffect(() => {
+    if (isDirty) {
+      if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current)
+      autoSaveTimerRef.current = setTimeout(() => {
+        handleSaveDraft(true)
+      }, 1000)
+    }
+    return () => {
+      if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current)
+    }
+  }, [isDirty, headline, category, tags])
+
+  // Track changes in headline, category, tags
+  useEffect(() => {
+    if (!isMounted.current) return
+    setIsDirty(true)
+  }, [headline, category, tags])
+
+  useEffect(() => {
+    isMounted.current = true
+  }, [])
+
+  // Track changes in editor
+  useEffect(() => {
+    if (!editor) return
+    const handleUpdate = () => {
+       if (isMounted.current) setIsDirty(true)
+    }
+    editor.on('update', handleUpdate)
+    return () => editor.off('update', handleUpdate)
+  }, [editor])
 
   const handleSaveDraft = async (isAuto = false) => {
     if (isAuto) setIsAutoSaving(true)
@@ -566,7 +669,8 @@ export default function ArticleEditor() {
       body: editor.getHTML(),
       status: 'draft',
       category,
-      tags
+      tags,
+      publishedAt: publishedAt || null
     }
 
     try {
@@ -585,10 +689,27 @@ export default function ArticleEditor() {
       if (res.ok) {
         const data = await res.json()
         setLastSaved(new Date())
+        setIsDirty(false)
         if (!id && data.id) {
            navigate(`/articles/${data.id}`, { replace: true })
         }
-        if (!isAuto) alert("Draft saved successfully")
+        if (!isAuto) {
+          setDialog({ 
+            show: true, 
+            type: 'success', 
+            title: 'Draft Saved', 
+            message: 'Your progress has been safely stored.' 
+          })
+        }
+      } else {
+        if (!isAuto) {
+          setDialog({ 
+            show: true, 
+            type: 'error', 
+            title: 'Save Failed', 
+            message: 'System was unable to save the draft. Please check your connection.' 
+          })
+        }
       }
     } catch (err) {
       console.error("Error saving draft", err)
@@ -703,7 +824,7 @@ export default function ArticleEditor() {
                     {isAutoSaving ? (
                       'Synchronizing...'
                     ) : lastSaved ? (
-                      `Securely saved • ${lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                      `Securely saved • ${lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`
                     ) : (
                       'Workspace Ready'
                     )} 
@@ -713,6 +834,15 @@ export default function ArticleEditor() {
           </div>
 
           <div className="flex items-center gap-4">
+             {status === 'published' && (
+                <button 
+                  onClick={handleUnpublish}
+                  disabled={isSaving}
+                  className="hidden md:flex items-center px-5 py-2.5 text-amber-600 font-bold bg-amber-50 border border-amber-100 rounded-2xl hover:bg-amber-100 transition-all active:scale-95 disabled:opacity-50"
+                >
+                   <EyeOff className="mr-2.5 w-4.5 h-4.5" /> Unpublish
+                </button>
+             )}
              <button 
                onClick={handleSaveDraft}
                disabled={isSaving}
@@ -720,12 +850,15 @@ export default function ArticleEditor() {
              >
                 <Save className="mr-2.5 w-4.5 h-4.5 opacity-40" /> {isSaving ? 'Saving...' : 'Draft'}
              </button>
-             <button 
+             <button
                onClick={handlePublish}
                disabled={isSaving}
                className="flex items-center px-7 py-3 text-white font-black bg-[#E94560] rounded-2xl hover:bg-[#d63d56] transition-all shadow-[0_10px_30px_rgba(233,69,96,0.3)] active:scale-95 disabled:opacity-50"
              >
-                <span className="mr-2.5">{isSaving ? 'Sending...' : 'Publish'}</span> <Send className="w-5 h-5" />
+                <span className="mr-2.5">
+                  {isSaving ? 'Sending...' : (publishedAt > new Date().toISOString().split('T')[0] ? 'Schedule' : 'Publish')}
+                </span>
+                <Send className="w-5 h-5" />
              </button>
           </div>
         </div>
@@ -740,8 +873,8 @@ export default function ArticleEditor() {
             value={headline}
             onChange={e => setHeadline(e.target.value)}
           />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-10 border-t border-gray-50">
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pt-10 border-t border-gray-50">
             {/* Category Selection */}
             <div className="space-y-4">
               <label className="flex items-center gap-3 text-[11px] font-black text-gray-400 uppercase tracking-[0.25em]">
@@ -828,7 +961,29 @@ export default function ArticleEditor() {
                 )}
               </div>
             </div>
+
+            {/* Publishing Date */}
+            <div className="space-y-4">
+              <label className="flex items-center gap-3 text-[11px] font-black text-gray-400 uppercase tracking-[0.25em]">
+                <div className="w-8 h-8 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 transition-all">
+                   <Calendar size={14} />
+                </div>
+                Publishing Date
+              </label>
+              
+              <div className="relative group">
+                <input 
+                  type="date"
+                  min={new Date().toISOString().split('T')[0]}
+                  value={publishedAt}
+                  onChange={e => setPublishedAt(e.target.value)}
+                  className="w-full bg-gray-50/80 border border-gray-200 rounded-2xl px-5 py-4 text-sm font-bold text-gray-700 outline-none focus:border-[#E84560] focus:ring-4 focus:ring-[#E84560]/5 focus:bg-white transition-all cursor-pointer hover:bg-gray-100/50"
+                  required
+                />
+              </div>
+            </div>
           </div>
+          
       </div>
 
       {/* Styled Toolbar */}
@@ -1200,6 +1355,54 @@ export default function ArticleEditor() {
       </div>
 
       {/* AI loading removed */}
+      {/* Custom Dialog Modal */}
+      {dialog.show && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
+           <div className="bg-white rounded-[32px] shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200 border border-gray-100">
+              <div className="p-8 text-center">
+                 <div className={`w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center ${
+                    dialog.type === 'error' ? 'bg-red-50 text-red-500' :
+                    dialog.type === 'success' ? 'bg-green-50 text-green-500' :
+                    dialog.type === 'confirm' ? 'bg-blue-50 text-blue-500' : 'bg-gray-50 text-gray-500'
+                 }`}>
+                    {dialog.type === 'error' && <AlertCircle size={32} />}
+                    {dialog.type === 'success' && <CheckCircle size={32} />}
+                    {dialog.type === 'confirm' && <Rocket size={32} />}
+                    {dialog.type === 'info' && <Info size={32} />}
+                 </div>
+                 
+                 <h3 className="text-xl font-black text-gray-900 mb-2 tracking-tight">{dialog.title}</h3>
+                 <p className="text-gray-500 text-sm font-medium leading-relaxed px-4">{dialog.message}</p>
+              </div>
+              
+              <div className="p-6 bg-gray-50/50 flex gap-3 border-t border-gray-100">
+                 {dialog.type === 'confirm' ? (
+                   <>
+                     <button 
+                        onClick={dialog.onCancel}
+                        className="flex-1 px-6 py-3.5 rounded-2xl text-sm font-bold text-gray-500 hover:text-gray-700 hover:bg-white transition-all active:scale-95"
+                     >
+                        Cancel
+                     </button>
+                     <button 
+                        onClick={dialog.onConfirm}
+                        className="flex-1 px-6 py-3.5 rounded-2xl text-sm font-bold bg-[#E94560] text-white shadow-lg shadow-[#E94560]/20 hover:bg-[#C73652] transition-all active:scale-95"
+                     >
+                        Confirm
+                     </button>
+                   </>
+                 ) : (
+                   <button 
+                      onClick={() => setDialog({ ...dialog, show: false })}
+                      className="w-full px-6 py-3.5 rounded-2xl text-sm font-bold bg-gray-900 text-white hover:bg-black transition-all active:scale-95"
+                   >
+                      Got it
+                   </button>
+                 )}
+              </div>
+           </div>
+        </div>
+      )}
     </div>
   )
 }
