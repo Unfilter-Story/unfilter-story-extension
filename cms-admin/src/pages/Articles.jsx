@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Plus, Search, Filter, MoreHorizontal, CheckCircle2, Clock, Calendar, ArrowRight, History } from 'lucide-react'
+import { Plus, Search, Filter, MoreHorizontal, CheckCircle2, Clock, Calendar, ArrowRight, History, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const getStatusBadge = (status) => {
@@ -24,6 +24,8 @@ export default function Articles() {
   const [endDate, setEndDate] = useState('')
   const [quickRange, setQuickRange] = useState('custom')
   const [openDropdownId, setOpenDropdownId] = useState(null)
+  const [datePickerId, setDatePickerId] = useState(null)
+  const [newPublishDate, setNewPublishDate] = useState('')
 
   const fetchArticles = () => {
     fetch('http://localhost:3000/cms/v1/articles')
@@ -59,12 +61,12 @@ export default function Articles() {
   }
 
   const handleUnpublish = async (id) => {
-    if(!window.confirm("Move this article back to drafts? It will be removed from the public site.")) return;
+    if(!window.confirm("Unpublish this article? It will be removed from the public site.")) return;
     try {
       await fetch(`http://localhost:3000/cms/v1/articles/${id}`, { 
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'draft' })
+        body: JSON.stringify({ status: 'unpublished' })
       })
       setOpenDropdownId(null)
       fetchArticles()
@@ -73,14 +75,43 @@ export default function Articles() {
     }
   }
 
-  const handleDelete = async (id) => {
-    if(!window.confirm("Are you sure you want to permanently delete this article?")) return;
+  const handlePublishNow = async (id) => {
+    if(!window.confirm("Publish this article immediately?")) return;
     try {
-      await fetch(`http://localhost:3000/cms/v1/articles/${id}`, { method: 'DELETE' })
+      await fetch(`http://localhost:3000/cms/v1/articles/${id}`, { 
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          status: 'published',
+          publishedAt: new Date().toISOString()
+        })
+      })
       setOpenDropdownId(null)
       fetchArticles()
     } catch(err) {
-      alert("Failed to delete article")
+      alert("Failed to publish article")
+    }
+  }
+
+  const handleReschedule = async () => {
+    if(!newPublishDate) return;
+    try {
+      const today = new Date().toISOString().split('T')[0]
+      const targetStatus = newPublishDate > today ? 'scheduled' : 'published'
+      
+      await fetch(`http://localhost:3000/cms/v1/articles/${datePickerId}`, { 
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          status: targetStatus,
+          publishedAt: new Date(newPublishDate).toISOString()
+        })
+      })
+      setDatePickerId(null)
+      setOpenDropdownId(null)
+      fetchArticles()
+    } catch(err) {
+      alert("Failed to reschedule article")
     }
   }
 
@@ -264,35 +295,70 @@ export default function Articles() {
                     {/* Action Dropdown */}
                     {openDropdownId === article.id && (
                        <div className="absolute right-8 top-12 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 overflow-hidden text-left" onClick={(e) => e.stopPropagation()}>
-                          {article.status === 'draft' && (
-                             <Link 
-                                to={`/articles/${article.id}`}
-                                className="w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
-                             >
-                                Edit Article
-                             </Link>
-                          )}
-                          {article.status === 'published' && (
+                          {article.status === 'published' ? (
                              <button 
                                 onClick={() => handleUnpublish(article.id)}
                                 className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
                              >
-                                Move to Draft (Unpublish)
+                                Unpublish
                              </button>
+                          ) : (
+                             <>
+                                <Link 
+                                   to={`/articles/${article.id}`}
+                                   className="w-full block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+                                >
+                                   Edit Article
+                                </Link>
+
+                                {article.status === 'scheduled' && (
+                                   <>
+                                      <button 
+                                         onClick={() => handlePublishNow(article.id)}
+                                         className="w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-green-50 cursor-pointer font-medium"
+                                      >
+                                         Publish Now
+                                      </button>
+                                      <button 
+                                         onClick={() => {
+                                           setDatePickerId(article.id)
+                                           setNewPublishDate(article.publishedAt ? article.publishedAt.split('T')[0] : '')
+                                         }}
+                                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+                                      >
+                                         Change publishing date
+                                      </button>
+                                   </>
+                                )}
+
+                                {article.status === 'unpublished' && (
+                                   <>
+                                      <button 
+                                         onClick={() => handlePublishNow(article.id)}
+                                         className="w-full text-left px-4 py-2 text-sm text-green-600 hover:bg-green-50 cursor-pointer font-medium"
+                                      >
+                                         Republish
+                                      </button>
+                                      <button 
+                                         onClick={() => {
+                                           setDatePickerId(article.id)
+                                           setNewPublishDate(article.publishedAt ? article.publishedAt.split('T')[0] : '')
+                                         }}
+                                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+                                      >
+                                         Schedule for republishing
+                                      </button>
+                                   </>
+                                )}
+
+                                <button 
+                                   onClick={() => window.open(`http://localhost:4321/article/${article.slug}`, '_blank')}
+                                   className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+                                >
+                                   Preview / View
+                                </button>
+                             </>
                           )}
-                          <button 
-                             onClick={() => window.open(`http://localhost:4321/article/${article.slug}`, '_blank')}
-                             className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
-                          >
-                             Preview / View
-                          </button>
-                          <div className="border-t border-gray-100"></div>
-                          <button 
-                             onClick={() => handleDelete(article.id)}
-                             className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
-                          >
-                             Delete
-                          </button>
                        </div>
                     )}
                   </td>
@@ -311,6 +377,54 @@ export default function Articles() {
           </div>
         </div>
       </div>
+
+      {/* Date Change Modal */}
+      {datePickerId && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4" onClick={() => setDatePickerId(null)}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all scale-100" onClick={e => e.stopPropagation()}>
+            <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+               <div>
+                 <h3 className="text-lg font-black text-gray-900 tracking-tight">Reschedule Article</h3>
+                 <p className="text-xs text-gray-500 font-medium">Select a new publication date</p>
+               </div>
+               <button onClick={() => setDatePickerId(null)} className="p-2 hover:bg-white rounded-full transition-colors border border-transparent hover:border-gray-100">
+                 <X className="w-5 h-5 text-gray-400" />
+               </button>
+            </div>
+            
+            <div className="p-8 space-y-6">
+               <div className="space-y-2">
+                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">New Publishing Date</label>
+                 <div className="relative group">
+                   <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#E94560] transition-colors" />
+                   <input 
+                     type="date"
+                     min={new Date().toISOString().split('T')[0]}
+                     value={newPublishDate}
+                     onChange={(e) => setNewPublishDate(e.target.value)}
+                     className="w-full pl-12 pr-6 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-[#E94560] focus:outline-none transition-all text-gray-700 font-bold shadow-inner"
+                   />
+                 </div>
+               </div>
+            </div>
+
+            <div className="p-6 bg-gray-50 border-t border-gray-100 flex items-center justify-end gap-3">
+               <button 
+                 onClick={() => setDatePickerId(null)}
+                 className="px-6 py-3 text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors"
+               >
+                 Cancel
+               </button>
+               <button 
+                 onClick={handleReschedule}
+                 className="px-8 py-3 bg-[#E94560] text-white font-black rounded-xl hover:bg-[#d63d56] transition-all shadow-lg shadow-[#E94560]/20 active:scale-95"
+               >
+                 Update Date
+               </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

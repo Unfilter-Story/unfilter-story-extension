@@ -604,7 +604,7 @@ export default function ArticleEditor() {
       show: true,
       type: 'confirm',
       title: 'Unpublish Article?',
-      message: 'This will move the article back to drafts and remove it from the public site.',
+      message: 'This will change the article status to unpublished and remove it from the public site.',
       onConfirm: async () => {
         setDialog({ show: false })
         setIsSaving(true)
@@ -625,6 +625,29 @@ export default function ArticleEditor() {
       },
       onCancel: () => setDialog({ show: false })
     })
+  }
+
+  const handlePublishNowInEditor = async () => {
+    if(!window.confirm("Publish this article immediately?")) return;
+    setIsSaving(true)
+    try {
+      const res = await fetch(`http://localhost:3000/cms/v1/articles/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          status: 'published',
+          publishedAt: new Date().toISOString()
+        })
+      })
+      if (res.ok) {
+        setStatus('published')
+        setPublishedAt(new Date().toISOString().split('T')[0])
+      }
+    } catch (err) {
+      setDialog({ show: true, type: 'error', title: 'Action Failed', message: 'Unable to publish now.' })
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   // Auto-save logic: triggers 1 second after the last change
@@ -843,20 +866,31 @@ export default function ArticleEditor() {
                    <EyeOff className="mr-2.5 w-4.5 h-4.5" /> Unpublish
                 </button>
              )}
-             <button 
-               onClick={handleSaveDraft}
-               disabled={isSaving}
-               className="hidden md:flex items-center px-5 py-2.5 text-gray-600 font-bold bg-white border border-gray-100 rounded-2xl hover:bg-gray-50 hover:text-gray-900 transition-all active:scale-95 disabled:opacity-50"
-             >
-                <Save className="mr-2.5 w-4.5 h-4.5 opacity-40" /> {isSaving ? 'Saving...' : 'Draft'}
-             </button>
+             {status !== 'published' && status !== 'scheduled' && (
+                <button 
+                  onClick={handleSaveDraft}
+                  disabled={isSaving}
+                  className="hidden md:flex items-center px-5 py-2.5 text-gray-600 font-bold bg-white border border-gray-100 rounded-2xl hover:bg-gray-50 hover:text-gray-900 transition-all active:scale-95 disabled:opacity-50"
+                >
+                   <Save className="mr-2.5 w-4.5 h-4.5 opacity-40" /> {isSaving ? 'Saving...' : (status === 'unpublished' ? 'Save' : 'Draft')}
+                </button>
+             )}
+             {status === 'scheduled' && (
+                <button 
+                  onClick={handlePublishNowInEditor}
+                  disabled={isSaving}
+                  className="hidden md:flex items-center px-5 py-2.5 text-green-600 font-bold bg-green-50 border border-green-100 rounded-2xl hover:bg-green-100 transition-all active:scale-95 disabled:opacity-50"
+                >
+                   <Rocket className="mr-2.5 w-4.5 h-4.5" /> Publish Now
+                </button>
+             )}
              <button
                onClick={handlePublish}
                disabled={isSaving}
                className="flex items-center px-7 py-3 text-white font-black bg-[#E94560] rounded-2xl hover:bg-[#d63d56] transition-all shadow-[0_10px_30px_rgba(233,69,96,0.3)] active:scale-95 disabled:opacity-50"
              >
                 <span className="mr-2.5">
-                  {isSaving ? 'Sending...' : (publishedAt > new Date().toISOString().split('T')[0] ? 'Schedule' : 'Publish')}
+                  {isSaving ? 'Sending...' : ((status === 'published' || status === 'unpublished') ? 'Republish' : (publishedAt > new Date().toISOString().split('T')[0] ? 'Schedule' : 'Publish'))}
                 </span>
                 <Send className="w-5 h-5" />
              </button>
