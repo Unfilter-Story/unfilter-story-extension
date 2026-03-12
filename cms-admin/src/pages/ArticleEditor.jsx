@@ -698,7 +698,7 @@ export default function ArticleEditor() {
   return (
     <div className="max-w-5xl mx-auto pb-20">
       {/* Premium Header */}
-      <div className="flex items-center justify-between mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+      <div className="sticky top-4 z-40 flex items-center justify-between mb-8 bg-white/80 backdrop-blur-xl p-4 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/20 transition-all duration-300">
         <div className="flex items-center gap-4">
            <button onClick={() => navigate('/articles')} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-600">
               <ArrowLeft size={24} />
@@ -720,38 +720,21 @@ export default function ArticleEditor() {
               </p>
            </div>
         </div>
-        <div className="flex items-center gap-6">
-           <div className="flex items-center bg-gray-50 p-1 rounded-lg border border-gray-100">
-              <button 
-                onClick={() => setEditorMode('normal')}
-                className={`flex items-center px-3 py-1.5 text-xs font-bold rounded-md transition-all ${editorMode === 'normal' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-              >
-                <Type className="w-3.5 h-3.5 mr-1.5" /> Normal
-              </button>
-              <button 
-                onClick={() => setEditorMode('block')}
-                className={`flex items-center px-3 py-1.5 text-xs font-bold rounded-md transition-all ${editorMode === 'block' ? 'bg-[#E94560] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-              >
-                <Layout className="w-3.5 h-3.5 mr-1.5" /> Block
-              </button>
-           </div>
-           
-           <div className="flex items-center gap-3">
-              <button 
-                onClick={handleSaveDraft}
-                disabled={isSaving}
-                className="flex items-center px-4 py-2 text-gray-700 font-semibold bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all shadow-sm disabled:opacity-50"
-              >
-                 <Save className="mr-2 w-4 h-4" /> {isSaving ? 'Saving...' : 'Save Draft'}
-              </button>
-              <button 
-                onClick={handlePublish}
-                disabled={isSaving}
-                className="flex items-center px-5 py-2 text-white font-bold bg-[#E94560] rounded-lg hover:bg-[#d63d56] transition-all shadow-lg shadow-[#E94560]/20 disabled:opacity-50"
-              >
-                 <span className="mr-2">{isSaving ? 'Sending...' : 'Publish Now'}</span> <Send className="w-4 h-4" />
-              </button>
-           </div>
+        <div className="flex items-center gap-3">
+           <button 
+             onClick={handleSaveDraft}
+             disabled={isSaving}
+             className="flex items-center px-4 py-2 text-gray-700 font-bold bg-white border border-gray-100 rounded-xl hover:bg-gray-50 transition-all shadow-sm active:scale-95 disabled:opacity-50"
+           >
+              <Save className="mr-2.5 w-4.5 h-4.5 opacity-60" /> {isSaving ? 'Saving...' : 'Save Draft'}
+           </button>
+           <button 
+             onClick={handlePublish}
+             disabled={isSaving}
+             className="flex items-center px-6 py-2 text-white font-black bg-[#E94560] rounded-xl hover:bg-[#d63d56] transition-all shadow-lg shadow-[#E94560]/25 active:scale-95 disabled:opacity-50"
+           >
+              <span className="mr-2.5">{isSaving ? 'Sending...' : 'Publish Now'}</span> <Send className="w-4.5 h-4.5" />
+           </button>
         </div>
       </div>
 
