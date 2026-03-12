@@ -413,21 +413,21 @@ export default function ArticleEditor() {
       // Force React to re-render to update counters
       setUpdateCounter(c => c + 1)
 
-      // Apply sticky marks if selection is empty (re-applying after a click)
+      // Apply sticky marks if selection is empty (keeping the color active for the next typing)
       if (editor.state.selection.empty) {
-        if (pendingColorRef.current && !editor.isActive('textStyle', { color: pendingColorRef.current })) {
+        if (pendingColorRef.current) {
           editor.commands.setMark('textStyle', { color: pendingColorRef.current })
         }
-        if (pendingHighlightRef.current && !editor.isActive('highlight', { color: pendingHighlightRef.current })) {
-          editor.commands.toggleHighlight({ color: pendingHighlightRef.current })
+        if (pendingHighlightRef.current) {
+          // For highlight, we only apply if it's not already active to avoid toggle flickering
+          if (!editor.isActive('highlight', { color: pendingHighlightRef.current })) {
+            editor.commands.setHighlight({ color: pendingHighlightRef.current })
+          }
         }
       }
 
-      // Clear sticky marks if document changed (user started typing)
-      if (transaction.docChanged) {
-        pendingColorRef.current = null
-        pendingHighlightRef.current = null
-      }
+      // We DON'T clear sticky marks on docChanged anymore to allow the color 
+      // to persist for the entire session until the user picks a new color or hits reset.
 
       const currentSize = editor.getAttributes('textStyle').fontSize?.replace('px', '') || ''
       setLocalSize(currentSize)
