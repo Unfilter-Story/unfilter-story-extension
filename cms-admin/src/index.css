@@ -28,6 +28,22 @@ body {
   height: 0;
 }
 
+.tiptap ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin: 1rem 0 !important;
+}
+
+.tiptap ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+  margin: 1rem 0 !important;
+}
+
+.tiptap li {
+  margin-bottom: 0.25rem !important;
+}
+
 ul[data-type="taskList"] {
   list-style: none;
   padding: 0;

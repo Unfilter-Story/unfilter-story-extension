@@ -234,6 +234,8 @@ export default function ArticleEditor() {
         history: true,
         heading: { levels: [1, 2, 3, 4, 5, 6] },
         codeBlock: true,
+        bulletList: {},
+        orderedList: {},
       }),
       UnderlineExtension,
       HighlightExtension.configure({ multicolor: true }),
