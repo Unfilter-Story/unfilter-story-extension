@@ -4,7 +4,7 @@ import {
   Save, ExternalLink, ArrowLeft, Bold, Italic, Strikethrough, Underline, Highlighter, 
   Link as LinkIcon, Unlink, List, ListOrdered, Quote, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6,
   Code, Copy, CheckCircle2, AlignLeft, AlignCenter, AlignRight, AlignJustify,
-  Type, Check, X, Languages, Eye, Send, GripVertical, AlertCircle, Layout, List as ListIconNormal
+  Type, Check, X, Languages, Eye, Send, GripVertical, AlertCircle, Layout
 } from 'lucide-react'
 import { useParams } from 'react-router-dom'
 import { useEditor, EditorContent, ReactNodeViewRenderer, NodeViewWrapper, ReactRenderer } from '@tiptap/react'
@@ -244,6 +244,7 @@ export default function ArticleEditor() {
   const [headline, setHeadline] = useState('')
   const [localSize, setLocalSize] = useState('')
   const [updateCounter, setUpdateCounter] = useState(0)
+  const [isSaving, setIsSaving] = useState(false)
   const [status, setStatus] = useState('draft')
   const [lastSaved, setLastSaved] = useState(null)
   const [isAutoSaving, setIsAutoSaving] = useState(false)
