@@ -839,7 +839,7 @@ export default function ArticleEditor() {
       </div>
 
       {/* Styled Toolbar */}
-      <div className="sticky top-4 z-30 bg-white/80 backdrop-blur-md border border-gray-100 rounded-xl p-2 mb-6 shadow-md flex flex-wrap gap-1 items-center">
+      <div className="sticky top-28 z-30 bg-white/80 backdrop-blur-md border border-gray-100 rounded-xl p-2 mb-6 shadow-md flex flex-wrap gap-1 items-center">
         <div className="flex items-center gap-1 pr-2 border-r border-gray-200">
           <ToolbarButton onClick={() => editor.chain().focus().toggleBold().run()} isActive={editor.isActive('bold')} tooltip="Bold"><Bold size={18}/></ToolbarButton>
           <ToolbarButton onClick={() => editor.chain().focus().toggleItalic().run()} isActive={editor.isActive('italic')} tooltip="Italic"><Italic size={18}/></ToolbarButton>
