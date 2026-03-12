@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Plus, Search, Filter, MoreHorizontal, CheckCircle2, Clock, Calendar, ArrowRight, History, X, Tag as TagIcon, LayoutGrid } from 'lucide-react'
+import { Plus, Search, Filter, MoreHorizontal, CheckCircle2, Clock, Calendar, ArrowRight, History, X, Tag as TagIcon, LayoutGrid, AlertTriangle, Send } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const getStatusBadge = (status) => {
@@ -30,6 +30,7 @@ export default function Articles() {
   const [newPublishDate, setNewPublishDate] = useState('')
   const [allCategories, setAllCategories] = useState([])
   const [allTags, setAllTags] = useState([])
+  const [confirmModal, setConfirmModal] = useState({ open: false, title: '', message: '', onConfirm: null, type: 'warning' })
 
   const fetchArticles = () => {
     fetch('http://localhost:3000/cms/v1/articles')
@@ -83,36 +84,52 @@ export default function Articles() {
   }
 
   const handleUnpublish = async (id) => {
-    if(!window.confirm("Unpublish this article? It will be removed from the public site.")) return;
-    try {
-      await fetch(`http://localhost:3000/cms/v1/articles/${id}`, { 
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'unpublished' })
-      })
-      setOpenDropdownId(null)
-      fetchArticles()
-    } catch(err) {
-      alert("Failed to unpublish article")
-    }
+    setConfirmModal({
+      open: true,
+      title: 'Unpublish Article',
+      message: 'This article will be removed from the public site. You can republish it later.',
+      type: 'warning',
+      onConfirm: async () => {
+        try {
+          await fetch(`http://localhost:3000/cms/v1/articles/${id}`, { 
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'unpublished' })
+          })
+          setOpenDropdownId(null)
+          fetchArticles()
+        } catch(err) {
+          console.error("Failed to unpublish article", err)
+        }
+        setConfirmModal(prev => ({ ...prev, open: false }))
+      }
+    })
   }
 
   const handlePublishNow = async (id) => {
-    if(!window.confirm("Publish this article immediately?")) return;
-    try {
-      await fetch(`http://localhost:3000/cms/v1/articles/${id}`, { 
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          status: 'published',
-          publishedAt: new Date().toISOString()
-        })
-      })
-      setOpenDropdownId(null)
-      fetchArticles()
-    } catch(err) {
-      alert("Failed to publish article")
-    }
+    setConfirmModal({
+      open: true,
+      title: 'Publish Article',
+      message: 'This article will be published immediately and visible on the public site.',
+      type: 'success',
+      onConfirm: async () => {
+        try {
+          await fetch(`http://localhost:3000/cms/v1/articles/${id}`, { 
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              status: 'published',
+              publishedAt: new Date().toISOString()
+            })
+          })
+          setOpenDropdownId(null)
+          fetchArticles()
+        } catch(err) {
+          console.error("Failed to publish article", err)
+        }
+        setConfirmModal(prev => ({ ...prev, open: false }))
+      }
+    })
   }
 
   const handleReschedule = async () => {
@@ -480,6 +497,61 @@ export default function Articles() {
           </div>
         </div>
       )}
+
+      {/* Confirmation Modal */}
+      {confirmModal.open && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100] p-4" onClick={() => setConfirmModal(prev => ({ ...prev, open: false }))}>
+          <div 
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in" 
+            onClick={(e) => e.stopPropagation()}
+            style={{ animation: 'fadeInUp 0.2s ease-out' }}
+          >
+            <div className="p-6">
+              <div className="flex items-start gap-4">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
+                  confirmModal.type === 'warning' 
+                    ? 'bg-amber-50 text-amber-500' 
+                    : 'bg-green-50 text-green-500'
+                }`}>
+                  {confirmModal.type === 'warning' 
+                    ? <AlertTriangle className="w-6 h-6" /> 
+                    : <Send className="w-6 h-6" />
+                  }
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900">{confirmModal.title}</h3>
+                  <p className="text-sm text-gray-500 mt-1 leading-relaxed">{confirmModal.message}</p>
+                </div>
+              </div>
+            </div>
+            <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-end gap-3">
+              <button 
+                onClick={() => setConfirmModal(prev => ({ ...prev, open: false }))}
+                className="px-5 py-2.5 text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors rounded-xl hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={confirmModal.onConfirm}
+                className={`px-6 py-2.5 text-sm font-bold text-white rounded-xl transition-all shadow-lg active:scale-95 ${
+                  confirmModal.type === 'warning'
+                    ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/20'
+                    : 'bg-[#E94560] hover:bg-[#d63d56] shadow-[#E94560]/20'
+                }`}
+              >
+                {confirmModal.type === 'warning' ? 'Yes, Unpublish' : 'Yes, Publish'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(12px) scale(0.97); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+      `}</style>
     </div>
   )
 }
