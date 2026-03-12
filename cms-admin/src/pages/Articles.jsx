@@ -30,7 +30,7 @@ export default function Articles() {
   const [newPublishDate, setNewPublishDate] = useState('')
   const [allCategories, setAllCategories] = useState([])
   const [allTags, setAllTags] = useState([])
-  const [confirmModal, setConfirmModal] = useState({ open: false, title: '', message: '', onConfirm: null, type: 'warning' })
+  const [confirmModal, setConfirmModal] = useState({ open: false, title: '', message: '', onConfirm: null, type: 'warning', confirmText: 'Yes, Unpublish' })
   const [republishModal, setRepublishModal] = useState({ open: false, articleId: null, mode: 'now', scheduleDate: '', scheduleTime: '', label: 'Republish' })
 
   const fetchArticles = () => {
@@ -90,6 +90,7 @@ export default function Articles() {
       title: 'Unpublish Article',
       message: 'This article will be removed from the public site. You can republish it later.',
       type: 'warning',
+      confirmText: 'Yes, Unpublish',
       onConfirm: async () => {
         try {
           await fetch(`http://localhost:3000/cms/v1/articles/${id}`, { 
@@ -148,6 +149,29 @@ export default function Articles() {
     } catch (err) {
       console.error('Failed to update article', err)
     }
+  }
+  const handleCancelSchedule = async (id) => {
+    setConfirmModal({
+      open: true,
+      title: 'Cancel Scheduling',
+      message: 'Are you sure you want to cancel the scheduled publishing? This article will be moved back to drafts.',
+      type: 'warning',
+      confirmText: 'Cancel Scheduling',
+      onConfirm: async () => {
+        try {
+          await fetch(`http://localhost:3000/cms/v1/articles/${id}`, { 
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'draft' })
+          })
+          setOpenDropdownId(null)
+          fetchArticles()
+        } catch(err) {
+          console.error("Failed to cancel schedule", err)
+        }
+        setConfirmModal(prev => ({ ...prev, open: false }))
+      }
+    })
   }
 
   const handleReschedule = async () => {
@@ -418,6 +442,12 @@ export default function Articles() {
                                       >
                                          Change publishing date
                                       </button>
+                                       <button 
+                                          onClick={() => handleCancelSchedule(article.id)}
+                                          className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+                                       >
+                                          Cancel Scheduling
+                                       </button>
                                    </>
                                 )}
 
@@ -535,7 +565,7 @@ export default function Articles() {
                 onClick={confirmModal.onConfirm}
                 className="px-6 py-2.5 text-sm font-bold text-white rounded-xl transition-all shadow-lg active:scale-95 bg-amber-500 hover:bg-amber-600 shadow-amber-500/20"
               >
-                Yes, Unpublish
+                {confirmModal.confirmText}
               </button>
             </div>
           </div>
