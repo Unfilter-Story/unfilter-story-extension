@@ -409,26 +409,9 @@ export default function ArticleEditor() {
         class: 'tiptap focus:outline-none',
       },
     },
-    onTransaction: ({ editor, transaction }) => {
+    onTransaction: ({ editor }) => {
       // Force React to re-render to update counters
       setUpdateCounter(c => c + 1)
-
-      // Apply sticky marks if selection is empty (keeping the color active for the next typing)
-      if (editor.state.selection.empty) {
-        if (pendingColorRef.current) {
-          editor.commands.setMark('textStyle', { color: pendingColorRef.current })
-        }
-        if (pendingHighlightRef.current) {
-          // For highlight, we only apply if it's not already active to avoid toggle flickering
-          if (!editor.isActive('highlight', { color: pendingHighlightRef.current })) {
-            editor.commands.setHighlight({ color: pendingHighlightRef.current })
-          }
-        }
-      }
-
-      // We DON'T clear sticky marks on docChanged anymore to allow the color 
-      // to persist for the entire session until the user picks a new color or hits reset.
-
       const currentSize = editor.getAttributes('textStyle').fontSize?.replace('px', '') || ''
       setLocalSize(currentSize)
     }
@@ -596,6 +579,38 @@ export default function ArticleEditor() {
       if (editorEl) editorEl.removeEventListener('mouseover', handleMouseOver)
     }
   }, [editorMode, updateCounter])
+
+  // Handle persistent colors across selection changes and new lines
+  useEffect(() => {
+    if (!editor) return
+
+    const applyStickyMarks = () => {
+      if (editor.state.selection.empty && editor.isFocused) {
+        // Apply pending text color if not already active
+        if (pendingColorRef.current && !editor.isActive('textStyle', { color: pendingColorRef.current })) {
+          editor.commands.setMark('textStyle', { color: pendingColorRef.current })
+        }
+        // Apply pending highlight if not already active
+        if (pendingHighlightRef.current && !editor.isActive('highlight', { color: pendingHighlightRef.current })) {
+          editor.commands.setHighlight({ color: pendingHighlightRef.current })
+        }
+      }
+    }
+
+    // Capture click-based selection moves
+    editor.on('selectionUpdate', applyStickyMarks)
+    // Capture post-apply updates (when Enter or Backspace finishes)
+    editor.on('transaction', ({ transaction }) => {
+       if (transaction.docChanged || transaction.selectionSet) {
+         // Use setTimeout to ensure we run after TipTap has finalized the transaction
+         setTimeout(applyStickyMarks, 0)
+       }
+    })
+
+    return () => {
+      editor.off('selectionUpdate', applyStickyMarks)
+    }
+  }, [editor])
 
   if (!editor) return null
 
