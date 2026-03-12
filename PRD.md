@@ -1,119 +1,115 @@
-# Product Requirements Document (PRD) — v1.5
+# Product Requirements Document (PRD) — v1.6
 # Unfilter Story — News Platform & Support Infrastructure
 
-**Version:** 1.5 (Consolidated)  
+**Version:** 1.6 (Comprehensive Update)  
 **Date:** March 12, 2026  
-**Status:** Updated — Reflecting Implementation State  
+**Status:** Current — Reflecting Finalized Implementation  
 **Owner:** Product Team
 
 ---
 
 ## 1. Executive Summary
 
-**Unfilter Story** has evolved from a standard news CMS into a premium, design-driven media platform. The product now integrates two core pillars:
-1.  **High-Performance News Portal**: Built with Astro 5 and IBM Design principles for maximum readability and speed.
-2.  **Advanced Editorial CMS**: Featuring a state-of-the-art TipTap editor with AI assistance and grammar checking.
-3.  **Algo Support Module (TSoftware)**: A modular chat system for temporary, invite-only support rooms between Brokers, Algo Providers, and Clients.
+**Unfilter Story** is a high-performance, design-centric media platform optimized for technical precision and editorial efficiency. It serves two distinct audiences:
+1.  **Readers**: A lightning-fast, branding-consistent news portal built with Astro 5.
+2.  **Editors/Admins**: A professional-grade CMS dashboard with AI-assisted drafting, real-time article lifecycle management, and a robust support infrastructure.
 
 ---
 
 ## 2. IBM Branding & Design System
 
-The platform now strictly adheres to **IBM Brand Guidelines**, focusing on "Technical Precision & Grid Brutalism."
+The platform strictly follows the **IBM "Technical Precision & Grid Brutalism"** visual language.
 
-### 2.1 Core Visual Language
+### 2.1 Visual Identity
 *   **Typography**: 
-    *   Primary: **IBM Plex Sans** (for UI and reading).
-    *   Technical/Data: **IBM Plex Mono** (for metadata, counts, and code).
+    *   **IBM Plex Sans**: Standard UI elements, menus, and article body text.
+    *   **IBM Plex Mono**: Metadata (dates, counts, categories), code snippets, and technical indicators.
 *   **Color Palette**:
-    *   Primary Background: IBM Gray 100 (#161616) / White (#FFFFFF).
-    *   UI Surface: IBM Gray 90 (#262626).
-    *   Accent: IBM Blue 60 (#0f62fe) and Unfilter Red (#E94560).
-*   **Logo**: Implementation of the **IBM 8-bar logo** in headers and branding zones.
-*   **Layout**: Heavy use of grid lines, brutalist borders (1px solid IBM Gray 80), and clear technical indicators.
+    *   **Primary Background**: IBM Gray 100 (#161616) or Pure White (#FFFFFF).
+    *   **UI Surfaces**: IBM Gray 90 (#262626) with refined elevation.
+    *   **Accents**: IBM Blue 60 (#0F62FE) for primary actions and Unfilter Red (#E94560) for alerts.
+*   **Branding Elements**: Centralized usage of the **IBM 8-bar logo** and consistent 1px grid-line borders to convey technical robustness.
 
 ---
 
-## 3. Feature Specifications — CMS Article Editor (Refined)
+## 3. CMS Admin — Article Management Lifecycle
 
-The editor has been upgraded to a "Pro" writing environment, moving beyond standard WYSIWYG.
+The CMS dashboard provide editors with granular control over the article release cycle.
 
-### 3.1 Advanced TipTap Implementation
-*   **Floating Bubble Menu**: Context-aware formatting menu appearing on text selection.
-*   **Slash Command Menu (`/`)**: Quick-insertion menu for Headings, Lists, Images, and Tables.
-*   **Grammar Checker (Drafting Assistant)**: 
-    *   Inline wavy red underlining for common grammatical errors or stylistic improvements.
-    *   Hover-to-fix suggestions (one-click replacement).
-*   **AI Writing Assistant**:
-    *   **Tone Adjustment**: Highlight text to rewrite in *Professional, Casual, Persuasive, or Concise* tones.
-    *   **Generation**: AI-powered drafting based on headlines or bullet points.
+### 3.1 Advanced Action System
+Every article in the dashboard features a **Context-Aware Action Dropdown** that adapts based on the article's current status:
+*   **Draft/Unpublished Articles**:
+    *   **Edit Article**: Direct jump to the rich text editor.
+    *   **Publish Now**: Immediate transition to live state.
+*   **Scheduled Articles**:
+    *   **Publish Now**: Force an immediate release.
+    *   **Change Date**: Reschedule via an inline calendar/time picker.
+    *   **Cancel Scheduling**: Revert the article to "Draft" status (Requires Confirmation).
+*   **Published Articles**:
+    *   **Unpublish**: Safely take an article offline (Requires Confirmation).
 
-### 3.2 Media & Layout Tools
-*   **Custom Image Node**: Supports inline captions, credit fields, and alignment (Left/Center/Right).
-*   **Drag-and-Drop / Paste**: Direct image insertion from clipboard or local files.
-*   **Font Controls**: Granular Font Size (px) and Font Family selection within the toolbar.
-*   **Sticky Premium Toolbar**: Glassmorphism effect toolbar that follows the scroll, providing constant access to formatting.
-*   **Word & Character Counters**: Real-time technical counters (IBM Plex Mono) at the bottom of the editor.
+### 3.2 Premium Modal System
+All critical actions (Delete, Unpublish, Cancel Scheduling, Publishing) utilize **Custom High-Aesthetic Modals** instead of browser-based prompts. 
+*   **Features**: Glassmorphism backdrops, specific Lucide icons, and descriptive action labels (e.g., "Yes, Unpublish", "Confirm Cancellation").
 
----
-
-## 4. Feature Specifications — Room Management (Support Platform)
-
-A dedicated module for managing temporary Algo Support rooms.
-
-### 4.1 Temporary Support Rooms
-*   **Room Creation**: Admins create rooms bound to a specific **Client Code**.
-*   **Invite URL System**:
-    *   **Client Invite**: Secure, cryptographically unique link requiring Name, Mobile, Email, and Client Code to join.
-    *   **Algo Provider Invite**: Link requiring official agent email validation to join.
-*   **Adjustable Expiry**:
-    *   Admin defines room duration (default 15 days).
-    *   Admin can extend expiry at any time.
-    *   **Automatic Archival**: Upon expiry, rooms become read-only.
-    *   **Hard Deletion**: Archived rooms are purged after 30 days to ensure data privacy.
-
-### 4.2 Chat-to-Ticket Flow
-*   Rooms start as plain chat threads for low-friction support.
-*   Admin can "Convert to Ticket" to track formal issues with Priority, Category, and Assigned Agent.
-*   **Real-time Communication**: Powered by Socket.IO for sub-200ms message latency.
+### 3.3 Dynamic Filtering & Search
+*   **Real-time Synchronization**: The "Category" and "Tags" filters update instantly when new metadata is created in sibling tabs.
+*   **Headline Search**: High-performance search by headline with debounce logic.
+*   **Date Range Filtering**: Quick presets (Today, Last 7 Days) or custom technical date range selection.
 
 ---
 
-## 5. Technical Architecture (Updated)
+## 4. CMS Admin — Pro Article Editor
 
-### 5.1 Technology Stack
-*   **Frontend (Public)**: Astro 5 (Islands Architecture), Tailwind CSS 4.
-*   **Frontend (CMS)**: React 18, Vite, TipTap 2.0, Lucide Icons.
-*   **Backend**: Fastify (Node.js), Prisma ORM.
-*   **Database**: PostgreSQL 16 (Main Store), Redis (Session & Trending).
-*   **Real-time**: Socket.IO (for support chat).
+A high-performance drafting environment optimized for modern web journalism.
 
-### 5.2 Performance Targets
-*   **LCP (Largest Contentful Paint)**: < 1.2s on desktop.
-*   **Editor Boot Time**: < 500ms.
-*   **Message Latency**: < 200ms.
+### 4.1 TipTap "Pro" Implementation
+*   **Sticky Premium Toolbar**: A glassmorphism-enhanced toolbar with technical precision controls.
+*   **AI Writing Hub**:
+    *   **Tone Transition**: Modify highlighted text into Professional, Casual, or Concise styles.
+    *   **Smart Drafting**: Generate or expand content based on headlines.
+*   **Technical Metadata Control**: Integrated fields for SEO titles, meta descriptions, categories, and tags with multi-select capabilities.
 
 ---
 
-## 6. Project Directory Structure
+## 5. Support Platform — Room & Ticket Management
+
+A temporary communication bridge between Algo Providers and Clients.
+
+### 5.1 Temporary Support Rooms
+*   **Invite Link Logic**: Generates secure, unique URLs for restricted access.
+*   **Automated Expiry**: 
+    *   Rooms defaulted to 15 days; extendable by Admin.
+    *   Transition to read-only state upon expiry.
+*   **Data Privacy**: Automated purge of archived rooms after 30 days.
+
+---
+
+## 6. Technical Architecture
+
+### 6.1 Modern Stack
+*   **Frontend**: 
+    *   **Public Site**: Astro 5 (Zero-JS baseline, Islands architecture).
+    *   **CMS Dashboard**: React 18 with Vite for instantaneous HMR.
+*   **Backend**: Fastify for high-throughput API performance.
+*   **Database**: PostgreSQL 16 managed via Prisma ORM.
+*   **Real-time Layers**: Socket.IO for chat and real-time dashboard updates.
+
+### 6.2 Key Indicators
+*   **SEO**: Semantic HTML5 hierarchy, automated meta-tag generation, and fast TTI scores.
+*   **UX**: Adaptive layouts for mobile and technical tablet environments.
+
+---
+
+## 7. Project Structure
 
 ```text
 unfilter-story/
-├── api-backend/           # Fastify API (Prisma/PostgreSQL)
-├── cms-admin/             # React SPA (The "Pro" Editor & Dashboard)
-├── public-site/           # Astro 5 News Portal
-├── docker-compose.yml     # Infrastructure (PostgreSQL, Redis)
-└── PRD.md                 # This Document
+├── api-backend/           # Fastify Business Logic
+├── cms-admin/             # React Editorial Dashboard
+├── public-site/           # Astro 5 High-Speed News Site
+└── PRD.md                 # Product Definitions
 ```
 
 ---
-
-## 7. Future Roadmap (v2.0)
-
-*   **RSS Aggregator**: Native feed parsing from PTI, Reuters, and TOI.
-*   **Newsletter Engine**: Integrated campaign builder and subscriber management.
-*   **Native Apps**: React Native wrappers for iOS and Android.
-*   **Paywall**: Razorpay integration for premium subscriber-only content.
-
----
-*Created by Antigravity AI — March 12, 2026*
+*Maintained by Antigravity AI — Comprehensive Update v1.6*
