@@ -549,6 +549,16 @@ export default function ArticleEditor() {
         </div>
       </div>
 
+      {/* Article Title Block */}
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-8 mb-6">
+         <input 
+            className="text-4xl font-extrabold w-full outline-none placeholder-gray-100 text-gray-900 border-none focus:ring-0"
+            placeholder="Enter Article Headline..."
+            value={headline}
+            onChange={e => setHeadline(e.target.value)}
+          />
+      </div>
+
       {/* Styled Toolbar */}
       <div className="sticky top-4 z-30 bg-white/80 backdrop-blur-md border border-gray-100 rounded-xl p-2 mb-6 shadow-md flex flex-wrap gap-1 items-center">
         <div className="flex items-center gap-1 pr-2 border-r border-gray-200">
@@ -669,16 +679,6 @@ export default function ArticleEditor() {
       </div>
 
       <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm min-h-[600px] p-10 relative group ${editorMode === 'block' ? 'is-block-editor-container' : ''}`}>
-        <div className="mb-10">
-          <input 
-            className="text-5xl font-extrabold w-full outline-none placeholder-gray-100 text-gray-900 border-none focus:ring-0 px-0"
-            placeholder="Enter headline here..."
-            value={headline}
-            onChange={e => setHeadline(e.target.value)}
-          />
-          <div className="h-0.5 bg-gray-50 mt-4 w-24"></div>
-        </div>
-
         {editor && <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }} className="flex bg-white shadow-xl border border-gray-100 rounded-lg relative z-50">
           <div className="flex p-1 gap-0.5">
             <ToolbarButton onClick={() => editor.chain().focus().toggleBold().run()} isActive={editor.isActive('bold')}><Bold size={16}/></ToolbarButton>
