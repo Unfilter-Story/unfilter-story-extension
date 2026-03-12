@@ -225,6 +225,8 @@ export default function ArticleEditor() {
   const [updateCounter, setUpdateCounter] = useState(0)
   const [isSaving, setIsSaving] = useState(false)
   const [status, setStatus] = useState('draft')
+  const [lastSaved, setLastSaved] = useState(null)
+  const [isAutoSaving, setIsAutoSaving] = useState(false)
 
   const editor = useEditor({
     extensions: [
@@ -339,8 +341,10 @@ export default function ArticleEditor() {
     }
   }
 
-  const handleSaveDraft = async () => {
-    setIsSaving(true)
+  const handleSaveDraft = async (isAuto = false) => {
+    if (isAuto) setIsAutoSaving(true)
+    else setIsSaving(true)
+
     const articleData = {
       headline: headline || 'Untitled',
       body: editor.getHTML(),
@@ -362,19 +366,33 @@ export default function ArticleEditor() {
 
       if (res.ok) {
         const data = await res.json()
-        if (!id) {
+        setLastSaved(new Date())
+        if (!id && data.id) {
            navigate(`/articles/${data.id}`, { replace: true })
         }
-        alert("Draft saved successfully")
-      } else {
-        alert("Failed to save draft")
+        if (!isAuto) alert("Draft saved successfully")
       }
     } catch (err) {
-      alert("Error saving draft")
+      console.error("Error saving draft", err)
     } finally {
       setIsSaving(false)
+      setIsAutoSaving(false)
     }
   }
+
+  // Auto-save logic
+  useEffect(() => {
+    if (!editor || status === 'published') return
+
+    const timer = setTimeout(() => {
+      const content = editor.getHTML()
+      if (content && content !== '<p></p>') {
+        handleSaveDraft(true)
+      }
+    }, 5000) // Auto-save after 5 seconds of inactivity
+
+    return () => clearTimeout(timer)
+  }, [updateCounter, headline])
 
   if (!editor) return null
 
@@ -402,8 +420,16 @@ export default function ArticleEditor() {
               <h2 className="text-xl font-bold text-gray-900 leading-tight">
                 {id ? 'Edit Article' : 'Create New Article'}
               </h2>
-              <p className="text-sm text-gray-500 font-medium">
-                {status === 'published' ? 'Published' : 'Drafting...'} 
+              <p className="text-sm text-gray-400 font-medium flex items-center gap-2">
+                {status === 'published' ? (
+                  <span className="flex items-center text-green-600"><Check className="w-3 h-3 mr-1"/> Published</span>
+                ) : isAutoSaving ? (
+                  <span className="flex items-center"><RefreshCw className="w-3 h-3 mr-1 animate-spin"/> Saving...</span>
+                ) : lastSaved ? (
+                  <span className="flex items-center"><CheckCircle2 className="w-3 h-3 mr-1 text-green-500"/> Auto-saved at {lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
+                ) : (
+                  'Drafting...'
+                )} 
               </p>
            </div>
         </div>
