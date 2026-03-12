@@ -1,0 +1,50 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-white border-t border-gray-200 mt-auto py-12">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+    <div class="md:col-span-1">
+      <h3 class="text-xl font-black font-playfair mb-4 text-[#1A1A2E]">Unfilter Story</h3>
+      <p class="text-sm font-inter text-gray-500 mb-4 leading-relaxed">
+        Delivering authentic, unfiltered news on startups, technology, and business, bringing you the stories that matter most.
+      </p>
+    </div>
+    
+    <div>
+      <h4 class="font-bold text-gray-900 mb-4 text-sm font-inter uppercase tracking-wide">Categories</h4>
+      <ul class="space-y-2 text-sm text-gray-600 font-inter">
+        <li><a href="/category/startups" class="hover:text-[#E94560] transition-colors">Startups</a></li>
+        <li><a href="/category/technology" class="hover:text-[#E94560] transition-colors">Technology</a></li>
+        <li><a href="/category/business" class="hover:text-[#E94560] transition-colors">Business</a></li>
+        <li><a href="/category/politics" class="hover:text-[#E94560] transition-colors">Politics</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="font-bold text-gray-900 mb-4 text-sm font-inter uppercase tracking-wide">About</h4>
+      <ul class="space-y-2 text-sm text-gray-600 font-inter">
+        <li><a href="/about" class="hover:text-[#E94560] transition-colors">About Us</a></li>
+        <li><a href="/submit-story" class="hover:text-[#E94560] transition-colors">Pitch a Story</a></li>
+        <li><a href="/contact" class="hover:text-[#E94560] transition-colors">Contact</a></li>
+        <li><a href="/rss.xml" class="hover:text-[#E94560] transition-colors">RSS Feed</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="font-bold text-gray-900 mb-4 text-sm font-inter uppercase tracking-wide">Legal</h4>
+      <ul class="space-y-2 text-sm text-gray-600 font-inter">
+        <li><a href="/privacy" class="hover:text-[#E94560] transition-colors">Privacy Policy</a></li>
+        <li><a href="/terms" class="hover:text-[#E94560] transition-colors">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 md:px-8 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 font-inter">
+    <p>&copy; {currentYear} Unfilter Story. All rights reserved.</p>
+    <div class="flex space-x-4 mt-4 md:mt-0">
+      <a href="#" class="hover:text-[#1A1A2E] text-gray-400">Twitter</a>
+      <a href="#" class="hover:text-[#1A1A2E] text-gray-400">LinkedIn</a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,52 @@
+---
+const navLinks = [
+  { href: '/category/politics', label: 'Politics' },
+  { href: '/category/business', label: 'Business' },
+  { href: '/category/technology', label: 'Technology' },
+  { href: '/category/startups', label: 'Startups' },
+  { href: '/category/sports', label: 'Sports' },
+];
+---
+
+<header class="bg-[#1A1A2E] text-white fixed top-0 w-full mb-16 z-[100] h-16 flex items-center shadow-md">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 w-full flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="text-xl md:text-2xl font-black font-playfair tracking-tight text-white hover:text-gray-200 transition-colors">
+      Unfilter Story
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center space-x-6 text-sm font-medium font-inter">
+      {navLinks.map((link) => (
+        <a href={link.href} class="text-[#D1D5DB] hover:text-white transition-colors">
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Actions -->
+    <div class="flex items-center space-x-4">
+      <button aria-label="Search" class="p-2 text-gray-300 hover:text-white transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+      </button>
+      
+      <a href="/submit-story" class="hidden sm:inline-block bg-[#E94560] text-white px-4 py-2 font-inter text-sm font-medium rounded-md hover:bg-[#C73652] transition-colors">
+        Submit Your Story
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <button aria-label="Menu" class="md:hidden p-2 text-gray-300 hover:text-white">
+         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" x2="20" y1="12" y2="12"></line>
+          <line x1="4" x2="20" y1="6" y2="6"></line>
+          <line x1="4" x2="20" y1="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+<!-- Spacer for fixed header -->
+<div class="h-16"></div>
