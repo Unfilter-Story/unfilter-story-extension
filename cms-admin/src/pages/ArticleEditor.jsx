@@ -686,88 +686,101 @@ export default function ArticleEditor() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-8 mb-6">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-10 mb-8 overflow-hidden relative">
+         <div className="absolute top-0 left-0 w-1.5 h-full bg-[#E94560]/80"></div>
+         
          <input 
-            className="text-4xl font-extrabold w-full outline-none placeholder-gray-100 text-gray-900 border-none focus:ring-0 mb-8"
+            className="text-5xl font-black w-full outline-none placeholder-gray-100 text-gray-900 border-none focus:ring-0 mb-10 tracking-tight leading-tight"
             placeholder="Enter Article Headline..."
             value={headline}
             onChange={e => setHeadline(e.target.value)}
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 pt-8 border-t border-gray-50">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-10 border-t border-gray-50">
             {/* Category Selection */}
-            <div className="group/meta">
-              <label className="flex items-center gap-2.5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4 group-hover/meta:text-[#E94560] transition-colors">
-                <div className="w-5 h-5 rounded-md bg-gray-50 flex items-center justify-center group-hover/meta:bg-[#E94560]/10 transition-colors">
-                   <Layout size={12} className="text-gray-400 group-hover/meta:text-[#E94560]" />
+            <div className="space-y-4">
+              <label className="flex items-center gap-3 text-[11px] font-black text-gray-400 uppercase tracking-[0.25em]">
+                <div className="w-8 h-8 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#E94560]/10 group-hover:text-[#E94560] transition-all">
+                   <Layout size={14} />
                 </div>
                 Article Category
               </label>
-              <div className="relative">
+              
+              <div className="relative group">
                 <select 
                   value={category}
                   onChange={e => setCategory(e.target.value)}
-                  className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 outline-none focus:border-[#E94560] focus:bg-white transition-all appearance-none cursor-pointer hover:border-gray-300"
+                  className="w-full bg-gray-50/80 border border-gray-200 rounded-2xl px-5 py-4 text-sm font-bold text-gray-700 outline-none focus:border-[#E84560] focus:ring-4 focus:ring-[#E84560]/5 focus:bg-white transition-all appearance-none cursor-pointer hover:bg-gray-100/50"
                 >
                   <option value="">Choose a category...</option>
                   {availableCategories.map(cat => (
                     <option key={cat.id} value={cat.name}>{cat.name}</option>
                   ))}
                 </select>
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                  <ArrowLeft size={14} className="-rotate-90" />
+                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within:text-[#E84560] group-focus-within:rotate-180 transition-all">
+                  <ArrowLeft size={16} className="-rotate-90" />
                 </div>
               </div>
             </div>
 
             {/* Tags Selection */}
-            <div className="group/meta">
-              <label className="flex items-center gap-2.5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4 group-hover/meta:text-[#E94560] transition-colors">
-                <div className="w-5 h-5 rounded-md bg-gray-50 flex items-center justify-center group-hover/meta:bg-[#E94560]/10 transition-colors">
-                   <Tag size={12} className="text-gray-400 group-hover/meta:text-[#E94560]" />
+            <div className="space-y-4">
+              <label className="flex items-center gap-3 text-[11px] font-black text-gray-400 uppercase tracking-[0.25em]">
+                <div className="w-8 h-8 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 transition-all">
+                   <Tag size={14} />
                 </div>
                 Searchable Tags
               </label>
-              <div className="flex flex-wrap gap-2 p-1.5 bg-gray-50/50 border border-gray-200 rounded-xl min-h-[46px] group-hover/meta:border-gray-300 focus-within:!border-[#E94560] focus-within:!bg-white transition-all">
-                {tags.map(tag => (
-                  <span key={tag} className="flex items-center gap-1.5 pl-3 pr-2 py-1.5 bg-white border border-[#E94560]/20 rounded-lg text-xs font-bold text-[#E94560] shadow-sm animate-in fade-in zoom-in duration-200">
-                    {tag}
-                    <button onClick={() => setTags(tags.filter(t => t !== tag))} className="w-5 h-5 flex items-center justify-center rounded-md hover:bg-[#E94560] hover:text-white transition-colors">
-                      <X size={12} />
-                    </button>
-                  </span>
-                ))}
-                <input 
-                  type="text"
-                  placeholder={tags.length === 0 ? "Type tag name..." : ""}
-                  className="flex-1 bg-transparent border-none outline-none text-sm px-3 font-semibold text-gray-800 placeholder-gray-400 min-w-[100px]"
-                  value={tagInput}
-                  onChange={e => setTagInput(e.target.value)}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter' && tagInput.trim()) {
-                      e.preventDefault()
-                      if (!tags.includes(tagInput.trim())) {
-                        setTags([...tags, tagInput.trim()])
+
+              <div className="space-y-3">
+                <div className="flex flex-wrap gap-2.5 p-2 min-h-[58px] bg-gray-50/80 border border-gray-200 rounded-2xl focus-within:border-[#E84560] focus-within:ring-4 focus-within:ring-[#E84560]/5 focus-within:bg-white transition-all shadow-sm">
+                  {tags.map(tag => (
+                    <span key={tag} className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-100 rounded-xl text-xs font-bold text-gray-700 shadow-sm hover:border-[#E84560]/30 transition-all group/tag">
+                      <span className="text-[#E84560] opacity-50">#</span>
+                      {tag}
+                      <button 
+                        onClick={() => setTags(tags.filter(t => t !== tag))} 
+                        className="w-5 h-5 flex items-center justify-center rounded-lg hover:bg-red-50 hover:text-red-500 transition-colors opacity-0 group-hover/tag:opacity-100"
+                      >
+                        <X size={12} strokeWidth={3} />
+                      </button>
+                    </span>
+                  ))}
+                  <input 
+                    type="text"
+                    placeholder={tags.length === 0 ? "Add tags..." : ""}
+                    className="flex-1 bg-transparent border-none outline-none text-sm px-3 font-bold text-gray-800 placeholder-gray-300 min-w-[120px]"
+                    value={tagInput}
+                    onChange={e => setTagInput(e.target.value)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' && tagInput.trim()) {
+                        e.preventDefault()
+                        if (!tags.includes(tagInput.trim())) {
+                          setTags([...tags, tagInput.trim()])
+                        }
+                        setTagInput('')
                       }
-                      setTagInput('')
+                    }}
+                  />
+                </div>
+                
+                {availableTags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 px-1">
+                    {availableTags
+                      .filter(t => !tags.includes(t.name))
+                      .slice(0, 6)
+                      .map(tag => (
+                        <button 
+                          key={tag.id}
+                          onClick={() => setTags([...tags, tag.name])}
+                          className="text-[10px] font-black text-gray-400 bg-white border border-gray-100 hover:border-[#E84560]/30 hover:text-[#E84560] px-3 py-1.5 rounded-xl transition-all shadow-sm active:scale-95"
+                        >
+                          + {tag.name}
+                        </button>
+                      ))
                     }
-                  }}
-                />
-              </div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {availableTags
-                  .filter(t => !tags.includes(t.name))
-                  .slice(0, 8)
-                  .map(tag => (
-                    <button 
-                      key={tag.id}
-                      onClick={() => setTags([...tags, tag.name])}
-                      className="text-[10px] font-extrabold text-gray-500 bg-gray-100/50 hover:bg-[#E94560]/10 hover:text-[#E94560] px-3 py-1 rounded-full transition-all border border-transparent hover:border-[#E94560]/20"
-                    >
-                      + {tag.name}
-                    </button>
-                  ))
-                }
+                  </div>
+                )}
               </div>
             </div>
           </div>
