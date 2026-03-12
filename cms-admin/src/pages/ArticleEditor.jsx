@@ -549,16 +549,6 @@ export default function ArticleEditor() {
         </div>
       </div>
 
-      {/* Title Input */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 mb-6">
-        <input 
-          className="text-4xl font-bold w-full outline-none placeholder-gray-200 text-gray-900 border-none focus:ring-0"
-          placeholder="Enter headline here..."
-          value={headline}
-          onChange={e => setHeadline(e.target.value)}
-        />
-      </div>
-
       {/* Styled Toolbar */}
       <div className="sticky top-4 z-30 bg-white/80 backdrop-blur-md border border-gray-100 rounded-xl p-2 mb-6 shadow-md flex flex-wrap gap-1 items-center">
         <div className="flex items-center gap-1 pr-2 border-r border-gray-200">
@@ -608,7 +598,6 @@ export default function ArticleEditor() {
             value={editor.isActive('heading') ? editor.getAttributes('heading').level : 'p'}
           >
             <option value="p">Paragraph</option>
-            <option value="1">Heading 1</option>
             <option value="2">Heading 2</option>
             <option value="3">Heading 3</option>
             <option value="4">Heading 4</option>
