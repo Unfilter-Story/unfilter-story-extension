@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 
 const getStatusBadge = (status) => {
   const styles = {
-    published: "bg-[#059669]/10 text-[#059669]",
-    scheduled: "bg-[#7C3AED]/10 text-[#7C3AED]",
-    draft: "bg-[#6B7280]/10 text-[#6B7280]",
-    unpublished: "bg-red-50 text-red-600 border border-red-100",
-    under_review: "bg-[#D97706]/10 text-[#D97706]"
+    published: "bg-[var(--cms-accent-light)] text-[var(--cms-accent)]",
+    scheduled: "bg-blue-50 text-blue-600",
+    draft: "bg-gray-100 text-gray-600",
+    unpublished: "bg-gray-200 text-gray-700",
+    under_review: "bg-blue-50 text-blue-700"
   }
   
   const defaultStyle = "bg-gray-100 text-gray-800"
@@ -227,12 +227,12 @@ export default function Articles() {
   return (
     <div className="space-y-6 flex flex-col h-full">
       {/* Header Area */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight text-[#111827]">Articles</h2>
-          <p className="text-sm text-gray-500 mt-1">Manage all your news stories, drafts, and scheduled posts.</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-100 pb-8">
+        <div className="pb-4">
+          <h1 className="text-[56px] font-extrabold text-[var(--cms-accent)] uppercase tracking-tighter italic leading-[1.1] mb-2">Articles</h1>
+          <p className="text-[16px] font-medium text-[var(--cms-text-secondary)] uppercase tracking-[0.2em] leading-[1.5]">Manage news stories and editorial calendar</p>
         </div>
-        <Link to="/articles/new" className="flex items-center px-4 py-2 bg-[#E94560] text-white text-sm font-medium rounded-md hover:bg-[#C73652] transition-colors cursor-pointer">
+        <Link to="/articles/new" className="flex items-center px-6 py-3 bg-[var(--cms-accent)] text-white text-sm font-black rounded-xl shadow-[0_8px_20px_rgba(0,93,59,0.2)] hover:scale-105 active:scale-95 transition-all uppercase tracking-widest italic">
           <Plus className="w-4 h-4 mr-2" />
           Create Article
         </Link>
@@ -240,13 +240,13 @@ export default function Articles() {
 
       <div className="flex flex-col xl:flex-row gap-4 justify-between items-start xl:items-center bg-white p-4 rounded-lg border border-[#E5E7EB] shadow-sm">
         <div className="relative w-full xl:w-96 min-w-[300px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input 
             type="text" 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search articles by headline..." 
-            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E94560]/20 focus:border-[#E94560]"
+            placeholder="Search headlines..." 
+            className="w-full pl-11 pr-4 py-3 text-sm font-bold bg-gray-50 border-none rounded-2xl focus:bg-white focus:ring-2 focus:ring-[var(--cms-accent-light)] transition-all"
           />
         </div>
         <div className="flex flex-wrap items-center gap-3 w-full xl:w-auto justify-start xl:justify-end">
@@ -439,7 +439,7 @@ export default function Articles() {
                              <div className="border-t border-gray-100 mt-1 pt-1">
                                 <button 
                                    onClick={() => handlePublishNow(article.id, 'Publish')}
-                                   className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-green-600 hover:bg-green-50 cursor-pointer font-semibold transition-colors"
+                                   className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-[var(--cms-accent)] hover:bg-[var(--cms-accent-light)] cursor-pointer font-semibold transition-colors"
                                 >
                                    <Send className="w-4 h-4" />
                                    Publish Now
@@ -469,7 +469,7 @@ export default function Articles() {
                              <div className="border-t border-gray-100 mt-1 pt-1">
                                <button 
                                   onClick={() => handlePublishNow(article.id, 'Republish')}
-                                  className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-green-600 hover:bg-green-50 cursor-pointer font-semibold transition-colors"
+                                  className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-[var(--cms-accent)] hover:bg-[var(--cms-accent-light)] cursor-pointer font-semibold transition-colors"
                                >
                                   <Send className="w-4 h-4" />
                                   {article.status === 'draft' ? 'Publish Now' : 'Republish Now'}
@@ -514,13 +514,13 @@ export default function Articles() {
                <div className="space-y-2">
                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">New Publishing Date</label>
                  <div className="relative group">
-                   <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#E94560] transition-colors" />
+                   <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[var(--cms-accent)] transition-colors" />
                    <input 
                      type="date"
                      min={new Date().toISOString().split('T')[0]}
                      value={newPublishDate}
                      onChange={(e) => setNewPublishDate(e.target.value)}
-                     className="w-full pl-12 pr-6 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-[#E94560] focus:outline-none transition-all text-gray-700 font-bold shadow-inner"
+                     className="w-full pl-12 pr-6 py-4 bg-gray-50 border-2 border-transparent rounded-2xl focus:bg-white focus:border-[var(--cms-accent)] focus:outline-none transition-all text-gray-700 font-bold shadow-inner"
                    />
                  </div>
                </div>
@@ -535,7 +535,7 @@ export default function Articles() {
                </button>
                <button 
                  onClick={handleReschedule}
-                 className="px-8 py-3 bg-[#E94560] text-white font-black rounded-xl hover:bg-[#d63d56] transition-all shadow-lg shadow-[#E94560]/20 active:scale-95"
+                 className="px-8 py-3 bg-[var(--cms-accent)] text-white font-black rounded-xl hover:scale-105 transition-all shadow-lg shadow-[var(--cms-accent)]/20 active:scale-95"
                >
                  Update Date
                </button>
@@ -606,14 +606,14 @@ export default function Articles() {
                   onClick={() => setRepublishModal(prev => ({ ...prev, mode: 'now' }))}
                   className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
                     republishModal.mode === 'now' 
-                      ? 'border-[#E94560] bg-[#E94560]/5' 
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-[var(--cms-accent)] bg-[var(--cms-accent-light)]' 
+                      : 'border-gray-100 hover:border-gray-200'
                   }`}
                 >
                   <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                    republishModal.mode === 'now' ? 'border-[#E94560]' : 'border-gray-300'
+                    republishModal.mode === 'now' ? 'border-[var(--cms-accent)]' : 'border-gray-300'
                   }`}>
-                    {republishModal.mode === 'now' && <div className="w-2.5 h-2.5 rounded-full bg-[#E94560]" />}
+                    {republishModal.mode === 'now' && <div className="w-2.5 h-2.5 rounded-full bg-[var(--cms-accent)]" />}
                   </div>
                   <div>
                     <p className="text-sm font-bold text-gray-900">{republishModal.label} Now</p>
@@ -683,10 +683,10 @@ export default function Articles() {
               <button 
                 onClick={executeRepublish}
                 disabled={republishModal.mode === 'schedule' && (!republishModal.scheduleDate || !republishModal.scheduleTime)}
-                className={`px-6 py-2.5 text-sm font-bold text-white rounded-xl transition-all shadow-lg active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed ${
+                className={`px-6 py-2.5 text-sm font-black uppercase tracking-widest italic text-white rounded-xl transition-all shadow-lg active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed ${
                   republishModal.mode === 'now'
-                    ? 'bg-[#E94560] hover:bg-[#d63d56] shadow-[#E94560]/20'
-                    : 'bg-[#7C3AED] hover:bg-[#6D28D9] shadow-[#7C3AED]/20'
+                    ? 'bg-[var(--cms-accent)] shadow-[var(--cms-accent)]/20'
+                    : 'bg-blue-600 shadow-blue-500/20'
                 }`}
               >
                 {republishModal.mode === 'now' ? `${republishModal.label} Now` : 'Schedule'}

@@ -31,17 +31,17 @@ The **Unfilter Story CMS Admin** is a professional-grade editorial environment d
     *   **Precision Scheduling**: Integrated date picker for setting the official "Publishing Date" in advance.
 *   **Advanced Rich-Text Toolbar**:
     *   **Formatting Layers**: Core formatting (Bold, Italic, Underlined, Strike) combined with Heading/Paragraph levels.
-    *   **Technical Typography Controls**: Specific controls for **Font Family** (IBM Plex Sans/Mono) and **Font Size** adjustments.
+    *   **Technical Typography Controls**: Specific controls for **Font Family** (Nunito) and **Font Size** adjustments.
     *   **Visual Alignment**: Comprehensive alignment suite (Left, Center, Right, Justify).
     *   **Advanced Tools**: Integrated **Color Picker** (Brand-aligned colors), Code marks, Quote blocks, and direct **Image/YouTube insertion**.
 *   **Workspace Optimization**: 
-    *   **Live Status Indicators**: Real-time status reporting (e.g., "WORKSPACE READY", "SAVING...") to provide editor feedback.
+    *   **Live Status Indicators**: Real-time status reporting (e.g., "WORKSPACE READY", "SAVING...") in Dark Green to provide editor feedback.
     *   **Editorial Metrics**: High-precision footer tracking for **Word Count** and **Character Count**.
 *   **Mandatory Header Image**: 
     *   Articles cannot be published without a featured header image (Mandatory validation logic).
     *   Technical Guidance: Specific UI recommendations provided (**1600x900px recommended**).
-    *   Visual Indicators: High-impact Red border validation on empty media states and prominent "MANDATORY" labeling.
-*   **Contextual Toolbars**: Sticky glassmorphism toolbar for formatting and a floating bubble menu.
+    *   Visual Indicators: High-impact validation states and prominent "MANDATORY" labeling in branded typography.
+*   **Contextual Toolbars**: Sticky glassmorphism toolbar for formatting and a floating bubble menu with Dark Green accents.
 *   **AI Drafting Suite**: Integrated LLM for rewriting text in different tones (Professional, Concise, Casual).
 *   **Slash Command Menu (`/`)**: Quick-insertion for media, tables, and lists.
 
@@ -77,7 +77,7 @@ The **Unfilter Story CMS Admin** is a professional-grade editorial environment d
 
 ### 3.5 Article Registry & Dashboard
 *   **Editorial Table**: Tracking of **Headline, Status, Author, Category, Tags, and Date**.
-*   **Visual Badging**: Green (Published), Purple (Scheduled), Gray (Draft), Red (Unpublished).
+*   **Visual Badging**: Dark Green (Published), Sky Blue (Scheduled), Neutral (Draft), Warning (Unpublished).
 *   **Live Sync**: Automated 30-second background polling ensures state consistency across editors.
 *   **Action Menu**: Context-aware menu for "Republish", "Unpublish", and "Reschedule" workflows.
 

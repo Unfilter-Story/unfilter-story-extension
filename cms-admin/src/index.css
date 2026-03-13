@@ -1,23 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 :root {
-  --cms-bg: #F9FAFB;
-  --cms-sidebar-bg: #111827;
-  --cms-sidebar-text: #D1D5DB;
-  --cms-sidebar-active: #E94560;
+  --cms-bg: #FAFAFA;
+  --cms-sidebar-bg: #005D3B;
+  --cms-sidebar-text: rgba(255, 255, 255, 0.7);
+  --cms-sidebar-active-bg: #C9F775;
+  --cms-sidebar-active-text: #005D3B;
   --cms-surface: #FFFFFF;
-  --cms-border: #E5E7EB;
-  --cms-text-primary: #111827;
-  --cms-text-secondary: #6B7280;
-  --cms-accent: #E94560;
+  --cms-border: #E0E0E0;
+  --cms-text-primary: #242424;
+  --cms-text-secondary: #8F8F8F;
+  --cms-accent: #005D3B;
+  --cms-accent-light: #C9F775;
+  --cms-error: #F43927;
+  --cms-success: #1EDF00;
 }
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
   background-color: var(--cms-bg);
   color: var(--cms-text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 .tiptap p.is-editor-empty:first-child::before {
@@ -78,7 +85,7 @@ ul[data-type="taskList"] li > label {
 .callout-block {
   background: #f8f9fa;
   border: 1px solid #e9ecef;
-  border-left: 4px solid #E94560;
+  border-left: 4px solid var(--cms-accent);
   padding: 1.25rem;
   border-radius: 8px;
   margin: 1.5rem 0;
@@ -137,7 +144,7 @@ ul[data-type="taskList"] li > label {
   line-height: 0.8;
   padding: 0.2rem 0.6rem 0 0;
   font-weight: 800;
-  color: #E94560;
+  color: var(--cms-accent);
   text-transform: uppercase;
 }
 

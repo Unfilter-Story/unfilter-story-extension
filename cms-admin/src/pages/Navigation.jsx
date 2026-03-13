@@ -38,44 +38,44 @@ function SortableMenuItem({ item, level = 0, openModal, handleDelete, updateDisp
   return (
     <div key={item.id} className="mb-2 relative" ref={setNodeRef} style={style}>
       <div 
-        className={`flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:border-gray-300 transition-all group ${level > 0 ? 'ml-8' : ''}`}
+        className={`flex items-center justify-between p-4 bg-white border border-gray-100 rounded-2xl hover:border-[var(--cms-accent-light)] hover:shadow-sm transition-all group ${level > 0 ? 'ml-8' : ''}`}
       >
         <div className="flex items-center gap-4">
           {level > 0 && (
             <div className="absolute -left-4 top-1/2 w-4 h-px bg-gray-200" />
           )}
           <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing p-1">
-            <GripVertical className="text-gray-300 group-hover:text-gray-400" size={18} />
+            <GripVertical className="text-gray-300 group-hover:text-[var(--cms-accent)]" size={18} />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-gray-900 uppercase tracking-tight italic">{item.label}</span>
-              <span className="text-[10px] px-2 py-0.5 bg-gray-100 text-gray-500 rounded-full font-mono uppercase font-bold">{item.type}</span>
+              <span className="font-bold text-[var(--cms-text-primary)] uppercase tracking-tight italic">{item.label}</span>
+              <span className="text-[10px] px-2 py-0.5 bg-[var(--cms-accent-light)] text-[var(--cms-accent)] rounded-lg font-mono uppercase font-bold">{item.type}</span>
             </div>
-            <div className="flex items-center gap-1 text-xs text-gray-400 font-mono">
+            <div className="flex items-center gap-1 text-xs text-[var(--cms-text-secondary)] font-mono">
               <ExternalLink size={10} />
               {item.href}
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
           <button 
             onClick={() => openModal(null, item.id, item.label)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-900 text-white text-[10px] font-black uppercase tracking-widest rounded-lg hover:bg-gray-800 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--cms-accent)] text-white text-[10px] font-black uppercase tracking-widest rounded-lg hover:shadow-lg transition-all"
           >
             <Plus size={12} />
             Sub-menu
           </button>
           <button 
             onClick={() => openModal(item)}
-            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+            className="p-2 text-[var(--cms-accent)] hover:bg-[var(--cms-accent-light)] rounded-lg transition-colors"
             title="Edit"
           >
             <Edit2 size={16} />
           </button>
           <button 
             onClick={() => handleDelete(item.id)}
-            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            className="p-2 text-[var(--cms-error)] hover:bg-red-50 rounded-lg transition-colors"
             title="Delete"
           >
             <Trash2 size={16} />
@@ -279,12 +279,12 @@ export default function Navigation() {
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-700">
       <div className="flex justify-between items-end border-b border-gray-100 pb-8">
         <div>
-          <h1 className="text-4xl font-black text-gray-900 uppercase tracking-tighter italic">Navigation</h1>
-          <p className="text-gray-500 font-bold text-xs uppercase tracking-widest mt-2">Manage website headers and sub-menus</p>
+          <h1 className="text-[56px] font-extrabold text-[var(--cms-accent)] uppercase tracking-tighter italic leading-[1.1] mb-2">Navigation</h1>
+          <p className="text-[16px] font-medium text-[var(--cms-text-secondary)] uppercase tracking-[0.2em] leading-[1.5] mt-2">Manage website headers and sub-menus</p>
         </div>
         <button 
           onClick={() => openModal()}
-          className="px-6 py-3 bg-[#E94560] text-white font-black text-sm rounded-xl shadow-lg hover:bg-[#C73652] transition-all flex items-center gap-2 uppercase tracking-widest italic"
+          className="px-6 py-3 bg-[var(--cms-accent)] text-white font-black text-sm rounded-xl shadow-[0_8px_20px_rgba(0,93,59,0.2)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2 uppercase tracking-widest italic"
         >
           <Plus size={18} />
           Add Menu Item
@@ -332,14 +332,14 @@ export default function Navigation() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsModalOpen(false)}></div>
           <div className="relative bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in duration-300">
-            <div className="p-8 border-b border-gray-100">
-              <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tighter italic leading-none">
+            <div className="p-8 border-b border-gray-50">
+              <h2 className="text-2xl font-black text-[var(--cms-text-primary)] uppercase tracking-tighter italic leading-none">
                 {editingItem ? 'Edit Item' : formData.parentId ? `Add Sub-menu` : 'New Menu Item'}
               </h2>
               {formData.parentLabel && !editingItem && (
                 <div className="flex items-center gap-2 mt-2">
-                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Parent:</span>
-                  <span className="text-[10px] font-black text-[#E94560] uppercase tracking-widest">{formData.parentLabel}</span>
+                  <span className="text-[10px] font-bold text-[var(--cms-text-secondary)] uppercase tracking-widest">Parent:</span>
+                  <span className="text-[10px] font-black text-[var(--cms-accent)] uppercase tracking-widest">{formData.parentLabel}</span>
                 </div>
               )}
             </div>
@@ -399,13 +399,13 @@ export default function Navigation() {
                 <button 
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 py-4 bg-gray-100 text-gray-500 font-black text-xs rounded-2xl hover:bg-gray-200 transition-all uppercase tracking-widest italic"
+                  className="flex-1 py-4 bg-gray-50 text-[var(--cms-text-secondary)] font-black text-xs rounded-2xl hover:bg-gray-100 transition-all uppercase tracking-widest italic"
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit"
-                  className="flex-1 py-4 bg-gray-900 text-white font-black text-xs rounded-2xl shadow-xl hover:scale-105 active:scale-95 transition-all uppercase tracking-widest italic"
+                  className="flex-1 py-4 bg-[var(--cms-accent)] text-white font-black text-xs rounded-2xl shadow-[0_8px_20px_rgba(0,93,59,0.2)] hover:scale-105 active:scale-95 transition-all uppercase tracking-widest italic"
                 >
                   {editingItem ? 'Update Item' : 'Create Item'}
                 </button>

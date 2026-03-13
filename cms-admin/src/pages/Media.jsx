@@ -117,17 +117,17 @@ export default function Media() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h1 className="text-4xl font-black tracking-tighter text-gray-900 mb-2 uppercase italic underline decoration-[6px] decoration-[#E94560]/20 underline-offset-[12px]">Media Library</h1>
-          <p className="text-gray-400 font-bold text-xs uppercase tracking-widest mt-4">Manage assets & uploaded content</p>
+          <h1 className="text-[56px] font-extrabold tracking-tighter text-[var(--cms-accent)] uppercase italic leading-[1.1] mb-2">Media Library</h1>
+          <p className="text-[16px] font-medium text-[var(--cms-text-secondary)] uppercase tracking-[0.2em] leading-[1.5] mt-2 px-1">Manage assets and editorial resources</p>
         </div>
         
         <label className={`
-          relative flex items-center gap-3 px-8 py-4 bg-[#E94560] text-white rounded-2xl font-black text-sm 
-          shadow-[0_8px_30px_rgb(233,69,96,0.3)] hover:scale-105 active:scale-95 transition-all cursor-pointer
+          relative flex items-center gap-3 px-8 py-4 bg-[var(--cms-accent)] text-white rounded-2xl font-black text-sm 
+          shadow-[0_8px_30px_rgba(0,93,59,0.2)] hover:scale-105 active:scale-95 transition-all cursor-pointer uppercase tracking-widest italic
           ${isUploading ? 'opacity-50 cursor-wait' : ''}
         `}>
           <Upload size={18} className={isUploading ? 'animate-bounce' : ''} />
-          {isUploading ? 'UPLOADING...' : 'UPLOAD NEW ASSET'}
+          {isUploading ? 'Uploading...' : 'Upload Asset'}
           <input type="file" className="hidden" accept="image/jpeg, image/png" onChange={handleFileUpload} disabled={isUploading} />
         </label>
       </div>
@@ -135,11 +135,11 @@ export default function Media() {
       {/* Controls Bar */}
       <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] flex flex-col md:flex-row gap-4 items-center">
         <div className="relative flex-1 w-full group">
-          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#E94560] transition-colors" size={20} />
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[var(--cms-accent)] transition-colors" size={20} />
           <input 
             type="text" 
-            placeholder="SEARCH ASSETS BY FILENAME..." 
-            className="w-full pl-14 pr-6 py-4 bg-gray-50 border-none rounded-2xl text-sm font-black tracking-widest placeholder-gray-300 focus:ring-2 focus:ring-[#E94560]/20 transition-all"
+            placeholder="Search assets..." 
+            className="w-full pl-14 pr-6 py-4 bg-gray-50 border-none rounded-2xl text-sm font-bold placeholder-gray-300 focus:ring-2 focus:ring-[var(--cms-accent-light)] transition-all"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

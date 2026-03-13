@@ -4,24 +4,24 @@ import { UserPlus, Search, Settings as SettingsIcon } from 'lucide-react'
 export default function Users() {
   return (
     <div className="space-y-6 flex flex-col h-full">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-100 pb-8">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-[#111827]">Users & Roles</h2>
-          <p className="text-sm text-gray-500 mt-1">Manage your editorial team and access permissions.</p>
+          <h1 className="text-[56px] font-extrabold text-[var(--cms-accent)] uppercase tracking-tighter italic leading-[1.1] mb-2">Users & Roles</h1>
+          <p className="text-[16px] font-medium text-[var(--cms-text-secondary)] uppercase tracking-[0.2em] leading-[1.5] mt-2 px-1">Manage your editorial team and access permissions</p>
         </div>
-        <button className="flex items-center px-4 py-2 bg-[#E94560] text-white text-sm font-medium rounded-md hover:bg-[#C73652] transition-colors">
+        <button className="flex items-center px-6 py-3 bg-[var(--cms-accent)] text-white text-sm font-black rounded-xl shadow-[0_8px_20px_rgba(0,93,59,0.2)] hover:scale-105 active:scale-95 transition-all uppercase tracking-widest italic">
           <UserPlus className="w-4 h-4 mr-2" />
           Invite User
         </button>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white p-4 rounded-lg border border-[#E5E7EB] shadow-sm">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white p-4 rounded-3xl border border-gray-100 shadow-sm">
         <div className="relative w-full sm:w-96">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input 
             type="text" 
-            placeholder="Search by name or email..." 
-            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E94560]/20 focus:border-[#E94560]"
+            placeholder="Search team members..." 
+            className="w-full pl-11 pr-4 py-3 bg-gray-50 border-none rounded-2xl text-sm font-bold focus:bg-white focus:ring-2 focus:ring-[var(--cms-accent-light)] transition-all"
           />
         </div>
       </div>
@@ -40,7 +40,7 @@ export default function Users() {
             <tr className="hover:bg-gray-50/50 transition-colors">
               <td className="px-6 py-4">
                 <div className="flex items-center">
-                  <div className="h-10 w-10 flex-shrink-0 rounded-full bg-[#1A1A2E] flex items-center justify-center text-white font-bold text-sm">
+                  <div className="h-10 w-10 flex-shrink-0 rounded-full bg-[var(--cms-accent)] flex items-center justify-center text-white font-black text-sm italic shadow-lg shadow-[var(--cms-accent)]/20">
                     KS
                   </div>
                   <div className="ml-4">
@@ -50,12 +50,12 @@ export default function Users() {
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                <span className="inline-flex items-center px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest bg-[var(--cms-accent-light)] text-[var(--cms-accent)]">
                   Admin
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <span className="inline-flex items-center px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest bg-blue-50 text-blue-600">
                   Active
                 </span>
               </td>

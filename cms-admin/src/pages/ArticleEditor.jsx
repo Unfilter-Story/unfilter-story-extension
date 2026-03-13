@@ -64,7 +64,7 @@ const COLOR_PALETTE = [
   ['#5B0F00', '#660000', '#783F04', '#7F6000', '#274E13', '#0C343D', '#1C4587', '#073763', '#20124D', '#4C1130']
 ]
 
-const STANDARD_COLORS = ['#000000', '#FFFFFF', '#4A86E8', '#EA4335', '#FBBC04', '#34A853', '#FF6D01', '#46BDC6']
+const STANDARD_COLORS = ['#000000', '#FFFFFF', '#005D3B', '#C9F775', '#4A86E8', '#EA4335', '#FBBC04', '#34A853']
 
 
 import { useEditor, EditorContent, ReactNodeViewRenderer, NodeViewWrapper, ReactRenderer } from '@tiptap/react'
@@ -275,7 +275,7 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }) => {
     <NodeViewWrapper className={`flex my-10 w-full transition-all ${align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : 'justify-start'}`}>
       <div 
         ref={containerRef}
-        className={`relative group transition-all duration-300 ${isResizing ? 'ring-2 ring-[#E94560] ring-offset-4' : ''}`}
+        className={`relative group transition-all duration-300 ${isResizing ? 'ring-2 ring-[var(--cms-accent)] ring-offset-4' : ''}`}
         style={{ width, maxWidth: '100%' }}
       >
         <div className="relative overflow-hidden rounded-2xl shadow-lg border border-gray-100 group-hover:shadow-2xl transition-all duration-500">
@@ -284,30 +284,30 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }) => {
           {/* Resize Handle */}
           <div 
             onMouseDown={handleResize}
-            className="absolute bottom-4 right-4 w-4 h-4 bg-white border-2 border-[#E94560] rounded-full cursor-nwse-resize shadow-lg z-20 opacity-0 group-hover:opacity-100 transition-opacity scale-0 group-hover:scale-100 transform duration-300"
+            className="absolute bottom-4 right-4 w-4 h-4 bg-white border-2 border-[var(--cms-accent)] rounded-full cursor-nwse-resize shadow-lg z-20 opacity-0 group-hover:opacity-100 transition-opacity scale-0 group-hover:scale-100 transform duration-300"
           >
-            <div className="absolute inset-0 bg-[#E94560] animate-ping rounded-full opacity-20 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-[var(--cms-accent)] animate-ping rounded-full opacity-20 pointer-events-none"></div>
           </div>
 
           {/* Alignment & Action Controls */}
           <div className="absolute top-4 right-4 flex items-center gap-1.5 p-1.5 bg-white/90 backdrop-blur-md rounded-xl shadow-2xl translate-y-[-10px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 border border-gray-100 z-30">
             <button 
               onClick={() => updateAttributes({ align: 'left' })} 
-              className={`p-1.5 rounded-lg transition-all ${align === 'left' ? 'bg-[#E94560] text-white shadow-lg shadow-[#E94560]/20' : 'text-gray-400 hover:bg-gray-100'}`}
+              className={`p-1.5 rounded-lg transition-all ${align === 'left' ? 'bg-[var(--cms-accent)] text-white shadow-lg shadow-[var(--cms-accent)]/20' : 'text-gray-400 hover:bg-gray-100'}`}
               title="Align Left"
             >
               <AlignLeft size={16}/>
             </button>
             <button 
               onClick={() => updateAttributes({ align: 'center' })} 
-              className={`p-1.5 rounded-lg transition-all ${align === 'center' ? 'bg-[#E94560] text-white shadow-lg shadow-[#E94560]/20' : 'text-gray-400 hover:bg-gray-100'}`}
+              className={`p-1.5 rounded-lg transition-all ${align === 'center' ? 'bg-[var(--cms-accent)] text-white shadow-lg shadow-[var(--cms-accent)]/20' : 'text-gray-400 hover:bg-gray-100'}`}
               title="Align Center"
             >
               <AlignCenter size={16}/>
             </button>
             <button 
               onClick={() => updateAttributes({ align: 'right' })} 
-              className={`p-1.5 rounded-lg transition-all ${align === 'right' ? 'bg-[#E94560] text-white shadow-lg shadow-[#E94560]/20' : 'text-gray-400 hover:bg-gray-100'}`}
+              className={`p-1.5 rounded-lg transition-all ${align === 'right' ? 'bg-[var(--cms-accent)] text-white shadow-lg shadow-[var(--cms-accent)]/20' : 'text-gray-400 hover:bg-gray-100'}`}
               title="Align Right"
             >
               <AlignRight size={16}/>
@@ -324,7 +324,7 @@ const ImageComponent = ({ node, updateAttributes, deleteNode }) => {
         </div>
 
         <input 
-          className="w-full text-center text-xs font-black text-gray-300 mt-4 outline-none border-none bg-transparent hover:text-gray-500 focus:text-[#E94560] transition-colors tracking-widest uppercase" 
+          className="w-full text-center text-xs font-black text-gray-300 mt-4 outline-none border-none bg-transparent hover:text-gray-500 focus:text-[var(--cms-accent)] transition-colors tracking-widest uppercase" 
           value={caption || ''} 
           placeholder="ENTER CAPTION..." 
           onChange={e => updateAttributes({ caption: e.target.value })}
@@ -483,7 +483,7 @@ export default function ArticleEditor() {
       LinkExtension.configure({
         openOnClick: false,
         HTMLAttributes: {
-          class: 'text-[#E94560] underline decoration-[#E94560]/30 underline-offset-4'
+          class: 'text-[var(--cms-accent)] underline decoration-[var(--cms-accent)]/30 underline-offset-4'
         }
       }),
       TextStyle,
@@ -879,7 +879,7 @@ export default function ArticleEditor() {
     <button 
       onClick={(e) => { e.preventDefault(); onClick(); }}
       className={`p-2 rounded-md transition-all ${
-        isActive ? 'bg-[#E94560] text-white shadow-sm' : 'hover:bg-gray-100 text-gray-600'
+        isActive ? 'bg-[var(--cms-accent)] text-white shadow-sm' : 'hover:bg-gray-100 text-gray-600'
       }`}
       title={tooltip}
     >
@@ -899,27 +899,27 @@ export default function ArticleEditor() {
                 <ArrowLeft size={22} />
              </button>
              <div className="flex flex-col">
-                <div className="flex items-center gap-3">
-                   <h2 className={`font-black text-gray-900 leading-tight transition-all duration-300 ${isScrolled ? 'text-lg max-w-[300px] truncate' : 'text-xl'}`}>
-                     {isScrolled && headline ? headline : (id ? 'Edit Article' : 'Create New Article')}
-                   </h2>
-                   <div className="h-4 w-px bg-gray-200"></div>
-                   <div className="text-[10px] font-black tracking-widest text-[#E94560] uppercase">
-                     {status}
-                   </div>
-                </div>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <div className={`w-2 h-2 rounded-full ${isAutoSaving ? 'bg-amber-400 animate-pulse' : 'bg-green-500'}`}></div>
-                  <p className="text-[11px] text-gray-400 font-bold uppercase tracking-tight">
-                    {isAutoSaving ? (
-                      'Synchronizing...'
-                    ) : lastSaved ? (
-                      `Securely saved • ${lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`
-                    ) : (
-                      'Workspace Ready'
-                    )} 
-                  </p>
-                </div>
+                 <div className="flex items-center gap-4">
+                    <h1 className={`font-extrabold text-[var(--cms-accent)] leading-tight transition-all duration-300 uppercase italic tracking-tighter ${isScrolled ? 'text-2xl max-w-[400px] truncate' : 'text-[56px] py-4'}`}>
+                      {isScrolled && headline ? headline : (id ? 'Edit Article' : 'Create New Article')}
+                    </h1>
+                    {!isScrolled && <div className="h-10 w-px bg-gray-200 ml-4"></div>}
+                    <div className={`font-black tracking-[0.2em] text-[var(--cms-accent)] uppercase ${isScrolled ? 'text-[10px]' : 'text-xs ml-4'}`}>
+                      {status}
+                    </div>
+                 </div>
+                 <div className="flex items-center gap-2 mt-1">
+                   <div className={`w-2 h-2 rounded-full ${isAutoSaving ? 'bg-amber-400 animate-pulse' : 'bg-green-500'}`}></div>
+                   <p className="text-[14px] text-gray-400 font-medium uppercase tracking-[0.1em]">
+                     {isAutoSaving ? (
+                       'Synchronizing...'
+                     ) : lastSaved ? (
+                       `Securely saved • ${lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`
+                     ) : (
+                       'Workspace Ready'
+                     )} 
+                   </p>
+                 </div>
              </div>
           </div>
 
@@ -954,7 +954,7 @@ export default function ArticleEditor() {
              <button
                onClick={handlePublish}
                disabled={isSaving}
-               className="flex items-center px-7 py-3 text-white font-black bg-[#E94560] rounded-2xl hover:bg-[#d63d56] transition-all shadow-[0_10px_30px_rgba(233,69,96,0.3)] active:scale-95 disabled:opacity-50"
+               className="flex items-center px-7 py-3 text-white font-black bg-[var(--cms-accent)] rounded-2xl hover:scale-105 transition-all shadow-[0_10px_30px_rgba(0,93,59,0.3)] active:scale-95 disabled:opacity-50 uppercase tracking-widest italic text-xs"
              >
                 <span className="mr-2.5">
                   {isSaving ? 'Sending...' : ((status === 'published' || status === 'unpublished') ? 'Republish' : (publishedAt > new Date().toISOString().split('T')[0] ? 'Schedule' : 'Publish'))}
@@ -966,18 +966,18 @@ export default function ArticleEditor() {
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-10 mb-8 overflow-hidden relative">
-         <div className="absolute top-0 left-0 w-1.5 h-full bg-[#E94560]/80"></div>
+         <div className="absolute top-0 left-0 w-1.5 h-full bg-[var(--cms-accent)]/80"></div>
          
          {/* Mandatory Header Image Section */}
          <div className="mb-10 group/header-image">
             <label className="flex items-center gap-3 text-[11px] font-black text-gray-400 uppercase tracking-[0.25em] mb-4">
-              <div className="w-8 h-8 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover/header-image:bg-[#E94560]/10 group-hover/header-image:text-[#E94560] transition-all">
+              <div className="w-8 h-8 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover/header-image:bg-[var(--cms-accent)]/10 group-hover/header-image:text-[var(--cms-accent)] transition-all">
                   <ImageIcon size={14} />
               </div>
               Header Image (Mandatory)
             </label>
             
-            <div className={`relative w-full aspect-[21/9] rounded-3xl overflow-hidden border-2 border-dashed transition-all duration-500 flex flex-col items-center justify-center bg-gray-50/50 ${featuredImageUrl ? 'border-transparent shadow-2xl' : 'border-gray-200 hover:border-[#E94560]/30 hover:bg-[#E94560]/5'}`}>
+          <div className={`relative w-full aspect-[21/9] rounded-3xl overflow-hidden border-2 border-dashed transition-all duration-500 flex flex-col items-center justify-center bg-gray-50/50 ${featuredImageUrl ? 'border-transparent shadow-2xl' : 'border-gray-200 hover:border-[var(--cms-accent)]/30 hover:bg-[var(--cms-accent-light)]'}`}>
                {featuredImageUrl ? (
                  <>
                    <img src={featuredImageUrl} className="w-full h-full object-cover" alt="Header" />
@@ -1021,7 +1021,7 @@ export default function ArticleEditor() {
                  </>
                ) : (
                  <label className="flex flex-col items-center cursor-pointer group/upload">
-                   <div className="w-16 h-16 rounded-2xl bg-white shadow-xl flex items-center justify-center mb-4 text-gray-400 group-hover/upload:text-[#E94560] group-hover/upload:scale-110 transition-all duration-500">
+                   <div className="w-16 h-16 rounded-2xl bg-white shadow-xl flex items-center justify-center mb-4 text-gray-400 group-hover/upload:text-[var(--cms-accent)] group-hover/upload:scale-110 transition-all duration-500">
                       <UploadCloud size={32} />
                    </div>
                    <p className="text-gray-900 font-black text-lg mb-1">Click to upload header image</p>
@@ -1057,7 +1057,7 @@ export default function ArticleEditor() {
             </div>
             {featuredImageUrl && (
               <input 
-                className="w-full text-center text-xs font-black text-gray-300 mt-4 outline-none border-none bg-transparent hover:text-gray-500 focus:text-[#E94560] transition-colors tracking-widest uppercase" 
+                className="w-full text-center text-xs font-black text-gray-300 mt-4 outline-none border-none bg-transparent hover:text-gray-500 focus:text-[var(--cms-accent)] transition-colors tracking-widest uppercase" 
                 value={imageCaption} 
                 placeholder="ENTER IMAGE CAPTION..." 
                 onChange={e => setImageCaption(e.target.value)}
@@ -1076,7 +1076,7 @@ export default function ArticleEditor() {
             {/* Category Selection */}
             <div className="space-y-4">
               <label className="flex items-center gap-3 text-[11px] font-black text-gray-400 uppercase tracking-[0.25em]">
-                <div className="w-8 h-8 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#E94560]/10 group-hover:text-[#E94560] transition-all">
+                <div className="w-8 h-8 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[var(--cms-accent)]/10 group-hover:text-[var(--cms-accent)] transition-all">
                    <Layout size={14} />
                 </div>
                 Article Category
@@ -1086,14 +1086,14 @@ export default function ArticleEditor() {
                 <select 
                   value={category}
                   onChange={e => setCategory(e.target.value)}
-                  className="w-full bg-gray-50/80 border border-gray-200 rounded-2xl px-5 py-4 text-sm font-bold text-gray-700 outline-none focus:border-[#E84560] focus:ring-4 focus:ring-[#E84560]/5 focus:bg-white transition-all appearance-none cursor-pointer hover:bg-gray-100/50"
+                  className="w-full bg-gray-50/80 border border-gray-200 rounded-2xl px-5 py-4 text-sm font-bold text-gray-700 outline-none focus:border-[var(--cms-accent)] focus:ring-4 focus:ring-[var(--cms-accent)]/5 focus:bg-white transition-all appearance-none cursor-pointer hover:bg-gray-100/50"
                 >
                   <option value="">Choose a category...</option>
                   {availableCategories.map(cat => (
                     <option key={cat.id} value={cat.name}>{cat.name}</option>
                   ))}
                 </select>
-                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within:text-[#E84560] group-focus-within:rotate-180 transition-all">
+                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within:text-[var(--cms-accent)] group-focus-within:rotate-180 transition-all">
                   <ArrowLeft size={16} className="-rotate-90" />
                 </div>
               </div>
@@ -1109,10 +1109,10 @@ export default function ArticleEditor() {
               </label>
 
               <div className="space-y-3">
-                <div className="flex flex-wrap gap-2.5 p-2 min-h-[58px] bg-gray-50/80 border border-gray-200 rounded-2xl focus-within:border-[#E84560] focus-within:ring-4 focus-within:ring-[#E84560]/5 focus-within:bg-white transition-all shadow-sm">
+                <div className="flex flex-wrap gap-2.5 p-2 min-h-[58px] bg-gray-50/80 border border-gray-200 rounded-2xl focus-within:border-[var(--cms-accent)] focus-within:ring-4 focus-within:ring-[var(--cms-accent)]/5 focus-within:bg-white transition-all shadow-sm">
                   {tags.map(tag => (
-                    <span key={tag} className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-100 rounded-xl text-xs font-bold text-gray-700 shadow-sm hover:border-[#E84560]/30 transition-all group/tag">
-                      <span className="text-[#E84560] opacity-50">#</span>
+                    <span key={tag} className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-100 rounded-xl text-xs font-bold text-gray-700 shadow-sm hover:border-[var(--cms-accent)]/30 transition-all group/tag">
+                      <span className="text-[var(--cms-accent)] opacity-50">#</span>
                       {tag}
                       <button 
                         onClick={() => setTags(tags.filter(t => t !== tag))} 
@@ -1149,7 +1149,7 @@ export default function ArticleEditor() {
                         <button 
                           key={tag.id}
                           onClick={() => setTags([...tags, tag.name])}
-                          className="text-[10px] font-black text-gray-400 bg-white border border-gray-100 hover:border-[#E84560]/30 hover:text-[#E84560] px-3 py-1.5 rounded-xl transition-all shadow-sm active:scale-95"
+                          className="text-[10px] font-black text-gray-400 bg-white border border-gray-100 hover:border-[var(--cms-accent)]/30 hover:text-[var(--cms-accent)] px-3 py-1.5 rounded-xl transition-all shadow-sm active:scale-95"
                         >
                           + {tag.name}
                         </button>
@@ -1175,7 +1175,7 @@ export default function ArticleEditor() {
                   min={new Date().toISOString().split('T')[0]}
                   value={publishedAt}
                   onChange={e => setPublishedAt(e.target.value)}
-                  className="w-full bg-gray-50/80 border border-gray-200 rounded-2xl px-5 py-4 text-sm font-bold text-gray-700 outline-none focus:border-[#E84560] focus:ring-4 focus:ring-[#E84560]/5 focus:bg-white transition-all cursor-pointer hover:bg-gray-100/50"
+                  className="w-full bg-gray-50/80 border border-gray-200 rounded-2xl px-5 py-4 text-sm font-bold text-gray-700 outline-none focus:border-[var(--cms-accent)] focus:ring-4 focus:ring-[var(--cms-accent)]/5 focus:bg-white transition-all cursor-pointer hover:bg-gray-100/50"
                   required
                 />
               </div>
@@ -1195,7 +1195,7 @@ export default function ArticleEditor() {
 
         <div className="flex items-center gap-2 px-2 border-r border-gray-200">
           <select 
-            className="w-[70px] border border-gray-200 rounded-md px-1 py-1 text-sm focus:border-[#E94560] outline-none h-[34px]"
+            className="w-[70px] border border-gray-200 rounded-md px-1 py-1 text-sm focus:border-[var(--cms-accent)] outline-none h-[34px]"
             value={localSize}
             onChange={e => {
               const val = e.target.value
@@ -1213,7 +1213,7 @@ export default function ArticleEditor() {
             ))}
           </select>
           <select 
-            className="border border-gray-200 rounded-md text-sm px-2 py-1 h-[34px] focus:border-[#E94560] outline-none max-w-[140px]"
+            className="border border-gray-200 rounded-md text-sm px-2 py-1 h-[34px] focus:border-[var(--cms-accent)] outline-none max-w-[140px]"
             onChange={e => editor.chain().focus().setFontFamily(e.target.value).run()}
             value={editor.getAttributes('textStyle').fontFamily || ''}
           >
@@ -1228,7 +1228,7 @@ export default function ArticleEditor() {
 
         <div className="flex items-center gap-1 px-2 border-r border-gray-200">
           <select 
-            className="border border-gray-200 rounded-md text-sm px-2 py-1 h-[34px] focus:border-[#E94560] outline-none"
+            className="border border-gray-200 rounded-md text-sm px-2 py-1 h-[34px] focus:border-[var(--cms-accent)] outline-none"
             onChange={e => {
               const val = e.target.value
               if (val === 'p') editor.chain().focus().setParagraph().run()
@@ -1270,7 +1270,7 @@ export default function ArticleEditor() {
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-2 px-1">Line Spacing</label>
                     <select 
-                      className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:border-[#E94560] outline-none bg-gray-50/50"
+                      className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:border-[var(--cms-accent)] outline-none bg-gray-50/50"
                       onChange={e => editor.chain().focus().setLineHeight(e.target.value).run()}
                       value={editor.getAttributes('paragraph').lineHeight || ''}
                     >
@@ -1283,7 +1283,7 @@ export default function ArticleEditor() {
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-2 px-1">Letter Spacing</label>
                     <select 
-                      className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:border-[#E94560] outline-none bg-gray-50/50"
+                      className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:border-[var(--cms-accent)] outline-none bg-gray-50/50"
                       onChange={e => editor.chain().focus().setLetterSpacing(e.target.value).run()}
                       value={editor.getAttributes('paragraph').letterSpacing || ''}
                     >
@@ -1296,7 +1296,7 @@ export default function ArticleEditor() {
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-2 px-1">Paragraph Spacing (Bottom)</label>
                     <select 
-                      className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:border-[#E94560] outline-none bg-gray-50/50"
+                      className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:border-[var(--cms-accent)] outline-none bg-gray-50/50"
                       onChange={e => editor.chain().focus().setParagraphSpacing(e.target.value).run()}
                       value={editor.getAttributes('paragraph').paragraphSpacing || ''}
                     >
@@ -1309,7 +1309,7 @@ export default function ArticleEditor() {
                   <div>
                     <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-2 px-1">Text Indent</label>
                     <select 
-                      className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:border-[#E94560] outline-none bg-gray-50/50"
+                      className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:border-[var(--cms-accent)] outline-none bg-gray-50/50"
                       onChange={e => editor.chain().focus().setTextIndent(e.target.value).run()}
                       value={editor.getAttributes('paragraph').textIndent || ''}
                     >
@@ -1326,7 +1326,7 @@ export default function ArticleEditor() {
                     </div>
                     <button 
                       onClick={() => editor.chain().focus().toggleDropCap().run()}
-                      className={`p-2 rounded-lg transition-all ${editor.isActive('paragraph', { dropCap: true }) ? 'bg-[#E94560] text-white shadow-lg shadow-[#E94560]/20' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'}`}
+                      className={`p-2 rounded-lg transition-all ${editor.isActive('paragraph', { dropCap: true }) ? 'bg-[var(--cms-accent)] text-white shadow-lg shadow-[var(--cms-accent)]/20' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'}`}
                     >
                       <div className="text-sm font-black">A</div>
                     </button>
@@ -1368,7 +1368,7 @@ export default function ArticleEditor() {
                           editor.chain().focus().setColor(c).run(); 
                           pendingColorRef.current = c;
                         }} 
-                        className={`w-5.5 h-5.5 rounded-full border border-gray-100 hover:scale-125 transition-all ${editor.isActive('textStyle', { color: c }) ? 'ring-2 ring-offset-1 ring-[#E94560]' : ''}`} 
+                        className={`w-5.5 h-5.5 rounded-full border border-gray-100 hover:scale-125 transition-all ${editor.isActive('textStyle', { color: c }) ? 'ring-2 ring-offset-1 ring-[var(--cms-accent)]' : ''}`} 
                         style={{ backgroundColor: c }}
                         title={c}
                       ></button>
@@ -1433,7 +1433,7 @@ export default function ArticleEditor() {
                           editor.chain().focus().toggleHighlight({ color: c }).run(); 
                           pendingHighlightRef.current = c;
                         }} 
-                        className={`w-5.5 h-5.5 rounded-full border border-gray-100 hover:scale-125 transition-all ${editor.isActive('highlight', { color: c }) ? 'ring-2 ring-offset-1 ring-[#E94560]' : ''}`} 
+                        className={`w-5.5 h-5.5 rounded-full border border-gray-100 hover:scale-125 transition-all ${editor.isActive('highlight', { color: c }) ? 'ring-2 ring-offset-1 ring-[var(--cms-accent)]' : ''}`} 
                         style={{ backgroundColor: c }}
                         title={c}
                       ></button>
@@ -1556,9 +1556,9 @@ export default function ArticleEditor() {
         )}
       </div>
 
-      <div className="fixed bottom-6 right-6 bg-white/80 backdrop-blur-md border border-gray-100 px-6 py-2.5 rounded-full shadow-2xl text-sm font-semibold text-gray-600 flex items-center gap-4 z-40 transition-all hover:scale-105 border-b-2 border-b-[#E94560]">
+      <div className="fixed bottom-6 right-6 bg-white/80 backdrop-blur-md border border-gray-100 px-6 py-2.5 rounded-full shadow-2xl text-sm font-semibold text-gray-600 flex items-center gap-4 z-40 transition-all hover:scale-105 border-b-2 border-b-[var(--cms-accent)]">
         <div className="flex items-center gap-2">
-          <Type size={16} className="text-[#E94560]" />
+          <Type size={16} className="text-[var(--cms-accent)]" />
           <span>{editor.storage.characterCount.words()} words</span>
         </div>
         <div className="w-px h-4 bg-gray-200"></div>
@@ -1597,7 +1597,7 @@ export default function ArticleEditor() {
                      </button>
                      <button 
                         onClick={dialog.onConfirm}
-                        className="flex-1 px-6 py-3.5 rounded-2xl text-sm font-bold bg-[#E94560] text-white shadow-lg shadow-[#E94560]/20 hover:bg-[#C73652] transition-all active:scale-95"
+                        className="flex-1 px-6 py-3.5 rounded-2xl text-sm font-bold bg-[var(--cms-accent)] text-white shadow-lg shadow-[var(--cms-accent)]/20 hover:bg-[var(--cms-accent)]/90 transition-all active:scale-95"
                      >
                         Confirm
                      </button>

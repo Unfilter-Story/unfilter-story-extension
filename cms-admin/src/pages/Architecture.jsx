@@ -36,9 +36,9 @@ export default function Architecture() {
     }
   }
 
-  const renderSection = (title, icon, items, color) => (
-    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
-      <div className={`p-6 border-b border-gray-50 flex items-center justify-between bg-gradient-to-r ${color} text-white`}>
+  const renderSection = (title, icon, items) => (
+    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col hover:border-[var(--cms-accent-light)] transition-colors">
+      <div className="p-6 border-b border-gray-50 flex items-center justify-between bg-[var(--cms-accent)] text-white">
         <div className="flex items-center gap-3">
           {icon}
           <h3 className="font-black uppercase tracking-tighter italic">{title}</h3>
@@ -93,17 +93,17 @@ export default function Architecture() {
       <div className="flex justify-between items-end border-b border-gray-100 pb-8">
         <div>
           <div className="flex items-center gap-2 mb-2">
-             <div className="w-8 h-8 rounded-lg bg-gray-900 flex items-center justify-center text-white">
+             <div className="w-8 h-8 rounded-lg bg-[var(--cms-accent)] flex items-center justify-center text-white">
                <Map size={18} />
              </div>
-             <span className="text-xs font-black text-[#E94560] uppercase tracking-[0.2em]">Discovery Engine</span>
+             <span className="text-xs font-black text-[var(--cms-accent)] uppercase tracking-[0.2em]">Discovery Engine</span>
           </div>
-          <h1 className="text-4xl font-black text-gray-900 uppercase tracking-tighter italic leading-none">Site Architecture</h1>
-          <p className="text-gray-500 font-bold text-xs uppercase tracking-widest mt-2 px-1">Mapping the structural flow of Unfilter Story</p>
+          <h1 className="text-[56px] font-extrabold text-[var(--cms-accent)] uppercase tracking-tighter italic leading-[1.1] mb-2">Site Architecture</h1>
+          <p className="text-[16px] font-medium text-[var(--cms-text-secondary)] uppercase tracking-[0.2em] leading-[1.5] mt-2 px-1">Mapping the structural flow of Unfilter Story</p>
         </div>
         <button 
           onClick={fetchArchitecture}
-          className="p-4 bg-gray-100 text-gray-600 rounded-2xl hover:bg-gray-900 hover:text-white transition-all shadow-sm hover:shadow-xl active:scale-95 group"
+          className="p-4 bg-white border border-gray-100 text-[var(--cms-accent)] rounded-2xl hover:bg-[var(--cms-accent)] hover:text-white transition-all shadow-sm hover:shadow-xl active:scale-95 group"
           title="Refresh Sitemap"
         >
           <RefreshCw size={20} className={loading ? 'animate-spin' : 'group-hover:rotate-180 transition-transform duration-500'} />
@@ -112,21 +112,21 @@ export default function Architecture() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Core Architecture */}
-        {renderSection('Core Infrastructure', <Landmark size={20} />, staticRoutes, 'from-gray-900 to-gray-700')}
+        {renderSection('Core Infrastructure', <Landmark size={20} />, staticRoutes)}
         
         {/* Taxonomy Map */}
-        {renderSection('Category Feeds', <Folder size={20} />, categoryRoutes, 'from-blue-600 to-blue-400')}
+        {renderSection('Category Feeds', <Folder size={20} />, categoryRoutes)}
         
         {/* Article Permalinks */}
-        {renderSection('Article Routing', <FileText size={20} />, articleRoutes, 'from-[#E94560] to-[#FF6B6B]')}
+        {renderSection('Article Routing', <FileText size={20} />, articleRoutes)}
       </div>
 
       {/* Navigation Mapping */}
-      <div className="bg-gray-900 p-8 rounded-[2.5rem] text-white overflow-hidden relative border-4 border-white shadow-2xl">
+      <div className="bg-[var(--cms-accent)] p-8 rounded-[2.5rem] text-white overflow-hidden relative border-4 border-white shadow-2xl">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-8">
-            <Share2 className="text-[#E94560]" />
+            <Share2 className="text-[var(--cms-accent-light)]" />
             <h2 className="text-2xl font-black uppercase tracking-tighter italic">Global Navigation Bridge</h2>
           </div>
           
@@ -136,7 +136,7 @@ export default function Architecture() {
             ) : (
               data.navigation.map((nav, idx) => (
                 <div key={idx} className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-md hover:bg-white/10 transition-colors">
-                  <span className="text-[10px] font-black text-[#E94560] uppercase tracking-widest mb-1 block">{nav.type}</span>
+                  <span className="text-[10px] font-black text-[var(--cms-accent-light)] uppercase tracking-widest mb-1 block">{nav.type}</span>
                   <div className="flex items-center justify-between">
                     <span className="font-black uppercase tracking-tight italic">{nav.label}</span>
                     <ExternalLink size={12} className="text-gray-500" />
@@ -148,8 +148,8 @@ export default function Architecture() {
                      <div className="mt-4 pt-3 border-t border-white/5 space-y-2">
                         {nav.children.map((child, cIdx) => (
                           <div key={cIdx} className="flex items-center gap-2">
-                            <div className="w-1 h-1 bg-[#E94560] rounded-full"></div>
-                            <span className="text-[10px] uppercase font-bold tracking-tight text-gray-300">{child.label}</span>
+                            <div className="w-1 h-1 bg-[var(--cms-accent-light)] rounded-full"></div>
+                            <span className="text-[10px] uppercase font-bold tracking-tight text-gray-100">{child.label}</span>
                           </div>
                         ))}
                      </div>
