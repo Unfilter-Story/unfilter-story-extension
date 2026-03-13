@@ -55,7 +55,18 @@ The **Unfilter Story CMS Admin** is a professional-grade editorial environment d
 *   **Search & Indexing**: Real-time search by filename with metadata visibility (Size, Date, Format).
 *   **Direct Management**: Ability to upload or permanently delete assets independently.
 
-### 3.4 Taxonomy & Structural Management (New)
+### 3.4 Navigation & Menu Management (New)
+*   **Hierarchical Header Control**:
+    *   **Unified CRUD Ops**: Full Create, Read, Update, and Delete capabilities for the website's main menu.
+    *   **Nested Sub-Menus**: Ability to create multi-level navigation structures (Parents/Children).
+    *   **Smart Slug Engine**: Automated real-time URL generation (e.g., "Technology" -> `/category/technology`) with **Manual Override Detection** to preserve custom paths.
+*   **Format & Types**:
+    *   **Versatile Item Types**: Support for standard **Links**, **Dropdowns**, and **Category Groups**.
+    *   **Custom Ordering**: Drag-handle iconography and numeric priority for precise display control.
+*   **Visual Management**:
+    *   **Hierarchical Registry**: An indented tree view for nested sub-menus with specialized styling for child items.
+
+### 3.5 Taxonomy & Structural Management (New)
 *   **Unified Taxonomy Hub**:
     *   **Categories Registry**: List-based management of primary content divisions with automated **Slug Generation** and real-time count badges.
     *   **Visual Tag Index**: Multi-column grid of hashtag-style content markers for quick thematic scanning.

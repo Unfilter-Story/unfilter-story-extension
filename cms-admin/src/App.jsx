@@ -6,6 +6,7 @@ import Articles from './pages/Articles'
 import ArticleEditor from './pages/ArticleEditor'
 import Media from './pages/Media'
 import Taxonomy from './pages/Taxonomy'
+import Navigation from './pages/Navigation'
 import Users from './pages/Users'
 import Settings from './pages/Settings'
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="articles/:id" element={<ArticleEditor />} />
           <Route path="media" element={<Media />} />
           <Route path="taxonomy" element={<Taxonomy />} />
+          <Route path="navigation" element={<Navigation />} />
           <Route path="users" element={<Users />} />
           <Route path="settings" element={<Settings />} />
           <Route path="*" element={<Error404 />} />

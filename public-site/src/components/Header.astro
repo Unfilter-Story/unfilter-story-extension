@@ -1,11 +1,16 @@
 ---
-const navLinks = [
-  { href: '/category/politics', label: 'Politics' },
-  { href: '/category/business', label: 'Business' },
-  { href: '/category/technology', label: 'Technology' },
-  { href: '/category/startups', label: 'Startups' },
-  { href: '/category/sports', label: 'Sports' },
-];
+let navLinks = [];
+try {
+  const response = await fetch('http://localhost:3000/cms/v1/navigation');
+  navLinks = await response.json();
+} catch (error) {
+  console.error('Failed to fetch navigation:', error);
+  // Fallback links if API fails
+  navLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/category/technology', label: 'Technology' }
+  ];
+}
 ---
 
 <header class="bg-[#1A1A2E] text-white fixed top-0 w-full mb-16 z-[100] h-16 flex items-center shadow-md">
@@ -18,9 +23,28 @@ const navLinks = [
     <!-- Desktop Navigation -->
     <nav class="hidden md:flex items-center space-x-6 text-sm font-medium font-inter">
       {navLinks.map((link) => (
-        <a href={link.href} class="text-[#D1D5DB] hover:text-white transition-colors">
-          {link.label}
-        </a>
+        <div class="relative group">
+          <a href={link.href} class="text-[#D1D5DB] hover:text-white transition-colors flex items-center gap-1 py-4">
+            {link.label}
+            {link.children && link.children.length > 0 && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:rotate-180 transition-transform duration-300">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            )}
+          </a>
+          
+          {link.children && link.children.length > 0 && (
+            <div class="absolute left-0 top-full pt-0 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+              <div class="bg-[#1A1A2E] border border-gray-800 rounded-lg shadow-2xl py-2 mt-1 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                {link.children.map((child) => (
+                  <a href={child.href} class="block px-4 py-2 text-sm text-[#D1D5DB] hover:text-white hover:bg-white/5 transition-colors">
+                    {child.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       ))}
     </nav>
 

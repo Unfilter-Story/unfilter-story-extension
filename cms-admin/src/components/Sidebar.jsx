@@ -7,7 +7,8 @@ import {
   FolderTree, 
   Users, 
   Settings, 
-  LogOut 
+  LogOut,
+  Menu
 } from 'lucide-react'
 
 const navItems = [
@@ -15,6 +16,7 @@ const navItems = [
   { label: 'Articles', icon: PenTool, path: '/articles' },
   { label: 'Media Library', icon: ImageIcon, path: '/media' },
   { label: 'Categories & Tags', icon: FolderTree, path: '/taxonomy' },
+  { label: 'Header Navigation', icon: Menu, path: '/navigation' },
   { label: 'Users', icon: Users, path: '/users' },
   { label: 'Settings', icon: Settings, path: '/settings' },
 ]

@@ -174,3 +174,20 @@ model Redirect {
 
   @@map("redirects")
 }
+
+model Navigation {
+  id           String    @id @default(uuid())
+  label        String
+  href         String
+  displayOrder Int       @default(0) @map("display_order")
+  parentId     String?   @map("parent_id")
+  type         String    @default("link") // "link", "dropdown", "category_group"
+  isActive     Boolean   @default(true) @map("is_active")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  parent       Navigation? @relation("NavigationHierarchy", fields: [parentId], references: [id])
+  children     Navigation[] @relation("NavigationHierarchy")
+
+  @@map("navigation")
+}

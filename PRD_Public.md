@@ -24,6 +24,9 @@ The **Unfilter Story Public Portal** is a sub-second performance delivery engine
 ### 3.1 Presentation Layer
 *   **Home Stream**: A high-speed feed of stories featuring compressed header images and high-contrast metadata.
 *   **Technical Typography**: Primary usage of **IBM Plex Sans** for long-form reading and **IBM Plex Mono** for technical data.
+*   **Dynamic Navigation System**: 
+    *   **CMS-Driven Menus**: The primary header is now fully dynamic, fetching structural data from the Admin navigation suite.
+    *   **Sub-Menu Support**: Infrastructure for rendering complex dropdowns and hierarchical links.
 *   **Media Display**: Intelligent aspect-ratio enforcement (21:9) for header images to maintain grid consistency.
 *   **Fallback Integrity**: Dynamic placeholders for historical articles or missing media to prevent layout shifts.
 

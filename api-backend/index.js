@@ -358,6 +358,75 @@ fastify.delete('/cms/v1/media/:id', async (request, reply) => {
   }
 })
 
+// === NAVIGATION API ROUTES ===
+fastify.get('/cms/v1/navigation', async (request, reply) => {
+  try {
+    const nav = await prisma.navigation.findMany({
+      orderBy: { displayOrder: 'asc' },
+      include: { children: { orderBy: { displayOrder: 'asc' } } }
+    })
+    // Filter out children from the top level since they are included in parents
+    return nav.filter(item => !item.parentId)
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to fetch navigation' })
+  }
+})
+
+fastify.post('/cms/v1/navigation', async (request, reply) => {
+  try {
+    const { label, href, displayOrder, parentId, type } = request.body
+    const nav = await prisma.navigation.create({
+      data: {
+        label,
+        href,
+        displayOrder: displayOrder || 0,
+        parentId,
+        type: type || 'link'
+      }
+    })
+    return nav
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to create navigation item' })
+  }
+})
+
+fastify.put('/cms/v1/navigation/:id', async (request, reply) => {
+  try {
+    const { id } = request.params
+    const { label, href, displayOrder, parentId, type, isActive } = request.body
+    const nav = await prisma.navigation.update({
+      where: { id },
+      data: {
+        label,
+        href,
+        displayOrder,
+        parentId,
+        type,
+        isActive
+      }
+    })
+    return nav
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to update navigation item' })
+  }
+})
+
+fastify.delete('/cms/v1/navigation/:id', async (request, reply) => {
+  try {
+    const { id } = request.params
+    // Also delete children? Let's keep it simple for now or use cascade if defined in schema.
+    // Prisma relation handles it if configured, but here we'll just delete the item.
+    await prisma.navigation.delete({ where: { id } })
+    return { success: true }
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to delete navigation item' })
+  }
+})
+
 // Start server
 const start = async () => {
   try {
