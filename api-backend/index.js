@@ -4,7 +4,8 @@ import { PrismaClient } from '@prisma/client'
 import 'dotenv/config'
 
 const fastify = Fastify({
-  logger: true
+  logger: true,
+  bodyLimit: 52428800 // 50MB
 })
 
 const prisma = new PrismaClient()
@@ -33,7 +34,7 @@ fastify.get('/v1/articles', async (request, reply) => {
 // === CMS API ROUTES ===
 fastify.post('/cms/v1/articles', async (request, reply) => {
   try {
-    const { headline, body, categoryId, category, tags, status, publishedAt } = request.body
+    const { headline, body, categoryId, category, tags, status, publishedAt, featuredImageUrl } = request.body
     
     // Slugify the headline. Fallback to generic if empty.
     const slugBasis = headline || 'untitled'
@@ -74,6 +75,7 @@ fastify.post('/cms/v1/articles', async (request, reply) => {
         body: body || '',
         status: status || 'draft',
         categoryId: finalCategoryId || null,
+        featuredImageUrl: featuredImageUrl || null,
         publishedAt: publishedAt ? new Date(publishedAt) : (status === 'published' ? new Date() : null),
         readingTimeMins: Math.ceil((body || '').split(' ').length / 200) || 1,
         articleTags: finalTagIds.length > 0 ? {
@@ -137,7 +139,7 @@ fastify.get('/cms/v1/articles/:id', async (request, reply) => {
 fastify.put('/cms/v1/articles/:id', async (request, reply) => {
   try {
     const { id } = request.params
-    const { headline, body, status, categoryId, category, tags, publishedAt } = request.body
+    const { headline, body, status, categoryId, category, tags, publishedAt, featuredImageUrl } = request.body
     
     // Slugify the headline
     const slug = headline ? headline.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : undefined
@@ -154,6 +156,7 @@ fastify.put('/cms/v1/articles/:id', async (request, reply) => {
       body,
       status: status || undefined,
       categoryId: finalCategoryId !== undefined ? finalCategoryId : undefined,
+      featuredImageUrl: featuredImageUrl !== undefined ? featuredImageUrl : undefined,
       publishedAt: publishedAt ? new Date(publishedAt) : undefined,
       readingTimeMins: body ? (Math.ceil(body.split(' ').length / 200) || 1) : undefined
     }
@@ -310,6 +313,48 @@ fastify.delete('/cms/v1/tags/:id', async (request, reply) => {
   } catch (error) {
     fastify.log.error(error)
     reply.code(500).send({ error: 'Failed to delete tag' })
+  }
+})
+
+// === MEDIA API ROUTES ===
+fastify.get('/cms/v1/media', async (request, reply) => {
+  try {
+    const media = await prisma.media.findMany({
+      orderBy: { createdAt: 'desc' }
+    })
+    return media
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to fetch media' })
+  }
+})
+
+fastify.post('/cms/v1/media', async (request, reply) => {
+  try {
+    const { filename, url, mimeType, sizeBytes } = request.body
+    const media = await prisma.media.create({
+      data: {
+        filename: filename || 'Upload',
+        url,
+        mimeType: mimeType || 'image/jpeg',
+        sizeBytes: sizeBytes || 0
+      }
+    })
+    return media
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to upload media' })
+  }
+})
+
+fastify.delete('/cms/v1/media/:id', async (request, reply) => {
+  try {
+    const { id } = request.params
+    await prisma.media.delete({ where: { id } })
+    return { success: true }
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to delete media' })
   }
 })
 

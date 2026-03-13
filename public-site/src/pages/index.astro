@@ -55,7 +55,11 @@ const trendingNews = [
 			<!-- Main Featured Article -->
 			<article class="lg:col-span-8 group cursor-pointer flex flex-col">
 				<div class="relative w-full aspect-video overflow-hidden rounded-xl bg-gray-200 mb-6 flex items-center justify-center">
-                    <span class="text-gray-400 font-medium">Article Image Not Uploaded</span>
+                    {displayFeatured.featuredImageUrl ? (
+                        <img src={displayFeatured.featuredImageUrl} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={displayFeatured.headline} />
+                    ) : (
+                        <span class="text-gray-400 font-medium font-inter uppercase tracking-widest text-xs">No Header Image</span>
+                    )}
 				</div>
 				<div class="flex items-center space-x-3 mb-3">
 					<span class="font-inter text-xs font-bold uppercase tracking-wider px-2 py-1 rounded-sm text-[#E94560] bg-[#FEF2F2]">
@@ -67,7 +71,7 @@ const trendingNews = [
 					<a href={`/article/${displayFeatured.slug || 'featured'}`}>{displayFeatured.headline}</a>
 				</h1>
 				<div 
-					class="text-base md:text-lg text-gray-800 font-inter mb-4 leading-relaxed max-w-3xl prose prose-gray"
+					class="text-base md:text-lg text-gray-800 font-inter mb-4 leading-relaxed max-w-3xl prose prose-gray line-clamp-3"
 					set:html={displayFeatured.body}
 				/>
 				<div class="text-sm font-medium font-inter text-gray-900 mt-auto">
@@ -107,8 +111,14 @@ const trendingNews = [
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {gridStories.map(story => (
                         <article class="group cursor-pointer">
-                            <div class="w-full aspect-[4/3] bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
-                                <span class="text-gray-400 text-xs text-center px-4">Image Missing</span>
+                            <div class="w-full aspect-[4/3] bg-gray-100 rounded-lg mb-4 overflow-hidden relative border border-gray-100">
+                                {story.featuredImageUrl ? (
+                                    <img src={story.featuredImageUrl} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={story.headline} />
+                                ) : (
+                                    <div class="flex items-center justify-center w-full h-full">
+                                        <span class="text-gray-400 text-[10px] font-black uppercase tracking-widest px-4">No Image</span>
+                                    </div>
+                                )}
                             </div>
                             <h3 class="text-xl font-bold font-playfair text-gray-900 group-hover:text-[#E94560] transition-colors mb-2 line-clamp-2">
                                 {story.headline}

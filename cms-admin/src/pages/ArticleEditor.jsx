@@ -1,8 +1,57 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { 
   Type, Check, X, Languages, Eye, EyeOff, Send, GripVertical, AlertCircle, Layout, Eraser, Settings2, ArrowLeft, Save, CheckCircle2, RefreshCw, Bold, Italic, Underline, Strikethrough, List, ListOrdered, CheckSquare, AlignLeft, AlignCenter, AlignRight, AlignJustify, Type as TypeIcon, Highlighter, Code, Quote, Image as ImageIcon, Link as LinkIcon, UploadCloud, Minus, Trash2, Plus, Hash, Tag, Calendar, Rocket, CheckCircle, Info
 } from 'lucide-react'
+
+// Helper for image compression
+const compressImage = (file, maxWidth = 1920, quality = 0.7) => {
+  return new Promise((resolve, reject) => {
+    if (!file || !file.type.startsWith('image/')) {
+      return reject(new Error('File is not an image'))
+    }
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = (event) => {
+      const img = new Image()
+      img.src = event.target.result
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        let width = img.width
+        let height = img.height
+
+        if (width > maxWidth) {
+          height = (maxWidth / width) * height
+          width = maxWidth
+        }
+
+        canvas.width = width
+        canvas.height = height
+        const ctx = canvas.getContext('2d')
+        ctx.drawImage(img, 0, 0, width, height)
+        
+        // Export as JPEG with compression quality
+        const dataUrl = canvas.toDataURL('image/jpeg', quality)
+        resolve(dataUrl)
+      }
+      img.onerror = (err) => reject(err)
+    }
+    reader.onerror = (err) => reject(err)
+  })
+}
+
+// Helper to register media in the central library
+const registerMedia = async (url, filename, mimeType, sizeBytes) => {
+  try {
+    await fetch('http://localhost:3000/cms/v1/media', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename, url, mimeType, sizeBytes })
+    })
+  } catch (err) {
+    console.error("Failed to register media", err)
+  }
+}
 
 const COLOR_PALETTE = [
   ['#000000', '#434343', '#666666', '#999999', '#B7B7B7', '#CCCCCC', '#D9D9D9', '#EFEFEF', '#F3F3F3', '#FFFFFF'],
@@ -17,7 +66,7 @@ const COLOR_PALETTE = [
 
 const STANDARD_COLORS = ['#000000', '#FFFFFF', '#4A86E8', '#EA4335', '#FBBC04', '#34A853', '#FF6D01', '#46BDC6']
 
-import { useParams } from 'react-router-dom'
+
 import { useEditor, EditorContent, ReactNodeViewRenderer, NodeViewWrapper, ReactRenderer } from '@tiptap/react'
 import { BubbleMenu } from '@tiptap/react/menus'
 import StarterKit from '@tiptap/starter-kit'
@@ -303,9 +352,14 @@ const ImageDropPaste = Extension.create({
             const files = event.dataTransfer?.files
             if (files?.[0]?.type.startsWith('image/')) {
               event.preventDefault()
-              const reader = new FileReader()
-              reader.onload = e => view.dispatch(view.state.tr.replaceSelectionWith(view.state.schema.nodes.customImage.create({ src: e.target.result })))
-              reader.readAsDataURL(files[0])
+              compressImage(files[0]).then(compressed => {
+                view.dispatch(view.state.tr.replaceSelectionWith(view.state.schema.nodes.customImage.create({ src: compressed })))
+              }).catch(err => {
+                console.error("Drop compression failed", err)
+                const reader = new FileReader()
+                reader.onload = e => view.dispatch(view.state.tr.replaceSelectionWith(view.state.schema.nodes.customImage.create({ src: e.target.result })))
+                reader.readAsDataURL(files[0])
+              })
               return true
             }
             return false
@@ -314,9 +368,14 @@ const ImageDropPaste = Extension.create({
             const item = event.clipboardData?.items[0]
             if (item?.type.startsWith('image/')) {
               const file = item.getAsFile()
-              const reader = new FileReader()
-              reader.onload = e => view.dispatch(view.state.tr.replaceSelectionWith(view.state.schema.nodes.customImage.create({ src: e.target.result })))
-              reader.readAsDataURL(file)
+              compressImage(file).then(compressed => {
+                view.dispatch(view.state.tr.replaceSelectionWith(view.state.schema.nodes.customImage.create({ src: compressed })))
+              }).catch(err => {
+                console.error("Paste compression failed", err)
+                const reader = new FileReader()
+                reader.onload = e => view.dispatch(view.state.tr.replaceSelectionWith(view.state.schema.nodes.customImage.create({ src: e.target.result })))
+                reader.readAsDataURL(file)
+              })
               return true
             }
             return false
@@ -397,6 +456,8 @@ export default function ArticleEditor() {
   const [availableTags, setAvailableTags] = useState([])
   const [publishedAt, setPublishedAt] = useState(new Date().toISOString().split('T')[0])
   const [dialog, setDialog] = useState({ show: false, title: '', message: '', type: 'info', onConfirm: null, onCancel: null })
+  const [featuredImageUrl, setFeaturedImageUrl] = useState('')
+  const [imageCaption, setImageCaption] = useState('')
   const [isDirty, setIsDirty] = useState(false)
   const autoSaveTimerRef = useRef(null)
   const isMounted = useRef(false)
@@ -517,6 +578,8 @@ export default function ArticleEditor() {
             setStatus(data.status || 'draft')
             setCategory(data.category || '')
             setTags(data.tags || [])
+            setFeaturedImageUrl(data.featuredImageUrl || '')
+            setImageCaption(data.imageCaption || '')
             if (data.publishedAt) {
               setPublishedAt(new Date(data.publishedAt).toISOString().split('T')[0])
             }
@@ -533,6 +596,7 @@ export default function ArticleEditor() {
   }, [id, editor])
 
   const handlePublish = async () => {
+    if (!featuredImageUrl) return setDialog({ show: true, type: 'error', title: 'Action Required', message: 'Header Image is mandatory for publishing.' })
     if (!headline) return setDialog({ show: true, type: 'error', title: 'Action Required', message: 'Article Headline is required.' })
     if (!category) return setDialog({ show: true, type: 'error', title: 'Action Required', message: 'Please select a Category before publishing.' })
     if (!tags || tags.length === 0) return setDialog({ show: true, type: 'error', title: 'Action Required', message: 'Please add at least one Tag before publishing.' })
@@ -563,7 +627,8 @@ export default function ArticleEditor() {
       body: editor.getHTML(),
       status: targetStatus,
       category,
-      tags,
+      featuredImageUrl,
+      imageCaption,
       publishedAt: publishedAt || new Date().toISOString()
     }
 
@@ -661,13 +726,13 @@ export default function ArticleEditor() {
     return () => {
       if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current)
     }
-  }, [isDirty, headline, category, tags])
+  }, [isDirty, headline, category, tags, featuredImageUrl, imageCaption])
 
-  // Track changes in headline, category, tags
+  // Track changes in headline, category, tags, image
   useEffect(() => {
     if (!isMounted.current) return
     setIsDirty(true)
-  }, [headline, category, tags])
+  }, [headline, category, tags, featuredImageUrl, imageCaption])
 
   useEffect(() => {
     isMounted.current = true
@@ -693,6 +758,8 @@ export default function ArticleEditor() {
       status: 'draft',
       category,
       tags,
+      featuredImageUrl,
+      imageCaption,
       publishedAt: publishedAt || null
     }
 
@@ -758,7 +825,7 @@ export default function ArticleEditor() {
     return () => {
       if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current)
     }
-  }, [updateCounter, headline, editor, status, category, tags])
+  }, [updateCounter, headline, editor, status, category, tags, featuredImageUrl, imageCaption])
 
   // Sentinel based scroll detection for reliable sticky behavior in any container
   const sentinelRef = useRef(null)
@@ -900,6 +967,103 @@ export default function ArticleEditor() {
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-10 mb-8 overflow-hidden relative">
          <div className="absolute top-0 left-0 w-1.5 h-full bg-[#E94560]/80"></div>
+         
+         {/* Mandatory Header Image Section */}
+         <div className="mb-10 group/header-image">
+            <label className="flex items-center gap-3 text-[11px] font-black text-gray-400 uppercase tracking-[0.25em] mb-4">
+              <div className="w-8 h-8 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover/header-image:bg-[#E94560]/10 group-hover/header-image:text-[#E94560] transition-all">
+                  <ImageIcon size={14} />
+              </div>
+              Header Image (Mandatory)
+            </label>
+            
+            <div className={`relative w-full aspect-[21/9] rounded-3xl overflow-hidden border-2 border-dashed transition-all duration-500 flex flex-col items-center justify-center bg-gray-50/50 ${featuredImageUrl ? 'border-transparent shadow-2xl' : 'border-gray-200 hover:border-[#E94560]/30 hover:bg-[#E94560]/5'}`}>
+               {featuredImageUrl ? (
+                 <>
+                   <img src={featuredImageUrl} className="w-full h-full object-cover" alt="Header" />
+                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/header-image:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-sm">
+                      <label className="px-6 py-3 bg-white text-gray-900 rounded-2xl font-black text-sm cursor-pointer hover:scale-105 transition-all shadow-xl">
+                        Change Image
+                        <input 
+                          type="file" 
+                          className="hidden" 
+                          accept="image/jpeg, image/png"
+                          onChange={async e => {
+                            const file = e.target.files?.[0]
+                            if (file) {
+                               if (file.size > 5 * 1024 * 1024) {
+                                 return setDialog({ show: true, type: 'error', title: 'File Too Large', message: 'Header image must be less than 5MB.' })
+                               }
+                               if (!['image/jpeg', 'image/png'].includes(file.type)) {
+                                 return setDialog({ show: true, type: 'error', title: 'Invalid Format', message: 'Please upload a PNG or JPEG image.' })
+                               }
+                               try {
+                                 const compressed = await compressImage(file)
+                                 setFeaturedImageUrl(compressed)
+                                 registerMedia(compressed, file.name, file.type, file.size)
+                               } catch (err) {
+                                 console.error("Compression failed", err)
+                                 const reader = new FileReader()
+                                 reader.onload = (event) => setFeaturedImageUrl(event.target.result)
+                                 reader.readAsDataURL(file)
+                               }
+                            }
+                          }}
+                        />
+                      </label>
+                      <button 
+                        onClick={() => setFeaturedImageUrl('')}
+                        className="px-6 py-3 bg-red-500 text-white rounded-2xl font-black text-sm hover:bg-red-600 transition-all shadow-xl hover:scale-105"
+                      >
+                        Remove
+                      </button>
+                   </div>
+                 </>
+               ) : (
+                 <label className="flex flex-col items-center cursor-pointer group/upload">
+                   <div className="w-16 h-16 rounded-2xl bg-white shadow-xl flex items-center justify-center mb-4 text-gray-400 group-hover/upload:text-[#E94560] group-hover/upload:scale-110 transition-all duration-500">
+                      <UploadCloud size={32} />
+                   </div>
+                   <p className="text-gray-900 font-black text-lg mb-1">Click to upload header image</p>
+                   <p className="text-gray-400 text-[10px] font-black uppercase tracking-widest mt-1">Recommended: 1600x900px • Max: 5MB (PNG/JPEG)</p>
+                   <input 
+                      type="file" 
+                      className="hidden" 
+                      accept="image/jpeg, image/png"
+                      onChange={async e => {
+                        const file = e.target.files?.[0]
+                        if (file) {
+                           if (file.size > 5 * 1024 * 1024) {
+                             return setDialog({ show: true, type: 'error', title: 'File Too Large', message: 'Header image must be less than 5MB.' })
+                           }
+                           if (!['image/jpeg', 'image/png'].includes(file.type)) {
+                             return setDialog({ show: true, type: 'error', title: 'Invalid Format', message: 'Please upload a PNG or JPEG image.' })
+                           }
+                           try {
+                             const compressed = await compressImage(file)
+                             setFeaturedImageUrl(compressed)
+                             registerMedia(compressed, file.name, file.type, file.size)
+                           } catch (err) {
+                             console.error("Compression failed", err)
+                             const reader = new FileReader()
+                             reader.onload = (event) => setFeaturedImageUrl(event.target.result)
+                             reader.readAsDataURL(file)
+                           }
+                        }
+                      }}
+                    />
+                 </label>
+               )}
+            </div>
+            {featuredImageUrl && (
+              <input 
+                className="w-full text-center text-xs font-black text-gray-300 mt-4 outline-none border-none bg-transparent hover:text-gray-500 focus:text-[#E94560] transition-colors tracking-widest uppercase" 
+                value={imageCaption} 
+                placeholder="ENTER IMAGE CAPTION..." 
+                onChange={e => setImageCaption(e.target.value)}
+              />
+            )}
+         </div>
          
          <input 
             className="text-5xl font-black w-full outline-none placeholder-gray-100 text-gray-900 border-none focus:ring-0 mb-10 tracking-tight leading-tight"
@@ -1327,24 +1491,37 @@ export default function ArticleEditor() {
                 >
                   <LinkIcon size={14} /> From URL
                 </button>
-                <label className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold hover:bg-gray-50 rounded cursor-pointer text-gray-700">
-                  <UploadCloud size={14} /> Upload File
-                  <input 
-                    type="file" 
-                    className="hidden" 
-                    accept="image/*"
-                    onChange={e => {
-                      const file = e.target.files?.[0]
-                      if (file) {
-                        const reader = new FileReader()
-                        reader.onload = (event) => {
-                          editor.chain().focus().insertContent({ type: 'customImage', attrs: { src: event.target.result } }).run()
+                  <label className="flex items-center gap-2 px-3 py-1.5 text-[10px] font-black hover:bg-gray-50 rounded cursor-pointer text-gray-700 uppercase">
+                    <UploadCloud size={14} /> Upload File (Max 5MB • PNG/JPEG)
+                    <input 
+                      type="file" 
+                      className="hidden" 
+                      accept="image/jpeg, image/png"
+                      onChange={async e => {
+                        const file = e.target.files?.[0]
+                        if (file) {
+                           if (file.size > 5 * 1024 * 1024) {
+                             return setDialog({ show: true, type: 'error', title: 'File Too Large', message: 'Image must be less than 5MB.' })
+                           }
+                           if (!['image/jpeg', 'image/png'].includes(file.type)) {
+                             return setDialog({ show: true, type: 'error', title: 'Invalid Format', message: 'Please upload a PNG or JPEG image.' })
+                           }
+                           try {
+                             const compressed = await compressImage(file)
+                             editor.chain().focus().insertContent({ type: 'customImage', attrs: { src: compressed } }).run()
+                             registerMedia(compressed, file.name, file.type, file.size)
+                           } catch (err) {
+                             console.error("Compression failed", err)
+                             const reader = new FileReader()
+                             reader.onload = (event) => {
+                               editor.chain().focus().insertContent({ type: 'customImage', attrs: { src: event.target.result } }).run()
+                             }
+                             reader.readAsDataURL(file)
+                           }
                         }
-                        reader.readAsDataURL(file)
-                      }
-                    }}
-                  />
-                </label>
+                      }}
+                    />
+                  </label>
               </div>
             </div>
           </div>
