@@ -563,7 +563,9 @@ fastify.get('/cms/v1/rss/fetch', async (request, reply) => {
       bookmarkedOnly = false,
       sources = '',
       categories = '',
-      dateFilter = 'all'
+      dateFilter = 'all',
+      startDate = '',
+      endDate = ''
     } = request.query;
 
     const skip = (parseInt(page) - 1) * parseInt(limit);
@@ -589,36 +591,68 @@ fastify.get('/cms/v1/rss/fetch', async (request, reply) => {
       }));
     }
 
-    // 4. Date Filter
-    if (dateFilter !== 'all') {
-      const now = new Date();
-      if (dateFilter === '7d') {
-        where.pubDate = { gte: new Date(now.setDate(now.getDate() - 7)) };
-      } else if (dateFilter === '15d') {
-        where.pubDate = { gte: new Date(now.setDate(now.getDate() - 15)) };
-      } else if (dateFilter === '30d') {
-        where.pubDate = { gte: new Date(now.setDate(now.getDate() - 30)) };
+    // 4. Date Filter + Dynamic 1-Year 'Lifecycle' Threshold
+    const now = new Date();
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(now.getFullYear() - 1);
+    
+    let gteDate = oneYearAgo; 
+    let lteDate = null;
+
+    if (dateFilter === 'custom' && startDate) {
+      gteDate = new Date(startDate);
+      gteDate.setHours(0, 0, 0, 0); // Precision start of day
+      
+      if (endDate) {
+        lteDate = new Date(endDate);
+        lteDate.setHours(23, 59, 59, 999);
+      } else {
+        // If single date provided, fetch for that day only
+        lteDate = new Date(startDate);
+        lteDate.setHours(23, 59, 59, 999);
       }
     }
+ else if (dateFilter !== 'all' && dateFilter !== '') {
+      const filterDate = new Date();
+      if (dateFilter === '24h') filterDate.setHours(now.getHours() - 24);
+      else if (dateFilter === '48h') filterDate.setHours(now.getHours() - 48);
+      else if (dateFilter === '7d') filterDate.setDate(now.getDate() - 7);
+      else if (dateFilter === '15d') filterDate.setDate(now.getDate() - 15);
+      else if (dateFilter === '3m') filterDate.setMonth(now.getMonth() - 3);
+      
+      if (filterDate > oneYearAgo) gteDate = filterDate;
+    }
+    
+    where.pubDate = { gte: gteDate };
+    if (lteDate) where.pubDate.lte = lteDate;
 
     // Initial source check
     const sourcesCount = await prisma.rssSource.count();
     if (sourcesCount === 0) {
       const initialSources = [
-        { name: 'Inc42 Funding', url: 'https://inc42.com/tag/funding/feed/' },
         { name: 'YourStory', url: 'https://yourstory.com/feed' },
-        { name: 'Entrackr', url: 'https://entrackr.com/rss' },
+        { name: 'Inc42', url: 'https://inc42.com/feed/' },
+        { name: 'Entrackr', url: 'https://entrackr.com/feed/' },
         { name: 'Economic Times', url: 'https://economictimes.indiatimes.com/small-biz/startups/rssfeeds/11959139.cms' },
+        { name: 'VCCircle', url: 'https://news.google.com/rss/search?q=site:vccircle.com&hl=en-IN&gl=IN&ceid=IN:en' },
+        { name: 'LiveMint', url: 'https://www.livemint.com/rss/companies' },
+        { name: 'Moneycontrol', url: 'https://news.google.com/rss/search?q=site:moneycontrol.com+startup&hl=en-IN&gl=IN&ceid=IN:en' },
+        { name: 'StartupTalky', url: 'https://startuptalky.com/rss/' },
+        { name: 'Entrepreneur India', url: 'https://india.entrepreneur.com/feed/' },
+        { name: 'The Ken', url: 'https://the-ken.com/feed/' },
+        { name: 'Morning Context', url: 'https://themorningcontext.com/feed/' },
+        { name: 'Finshots', url: 'https://finshots.in/rss/' },
+        { name: 'IndianStartupNews', url: 'https://indianstartupnews.com/rss' },
+        { name: 'TICE News', url: 'https://www.tice.news/category/startup-story/feed/' },
         { name: 'StartupNews.fyi', url: 'https://startupnews.fyi/feed/' },
-        { name: 'Trak.in Startups', url: 'https://trak.in/feed' },
-        { name: 'Business Standard', url: 'https://www.business-standard.com/rss/home_page_top_stories.rss' },
-        { name: 'VCCircle Alternative', url: 'https://www.livemint.com/rss/companies' },
-        { name: 'StartupTalky', url: 'https://startuptalky.com/rss' },
-        { name: 'IndianStartupTimes', url: 'https://www.indianstartuptimes.com/feed' },
-        { name: 'TOI Business', url: 'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms' }
+        { name: 'Google News', url: 'https://news.google.com/rss/search?q=Indian+Startup+News&hl=en-IN&gl=IN&ceid=IN:en' }
       ];
       for (const s of initialSources) {
-        await prisma.rssSource.create({ data: s }).catch(() => {});
+        await prisma.rssSource.upsert({ 
+          where: { url: s.url },
+          update: { name: s.name },
+          create: { ...s, isActive: true } 
+        }).catch(() => {});
       }
     }
 
@@ -626,81 +660,9 @@ fastify.get('/cms/v1/rss/fetch', async (request, reply) => {
     const shouldSync = sync === 'true' || sync === true || cacheCount === 0;
 
     if (shouldSync) {
-      const activeSources = await prisma.rssSource.findMany({ where: { isActive: true } });
-      const majorSources = [
-        { name: 'Inc42', keys: ['inc42'] },
-        { name: 'YourStory', keys: ['yourstory'] },
-        { name: 'Entrackr', keys: ['entrackr', 'entracker'] },
-        { name: 'Economic Times', keys: ['economic times', 'et auto', 'et tech'] },
-        { name: 'Business Standard', keys: ['business standard'] },
-        { name: 'VCCircle', keys: ['vccircle'] },
-        { name: 'Trak.in', keys: ['trak.in', 'trakin'] },
-        { name: 'LiveMint', keys: ['livemint', 'mint'] },
-        { name: 'StartupTalky', keys: ['startuptalky'] },
-        { name: 'IndianStartupTimes', keys: ['indianstartuptimes', 'indian startup times'] },
-        { name: 'Times of India', keys: ['times of india', 'toi'] },
-        { name: 'PNN', keys: ['pnn', 'press note network'] },
-        { name: 'PTI', keys: ['pti', 'press trust of india'] },
-        { name: 'ANI', keys: ['ani news'] },
-        { name: 'Search Engine Journal', keys: ['search engine journal', 'sej'] }
-      ];
-
-      for (const source of activeSources) {
-        try {
-          console.log(`Deep Sync: Starting scan for ${source.name}...`);
-          // Archive Recovery: Fetch up to 10 pages of historical data
-          const pagesToFetch = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; 
-          for (const pageNum of pagesToFetch) {
-            let fetchUrl = source.url;
-            if (pageNum > 1) {
-               // Support multiple pagination styles
-               const separator = fetchUrl.includes('?') ? '&' : '?';
-               // Add both common pagination params to be safe, or try sequentially
-               fetchUrl += `${separator}paged=${pageNum}&page=${pageNum}`;
-            }
-
-            console.log(`  Scanning Depth ${pageNum}: ${fetchUrl}`);
-            const feed = await parser.parseURL(fetchUrl);
-            
-            if (!feed.items || feed.items.length === 0) {
-              console.log(`  Depth ${pageNum} empty. Stopping scan.`);
-              break;
-            }
-
-            for (const item of feed.items) {
-              const authorRaw = item.creator || item.author || 'Editorial Team';
-              const authorLower = authorRaw.toLowerCase();
-              const titleLower = (item.title || '').toLowerCase();
-              
-              let detectedSource = source.name; 
-              const match = majorSources.find(ms => 
-                ms.keys.some(k => authorLower.includes(k) || titleLower.includes(k))
-              );
-              
-              if (match) detectedSource = match.name;
-
-              var dateObj = item.pubDate ? new Date(item.pubDate) : new Date();
-              var validDate = isNaN(dateObj.getTime()) ? new Date() : dateObj;
-
-              await prisma.discoveryCache.upsert({
-                where: { link: item.link },
-                update: {}, 
-                create: {
-                  title: item.title || 'Untitled Signal',
-                  link: item.link,
-                  pubDate: validDate,
-                  content: (item.contentSnippet || item.content || item.description || item.summary || '').substring(0, 5000),
-                  author: authorRaw,
-                  source: detectedSource,
-                  categories: JSON.stringify(item.categories || [])
-                }
-              }).catch(() => {});
-            }
-          }
-        } catch (err) {
-          console.error(`Deep Sync failed for ${source.name}: ${err.message}`);
-        }
-      }
+      // Trigger background sync but don't wait for all of it to finish for the response
+      // unless it's a small fetch. To keep responsive, we'll run it in background.
+      runDeepSync().catch(err => fastify.log.error(`Background Sync Error: ${err.message}`));
     }
 
     const total = await prisma.discoveryCache.count({ where });
@@ -746,12 +708,133 @@ fastify.post('/cms/v1/rss/bookmark/:id', async (request, reply) => {
   }
 });
 
+// Historical Archival Engine: Deep Sync Core
+async function runDeepSync() {
+  const activeSources = await prisma.rssSource.findMany({ where: { isActive: true } });
+  
+  const industryVerticals = [
+    { name: 'Fintech', keys: ['payments', 'lending', 'insurtech', 'wealthtech', 'regtech', 'fintech', 'banking', 'upi', 'neobank', 'wealth management', 'insurance', 'stock brokerage'] },
+    { name: 'EdTech', keys: ['k-12', 'higher education', 'upskilling', 'test prep', 'edtech', 'learning', 'classroom', 'skill development', 'tutoring', 'academy'] },
+    { name: 'AI / ML', keys: ['generative ai', 'computer vision', 'nlp', 'ai infrastructure', 'ai/ml', 'artificial intelligence', 'machine learning', 'llm', 'deep learning', 'automation'] },
+    { name: 'HealthTech', keys: ['digital health', 'medtech', 'pharmatech', 'mental health', 'healthtech', 'medical', 'healthcare', 'clinics', 'diagnostics', 'telemedicine'] },
+    { name: 'AgriTech', keys: ['precision farming', 'supply chain', 'agrifinance', 'agritech', 'farming', 'agriculture', 'harvest', 'farmer', 'agrifood'] },
+    { name: 'CleanTech / EV', keys: ['electric vehicles', 'renewable energy', 'green tech', 'cleantech', 'ev', 'battery', 'solar', 'wind', 'sustainability', 'charging infrastructure'] },
+    { name: 'SaaS / B2B', keys: ['enterprise software', 'dev tools', 'hr tech', 'martech', 'saas', 'b2b', 'software-as-a-service', 'crm', 'workflow', 'clouddays'] },
+    { name: 'D2C / E-Commerce', keys: ['consumer brands', 'quick commerce', 'fashion', 'd2c', 'e-commerce', 'omnichannel', 'retail', 'marketplace', 'wellness', 'beauty', 'direct-to-consumer', 'personal care', 'jewellery', 'apparel', 'direct to consumer'] },
+    { name: 'LogisTech', keys: ['supply chain', 'warehousing', 'last-mile delivery', 'logistech', 'logistics', 'delivery', 'fleet', 'shipping', 'freight'] },
+    { name: 'SpaceTech / DeepTech', keys: ['semiconductors', 'space', 'quantum', 'spacetech', 'deeptech', 'satellite', 'rocketry', 'isro', 'robotics'] },
+    { name: 'Gaming / Media', keys: ['gaming', 'media', 'creator economy', 'esports', 'publisher', 'content creation', 'streaming', 'entertainment', 'influencer economy'] },
+    { name: 'Real Estate Tech', keys: ['proptech', 'construction tech', 'real estate', 'property', 'real estate tech', 'homebuying', 'coworking'] }
+  ];
+
+  const majorSources = [
+    { name: 'Inc42', keys: ['inc42'] },
+    { name: 'YourStory', keys: ['yourstory'] },
+    { name: 'Entrackr', keys: ['entrackr', 'entracker'] },
+    { name: 'Economic Times', keys: ['economic times', 'et auto', 'et tech'] },
+    { name: 'Moneycontrol', keys: ['moneycontrol'] },
+    { name: 'VCCircle', keys: ['vccircle'] },
+    { name: 'LiveMint', keys: ['livemint', 'mint'] },
+    { name: 'StartupTalky', keys: ['startuptalky'] },
+    { name: 'Entrepreneur India', keys: ['entrepreneur'] },
+    { name: 'The Ken', keys: ['the ken'] },
+    { name: 'Morning Context', keys: ['morning context'] },
+    { name: 'Finshots', keys: ['finshots'] },
+    { name: 'IndianStartupNews', keys: ['indianstartupnews', 'indian startup news'] },
+    { name: 'TICE News', keys: ['tice news', 'tice'] },
+    { name: 'StartupNews.fyi', keys: ['startupnews.fyi', 'startupnews'] }
+  ];
+
+  const now = new Date();
+  const oneYearAgo = new Date();
+  oneYearAgo.setFullYear(now.getFullYear() - 1);
+
+  console.log(`[Historical Bridge]: Starting deep archival scan for ${activeSources.length} sources...`);
+
+  for (let i = 0; i < activeSources.length; i += 3) {
+    const batch = activeSources.slice(i, i + 3);
+    await Promise.all(batch.map(async (source) => {
+      try {
+        console.log(`  Bridge Sync: Processing ${source.name}...`);
+        const pagesToFetch = Array.from({ length: 100 }, (_, i) => i + 1); 
+        let lastFirstItemLink = '';
+
+        for (const pageNum of pagesToFetch) {
+          let fetchUrl = source.url;
+          if (pageNum > 1) {
+             const separator = fetchUrl.includes('?') ? '&' : '?';
+             fetchUrl += `${separator}paged=${pageNum}&page=${pageNum}`;
+          }
+
+          const feed = await parser.parseURL(fetchUrl).catch(() => null);
+          if (!feed || !feed.items || feed.items.length === 0 || feed.items[0].link === lastFirstItemLink) break;
+          lastFirstItemLink = feed.items[0].link;
+
+          const firstItemDate = feed.items[0].pubDate ? new Date(feed.items[0].pubDate) : null;
+          if (firstItemDate && firstItemDate < oneYearAgo && pageNum > 1) break;
+
+          for (const item of feed.items) {
+            const rawDate = item.isoDate || item.pubDate || item.date;
+            const validDate = rawDate ? new Date(rawDate) : null;
+            if (!validDate || isNaN(validDate.getTime()) || validDate < oneYearAgo) continue;
+
+            const creatorRaw = item.creator || item.author || 'Editorial Team';
+            const contentBuffer = (item.title + ' ' + (item.contentSnippet || item.content || '')).toLowerCase();
+            
+            // Auto-Classification Logic
+            const detectedIndustry = industryVerticals.find(v => 
+              v.keys.some(k => contentBuffer.includes(k))
+            )?.name || 'Other / Unclassified';
+
+            let detectedSource = source.name;
+            const match = majorSources.find(ms => ms.keys.some(k => creatorRaw.toLowerCase().includes(k) || (item.title || '').toLowerCase().includes(k)));
+            if (match) detectedSource = match.name;
+
+            await prisma.discoveryCache.upsert({
+              where: { link: item.link },
+              update: {
+                categories: JSON.stringify([detectedIndustry])
+              }, 
+              create: {
+                title: item.title || 'Untitled Signal',
+                link: item.link,
+                pubDate: validDate,
+                content: (item.contentSnippet || item.content || '').substring(0, 5000),
+                author: creatorRaw,
+                source: detectedSource,
+                categories: JSON.stringify([detectedIndustry])
+              }
+            }).catch(() => {});
+          }
+          await new Promise(r => setTimeout(r, 200));
+        }
+        console.log(`  Bridge Sync: ${source.name} completed.`);
+      } catch (err) {
+        console.error(`  Bridge Sync Error [${source.name}]: ${err.message}`);
+      }
+    }));
+  }
+  console.log(`[Historical Bridge]: Archival cycle completed.`);
+}
+
 // Start server
 const start = async () => {
   try {
     const port = process.env.PORT ? parseInt(process.env.PORT) : 3000
     await fastify.listen({ port, host: '0.0.0.0' })
     fastify.log.info(`Server listening on port ${port}`)
+
+    // Permanent Fix: Run the Archival bridge every 4 hours automatically
+    setInterval(() => {
+      runDeepSync().catch(err => console.error('Historical Worker Failed:', err));
+    }, 4 * 60 * 60 * 1000);
+
+    // Initial fill on boot if cache is light
+    const cacheCount = await prisma.discoveryCache.count();
+    if (cacheCount < 100) {
+      runDeepSync().catch(err => console.error('Initial Historical Fill Failed:', err));
+    }
+
   } catch (err) {
     fastify.log.error(err)
     process.exit(1)

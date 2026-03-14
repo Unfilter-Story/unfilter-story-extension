@@ -1,9 +1,9 @@
 # PRD — CMS Admin (Editorial Suite)
 # Unfilter Story — News Platform & Editorial Infrastructure
 
-**Version:** 2.0  
+**Version:** 2.2  
 **Date:** March 14, 2026  
-**Status:** Feature Complete — Strategic Expansion Active  
+**Status:** Feature Complete — Industrial Archival Cycle Active  
 **Owner:** Product Engineering Team
 
 ---
@@ -113,26 +113,31 @@ The **Unfilter Story CMS Admin** is a professional-grade editorial environment d
 *   **Industrial-Grade Research Environment**:
     *   High-contrast, pixel-perfect UI tailored for high-speed editorial scanning.
     *   **Signal Navigation Matrix**:
-        *   **News Perimeter Selection**: Multi-select filtering across major news sources (*Entrackr, YourStory, Inc42, etc.*).
-        *   **Industry Signal Matrix**: Multi-select thematic filtering by categories (*Funding, Tech, AI, etc.*) with dynamic extraction.
+        *   **News Perimeter Selection**: Multi-select filtering across the 16-point Strategic Intelligence Matrix (*YourStory, Inc42, Entrackr, Economic Times, VCCircle, LiveMint, Moneycontrol, StartupTalky, Entrepreneur India, The Ken, Morning Context, Finshots, IndianStartupNews, TICE News, StartupNews.fyi, Google News*).
+        *   **Industry Signal Matrix**: Multi-select thematic filtering across a **Fixed 12-point Industrial Intelligence Taxonomy**. Automated classification powered by a **Thematic Routing Engine** with a multi-sector keyword lexicon.
 *   **Tactical Control Row**:
     *   **View Mode Matrix**: Iconographic toggles for high-density **Grid** or **List** viewing.
-    *   **Operational Controls**: Integrated **Bookmarking** engine (state-aware) and **Temporal Control** (7d, 15d, 30d, Anytime signals).
-    *   **Density Plane Adjustment**: Configurable signal volume (10, 20, 50 per page).
+    *   **Precision Calendar Matrix**: Interactive date selection for specific windows (e.g., 13th March 2026). Users can provide only a **Start Date** to isolate signals for a single day (EndDate is non-mandatory).
+    *   **Manual Trigger Protocol**: Custom ranges require an explicit **APPLY** action to trigger signal acquisition, preventing partial fetches during input calibration.
+    *   **Temporal Constraint Guard**: Single-scan date ranges are strictly limited to **90 days**. Adjusting signal density (10, 20, 50 per page) triggers immediate, sub-second re-fetches to maintain UX fluidity.
+    *   **Dynamic 1-Year Lifecycle**: A strict 1-year rolling research perimeter. Historical signals are automatically maintained by the background archival worker.
+    *   **Temporal Precision Guard**: Mandatory capture of original publishing date/time (isoDate priority). Fallback to system time is strictly prohibited to prevent signal spoofing.
 *   **Signal Intelligence Bar**:
     *   **Dynamic Status Core**: Real-time tracking of **Total Signals** across the active research perimeter.
     *   **Pagination Console**: High-precision navigation with deep tracking (e.g., "PAGE 1 OF 22").
 *   **Deep Signal Sync (Backend Architecture)**:
-    *   **Historical Archive Recovery**: Automated multi-page RSS crawling (Depth 1-10) to bridge year-over-year news gaps.
+    *   **Historical Archive Recovery**: Automated multi-page RSS crawling with **High-Density Depth (up to 100 pages)** to bridge multi-month news gaps for high-frequency sources.
+    *   **Autonomous Archival Worker**: Background cron-style cycle (4-hour interval) ensuring the 1-year research lifecycle is permanently populated.
+    *   **Parallel Ingestion Core**: Simultaneous processing of 3-source batches to accelerate signal acquisition without triggering rate limits.
+    *   **Thematic Routing Engine**: Automated keyword mapping layer that classifies raw signals into specialized industry verticals with sub-second precision.
     *   **Source Normalization Engine**: Automated publisher identification and author-level routing.
-    *   **Server-Side Intelligence**: High-performance Prisma filtering for sub-second signal acquisition.
 
 ---
 
 ## 4. Technical Requirements
 *   **Frontend**: React 19 & Vite.
-*   **API**: Node.js Fastify (50MB payload limit) with **RSS Parsing (Depth 10)**.
-*   **Database**: SQLite/PostgreSQL via Prisma with **High-Density Signal Indexing**.
+*   **API**: Node.js Fastify (50MB payload limit) with **RSS Parsing (Depth 100)** and autonomous background workers.
+*   **Database**: SQLite/PostgreSQL via Prisma with **High-Density Temporal Indexing**.
 
 ---
-*Maintained by Antigravity AI — Admin PRD v2.0*
+*Maintained by Antigravity AI — Admin PRD v2.2*

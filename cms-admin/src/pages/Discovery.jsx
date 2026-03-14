@@ -13,6 +13,8 @@ export default function Discovery() {
   const [selectedSources, setSelectedSources] = useState([]) 
   const [selectedCategories, setSelectedCategories] = useState([]) 
   const [viewMode, setViewMode] = useState('grid') 
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
   const [page, setPage] = useState(1)
   const [pagination, setPagination] = useState({ totalPages: 1, total: 0, limit: 10 })
   const [loadingMore, setLoadingMore] = useState(false)
@@ -27,24 +29,53 @@ export default function Discovery() {
     try {
       const sourcesParam = selectedSources.length > 0 ? `&sources=${encodeURIComponent(selectedSources.join(','))}` : ''
       const categoriesParam = selectedCategories.length > 0 ? `&categories=${encodeURIComponent(selectedCategories.join(','))}` : ''
-      const dateParam = dateFilter !== 'all' ? `&dateFilter=${dateFilter}` : ''
+      
+      let dateParam = dateFilter !== 'all' ? `&dateFilter=${dateFilter}` : ''
+      if (dateFilter === 'custom' && startDate) {
+        // Enforce 90-day limit
+        if (endDate) {
+          const start = new Date(startDate)
+          const end = new Date(endDate)
+          const diffDays = Math.ceil(Math.abs(end - start) / (1000 * 60 * 60 * 24))
+          if (diffDays > 90) {
+            alert('Temporal Alert: Date range cannot exceed 90 days in a single scan.')
+            setLoading(false)
+            setRefreshing(false)
+            return
+          }
+           dateParam += `&startDate=${startDate}&endDate=${endDate}`
+        } else {
+           dateParam += `&startDate=${startDate}`
+        }
+      }
       
       const res = await fetch(`http://localhost:3000/cms/v1/rss/fetch?page=${pageNum}&limit=${limit}${isSync ? '&sync=true' : ''}${bookmarkedOnly ? '&bookmarkedOnly=true' : ''}${sourcesParam}${categoriesParam}${dateParam}`)
       const data = await res.json()
       
-      const items = data.items || (Array.isArray(data) ? data : [])
+      const items = (data.items || (Array.isArray(data) ? data : [])).map(item => {
+        if (typeof item.categories === 'string') {
+          try { item.categories = JSON.parse(item.categories); } catch (e) { item.categories = []; }
+        }
+        return item;
+      })
       const paginationData = data.pagination || { totalPages: 1, total: items.length, limit }
 
-      if (pageNum === 1) {
-        setNews(items)
-      } else {
-        setNews(items) // In standard pagination, we replace instead of append
-      }
-      
+      setNews(items)
       setPagination(paginationData)
       setPage(pageNum)
+      
+      // Preserve for Offline Access
+      if (pageNum === 1) {
+        localStorage.setItem('unfilter_discovery_cache', JSON.stringify({ items, pagination: paginationData }))
+      }
     } catch (err) {
-      console.error('Failed to fetch news', err)
+      console.error('Offline Mode: Attempting to recover from local signal buffer...', err)
+      const cached = localStorage.getItem('unfilter_discovery_cache')
+      if (cached && pageNum === 1) {
+        const { items, pagination } = JSON.parse(cached)
+        setNews(items)
+        setPagination(pagination)
+      }
     } finally {
       setLoading(false)
       setRefreshing(false)
@@ -63,8 +94,19 @@ export default function Discovery() {
   }
 
   useEffect(() => {
+    // If we're in custom mode, only auto-fetch when the 'limit' changes (not the dates)
+    // All other presets and filters (bookmarked, sources) trigger auto-fetch immediately.
+    if (dateFilter !== 'custom') {
+      fetchNews(false, 1)
+    }
+  }, [bookmarkedOnly, selectedSources, selectedCategories, dateFilter])
+
+  // Limit change should always trigger re-fetch to maintain UX consistency
+  useEffect(() => {
+    // For custom, only re-fetch if we have a startDate (filter is active)
+    if (dateFilter === 'custom' && !startDate) return;
     fetchNews(false, 1)
-  }, [limit, bookmarkedOnly, selectedSources, selectedCategories, dateFilter])
+  }, [limit])
 
   useEffect(() => {
     fetchSources()
@@ -154,24 +196,21 @@ export default function Discovery() {
     return true
   })
 
-  // Dynamic Category Extraction: Only show categories eligible for the active source perimeter
-  const categoriesSourcePool = selectedSources.length > 0 
-    ? news.filter(item => selectedSources.includes(item.source))
-    : news
-
-  const allCategories = [...new Set(categoriesSourcePool.flatMap(item => 
-    (item.categories || []).map(c => c?.name || c)
-  ))].sort()
-
-  // Auto-prune categories that are no longer eligible for the new source selection
-  useEffect(() => {
-    if (selectedCategories.length > 0) {
-      const validCategories = selectedCategories.filter(cat => allCategories.includes(cat))
-      if (validCategories.length !== selectedCategories.length) {
-        setSelectedCategories(validCategories)
-      }
-    }
-  }, [selectedSources, allCategories])
+  // Fixed Industry Taxonomy based on Business Intelligence Matrix
+  const allCategories = [
+    'Fintech',
+    'EdTech',
+    'AI / ML',
+    'HealthTech',
+    'AgriTech',
+    'CleanTech / EV',
+    'SaaS / B2B',
+    'D2C / E-Commerce',
+    'LogisTech',
+    'SpaceTech / DeepTech',
+    'Gaming / Media',
+    'Real Estate Tech'
+  ]
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-7xl mx-auto pb-20">
@@ -276,10 +315,10 @@ export default function Discovery() {
               {allCategories.map(cat => (
                 <label 
                   key={cat}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold cursor-pointer transition-all border ${
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-[10px] font-black cursor-pointer transition-all border ${
                     selectedCategories.includes(cat)
-                      ? 'bg-[var(--cms-accent-light)] text-[var(--cms-accent)] border-[var(--cms-accent)]/20 shadow-sm'
-                      : 'bg-white text-gray-700 border-gray-200 hover:border-gray-300 shadow-sm'
+                      ? 'bg-[var(--cms-accent)] text-white border-[var(--cms-accent)] shadow-md'
+                      : 'bg-white text-gray-500 border-gray-100 hover:border-gray-200'
                   }`}
                 >
                   <input 
@@ -294,7 +333,7 @@ export default function Discovery() {
                       }
                     }}
                   />
-                  <span>{cat}</span>
+                  <span>{cat.toUpperCase()}</span>
                 </label>
               ))}
             </div>
@@ -345,12 +384,42 @@ export default function Discovery() {
                 className="w-full pl-12 pr-6 py-4 bg-white border border-gray-200 rounded-3xl text-[11px] font-black appearance-none cursor-pointer focus:ring-2 focus:ring-[var(--cms-accent)] transition-all uppercase tracking-[0.15em] shadow-sm text-black"
               >
                 <option value="all">Anytime Signals</option>
+                <option value="24h">Last 24 Hours</option>
+                <option value="48h">Last 48 Hours</option>
                 <option value="7d">Last 7 Days</option>
                 <option value="15d">Last 15 Days</option>
-                <option value="30d">Last 30 Days</option>
+                <option value="3m">Last 3 Months</option>
+                <option value="custom">📅 Custom Calendar</option>
               </select>
               <ChevronDown size={14} className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400" />
             </div>
+
+            {dateFilter === 'custom' && (
+              <div className="flex items-center gap-2 animate-in slide-in-from-left-2 duration-300">
+                <input 
+                  type="date" 
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  max={new Date().toISOString().split('T')[0]}
+                  className="px-6 py-4 bg-white border border-gray-200 rounded-3xl text-[11px] font-black focus:ring-2 focus:ring-[var(--cms-accent)] transition-all uppercase tracking-widest shadow-sm outline-none"
+                />
+                <span className="text-gray-300 font-bold">to</span>
+                <input 
+                  type="date" 
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  max={new Date().toISOString().split('T')[0]}
+                  className="px-6 py-4 bg-white border border-gray-200 rounded-3xl text-[11px] font-black focus:ring-2 focus:ring-[var(--cms-accent)] transition-all uppercase tracking-widest shadow-sm outline-none"
+                />
+                <button 
+                  onClick={() => fetchNews(false, 1)}
+                  disabled={!startDate}
+                  className="px-6 py-4 bg-[var(--cms-accent)] text-white rounded-3xl text-[10px] font-black tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[var(--cms-accent)]/20 uppercase"
+                >
+                  Apply
+                </button>
+              </div>
+            )}
 
             <div className="relative group w-40">
               <select 
@@ -436,15 +505,20 @@ export default function Discovery() {
                     <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest bg-gray-50 px-3 py-1 rounded-lg border border-gray-100">
                       By {item.author || 'Editorial'}
                     </span>
+                    {(item.categories || []).map((cat, ci) => (
+                      <span key={ci} className="px-3 py-1 bg-black text-white rounded-lg text-[9px] font-black uppercase tracking-widest border border-black shadow-sm">
+                        {cat}
+                      </span>
+                    ))}
                   </div>
-                  <div className={`flex items-center gap-2 font-bold text-gray-900 ${viewMode === 'grid' ? 'text-xs border-t border-gray-50 pt-2' : 'text-sm'}`}>
-                    <RefreshCw size={12} className="text-[var(--cms-accent)]" />
+                  <div className={`flex items-center gap-2 font-bold text-gray-900 ${viewMode === 'grid' ? 'text-[13px] border-t border-gray-50 pt-2' : 'text-[13px]'}`}>
+                    <Clock size={13} className="text-[var(--cms-accent)]" />
                     <span className="tracking-tight">
-                      {new Date(item.pubDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      {new Date(item.pubDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                     </span>
                     <span className="text-gray-300">|</span>
                     <span className="tracking-tight">
-                      {new Date(item.pubDate).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}
+                      {new Date(item.pubDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
                     </span>
                     <button 
                       onClick={(e) => {
