@@ -169,7 +169,10 @@ export default function Discovery() {
   // Signal Matrix Taxonomy (PRD v1.9)
   const SIGNAL_TYPES = [
     'Funding', 'Startup Launch', 'Acquisition', 'Shutdown', 'Layoffs', 
-    'Product Launch', 'Founder Interview', 'Pivot', 'Funding Ask', 'Revenue Milestone'
+    'Product News / Launch', 'Founder Story / Profile', 'Pivot', 'Funding Ask', 'Revenue Milestone',
+    'Partnership', 'Expansion', 'Regulatory / Policy', 'Leadership / People', 'Legal / Litigation', 'Ecosystem News',
+    'Market Insights / Reports', 'Tech Guides / Tutorials', 'Trends / Future Tech', 'Product Review / Opinion',
+    'Innovation / Breakthrough'
   ]
 
   // Fixed Industry Taxonomy based on Business Intelligence Matrix
@@ -195,7 +198,11 @@ export default function Discovery() {
     'LogisTech',
     'SpaceTech / DeepTech',
     'Gaming / Media',
-    'Real Estate Tech'
+    'Real Estate Tech',
+    'Government / Policy',
+    'Manufacturing / Industrial',
+    'Big Tech / Consumer Software',
+    'Telecom / Infrastructure'
   ]
 
   return (

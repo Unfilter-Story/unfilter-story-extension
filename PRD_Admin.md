@@ -1,7 +1,7 @@
 # PRD — CMS Admin (Editorial Suite)
 # Unfilter Story — News Platform & Editorial Infrastructure
 
-**Version:** 2.6  
+**Version:** 2.7  
 **Date:** March 15, 2026  
 **Status:** Feature Complete — Industrial Archival Cycle Active  
 **Owner:** Product Engineering Team
@@ -109,52 +109,44 @@ The **Unfilter Story CMS Admin** is a professional-grade editorial environment d
     *   **Source Mapping**: Visual indicators showing which categories drive which specific page sections.
     *   **Path Validation**: Real-time status checks for permalinks to ensure no routing conflicts.
 
-### 3.10 Discovery Engine (Signal Intelligence Console)
+### 3.10 Discovery Engine (Signal Intelligence Console v2.0)
 *   **Professional Research Environment**:
     *   High-density, pixel-perfect UI with **Natural Casing** and **Non-Italic** typographic mandate for maximum legibility.
     *   **Logo Intelligence System**:
-        *   **Real-Time Visual Attribution Sync**: Backend-driven mapping of partner logos to news signals during every fetch cycle, ensuring zero-latency brand recognition.
-        *   **Multi-Layered Fallback Hierarchy**: A four-stage resilience protocol for elusive logos:
-            1. **Primary**: High-fidelity logo from curated partner metadata.
-            2. **Secondary**: Tactical domain-based favicon harvesting (Google S2).
-            3. **Tertiary**: Emergency lookup via *IconHorse* intelligence vectors.
-            4. **Final Response**: High-contrast typographic badge ensuring zero "broken" visual states.
+        *   **Real-Time Visual Attribution Sync**: Backend-driven mapping of partner logos to news signals during every fetch cycle.
+        *   **Multi-Layered Fallback Hierarchy**: Four-stage resilience protocol (Curated > Google S2 > IconHorse > Typographic Badge).
     *   **Ergonomic Research Sidebar (Collapsible UX)**:
-        *   **Tactical Parameter Management**: All intelligence vectors—*Temporal Radius, Startup Category, Industries, and News Perimeter*—are individually collapsible to optimize vertical focus.
-        *   **Fluid Interaction Layer**: Smooth entry/exit animations with persistent batch action controls (ALL | CLR).
-    *   **Signal Navigation Matrix**:
-        *   **News Perimeter Selection**: Multi-select filtering across the 16-point Strategic Intelligence Matrix (*YourStory, Inc42, Entrackr, Economic Times, VCCircle, LiveMint, Moneycontrol, StartupTalky, Entrepreneur India, The Ken, Morning Context, Finshots, IndianStartupNews, TICE News, StartupNews.fyi, Google News*).
-        *   **Startup Category Matrix**: Multi-select thematic filtering across a **Dual-Vector Intelligence Matrix** (21 Industry Verticals + 10 Business Signals).
-        *   **Multi-Tiered Signal Architecture**: Automated high-confidence classification for 10 critical business events (**Funding, Startup Launch, Acquisition, Shutdown, Layoffs, Product Launch, Founder Interview, Pivot, Funding Ask, Revenue Milestone**).
-        *   **Signal Conflict Resolution (PRD v1.9 Ruleset)**:
-            1.  **Rule 1 — Priority Hierarchy**: If multiple signals compete, the higher-priority signal wins. Order: **Funding > Shutdown > Layoffs > Acquisition > Pivot > Funding Ask > Revenue Milestone > Startup Launch > Product Launch > Founder Interview**.
-            2.  **Rule 2 — Multi-Tag Capability**: Articles covering multiple discrete events (e.g., "raises $200M" + "turns profitable") are assigned dual tags.
-            3.  **Rule 3 — Strategic Cap**: A maximum of **2 tags** per signal pulse. If 3+ signals qualify, Rule 1 selects the top 2.
-            4.  **Rule 4 — Headline Subject Weighting**: Triggers found in the grammatical subject/headline take absolute priority over body mentions (Tiebreaker).
+        *   **Tactical Parameter Management**: Collapsible sectors for *Temporal Radius, Startup Category, Industries, and News Perimeter*.
+    *   **Universal Intelligence Matrix (v13.0 - Purified)**:
+        *   **The Purified Signal Doctrine**: Explicit exclusion of non-startup "noise" (Macro-Economics, GDP, Stocks, General Public Market IPOs) to ensure 100% actionable startup intelligence.
+        *   **Startup Signal Taxonomy (19 Master Signals)**: 
+            *   *Actionable Economics*: Funding, Funding Ask, Revenue Milestone, Acquisition, Layoffs, Shutdown.
+            *   *Growth Milestones*: Startup Launch, Product News / Launch, Expansion, Partnership.
+            *   *Strategic Intelligence*: Founder Story / Profile, Pivot, Regulatory / Policy, Leadership / People, Legal / Litigation, Ecosystem News.
+            *   *Content Intelligence*: Tech Guides / Tutorials, Trends / Future Tech, Product Review / Opinion, Innovation / Breakthrough.
+        *   **Industry Vertical Taxonomy (25 Verticals)**: 
+            *   *Core Tech*: Fintech, EdTech, HealthTech, MobilityTech, FoodTech, TravelTech, AI / ML, Cybersecurity, Web3 / Blockchain, ClimateTech / Sustainability, AgriTech, CleanTech / EV.
+            *   *Infrastructure*: Developer Infrastructure / Cloud, SpaceTech / DeepTech, Telecom / Infrastructure, Manufacturing / Industrial.
+            *   *Consumer/B2B*: Social / Community Platforms, SaaS / B2B, D2C / E-Commerce, LogisTech, Gaming / Media, Real Estate Tech, Government / Policy, Big Tech / Consumer Software.
+    *   **Signal Conflict Resolution (PRD v2.0 Ruleset)**:
+        1.  **Rule 1 — Single-Signal Integrity**: Every article is assigned exactly **ONE** primary signal. Multi-tagging is prohibited for Signals to ensure structural clarity. Order of Priority: *Funding > Shutdown > Layoffs > Acquisition > ... > Innovation*.
+        2.  **Rule 2 — Structural Subject Weighting**: Triggers found in the Title take absolute precedence over Body mentions.
+        3.  **Rule 3 — Semantic False-Positive Guards**: Cross-sector filtration (e.g., "AI/ML" news cannot trigger "EdTech" without explicit education-sector anchor words).
+        4.  **Rule 4 — Whole-Word Precision**: Use of `\b` boundary enforcement in the Regex core to prevent contextual "leakage" (e.g., "space" vs "personal space").
 *   **Tactical Control Row**:
-    *   **View Mode Matrix**: Iconographic toggles for high-density **Grid** or **List** viewing.
-    *   **Precision Calendar Matrix**: Interactive date selection for specific windows (e.g., 13th March 2026). Users can provide only a **Start Date** to isolate signals for a single day (EndDate is non-mandatory).
-    *   **Manual Trigger Protocol**: Custom ranges require an explicit **APPLY** action to trigger signal acquisition, preventing partial fetches during input calibration.
-    *   **Temporal Constraint Guard**: Single-scan date ranges are strictly limited to **90 days**. Adjusting signal density (10, 20, 50 per page) triggers immediate, sub-second re-fetches to maintain UX fluidity.
-    *   **Dynamic 1-Year Lifecycle**: A strict 1-year rolling research perimeter. Historical signals are automatically maintained by the background archival worker.
-    *   **Temporal Precision Guard**: Mandatory capture of original publishing date/time (isoDate priority). Fallback to system time is strictly prohibited to prevent signal spoofing.
-*   **Signal Intelligence Bar**:
-    *   **Dynamic Status Core**: Real-time tracking of **Total Signals** across the active research perimeter.
-    *   **Pagination Console**: High-precision navigation with deep tracking (e.g., "Unit 1 / 58").
-    *   **Emergency Signal Sync**: Circular manual trigger to bypass cache and force a fresh re-linking of brand assets and signal metadata.
+    *   **Precision Calendar Matrix**: Interactive date selection (Start/End). Single StartDate isolates signals for exactly one day.
+    *   **Temporal Constraint Guard**: 90-day single-scan limit; 1-year rolling research lifecycle.
 *   **Deep Signal Sync (Backend Architecture)**:
-    *   **Thematic Routing Engine**: Automated keyword mapping layer that performs dual-vector classification and priority-based conflict resolution.
-    *   **Signal Keyword Dictionary**: A multi-tiered lexicon (v1.9) with specific confidence thresholds for industrial business events.
-    *   **Historical Archive Recovery**: Automated multi-page RSS crawling with **High-Density Depth (up to 100 pages)**.
-    *   **Autonomous Archival Worker**: Background cron-style cycle (4-hour interval) ensuring the 1-year research lifecycle is permanently populated.
-    *   **Parallel Ingestion Core**: Simultaneous processing of 3-source batches to accelerate signal acquisition.
+    *   **Parallel Ingestion Core**: Simultaneous processing of 3-source batches.
+    *   **Autonomous Archival Worker**: 4-hour cron cycle ensuring continuous population of the 1-year intelligence buffer.
 
 ---
 
 ## 4. Technical Requirements
 *   **Frontend**: React 19 & Vite.
-*   **API**: Node.js Fastify (50MB payload limit) with **RSS Parsing (Depth 100)**, integrated **Logo Fallback Services** (Google, IconHorse), and autonomous background workers.
-*   **Database**: SQLite/PostgreSQL via Prisma with **High-Density Temporal Indexing** and Real-time Brand Mapping.
+*   **API**: Node.js Fastify (50MB payload limit) with **RSS Parsing (Depth 100)**, integrated **Logo Fallback Services**, and **Regex-based Whole-Word Matching** for industrial-grade classification confidence.
+*   **Database**: SQLite/PostgreSQL via Prisma with **High-Density Temporal Indexing**.
 
 ---
-*Maintained by Antigravity AI — Admin PRD v2.6*
+
+*Maintained by Antigravity AI — Admin PRD v2.7*
