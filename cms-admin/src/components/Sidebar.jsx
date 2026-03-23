@@ -11,6 +11,7 @@ import {
   Menu,
   Map,
   Zap,
+  Sparkles,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react'
@@ -18,11 +19,12 @@ import {
 const navItems = [
   { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
   { label: 'Articles', icon: PenTool, path: '/articles' },
+  { label: 'AI Studio', icon: Sparkles, path: '/ai-studio' },
+  { label: 'Discovery Engine', icon: Zap, path: '/discovery' },
   { label: 'Media Library', icon: ImageIcon, path: '/media' },
   { label: 'Categories & Tags', icon: FolderTree, path: '/taxonomy' },
   { label: 'Header Navigation', icon: Menu, path: '/navigation' },
   { label: 'Site Architecture', icon: Map, path: '/architecture' },
-  { label: 'Discovery Engine', icon: Zap, path: '/discovery' },
   { label: 'Users', icon: Users, path: '/users' },
   { label: 'Settings', icon: Settings, path: '/settings' },
 ]

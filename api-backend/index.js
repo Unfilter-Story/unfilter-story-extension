@@ -3,6 +3,8 @@ import cors from '@fastify/cors'
 import { PrismaClient } from '@prisma/client'
 import 'dotenv/config'
 import Parser from 'rss-parser'
+import { GoogleGenerativeAI } from '@google/generative-ai'
+import Bytez from 'bytez.js'
 
 const parser = new Parser({
   headers: {
@@ -17,6 +19,10 @@ const fastify = Fastify({
 })
 
 const prisma = new PrismaClient()
+
+// AI Initialization
+const genAI = process.env.GEMINI_API_KEY ? new GoogleGenerativeAI(process.env.GEMINI_API_KEY) : null
+const bytez = process.env.BYTEZ_API_KEY ? new Bytez(process.env.BYTEZ_API_KEY) : null
 
 // Register CORS
 fastify.register(cors, {
@@ -98,6 +104,65 @@ fastify.post('/cms/v1/articles', async (request, reply) => {
       return reply.code(400).send({ error: `An article with the headline "${headline}" already exists. Please choose a unique headline.` })
     }
     reply.code(500).send({ error: 'Failed to create article: ' + error.message })
+  }
+})
+
+// === AI AI STUDIO ROUTES ===
+fastify.post('/cms/v1/ai/transform', async (request, reply) => {
+  const { text, model, action } = request.body
+  
+  if (!text) return reply.code(400).send({ error: 'Text is required' })
+  
+  try {
+    let result = ''
+    
+    // Default action to Rewrite if none provided
+    const aiAction = action || 'Rewrite professionally'
+    const systemPrompt = `You are a professional editorial assistant for Unfilter Story, a high-end startup news platform. 
+    Your tone is technical, precise, and sophisticated. 
+    Perform the following action on the provided text: "${aiAction}". 
+    Return ONLY the transformed text. Do not include any intros, outros, or conversational filler.`
+
+    if (model === 'gemini') {
+      if (!genAI) throw new Error('Gemini API Key missing')
+      const geminiModel = genAI.getGenerativeModel({ model: "gemini-2.5-pro" })
+      const prompt = `${systemPrompt}\n\nTEXT TO TRANSFORM:\n${text}`
+      const response = await geminiModel.generateContent(prompt)
+      result = response.response.text()
+    } else if (model === 'gpt') {
+      if (!bytez) throw new Error('Bytez API Key missing')
+      const gptModel = bytez.model("openai/gpt-4o-mini")
+      const prompt = `${systemPrompt}\n\nTEXT TO TRANSFORM:\n${text}`
+      const resp = await gptModel.run([
+        { role: "user", content: prompt }
+      ])
+      
+      if (resp.error) throw new Error(resp.error)
+      
+      // Fix: Bytez returns an object { role: 'assistant', content: '...' }
+      result = resp.output && resp.output.content ? resp.output.content : resp.output
+    } else {
+      return reply.code(400).send({ error: 'Invalid model selected' })
+    }
+    
+    // Ensure we return a string and trim it
+    const finalResult = (typeof result === 'string' ? result : JSON.stringify(result)) || ''
+    return reply.code(200).send({ result: finalResult.trim() })
+  } catch (error) {
+    fastify.log.error(error)
+    
+    let userMessage = error.message || 'AI Transformation failed'
+    const modelName = model === 'gemini' ? 'Gemini 2.5 Pro' : 'GPT-4o mini'
+    
+    // Handle specific Google Quota error (429)
+    if (userMessage.includes('429') || userMessage.includes('Quota') || userMessage.includes('quota')) {
+      userMessage = `QUOTA EXCEEDED: ${modelName} has a strict limit on the FREE API tier (approx. 2 requests per minute). Your "Google One/Pro" subscription does not cover API usage. To fix this, wait 60 seconds before trying again, or use the GPT model.`
+    }
+
+    return reply.code(500).send({ 
+      error: userMessage,
+      details: error.stack 
+    })
   }
 })
 
@@ -633,7 +698,7 @@ fastify.get('/cms/v1/rss/fetch', async (request, reply) => {
       const initialSources = [
         { name: 'YourStory', url: 'https://yourstory.com/feed', logoUrl: 'https://www.google.com/s2/favicons?domain=yourstory.com&sz=128' },
         { name: 'Inc42', url: 'https://inc42.com/feed/', logoUrl: 'https://www.google.com/s2/favicons?domain=inc42.com&sz=128' },
-        { name: 'Entrackr', url: 'https://entrackr.com/feed/', logoUrl: 'https://www.google.com/s2/favicons?domain=entrackr.com&sz=128' },
+        { name: 'Entrackr', url: 'https://entrackr.com/rss', logoUrl: 'https://www.google.com/s2/favicons?domain=entrackr.com&sz=128' },
         { name: 'Economic Times', url: 'https://economictimes.indiatimes.com/small-biz/startups/rssfeeds/11959139.cms', logoUrl: 'https://www.google.com/s2/favicons?domain=economictimes.indiatimes.com&sz=128' },
         { name: 'VCCircle', url: 'https://news.google.com/rss/search?q=site:vccircle.com&hl=en-IN&gl=IN&ceid=IN:en', logoUrl: 'https://www.google.com/s2/favicons?domain=vccircle.com&sz=128' },
         { name: 'LiveMint', url: 'https://www.livemint.com/rss/companies', logoUrl: 'https://www.google.com/s2/favicons?domain=livemint.com&sz=128' },
@@ -644,9 +709,15 @@ fastify.get('/cms/v1/rss/fetch', async (request, reply) => {
         { name: 'Morning Context', url: 'https://themorningcontext.com/feed/', logoUrl: 'https://www.google.com/s2/favicons?domain=themorningcontext.com&sz=128' },
         { name: 'Finshots', url: 'https://finshots.in/rss/', logoUrl: 'https://www.google.com/s2/favicons?domain=finshots.in&sz=128' },
         { name: 'IndianStartupNews', url: 'https://indianstartupnews.com/rss', logoUrl: 'https://www.google.com/s2/favicons?domain=indianstartupnews.com&sz=128' },
-        { name: 'TICE News', url: 'https://www.tice.news/category/startup-story/feed/', logoUrl: 'https://www.google.com/s2/favicons?domain=tice.news&sz=128' },
+        { name: 'TICE News', url: 'https://www.tice.news/rss', logoUrl: 'https://www.google.com/s2/favicons?domain=tice.news&sz=128' },
         { name: 'StartupNews.fyi', url: 'https://startupnews.fyi/feed/', logoUrl: 'https://play-lh.googleusercontent.com/SI26dmhoYzDnpUoEm1pQpRECb8o6GKkUV8wOOnKWRSLVWdA6ln6Wshw1jHH-DNt0yg' },
-        { name: 'Google News', url: 'https://news.google.com/rss/search?q=Indian+Startup+News&hl=en-IN&gl=IN&ceid=IN:en', logoUrl: 'https://www.google.com/s2/favicons?domain=news.google.com&sz=128' }
+        { name: 'Google News', url: 'https://news.google.com/rss/search?q=Indian+Startup+News&hl=en-IN&gl=IN&ceid=IN:en', logoUrl: 'https://www.google.com/s2/favicons?domain=news.google.com&sz=128' },
+        { name: 'Google News - Funding', url: 'https://news.google.com/rss/search?q=Indian+startup+funding+raised&hl=en-IN&gl=IN&ceid=IN:en', logoUrl: 'https://www.google.com/s2/favicons?domain=news.google.com&sz=128' },
+        { name: 'Google News - Tech India', url: 'https://news.google.com/rss/search?q=India+technology+startup+launch&hl=en-IN&gl=IN&ceid=IN:en', logoUrl: 'https://www.google.com/s2/favicons?domain=news.google.com&sz=128' },
+        { name: 'Google News - Unicorn', url: 'https://news.google.com/rss/search?q=India+unicorn+startup+valuation&hl=en-IN&gl=IN&ceid=IN:en', logoUrl: 'https://www.google.com/s2/favicons?domain=news.google.com&sz=128' },
+        { name: 'TechCrunch India', url: 'https://news.google.com/rss/search?q=site:techcrunch.com+India&hl=en-IN&gl=IN&ceid=IN:en', logoUrl: 'https://www.google.com/s2/favicons?domain=techcrunch.com&sz=128' },
+        { name: 'Business Standard', url: 'https://www.business-standard.com/rss/companies-start-ups-10307.rss', logoUrl: 'https://www.google.com/s2/favicons?domain=business-standard.com&sz=128' },
+        { name: 'NDTV Profit', url: 'https://news.google.com/rss/search?q=site:ndtvprofit.com+startup&hl=en-IN&gl=IN&ceid=IN:en', logoUrl: 'https://www.google.com/s2/favicons?domain=ndtvprofit.com&sz=128' }
       ];
       for (const s of initialSources) {
         await prisma.rssSource.upsert({ 
@@ -736,28 +807,28 @@ async function runDeepSync() {
       { name: 'Fintech', keys: ['payments', 'lending', 'insurtech', 'wealthtech', 'regtech', 'fintech', 'banking', 'upi', 'neobank', 'wealth management', 'insurance', 'stock brokerage', 'rbi', 'bank of india', 'finance', 'trading'] },
       { name: 'EdTech', keys: ['k-12', 'higher education', 'upskilling', 'test prep', 'edtech', 'learning', 'classroom', 'skill development', 'tutoring', 'academy', 'education', 'books', 'reading', 'school'] },
       { name: 'HealthTech', keys: ['digital health', 'medtech', 'pharmatech', 'mental health', 'healthtech', 'medical', 'healthcare', 'clinics', 'diagnostics', 'telemedicine', 'biotech', 'pharma', 'fda', 'drugs', 'medicine'] },
-      { name: 'MobilityTech', keys: ['mobilitytech', 'ride-hailing', 'electric mobility', 'autonomous vehicles', 'ride sharing', 'scooters', 'micro-mobility', 'urban transport', 'car sharing', 'aviation', 'airlines', 'indigo', 'air-tickets', 'flight'] },
+      { name: 'MobilityTech', keys: ['mobilitytech', 'ride-hailing', 'electric mobility', 'autonomous vehicles', 'ride sharing', 'scooters', 'micro-mobility', 'urban transport', 'car sharing', 'aviation', 'airlines', 'indigo', 'air-tickets', 'flight', 'automotive', 'cars', 'vehicles', 'self-driving', 'tesla', 'uber', 'ola', 'rapido', 'driver', 'taxi', 'cab'] },
       { name: 'FoodTech', keys: ['foodtech', 'cloud kitchen', 'food delivery', 'grocery delivery', 'restaurant tech', 'agrifoodtech', 'food subscription', 'beverages', 'cooking', 'nutrition'] },
       { name: 'TravelTech', keys: ['traveltech', 'hotel booking', 'tourism', 'travel agency', 'airline tech', 'staycation', 'hospitality tech', 'resort', 'vacation'] },
-      { name: 'AI / ML', keys: ['generative ai', 'computer vision', 'nlp', 'ai infrastructure', 'ai/ml', 'artificial intelligence', 'machine learning', 'llm', 'deep learning', 'automation', 'data governance', 'algorithmic'] },
-      { name: 'Cybersecurity', keys: ['cybersecurity', 'encryption', 'firewall', 'data protection', 'hacking', 'threat detection', 'security software', 'identity management', 'zero trust', 'privacy', 'data breach'] },
+      { name: 'AI / ML', keys: ['generative ai', 'computer vision', 'nlp', 'ai infrastructure', 'ai/ml', 'artificial intelligence', 'machine learning', 'llm', 'deep learning', 'automation', 'data governance', 'algorithmic', 'chatgpt', 'openai', 'gemini ai', 'claude', 'copilot', 'ai model', 'neural network', 'gpt', 'agentic ai', 'ai agent', 'ai coding'] },
+      { name: 'Cybersecurity', keys: ['cybersecurity', 'encryption', 'firewall', 'data protection', 'hacking', 'threat detection', 'security software', 'identity management', 'zero trust', 'privacy', 'data breach', 'vpn', 'passkey', 'password', 'malware', 'ransomware', 'phishing', 'antivirus', 'security vulnerability', 'exploit', 'authentication', 'two-factor', 'biometric'] },
       { name: 'Web3 / Blockchain', keys: ['web3', 'blockchain', 'crypto', 'nft', 'decentralized', 'metaverse', 'defi', 'ethereum', 'bitcoin', 'smart contracts', 'dao', 'token'] },
       { name: 'ClimateTech / Sustainability', keys: ['climatetech', 'sustainability', 'carbon credit', 'circular economy', 'waste management', 'esg', 'environmental', 'green tech', 'renewable energy', 'ecology'] },
       { name: 'AgriTech', keys: ['precision farming', 'supply chain', 'agrifinance', 'agritech', 'farming', 'agriculture', 'harvest', 'farmer', 'agrifood', 'grains', 'pulses', 'organic'] },
       { name: 'CleanTech / EV', keys: ['electric', 'cleantech', 'ev', 'battery', 'solar', 'wind', 'charging', 'hypercharger', 'green energy', 'photovoltaic'] },
       { name: 'Future of Work / HRTech', keys: ['hrtech', 'remote work', 'talent acquisition', 'hiring', 'payroll', 'workforce management', 'recruitment', 'future of work', 'employee engagement', 'productivity'] },
-      { name: 'Developer Infrastructure / Cloud', keys: ['devops', 'cloud infrastructure', 'backend', 'cloud native', 'api', 'serverless', 'kubernetes', 'aws', 'azure', 'dev tools', 'infrastructure-as-code', 'computing'] },
+      { name: 'Developer Infrastructure / Cloud', keys: ['devops', 'cloud infrastructure', 'backend', 'cloud native', 'api', 'serverless', 'kubernetes', 'aws', 'azure', 'dev tools', 'infrastructure-as-code', 'computing', 'github', 'gitlab', 'docker', 'ci/cd', 'data center', 'data centre', 'cloud computing', 'database', 'sql', 'server', 'hosting', 'oracle cloud', 'ibm cloud'] },
       { name: 'Social / Community Platforms', keys: ['social media', 'community platform', 'networking', 'social network', 'dating app', 'content platform', 'short video', 'creator economy', 'creativity'] },
       { name: 'SaaS / B2B', keys: ['enterprise software', 'martech', 'saas', 'b2b', 'software-as-a-service', 'crm', 'workflow', 'clouddays', 'digital transformation'] },
       { name: 'D2C / E-Commerce', keys: ['consumer brands', 'quick commerce', 'fashion', 'd2c', 'e-commerce', 'omnichannel', 'retail', 'marketplace', 'wellness', 'beauty', 'direct-to-consumer', 'personal care', 'jewellery', 'apparel', 'direct to consumer', 'cosmetics', 'handmade', 'artisan', 'lifestyle', 'personal growth'] },
       { name: 'LogisTech', keys: ['supply chain', 'warehousing', 'last-mile delivery', 'logistech', 'logistics', 'delivery', 'fleet', 'shipping', 'freight', 'trucking', 'warehouse'] },
-      { name: 'SpaceTech / DeepTech', keys: ['semiconductors', 'spacetech', 'deeptech', 'satellite', 'rocketry', 'isro', 'robotics', 'space exploration', 'space startup', 'agnikul', 'skyroot', 'quantum', 'physics', 'iss', 'international space station', 'space station', 'orbit'] },
-      { name: 'Gaming / Media', keys: ['gaming', 'media', 'esports', 'publisher', 'content creation', 'streaming', 'entertainment', 'influencer economy', 'ott', 'movies', 'music', 'tv series', 'original series', 'premiere'] },
+      { name: 'SpaceTech / DeepTech', keys: ['semiconductors', 'spacetech', 'deeptech', 'satellite', 'rocketry', 'isro', 'robotics', 'space exploration', 'space startup', 'agnikul', 'skyroot', 'quantum', 'physics', 'iss', 'international space station', 'space station', 'orbit', 'chip', 'chipset', 'semiconductor', 'memory', 'ram', 'processor', 'cpu', 'gpu', 'nvidia', 'amd', 'intel', 'micron', 'qualcomm', 'mediatek', 'snapdragon', 'foundry', 'wafer', 'fab', 'tsmc'] },
+      { name: 'Gaming / Media', keys: ['gaming', 'media', 'esports', 'publisher', 'content creation', 'streaming', 'entertainment', 'influencer economy', 'ott', 'movies', 'music', 'tv series', 'original series', 'premiere', 'playstation', 'xbox', 'nintendo', 'steam', 'game pass', 'battlefield', 'emulation', 'handheld', 'console', 'video game'] },
       { name: 'Real Estate Tech', keys: ['proptech', 'construction tech', 'real estate', 'property', 'real estate tech', 'homebuying', 'coworking', 'architecture', 'housing'] },
       { name: 'Government / Policy', keys: ['regulatory', 'government', 'ministry', 'policy', 'framework', 'guidelines', 'statutory', 'law', 'legal', 'compliance', 'taxation', 'gst', 'central gov', 'cabinet', 'rbi', 'sebi', 'regulator'] },
-      { name: 'Manufacturing / Industrial', keys: ['manufacturing', 'factory', 'industrial', 'hardware', 'assembly', 'production', 'raw materials', 'machinery', 'leather', 'textile', 'processing', 'electronics'] },
-      { name: 'Big Tech / Consumer Software', keys: ['microsoft', 'apple', 'google', 'meta', 'amazon', 'firefox', 'windows', 'browser', 'operating system', 'software update', 'technical support', 'big tech', 'consumer tech', 'adobe'] },
-      { name: 'Telecom / Infrastructure', keys: ['telecom', 'fiber', '5g', '6g', 'network', 'broadband', 'infrastructure', 'connectivity', 'operator', 'openreach', 'internet provider', 'vibrations', 'underground'] }
+      { name: 'Manufacturing / Industrial', keys: ['manufacturing', 'factory', 'industrial', 'hardware', 'assembly', 'production', 'raw materials', 'machinery', 'leather', 'textile', 'processing', 'electronics', 'components', 'supply chain disruption', 'make in india', 'pli scheme', 'capacity expansion', 'plant', 'unit', 'craft', 'artisan', 'handmade', 'furniture'] },
+      { name: 'Big Tech / Consumer Software', keys: ['microsoft', 'apple', 'google', 'meta', 'amazon', 'firefox', 'windows', 'browser', 'operating system', 'software update', 'technical support', 'big tech', 'consumer tech', 'adobe', 'iphone', 'ipad', 'macbook', 'pixel', 'samsung', 'android', 'ios', 'app store', 'play store', 'chrome', 'safari', 'edge', 'smartphone', 'tablet', 'wearable', 'smartwatch', 'airpods', 'galaxy', 'oneplus', 'nothing phone', 'linkedin', 'whatsapp', 'instagram', 'twitter', 'reddit', 'youtube', 'netflix', 'spotify'] },
+      { name: 'Telecom / Infrastructure', keys: ['telecom', 'fiber', '5g', '6g', 'network', 'broadband', 'infrastructure', 'connectivity', 'operator', 'openreach', 'internet provider', 'vibrations', 'underground', 'jio', 'airtel', 'vodafone', 'bsnl', 'spectrum', 'tower', 'satellite internet', 'starlink', 'wifi', 'wi-fi'] }
     ];
 
     const signalCategories = [
@@ -872,8 +943,8 @@ async function runDeepSync() {
       {
         name: 'Trends / Future Tech',
         priority: 19,
-        strong: ['future of', 'will ai', 'impact of', 'the end of', 'state of', 'trends in', 'outlook', 'prediction', 'visionary', 'paradigm shift'],
-        supporting: ['analysis', 'forecast', 'landscape', 'potential', 'opportunity', 'transforming', 'shaping', 'evolution', 'thinker', 'long-term', 'innovation', 'vision', 'transformation']
+        strong: ['future of', 'will ai', 'impact of', 'the end of', 'state of', 'trends in', 'outlook', 'prediction', 'predicts', 'visionary', 'paradigm shift', 'could revolutionize', 'will transform', 'will reshape', 'will disrupt'],
+        supporting: ['analysis', 'forecast', 'landscape', 'potential', 'opportunity', 'transforming', 'shaping', 'evolution', 'thinker', 'long-term', 'innovation', 'vision', 'transformation', 'long-term growth', 'will need', 'will require', 'could create', 'may impact']
       },
       {
         name: 'Product Review / Opinion',
@@ -1050,16 +1121,24 @@ const start = async () => {
     await fastify.listen({ port, host: '0.0.0.0' })
     fastify.log.info(`Server listening on port ${port}`)
 
-    // Permanent Fix: Run the Archival bridge every 4 hours automatically
-    setInterval(() => {
-      runDeepSync().catch(err => console.error('Historical Worker Failed:', err));
-    }, 4 * 60 * 60 * 1000);
+    // Initial fill on boot if cache is stale (older than 2 hours)
+    const latestItem = await prisma.discoveryCache.findFirst({
+      orderBy: { pubDate: 'desc' }
+    });
+    
+    const twoHoursAgo = new Date();
+    twoHoursAgo.setHours(twoHoursAgo.getHours() - 2);
 
-    // Initial fill on boot if cache is light
-    const cacheCount = await prisma.discoveryCache.count();
-    if (cacheCount < 100) {
+    if (!latestItem || latestItem.pubDate < twoHoursAgo) {
+      console.log('[Historical Bridge]: Cache is stale or empty. Triggering initial refresh...');
       runDeepSync().catch(err => console.error('Initial Historical Fill Failed:', err));
     }
+
+    // Permanent Fix: Run the Archival bridge every 30 minutes for better discovery velocity
+    setInterval(() => {
+      console.log('[Historical Bridge]: Triggering periodic refresh...');
+      runDeepSync().catch(err => console.error('Historical Worker Failed:', err));
+    }, 30 * 60 * 1000); // 30 minutes
 
   } catch (err) {
     fastify.log.error(err)

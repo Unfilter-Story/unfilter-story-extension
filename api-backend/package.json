@@ -12,7 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "@fastify/cors": "^11.2.0",
+    "@google/generative-ai": "^0.24.1",
     "@prisma/client": "^6.19.2",
+    "bytez.js": "^3.0.0",
     "dotenv": "^17.3.1",
     "fastify": "^5.8.2",
     "jsonwebtoken": "^9.0.3",

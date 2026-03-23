@@ -1,9 +1,9 @@
 # PRD — CMS Admin (Editorial Suite)
 # Unfilter Story — News Platform & Editorial Infrastructure
 
-**Version:** 2.7  
-**Date:** March 15, 2026  
-**Status:** Feature Complete — Industrial Archival Cycle Active  
+**Version:** 2.8  
+**Date:** March 22, 2026  
+**Status:** Feature Complete — High-Frequency Archival Cycle Active  
 **Owner:** Product Engineering Team
 
 ---
@@ -137,8 +137,9 @@ The **Unfilter Story CMS Admin** is a professional-grade editorial environment d
     *   **Precision Calendar Matrix**: Interactive date selection (Start/End). Single StartDate isolates signals for exactly one day.
     *   **Temporal Constraint Guard**: 90-day single-scan limit; 1-year rolling research lifecycle.
 *   **Deep Signal Sync (Backend Architecture)**:
-    *   **Parallel Ingestion Core**: Simultaneous processing of 3-source batches.
-    *   **Autonomous Archival Worker**: 4-hour cron cycle ensuring continuous population of the 1-year intelligence buffer.
+    *   **Parallel Ingestion Core**: Simultaneous processing of 3-source batches across an expanded network of 25+ high-fidelity RSS endpoints (including targeted Google News metrics, TechCrunch India, Business Standard, and NDTV Profit).
+    *   **Autonomous Archival Worker**: 30-minute high-frequency cron cycle ensuring continuous, near-real-time population of the 1-year intelligence buffer.
+    *   **Advanced Keyword Taxonomy**: Comprehensive precision mapping covering granular subsets like semiconductors, RAM, generative model variants, cybersecurity tools (VPNs, passkeys), and automotive-tech to virtually eliminate 'Unclassified' leakage.
 
 ---
 
@@ -149,4 +150,4 @@ The **Unfilter Story CMS Admin** is a professional-grade editorial environment d
 
 ---
 
-*Maintained by Antigravity AI — Admin PRD v2.7*
+*Maintained by Antigravity AI — Admin PRD v2.8*
