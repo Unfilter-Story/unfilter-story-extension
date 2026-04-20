@@ -23,9 +23,12 @@ export default function Discovery() {
   const [collapsed, setCollapsed] = useState({ signals: false, industries: false, sources: false, temporal: false })
   const [syncStatus, setSyncStatus] = useState(null)
   const [justCompleted, setJustCompleted] = useState(false)
+  const [liveElapsedMs, setLiveElapsedMs] = useState(0)
   const syncPollRef = useRef(null)
   const prevSyncingRef = useRef(false)
   const justCompletedTimerRef = useRef(null)
+  const localTimerRef = useRef(null)
+  const syncStartMsRef = useRef(null)
 
   const toggleCollapse = (section) => setCollapsed(prev => ({ ...prev, [section]: !prev[section] }))
 
@@ -121,9 +124,26 @@ export default function Discovery() {
     fetchNews(false, 1)
   }, [limit])
 
+  // Local high-frequency timer for smooth elapsed display (10ms tick = 2-digit ms)
   useEffect(() => {
-    fetchSources()
-  }, [])
+    if (syncStatus?.isSyncing) {
+      // On first detect of sync starting, anchor the base time from backend's elapsed
+      if (!syncStartMsRef.current) {
+        syncStartMsRef.current = Date.now() - (syncStatus.elapsedSeconds || 0) * 1000
+      }
+      // Clear any previous interval
+      clearInterval(localTimerRef.current)
+      localTimerRef.current = setInterval(() => {
+        setLiveElapsedMs(Date.now() - syncStartMsRef.current)
+      }, 10)
+    } else {
+      // Sync stopped — clear timer and reset anchor
+      clearInterval(localTimerRef.current)
+      localTimerRef.current = null
+      syncStartMsRef.current = null
+    }
+    return () => clearInterval(localTimerRef.current)
+  }, [syncStatus?.isSyncing])
 
   // Sync Status Poller
   useEffect(() => {
@@ -210,10 +230,7 @@ export default function Discovery() {
     }
   }
 
-  // Trust the backend 'Thematic Routing Engine' as the single source of truth
-  const filteredNews = news
-
-  // Signal Matrix Taxonomy (PRD v1.9)
+  // Signal Matrix Taxonomy (PRD v1.9) — defined first so filteredNews can reference it
   const SIGNAL_TYPES = [
     'Funding', 'Startup Launch', 'Acquisition', 'Shutdown', 'Layoffs', 
     'Product News / Launch', 'Founder Story / Profile', 'Pivot', 'Funding Ask', 'Revenue Milestone',
@@ -251,6 +268,10 @@ export default function Discovery() {
     'Big Tech / Consumer Software',
     'Telecom / Infrastructure'
   ]
+
+  // Filtering is now done at the backend DB level (excludes 'Other / Unclassified' by default).
+  // The frontend simply renders whatever the backend returns.
+  const filteredNews = news
 
   return (
     <div className="flex bg-[#F8F9FA] min-h-screen overflow-hidden">
@@ -640,11 +661,15 @@ export default function Discovery() {
                   </div>
                   <div className="w-px h-8 bg-white/10" />
                   <div className="text-center">
-                    <div className="text-[18px] font-[900] text-white/60 tabular-nums leading-none">
-                      {Math.floor((syncStatus.elapsedSeconds || 0) / 60)}:{String((syncStatus.elapsedSeconds || 0) % 60).padStart(2, '0')}
-                    </div>
-                    <div className="text-[8px] font-black text-white/30 uppercase tracking-widest mt-0.5">Elapsed</div>
-                  </div>
+                     <div className="text-[18px] font-[900] text-white/60 tabular-nums leading-none flex items-baseline gap-[2px]">
+                       <span>{String(Math.floor(liveElapsedMs / 60000)).padStart(2, '0')}</span>
+                       <span className="text-white/30">:</span>
+                       <span>{String(Math.floor((liveElapsedMs % 60000) / 1000)).padStart(2, '0')}</span>
+                       <span className="text-white/30">.</span>
+                       <span className="text-[13px] text-white/40">{String(Math.floor((liveElapsedMs % 1000) / 10)).padStart(2, '0')}</span>
+                     </div>
+                     <div className="text-[8px] font-black text-white/30 uppercase tracking-widest mt-0.5">Elapsed</div>
+                   </div>
                 </>
               )}
               {!syncStatus.isSyncing && (
@@ -747,7 +772,7 @@ export default function Discovery() {
                       ))}
 
                       {/* Industry Footprints: The Secondary Context Vector */}
-                      {(item.categories || []).filter(cat => !SIGNAL_TYPES.includes(cat)).map((cat, i) => (
+                      {(item.categories || []).filter(cat => !SIGNAL_TYPES.includes(cat) && cat !== 'Other / Unclassified').map((cat, i) => (
                         <div key={`ind-${i}`} className="px-4 py-2 bg-gray-100 text-[10px] font-black text-gray-700 rounded-xl border border-gray-300">
                           {cat}
                         </div>

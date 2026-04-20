@@ -762,12 +762,17 @@ fastify.get('/cms/v1/rss/fetch', async (request, reply) => {
       where.source = { in: sources.split(',') };
     }
 
-    // 3. Category Filter
+    // 3. Category Filter — if a specific category is requested use it,
+    //    otherwise DEFAULT to excluding 'Other / Unclassified' items so
+    //    only properly classified Startup Category signals are surfaced.
     if (categories) {
       const catList = categories.split(',');
       where.OR = catList.map(cat => ({
         categories: { contains: cat }
       }));
+    } else {
+      // Exclude items that are ONLY tagged as 'Other / Unclassified'
+      where.NOT = { categories: JSON.stringify(['Other / Unclassified']) };
     }
 
     // 4. Date Filter + Dynamic 6-Month 'Lifecycle' Threshold
@@ -1021,8 +1026,8 @@ async function runDeepSync() {
       {
         name: 'Acquisition',
         priority: 4,
-        strong: ['acquires', 'acquisition of', 'takeover', 'acqui-hire', 'merger with', '100% stake purchase', 'buys startup', 'purchase of'],
-        supporting: ['strategic acquisition', 'all-stock deal', 'asset purchase', 'takes over', 'absorbed by', 'majority stake', 'buyout', 'controlling interest', 'merger talk', 'valuation in acquisition']
+        strong: ['acquires', 'acquired', 'acquiring', 'acquisition of', 'takeover', 'acqui-hire', 'merger with', '100% stake purchase', 'buys startup', 'purchase of', 'in talks to acquire', 'proposed acquisition', 'stake acquisition', 'majority stake in'],
+        supporting: ['strategic acquisition', 'all-stock deal', 'asset purchase', 'takes over', 'absorbed by', 'majority stake', 'buyout', 'controlling interest', 'merger talk', 'valuation in acquisition', 'acqui-hire deal', 'share swap', 'term sheet for acquisition']
       },
       {
         name: 'Shutdown',
@@ -1334,9 +1339,61 @@ async function runIncrementalSync() {
   const now = new Date();
   const sixMonthsAgo = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000);
 
-  // Re-use the classification arrays from runDeepSync scope
-  // by calling a shared helper — both functions use the same logic
-  console.log(`[Incremental Sync]: Starting fast top-of-feed scan for ${activeSources.length} sources...`);
+  // Full classification engine — same logic as runDeepSync so every new article is properly tagged on ingestion
+  const _incSignals = [
+    { name: 'Funding', priority: 1, strong: ['raises', 'funding', 'fundraise', 'series a', 'series b', 'series c', 'pre-seed', 'seed round', 'raised', 'closes funding', 'investment from', 'valuation hits', 'valuation of', 'funding from', 'secures funding', 'bags funding', 'capital infusion', 'mops up', 'infuses capital', 'investment round', 'strategic investment', 'invests', 'investment', 'infusion', 'capital', 'backed by', 'qip', 'capital raise', 'fundraising'], supporting: ['venture capital', 'vcs', 'investors', 'funding round', 'capital injection', 'equity', 'convertible note', 'debt funding', 'angel funding', 'bridge round', 'funding news', 'fund raise', 'capital raise', 'investment in', 'startup funding', 'equity financing', 'participation', 'led by', 'shares sold', 'secondary sale'] },
+    { name: 'Shutdown', priority: 2, strong: ['shuts down', 'ceases operations', 'closure of', 'bankruptcy', 'winding up', 'stops operations', 'halting operations'], supporting: ['insolvency', 'nclt filing', 'no longer operational', 'suspends services', 'folds', 'winding down', 'end of operations', 'failure', 'out of business'] },
+    { name: 'Layoffs', priority: 3, strong: ['layoffs', 'lays off', 'job cuts', 'retrenchment', 'downsizing', 'workforce reduction', 'mass layoff', 'slashes jobs', 'cuts workforce', 'restructuring'], supporting: ['pink slips', 'let go', 'rightsizing', 'headcount reduction', 'employees fired', 'mass termination', 'cost cutting', 'redundancies', 'job losses', 'cutting jobs'] },
+    { name: 'Acquisition', priority: 4, strong: ['acquires', 'acquired', 'acquiring', 'acquisition of', 'takeover', 'acqui-hire', 'merger with', '100% stake purchase', 'buys startup', 'purchase of', 'in talks to acquire', 'proposed acquisition', 'stake acquisition', 'majority stake in'], supporting: ['strategic acquisition', 'all-stock deal', 'asset purchase', 'takes over', 'absorbed by', 'majority stake', 'buyout', 'controlling interest', 'merger talk', 'acqui-hire deal', 'share swap', 'term sheet for acquisition'] },
+    { name: 'Pivot', priority: 5, strong: ['pivots', 'shifts focus to', 'new direction', 'pivoting to', 'pivoting from', 'business model change', 'strategic overhaul'], supporting: ['restructures', 'reinvents', 'overhauls strategy', 'moves away from', 'no longer focuses on', 'transition to', 'rebrands as', 'sunsets', 'change of direction', 'new strategy'] },
+    { name: 'Funding Ask', priority: 6, strong: ['in talks to raise', 'seeking investment', 'discussions with investors', 'looking to close', 'eyeing fundraise', 'plans to raise', 'seeking capital'], supporting: ['approaching vcs', 'expected to close', 'term sheet', 'due diligence ongoing', 'roadshow', 'scouting investors', 'fundraising round planned', 'investor meetings', 'pitching to investors'] },
+    { name: 'Revenue Milestone', priority: 7, strong: ['turns profitable', 'achieves breakeven', 'crosses arr', 'revenue milestone', 'ebitda positive', 'pat positive', 'clocks revenue', 'gross profit', 'profitable'], supporting: ['first profitable quarter', 'operating profit', 'mrr crosses', 'gmv milestone', 'revenue hits', 'gross profit positive', 'profitability achieved', 'revenue growth', 'revenue clocks'] },
+    { name: 'Startup Launch', priority: 8, strong: ['launches startup', 'founded in', 'new startup', 'debuts', 'coming out of stealth', 'stealth mode', 'founders start', 'unveils startup', 'enters the market', 'incorporated', 'starts up'], supporting: ['co-founded', 'venture launched', 'bootstrapped', 'early-stage', 'new venture', 'spin-off', 'fresh off', 'starting up', 'new player', 'enters sector', 'commences ops', 'kickstarts', 'startup', 'new company'] },
+    { name: 'Product News / Launch', priority: 9, strong: ['launches product', 'new feature', 'releases feature', 'unveils new', 'rolls out feature', 'rolls out', 'goes live', 'announces launch', 'beta launch', 'general availability', 'debuts new', 'expansion into', 'enters market', 'launches expansion'], supporting: ['releases', 'unveils', 'introduces', 'now available', 'new offering', 'app update', 'platform expansion', 'new vertical', 'product reveal', 'expansion', 'debuts', 'feature', 'update'] },
+    { name: 'Founder Story / Profile', priority: 10, strong: ['founder op-ed', 'founder profile', 'in conversation with', 'interview with founder', 'exclusive interview', 'founder exclusive', 'interview with ceo', 'founder speaks', 'co-founder says', 'story of', 'how it started'], supporting: ['opinion', 'thought leadership', 'vision', 'roadmap', 'op-ed by', 'startup journey', 'lessons from', 'in their own words', 'built', 'started by', 'founder story'] },
+    { name: 'Partnership', priority: 11, strong: ['partners with', 'partnership', 'collaboration', 'tie-up', 'signs mou', 'strategic alliance', 'joins hands with', 'teams up'], supporting: ['joint venture', 'collaboration with', 'agreement', 'mou', 'strategic partnership', 'synergy', 'cooperation'] },
+    { name: 'Expansion', priority: 12, strong: ['expands to', 'enters new market', 'new city', 'global footprint', 'opens office', 'expansion plan', 'geographical expansion', 'launches in', 'sets up base', 'opens its first'], supporting: ['new region', 'scaling up', 'international market', 'domestic expansion', 'wider reach', 'new territory', 'expansion', 'scaling', 'growth', 'expanding', 'presence in', 'new base'] },
+    { name: 'Regulatory / Policy', priority: 13, strong: ['regulatory update', 'complies with', 'government policy', 'new guidelines', 'rbi directive', 'sebi order', 'gdpr', 'compliance', 'framework', 'guidelines', 'privacy fine', 'gdpr fine', 'data protection law'], supporting: ['regulation', 'statutory', 'legal framework', 'government mandate', 'notification', 'official order', 'central government', 'privacy policy', 'penalty', 'fine imposed'] },
+    { name: 'Leadership / People', priority: 14, strong: ['appoints', 'new ceo', 'new cto', 'hires', 'leadership change', 'board of directors', 'joins as', 'stepping down', 'exit of', 'leaves role', 'resigns', 'transition from', 'new role', 'promoted'], supporting: ['hr news', 'executive hire', 'appointment', 'promoted', 'people news', 'hiring talent', 'veteran joins', 'industry veteran', 'career move'] },
+    { name: 'Legal / Litigation', priority: 15, strong: ['files suit', 'legal battle', 'court order', 'litigation', 'lawsuit', 'arbitration', 'dispute', 'notice from', 'legal action', 'court scraps', 'won appeal', 'legal win'], supporting: ['court stay', 'appeals court', 'petition', 'complaint', 'legal case', 'hearing', 'judgment', 'appeal', 'fine', 'won its appeal'] },
+    { name: 'Ecosystem News', priority: 16, strong: ['daily roundup', 'startup news', 'mid-day news', 'news updates', 'roundup', 'daily digest', 'weekly news', 'bulletin', 'accelerator', 'applications open'], supporting: ['latest updates', 'top stories', 'happening today', 'morning briefing', 'startup updates', 'cohort', 'program', 'applications for'] },
+    { name: 'Market Insights / Reports', priority: 17, strong: ['best of', 'top 10', 'review', 'comparison', 'market report', 'industry insights', 'top tools', 'product review'], supporting: ['ranking', 'curated list', 'analysis', 'research', 'landscape', 'market analysis', 'buying guide', 'recommendations'] },
+    { name: 'Tech Guides / Tutorials', priority: 18, strong: ['how to', 'tutorial', 'guide', 'how-to', 'step by step', 'setup', 'unblock', 'access', 'watch', 'configuring'], supporting: ['walkthrough', 'instructions', 'tips', 'tricks', 'manual', 'help', 'troubleshoot', 'setup guide'] },
+    { name: 'Trends / Future Tech', priority: 19, strong: ['future of', 'will ai', 'impact of', 'the end of', 'state of', 'trends in', 'outlook', 'prediction', 'predicts', 'visionary', 'paradigm shift', 'could revolutionize', 'will transform', 'will reshape', 'will disrupt'], supporting: ['analysis', 'forecast', 'landscape', 'potential', 'opportunity', 'transforming', 'shaping', 'evolution', 'long-term', 'innovation', 'vision', 'transformation'] },
+    { name: 'Product Review / Opinion', priority: 20, strong: ['meet the', 'review', 'opinion', 'hands-on', 'verdict', 'awful', 'brilliant', 'critique', 'comparison', 'vs', 'rebranding', 'unveiled'], supporting: ['feedback', 'rating', 'user experience', 'performance', 'testing', 'quality', 'benchmark', 'editor choice', 'first look'] },
+    { name: 'Innovation / Breakthrough', priority: 21, strong: ['breakthrough', 'innovation', 'unveils tech', 'pioneers', 'first ever', 'new technique', 'advanced technology'], supporting: ['showcases', 'demonstrates', 'case study', 'experimental', 'scientific advancement', 'technological leap'] }
+  ];
+  const _incIndustry = [
+    { name: 'Fintech', keys: ['payments', 'lending', 'insurtech', 'wealthtech', 'fintech', 'banking', 'upi', 'neobank', 'wealth management', 'insurance', 'finance', 'trading'] },
+    { name: 'EdTech', keys: ['edtech', 'learning', 'classroom', 'skill development', 'tutoring', 'academy', 'education', 'school'] },
+    { name: 'HealthTech', keys: ['digital health', 'medtech', 'healthtech', 'medical', 'healthcare', 'clinics', 'diagnostics', 'telemedicine', 'biotech', 'pharma', 'drugs', 'medicine', 'pharmacy', 'e-pharmacy'] },
+    { name: 'MobilityTech', keys: ['ride-hailing', 'electric mobility', 'autonomous vehicles', 'ride sharing', 'scooters', 'aviation', 'flight', 'automotive', 'cars', 'vehicles', 'uber', 'ola', 'rapido', 'taxi', 'cab'] },
+    { name: 'FoodTech', keys: ['foodtech', 'cloud kitchen', 'food delivery', 'grocery delivery', 'restaurant tech', 'food subscription', 'beverages', 'cooking', 'nutrition'] },
+    { name: 'TravelTech', keys: ['traveltech', 'hotel booking', 'tourism', 'travel agency', 'hospitality tech', 'resort', 'vacation'] },
+    { name: 'AI / ML', keys: ['generative ai', 'computer vision', 'nlp', 'artificial intelligence', 'machine learning', 'llm', 'deep learning', 'automation', 'chatgpt', 'openai', 'gemini ai', 'claude', 'ai model', 'neural network', 'gpt', 'ai agent', 'ai coding'] },
+    { name: 'Cybersecurity', keys: ['cybersecurity', 'encryption', 'firewall', 'data protection', 'hacking', 'threat detection', 'data breach', 'vpn', 'malware', 'ransomware', 'phishing', 'antivirus', 'security vulnerability'] },
+    { name: 'Web3 / Blockchain', keys: ['web3', 'blockchain', 'crypto', 'nft', 'decentralized', 'defi', 'ethereum', 'bitcoin', 'smart contracts', 'token'] },
+    { name: 'ClimateTech / Sustainability', keys: ['climatetech', 'sustainability', 'carbon credit', 'waste management', 'esg', 'green tech', 'renewable energy'] },
+    { name: 'AgriTech', keys: ['agritech', 'farming', 'agriculture', 'harvest', 'farmer', 'grains', 'organic'] },
+    { name: 'CleanTech / EV', keys: ['electric', 'cleantech', 'ev', 'battery', 'solar', 'wind', 'charging', 'green energy'] },
+    { name: 'Future of Work / HRTech', keys: ['hrtech', 'remote work', 'talent acquisition', 'hiring', 'payroll', 'workforce management', 'recruitment', 'future of work'] },
+    { name: 'Developer Infrastructure / Cloud', keys: ['devops', 'cloud infrastructure', 'cloud native', 'api', 'serverless', 'kubernetes', 'aws', 'azure', 'github', 'docker', 'ci/cd', 'data center', 'cloud computing', 'database'] },
+    { name: 'Social / Community Platforms', keys: ['social media', 'community platform', 'networking', 'social network', 'dating app', 'content platform', 'short video', 'creator economy'] },
+    { name: 'SaaS / B2B', keys: ['enterprise software', 'martech', 'saas', 'b2b', 'software-as-a-service', 'crm', 'workflow', 'digital transformation'] },
+    { name: 'D2C / E-Commerce', keys: ['consumer brands', 'quick commerce', 'fashion', 'd2c', 'e-commerce', 'omnichannel', 'retail', 'marketplace', 'wellness', 'beauty', 'direct-to-consumer', 'personal care', 'jewellery', 'apparel'] },
+    { name: 'LogisTech', keys: ['warehousing', 'last-mile delivery', 'logistics', 'delivery', 'fleet', 'shipping', 'freight', 'trucking'] },
+    { name: 'SpaceTech / DeepTech', keys: ['semiconductors', 'spacetech', 'deeptech', 'satellite', 'isro', 'robotics', 'space exploration', 'quantum', 'chip', 'chipset', 'semiconductor', 'nvidia', 'amd', 'intel', 'qualcomm'] },
+    { name: 'Gaming / Media', keys: ['gaming', 'esports', 'streaming', 'entertainment', 'ott', 'movies', 'music', 'tv series', 'video game'] },
+    { name: 'Real Estate Tech', keys: ['proptech', 'real estate', 'property', 'homebuying', 'coworking', 'housing'] },
+    { name: 'Government / Policy', keys: ['regulatory', 'government', 'ministry', 'policy', 'framework', 'guidelines', 'law', 'compliance', 'taxation', 'gst', 'cabinet', 'sebi', 'regulator'] },
+    { name: 'Manufacturing / Industrial', keys: ['manufacturing', 'factory', 'industrial', 'hardware', 'assembly', 'production', 'raw materials', 'machinery', 'make in india', 'pli scheme', 'capacity expansion'] },
+    { name: 'Big Tech / Consumer Software', keys: ['microsoft', 'apple', 'google', 'meta', 'amazon', 'firefox', 'windows', 'browser', 'operating system', 'software update', 'big tech', 'consumer tech', 'adobe', 'iphone', 'ipad', 'macbook', 'pixel', 'samsung', 'android', 'ios', 'app store', 'play store', 'chrome', 'safari', 'smartphone', 'linkedin', 'whatsapp', 'instagram', 'twitter', 'reddit', 'youtube', 'netflix', 'spotify'] },
+    { name: 'Telecom / Infrastructure', keys: ['telecom', 'fiber', '5g', '6g', 'network', 'broadband', 'infrastructure', 'connectivity', 'jio', 'airtel', 'vodafone', 'bsnl', 'spectrum', 'tower', 'starlink', 'wifi'] }
+  ];
+  const _incMatch = (text, keys) => keys.some(k => new RegExp(`\\b${k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(text));
+  const _incCount = (text, keys) => keys.filter(k => new RegExp(`\\b${k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(text)).length;
+
+  console.log(`[Incremental Sync]: Starting classified top-of-feed scan for ${activeSources.length} sources...`);
 
   for (let i = 0; i < activeSources.length; i += 5) {
     const batch = activeSources.slice(i, i + 5);
@@ -1373,6 +1430,24 @@ async function runIncrementalSync() {
           ].some(key => new RegExp(`\\b${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(titleBuffer));
           if (isNoise) continue;
 
+          // Run full classification engine on each new article
+          const _sm = [];
+          const fullBuffer = titleBuffer + ' ' + descBuffer;
+          _incSignals.forEach(sc => {
+            const inH = _incMatch(titleBuffer, sc.strong) || _incCount(titleBuffer, sc.supporting) >= 2;
+            const tS = _incCount(titleBuffer, sc.strong); const tSup = _incCount(titleBuffer, sc.supporting);
+            const bS = _incCount(descBuffer, sc.strong); const bSup = _incCount(descBuffer, sc.supporting);
+            if ((tS + bS) >= 1 || (tSup + bSup) >= 2) _sm.push({ name: sc.name, priority: sc.priority, isHeadlineSignal: inH });
+          });
+          const topSignals = _sm.sort((a, b) => {
+            if (a.isHeadlineSignal && !b.isHeadlineSignal) return -1;
+            if (!a.isHeadlineSignal && b.isHeadlineSignal) return 1;
+            return a.priority - b.priority;
+          }).slice(0, 1).map(s => s.name);
+          const industryTags = _incIndustry.filter(v => _incMatch(fullBuffer, v.keys)).map(v => v.name);
+          const finalCategories = [...topSignals, ...industryTags];
+          if (finalCategories.length === 0) finalCategories.push('Other / Unclassified');
+
           await prisma.discoveryCache.create({
             data: {
               title: item.title || 'Untitled Signal',
@@ -1382,7 +1457,7 @@ async function runIncrementalSync() {
               author: creatorRaw,
               source: source.name,
               logoUrl: source.logoUrl,
-              categories: JSON.stringify(['Other / Unclassified']) // Light classification; deep sync enriches later
+              categories: JSON.stringify(finalCategories)
             }
           }).catch(() => {}); // Ignore duplicate key errors
           newItems++;
