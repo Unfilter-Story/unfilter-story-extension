@@ -1,3 +1,4 @@
+import { PUBLIC_SITE_URL } from '../lib/config.js';
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
@@ -15,7 +16,7 @@ export default function Layout() {
           </div>
           <div className="flex items-center gap-4">
             <a 
-              href="http://localhost:4321" 
+              href={PUBLIC_SITE_URL} 
               target="_blank" 
               rel="noopener noreferrer"
               className="px-4 py-2 text-[11px] font-black text-[var(--cms-accent)] border-2 border-[var(--cms-accent-light)] rounded-xl hover:bg-[var(--cms-accent-light)] transition-all"

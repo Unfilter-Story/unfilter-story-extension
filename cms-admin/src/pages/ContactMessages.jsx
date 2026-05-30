@@ -1,3 +1,4 @@
+import { API_URL } from '../lib/config.js';
 import React, { useState, useEffect } from 'react'
 import { Loader, Search, Mail, MailOpen, Trash2, RefreshCw } from 'lucide-react'
 
@@ -15,7 +16,7 @@ export default function ContactMessages() {
 
   const fetchMessages = async () => {
     try {
-      const res = await fetch('http://localhost:3000/cms/v1/contact')
+      const res = await fetch(`${API_URL}/cms/v1/contact`)
       if (res.ok) {
         setMessages(await res.json())
       }
@@ -28,7 +29,7 @@ export default function ContactMessages() {
 
   const fetchMessagesBackground = async () => {
     try {
-      const res = await fetch('http://localhost:3000/cms/v1/contact')
+      const res = await fetch(`${API_URL}/cms/v1/contact`)
       if (res.ok) {
         setMessages(await res.json())
       }
@@ -46,7 +47,7 @@ export default function ContactMessages() {
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this message?')) return
     try {
-      await fetch(`http://localhost:3000/cms/v1/contact/${id}`, { method: 'DELETE' })
+      await fetch(`${API_URL}/cms/v1/contact/${id}`, { method: 'DELETE' })
       setMessages(prev => prev.filter(m => m.id !== id))
     } catch (e) {
       console.error(e)
@@ -56,7 +57,7 @@ export default function ContactMessages() {
   const handleToggleStatus = async (item) => {
     const newStatus = item.status === 'unread' ? 'read' : 'unread'
     try {
-      await fetch(`http://localhost:3000/cms/v1/contact/${item.id}/status`, {
+      await fetch(`${API_URL}/cms/v1/contact/${item.id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })

@@ -1,3 +1,4 @@
+import { API_URL } from '../lib/config.js';
 import React, { useState, useEffect } from 'react'
 import { UserPlus, Search, Settings as SettingsIcon, X, Mail, Shield, User as UserIcon, Trash2, CheckCircle2, XCircle, MoreVertical } from 'lucide-react'
 
@@ -19,7 +20,7 @@ export default function Users() {
   const fetchUsers = async () => {
     try {
       setLoading(true)
-      const res = await fetch('http://localhost:3000/cms/v1/users')
+      const res = await fetch(`${API_URL}/cms/v1/users`)
       const data = await res.json()
       setUsers(Array.isArray(data) ? data : [])
     } catch (e) {
@@ -37,7 +38,7 @@ export default function Users() {
   const handleInvite = async (e) => {
     e.preventDefault()
     try {
-      const res = await fetch('http://localhost:3000/cms/v1/users', {
+      const res = await fetch(`${API_URL}/cms/v1/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -56,7 +57,7 @@ export default function Users() {
 
   const handleToggleStatus = async (user) => {
     try {
-      const res = await fetch(`http://localhost:3000/cms/v1/users/${user.id}`, {
+      const res = await fetch(`${API_URL}/cms/v1/users/${user.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isActive: !user.isActive })
@@ -70,7 +71,7 @@ export default function Users() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to remove this team member? This action cannot be undone.')) return
     try {
-      const res = await fetch(`http://localhost:3000/cms/v1/users/${id}`, { method: 'DELETE' })
+      const res = await fetch(`${API_URL}/cms/v1/users/${id}`, { method: 'DELETE' })
       if (res.ok) fetchUsers()
       else alert('Failed to delete user')
     } catch (e) {
