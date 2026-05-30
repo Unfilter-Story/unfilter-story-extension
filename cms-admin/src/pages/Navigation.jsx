@@ -1,4 +1,4 @@
-import { API_URL } from '../lib/config.js';
+import { apiFetch } from '../lib/api.js';
 import React, { useState, useEffect } from 'react'
 import { Plus, GripVertical, Edit2, Trash2, ExternalLink, Move } from 'lucide-react'
 import {
@@ -132,7 +132,7 @@ export default function Navigation() {
 
   const fetchMenuItems = async () => {
     try {
-      const res = await fetch(`${API_URL}/cms/v1/navigation`)
+      const res = await apiFetch(`/cms/v1/navigation`)
       const data = await res.json()
       setMenuItems(data)
       setLoading(false)
@@ -191,7 +191,7 @@ export default function Navigation() {
       }
       
       try {
-        await fetch(`${API_URL}/cms/v1/navigation/reorder`, {
+        await apiFetch(`/cms/v1/navigation/reorder`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ items: flatten(newList) })
@@ -206,11 +206,11 @@ export default function Navigation() {
     e.preventDefault()
     const method = editingItem ? 'PUT' : 'POST'
     const url = editingItem 
-      ? `${API_URL}/cms/v1/navigation/${editingItem.id}`
-      : `${API_URL}/cms/v1/navigation`
+      ? `/cms/v1/navigation/${editingItem.id}`
+      : `/cms/v1/navigation`
 
     try {
-      await fetch(url, {
+      await apiFetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -227,7 +227,7 @@ export default function Navigation() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this menu item and its submenus?')) return
     try {
-      await fetch(`${API_URL}/cms/v1/navigation/${id}`, { method: 'DELETE' })
+      await apiFetch(`/cms/v1/navigation/${id}`, { method: 'DELETE' })
       fetchMenuItems()
     } catch (err) {
       console.error('Failed to delete menu item', err)

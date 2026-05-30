@@ -2,9 +2,11 @@ import { PUBLIC_SITE_URL } from '../lib/config.js';
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
+import { useAuth } from '../context/AuthContext.jsx'
 
 export default function Layout() {
   const [isCollapsed, setIsCollapsed] = React.useState(false)
+  const { user, logout } = useAuth()
 
   return (
     <div className="flex min-h-screen bg-[var(--cms-bg)] text-[var(--cms-text-primary)]">
@@ -23,6 +25,18 @@ export default function Layout() {
             >
               Public Portal
             </a>
+            {user && (
+              <span className="text-[11px] font-bold text-[var(--cms-text-secondary)] hidden md:inline">
+                {user.email}
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={logout}
+              className="px-4 py-2 text-[11px] font-black text-red-600 border-2 border-red-100 rounded-xl hover:bg-red-50 transition-all"
+            >
+              Log out
+            </button>
           </div>
         </header>
         <div className="p-10 flex-1">

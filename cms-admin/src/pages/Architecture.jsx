@@ -1,4 +1,5 @@
-import { API_URL, PUBLIC_SITE_URL } from '../lib/config.js';
+import { apiFetch } from '../lib/api.js';
+import { PUBLIC_SITE_URL } from '../lib/config.js';
 import React, { useState, useEffect } from 'react'
 import { Landmark, Folder, FileText, Share2, ExternalLink, RefreshCw, Layout as LayoutIcon, Globe, Map } from 'lucide-react'
 
@@ -18,9 +19,9 @@ export default function Architecture() {
     setLoading(true)
     try {
       const [catsRes, artsRes, navRes] = await Promise.all([
-        fetch(`${API_URL}/cms/v1/categories`),
-        fetch(`${API_URL}/cms/v1/articles`),
-        fetch(`${API_URL}/cms/v1/navigation`)
+        apiFetch(`/cms/v1/categories`),
+        apiFetch(`/cms/v1/articles`),
+        apiFetch(`/cms/v1/navigation`)
       ])
       
       const [categories, articles, navigation] = await Promise.all([
