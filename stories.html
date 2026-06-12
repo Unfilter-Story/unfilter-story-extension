@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Startup Stories | UnfilterStory</title>
+  <meta name="description" content="In-depth narratives, growth teardowns, and analytical business case studies of modern startups.">
+  
+  <script>
+    const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <app-header></app-header>
+
+  <main class="container">
+    
+    <!-- 1. Hero Story Canvas -->
+    <section class="stories-hero-grid" aria-labelledby="hero-story-heading">
+      <h2 id="hero-story-heading" class="visually-hidden">Featured Deep Dive</h2>
+      
+      <div class="hero-canvas-visual">
+        <!-- Using a gradient background to represent the image -->
+        <div style="width: 100%; height: 100%; background: linear-gradient(45deg, #1E293B, #334155); position: absolute; inset: 0; z-index: -1;"></div>
+      </div>
+      
+      <div class="hero-narrative-block">
+        <span class="card-tag" style="color: var(--color-accent); margin-bottom: var(--spacing-4);">The Deep Dive</span>
+        <h3 style="font-size: clamp(2.2rem, 4vw, 3.5rem); line-height: 1.15; margin-bottom: var(--spacing-6); letter-spacing: -0.02em;">
+          <a href="#">Inside Stripe's Playbook for Global Economic Infrastructure</a>
+        </h3>
+        <p style="font-size: 1.25rem; line-height: 1.6; color: var(--color-text-mute); margin-bottom: var(--spacing-8);">How the Collison brothers turned seven lines of code into a multi-billion dollar platform that powers the internet's financial backend, focusing on relentless developer experience and API design.</p>
+        <div class="card-meta" style="border-top: none; padding-top: 0; justify-content: flex-start; gap: var(--spacing-4);">
+          <div class="author-meta"><div class="author-avatar"></div><span style="font-weight: 600; color: var(--color-text-main);">David Chen</span></div>
+          <span>October 12, 2026</span>
+          <span style="color: var(--color-accent);">12 min read</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Composite Layout (Main Content + Sidebar) -->
+    <div class="stories-composite-grid">
+      
+      <!-- Primary Column -->
+      <div class="composite-primary">
+        
+        <!-- 3. Founder Journeys Matrix -->
+        <section aria-labelledby="founders-heading">
+          <div style="margin-bottom: var(--spacing-8); border-bottom: 2px solid var(--color-border); padding-bottom: var(--spacing-4);">
+            <h2 id="founders-heading" style="margin-bottom: 0;">Founder Journeys</h2>
+          </div>
+          
+          <div class="founder-grid">
+            <article class="card-founder">
+              <div class="img-zoom-wrapper">
+                <div class="bg-img img-cinematic" style="background: linear-gradient(180deg, transparent 50%, var(--color-primary) 100%), var(--color-border);"></div>
+              </div>
+              <p class="card-founder-quote">"We didn't build a software company, we built a community that happened to write software."</p>
+              <h3 class="card-title" style="font-size: 1.25rem;"><a href="#">Elena Rodriguez on Scaling Culture</a></h3>
+              <p class="card-excerpt line-clamp-2">Tracing the path from a 3-person garage startup to a publicly traded enterprise without losing the core ethos.</p>
+            </article>
+
+            <article class="card-founder">
+              <div class="img-zoom-wrapper">
+                <div class="bg-img img-cinematic" style="background: linear-gradient(180deg, transparent 50%, var(--color-primary) 100%), var(--color-border);"></div>
+              </div>
+              <p class="card-founder-quote">"The biggest risk is not taking any risk. In a rapidly changing world, playing it safe guarantees failure."</p>
+              <h3 class="card-title" style="font-size: 1.25rem;"><a href="#">Marcus Reid's Second Act</a></h3>
+              <p class="card-excerpt line-clamp-2">How a highly publicized failure led to the creation of one of the fastest-growing FinTech unicorns in Europe.</p>
+            </article>
+
+            <article class="card-founder">
+              <div class="img-zoom-wrapper">
+                <div class="bg-img img-cinematic" style="background: linear-gradient(180deg, transparent 50%, var(--color-primary) 100%), var(--color-border);"></div>
+              </div>
+              <p class="card-founder-quote">"Hardware is hard, but it's the only way to truly control the user experience from end to end."</p>
+              <h3 class="card-title" style="font-size: 1.25rem;"><a href="#">Sarah Jenkins on the Hardware Renaissance</a></h3>
+              <p class="card-excerpt line-clamp-2">Re-shoring manufacturing and building consumer electronics in an era dominated by SaaS.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- 4. Startup Case Studies & Teardowns -->
+        <section aria-labelledby="teardown-heading">
+          <div style="margin-bottom: var(--spacing-8); border-bottom: 2px solid var(--color-border); padding-bottom: var(--spacing-4);">
+            <h2 id="teardown-heading" style="margin-bottom: 0;">Case Studies & Teardowns</h2>
+          </div>
+
+          <div class="teardown-stack">
+            <!-- Row 1 -->
+            <article class="teardown-row">
+              <div class="teardown-content">
+                <span class="card-tag">Growth Mechanics</span>
+                <h3 style="font-size: 2rem; margin-bottom: var(--spacing-4);"><a href="#">Notion's Product-Led Growth Engine</a></h3>
+                <span class="metric-badge">120% YoY Growth</span>
+                <p style="color: var(--color-text-mute); font-size: 1.125rem;">An analysis of how template galleries, viral user sharing loops, and an incredibly flexible primitive data structure allowed Notion to bypass traditional enterprise sales motions entirely.</p>
+              </div>
+              <div class="teardown-media">
+                Growth Vector Model
+              </div>
+            </article>
+
+            <!-- Row 2 (Reversed automatically by CSS) -->
+            <article class="teardown-row">
+              <div class="teardown-content">
+                <span class="card-tag">Pricing Strategy</span>
+                <h3 style="font-size: 2rem; margin-bottom: var(--spacing-4);"><a href="#">Figma vs. Adobe: The Multiplayer Advantage</a></h3>
+                <span class="metric-badge">Market Capture</span>
+                <p style="color: var(--color-text-mute); font-size: 1.125rem;">Examining the strategic decision to build a browser-first design tool, and how real-time collaboration became the ultimate moat against legacy desktop incumbents.</p>
+              </div>
+              <div class="teardown-media">
+                Network Effects Map
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 5. Dual-Stream Editorial Matrix -->
+        <section aria-labelledby="dual-stream-heading">
+          <div style="margin-bottom: var(--spacing-8); border-bottom: 2px solid var(--color-border); padding-bottom: var(--spacing-4);">
+            <h2 id="dual-stream-heading" style="margin-bottom: 0;">The Reality of Scaling</h2>
+          </div>
+
+          <div class="dual-stream-grid">
+            <!-- Success Column -->
+            <div style="display: flex; flex-direction: column; gap: var(--spacing-6);">
+              <h3 style="font-size: 1.25rem; color: var(--color-success); text-transform: uppercase; letter-spacing: 0.05em;">Triumphs & Exits</h3>
+              
+              <article class="card-stream card-stream-success">
+                <h4 style="font-size: 1.5rem; margin-bottom: var(--spacing-4);"><a href="#">The $1B Bootstrap: Mailchimp's Quiet Domination</a></h4>
+                <p style="color: var(--color-text-mute); flex-grow: 1;">How rejecting venture capital allowed founders to build a highly profitable machine on their own terms, culminating in a massive acquisition.</p>
+                <div class="card-meta">
+                  <span>8 min read</span>
+                </div>
+              </article>
+
+              <article class="card-stream card-stream-success">
+                <h4 style="font-size: 1.5rem; margin-bottom: var(--spacing-4);"><a href="#">WhatsApp: 50 Engineers, 900 Million Users</a></h4>
+                <p style="color: var(--color-text-mute); flex-grow: 1;">A masterclass in extreme engineering efficiency and product focus.</p>
+                <div class="card-meta">
+                  <span>6 min read</span>
+                </div>
+              </article>
+            </div>
+
+            <!-- Failure Column -->
+            <div style="display: flex; flex-direction: column; gap: var(--spacing-6);">
+              <h3 style="font-size: 1.25rem; color: var(--color-warning); text-transform: uppercase; letter-spacing: 0.05em;">Post-Mortems</h3>
+              
+              <article class="card-stream card-stream-failure">
+                <h4 style="font-size: 1.5rem; margin-bottom: var(--spacing-4);"><a href="#">WeWork: The Icarus of Commercial Real Estate</a></h4>
+                <p style="color: var(--color-text-mute); flex-grow: 1;">Tracing the systemic risk, unchecked governance, and the illusion of tech multiples that led to the most spectacular implosion of the decade.</p>
+                <div class="card-meta">
+                  <span>15 min read</span>
+                </div>
+              </article>
+
+              <article class="card-stream card-stream-failure">
+                <h4 style="font-size: 1.5rem; margin-bottom: var(--spacing-4);"><a href="#">Quibi's $1.7B Miscalculation</a></h4>
+                <p style="color: var(--color-text-mute); flex-grow: 1;">Why premium content and massive capital couldn't overcome a fundamental misunderstanding of mobile consumption habits.</p>
+                <div class="card-meta">
+                  <span>10 min read</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Secondary Column (Sidebar Hub) -->
+      <aside class="composite-secondary sticky-sidebar" aria-labelledby="sidebar-heading">
+        <div style="background-color: var(--color-bg-surf); border-radius: 12px; padding: var(--spacing-6); border: 1px solid var(--color-border);">
+          <h2 id="sidebar-heading" style="font-size: 1.25rem; margin-bottom: var(--spacing-6); padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--color-border);">Popular Narratives</h2>
+          
+          <article class="card-popular">
+            <div class="popular-rank">#1</div>
+            <div>
+              <h3 class="card-title"><a href="#">The Y Combinator Mafia: 20 Years Later</a></h3>
+              <div style="font-size: 0.875rem; color: var(--color-text-mute); margin-top: var(--spacing-2);">
+                <span>124K Shares</span> &middot; <span>Oct 05</span>
+              </div>
+            </div>
+          </article>
+          
+          <article class="card-popular">
+            <div class="popular-rank">#2</div>
+            <div>
+              <h3 class="card-title"><a href="#">Silicon Valley vs. The Sovereign Wealth Funds</a></h3>
+              <div style="font-size: 0.875rem; color: var(--color-text-mute); margin-top: var(--spacing-2);">
+                <span>89K Shares</span> &middot; <span>Oct 08</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-popular">
+            <div class="popular-rank">#3</div>
+            <div>
+              <h3 class="card-title"><a href="#">The Last Days of the Zero-Interest Rate Phenomenon</a></h3>
+              <div style="font-size: 0.875rem; color: var(--color-text-mute); margin-top: var(--spacing-2);">
+                <span>65K Shares</span> &middot; <span>Sep 28</span>
+              </div>
+            </div>
+          </article>
+          
+          <div style="margin-top: var(--spacing-6); text-align: center;">
+            <a href="#" class="btn btn-primary" style="width: 100%; background-color: var(--color-text-main); color: var(--color-bg-main);">Subscribe to Deep Dives</a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+    <!-- 6. Growth Stories & Velocity Feeds (Full Width) -->
+    <section aria-labelledby="growth-heading" style="margin-bottom: var(--spacing-16);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6);">
+        <h2 id="growth-heading" style="margin-bottom: 0;">Growth Velocity Playbooks</h2>
+      </div>
+      
+      <div class="growth-carousel">
+        <article class="card-step">
+          <div class="step-number">Step 01</div>
+          <h3 style="font-size: 1.25rem; margin-bottom: var(--spacing-2);"><a href="#">Finding the Atomic Network</a></h3>
+          <p style="color: var(--color-text-mute); font-size: 0.95rem; flex-grow: 1;">How Tinder locked down USC before expanding, proving that deep, local density beats shallow, broad reach.</p>
+        </article>
+        
+        <article class="card-step">
+          <div class="step-number">Step 02</div>
+          <h3 style="font-size: 1.25rem; margin-bottom: var(--spacing-2);"><a href="#">The Waitlist Trap</a></h3>
+          <p style="color: var(--color-text-mute); font-size: 0.95rem; flex-grow: 1;">Why Superhuman's onboarding process worked, and why copying their waitlist will probably kill your SaaS.</p>
+        </article>
+
+        <article class="card-step">
+          <div class="step-number">Step 03</div>
+          <h3 style="font-size: 1.25rem; margin-bottom: var(--spacing-2);"><a href="#">Engineering as Marketing</a></h3>
+          <p style="color: var(--color-text-mute); font-size: 0.95rem; flex-grow: 1;">HubSpot's Website Grader: Building free tools that solve adjacent problems to acquire high-intent B2B leads.</p>
+        </article>
+
+        <article class="card-step">
+          <div class="step-number">Step 04</div>
+          <h3 style="font-size: 1.25rem; margin-bottom: var(--spacing-2);"><a href="#">Bypassing the App Store</a></h3>
+          <p style="color: var(--color-text-mute); font-size: 0.95rem; flex-grow: 1;">How Epic Games challenged the 30% tax and what it means for consumer distribution in the 2020s.</p>
+        </article>
+        
+        <article class="card-step">
+          <div class="step-number">Step 05</div>
+          <h3 style="font-size: 1.25rem; margin-bottom: var(--spacing-2);"><a href="#">The Content Moat</a></h3>
+          <p style="color: var(--color-text-mute); font-size: 0.95rem; flex-grow: 1;">How Ahrefs generated $100M ARR with zero salespeople, relying entirely on extreme-quality technical SEO content.</p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+</body>
+</html>

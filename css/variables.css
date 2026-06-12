@@ -1,0 +1,75 @@
+/* d:\unfilterstory\css\variables.css */
+:root {
+  /* Brand Palette */
+  --color-orange: #FF7A18;
+  --color-pink: #FF3C6F;
+  --color-magenta: #FF006E;
+  --color-black: #0F0F0F;
+  --color-yellow: #F4C542;
+
+  /* Gradients */
+  --gradient-brand: linear-gradient(135deg, var(--color-orange), var(--color-pink), var(--color-magenta));
+  --gradient-hz: linear-gradient(90deg, var(--color-orange), var(--color-pink), var(--color-magenta));
+  --gradient-fire: linear-gradient(135deg, var(--color-orange), var(--color-yellow));
+  --gradient-noir: linear-gradient(135deg, var(--color-black), #333333, var(--color-magenta));
+
+  /* Light Mode (Default) Tokens */
+  --color-primary: var(--color-black);
+  --color-accent: var(--color-magenta);
+  --color-success: #10B981; /* Keep green for pure success states */
+  --color-warning: var(--color-yellow);
+  --color-bg-main: #FFFFFF;
+  --color-bg-surf: #F8F9FA;
+  --color-text-main: var(--color-black);
+  --color-text-mute: #64748B;
+  --color-border: #E2E8F0;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --text-fluid-h1: clamp(3.5rem, 5vw, 4.5rem);
+  --text-fluid-h2: clamp(2rem, 3vw, 3rem);
+  --text-fluid-h3: clamp(1.5rem, 2vw, 2rem);
+  --text-body: 1.125rem; /* 18px */
+  --line-height-body: 1.75;
+
+  /* Layout */
+  --max-width-editorial: 45rem; /* 720px */
+  --max-width-container: 80rem; /* 1280px */
+  --header-height: 4.5rem; /* 72px */
+
+  /* Spacing */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+
+  /* Elevations */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 20px 25px -5px rgb(255 0 110 / 0.15), 0 8px 10px -6px rgb(255 0 110 / 0.1); /* Magenta tinted shadow */
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root[data-theme="dark"] {
+  /* Dark Mode Tokens */
+  --color-primary: #FFFFFF;
+  --color-accent: var(--color-pink);
+  --color-success: #34D399;
+  --color-warning: var(--color-yellow);
+  --color-bg-main: var(--color-black);
+  --color-bg-surf: #1A1A1A;
+  --color-text-main: #F9FAFB;
+  --color-text-mute: #94A3B8;
+  --color-border: #333333;
+
+  --shadow-sm: 0 1px 2px 0 rgb(255 255 255 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(255 255 255 / 0.1), 0 2px 4px -2px rgb(255 255 255 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(255 255 255 / 0.1), 0 4px 6px -4px rgb(255 255 255 / 0.1);
+}

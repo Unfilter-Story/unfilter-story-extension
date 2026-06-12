@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interviews | UnfilterStory</title>
+  <meta name="description" content="Exclusive interviews with founders, CEOs, and VCs.">
+  <script>
+    const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <app-header></app-header>
+  <main class="container">
+    <header style="margin: var(--spacing-12) 0 var(--spacing-8);">
+      <h1>Interviews</h1>
+      <p style="font-size: 1.25rem;">Conversations with the people building the future.</p>
+    </header>
+    <section class="grid-cards">
+      <script>
+        for(let i=0; i<6; i++) {
+          document.write(`
+            <article class="card-article">
+              <div class="card-article-img"></div>
+              <div class="card-article-content">
+                <span class="card-tag">Q&A</span>
+                <h2 class="card-title"><a href="#">In Conversation with the CEO of Stripe</a></h2>
+                <p class="card-excerpt">Discussing the global economic infrastructure, the future of crypto, and the importance of writing culture.</p>
+                <div class="card-meta">
+                  <div class="author-meta"><div class="author-avatar"></div><span>Marcus Reid</span></div>
+                  <span>15 min read</span>
+                </div>
+              </div>
+            </article>
+          `);
+        }
+      </script>
+    </section>
+  </main>
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+</body>
+</html>

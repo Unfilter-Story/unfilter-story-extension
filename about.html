@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | UnfilterStory</title>
+  <meta name="description" content="About UnfilterStory, our mission, and our editorial team.">
+  <script>
+    const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <app-header></app-header>
+  <main class="container">
+    <article class="editorial-content">
+      <header style="margin-bottom: var(--spacing-8); text-align: center;">
+        <h1>About UnfilterStory</h1>
+        <p style="font-size: 1.25rem;">Premium journalism for the builders of tomorrow.</p>
+      </header>
+      
+      <h2>Our Mission</h2>
+      <p>UnfilterStory was founded with a singular purpose: to cut through the noise of the modern tech ecosystem. We believe that true innovation requires deep understanding, not just surface-level headlines. Our team of veteran journalists and industry insiders are dedicated to providing unparalleled insights into startups, artificial intelligence, venture capital, and the people driving these sectors forward.</p>
+      
+      <h2>Editorial Standards</h2>
+      <p>We hold ourselves to the highest standards of journalistic integrity. Every story we publish is meticulously fact-checked, sourced from primary interviews, and analyzed for its broader impact on the business landscape. We don't chase clicks; we chase truth.</p>
+      
+      <h2>Join the Conversation</h2>
+      <p>Whether you're a founder scaling your first company, an investor looking for the next big trend, or an operator navigating the complexities of hyper-growth, UnfilterStory is your platform. <a href="#newsletter-form" style="color: var(--color-accent); font-weight: 600;">Subscribe to our newsletter</a> to get our latest insights delivered straight to your inbox.</p>
+    </article>
+  </main>
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+</body>
+</html>

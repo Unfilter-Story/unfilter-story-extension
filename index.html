@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnfilterStory | Premium Startup & Business Media</title>
+  <meta name="description" content="Discover the latest in startups, AI, funding, and interviews with leading innovators on UnfilterStory.">
+  
+  <!-- Zero-flash theme script -->
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/slider.css">
+  
+  <!-- JS -->
+  <script type="module" src="js/main.js"></script>
+  <script src="js/EditorialSlider.js" defer></script>
+</head>
+<body>
+  <!-- 1. Header Component -->
+  <app-header></app-header>
+
+  <!-- Breaking News Ticker Strip -->
+  <section aria-labelledby="trending-heading" class="ticker-feed-wrapper">
+    <h2 id="trending-heading" class="visually-hidden">Trending Now</h2>
+    <div class="ticker-feed">
+      <!-- Original Track -->
+      <div class="ticker-track" aria-hidden="false">
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Market Update</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Nasdaq 100 sees 5% surge on AI earnings</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">2 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-success); text-transform: uppercase;">Funding</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Stripe acquires another checkout startup</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">4 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">Policy</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">EU passes comprehensive data framework</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">5 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Startups</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Y Combinator announces new cohort</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">7 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">AI</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">OpenAI releases GPT-5 preview to developers</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">12 hrs ago</span>
+        </div>
+      </div>
+      <!-- Duplicated Track for Seamless Loop -->
+      <div class="ticker-track" aria-hidden="true">
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Market Update</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Nasdaq 100 sees 5% surge on AI earnings</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">2 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-success); text-transform: uppercase;">Funding</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Stripe acquires another checkout startup</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">4 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">Policy</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">EU passes comprehensive data framework</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">5 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Startups</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Y Combinator announces new cohort</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">7 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">AI</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">OpenAI releases GPT-5 preview to developers</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">12 hrs ago</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- 2. Hero Section (Editorial Slider) -->
+    <section class="hero-carousel" aria-roledescription="carousel" aria-label="Featured Articles">
+      <div class="hero-carousel-viewport">
+        <!-- Slide 1 -->
+        <article class="hero-carousel-slide hero-grid-60-40 is-active" role="group" aria-roledescription="slide">
+          <div class="hero-primary">
+            <span class="card-tag" style="margin-bottom: var(--spacing-4);">Exclusive Feature</span>
+            <h1 style="font-size: clamp(1.75rem, 3vw, 2.75rem); margin-bottom: var(--spacing-6); letter-spacing: -0.02em; line-height: 1.1;">The Great Re-Platforming: How Enterprise Tech is Evolving in 2026</h1>
+            <p style="max-width: 65ch; font-size: 1.125rem; color: var(--color-text-mute); line-height: 1.6; margin-bottom: var(--spacing-8);">A comprehensive analysis of why Fortune 500 companies are dismantling their legacy monoliths in favor of composable, AI-native architectures, and the startups leading the charge.</p>
+            <div>
+              <a href="#" class="btn btn-primary" style="padding: var(--spacing-3) var(--spacing-8); font-size: 1rem;">Read Full Article</a>
+            </div>
+          </div>
+          <div class="hero-secondary">
+            <div class="hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;" aria-label="Modern enterprise server racks"></div>
+          </div>
+        </article>
+
+        <!-- Slide 2 -->
+        <article class="hero-carousel-slide hero-grid-60-40" role="group" aria-roledescription="slide">
+          <div class="hero-primary">
+            <span class="card-tag" style="margin-bottom: var(--spacing-4);">Venture Capital</span>
+            <h1 style="font-size: clamp(1.75rem, 3vw, 2.75rem); margin-bottom: var(--spacing-6); letter-spacing: -0.02em; line-height: 1.1;">The $100M Seed Round: A New Era of Funding</h1>
+            <p style="max-width: 65ch; font-size: 1.125rem; color: var(--color-text-mute); line-height: 1.6; margin-bottom: var(--spacing-8);">How sovereign wealth and mega-funds are bypassing traditional Series A/B rounds to dominate the cap tables of generational startups.</p>
+            <div>
+              <a href="#" class="btn btn-primary" style="padding: var(--spacing-3) var(--spacing-8); font-size: 1rem;">Read Full Article</a>
+            </div>
+          </div>
+          <div class="hero-secondary" style="height: 100%;">
+            <div class="hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;" aria-label="Venture capital charts"></div>
+          </div>
+        </article>
+
+        <!-- Slide 3 -->
+        <article class="hero-carousel-slide hero-grid-60-40" role="group" aria-roledescription="slide">
+          <div class="hero-primary">
+            <span class="card-tag" style="margin-bottom: var(--spacing-4);">Design</span>
+            <h1 style="font-size: clamp(1.75rem, 3vw, 2.75rem); margin-bottom: var(--spacing-6); letter-spacing: -0.02em; line-height: 1.1;">Beyond Dark Mode: The Neo-Brutalism Resurgence</h1>
+            <p style="max-width: 65ch; font-size: 1.125rem; color: var(--color-text-mute); line-height: 1.6; margin-bottom: var(--spacing-8);">A deep dive into why enterprise SaaS platforms are dropping soft shadows for high-contrast, structural boundaries that enforce clarity over comfort.</p>
+            <div>
+              <a href="#" class="btn btn-primary" style="padding: var(--spacing-3) var(--spacing-8); font-size: 1rem;">Read Full Article</a>
+            </div>
+          </div>
+          <div class="hero-secondary" style="height: 100%;">
+            <div class="hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;" aria-label="Neo-brutalism design UI"></div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Navigation Dots -->
+      <div class="hero-carousel-nav" aria-label="Carousel Navigation">
+        <div class="hero-nav-dot is-active" aria-label="Slide 1" role="button" tabindex="0"></div>
+        <div class="hero-nav-dot" aria-label="Slide 2" role="button" tabindex="0"></div>
+        <div class="hero-nav-dot" aria-label="Slide 3" role="button" tabindex="0"></div>
+      </div>
+    </section>
+
+
+    <!-- 4. Latest Stories Section -->
+    <section aria-labelledby="latest-stories-heading" style="margin-bottom: var(--spacing-16);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6);">
+        <h2 id="latest-stories-heading" style="margin-bottom: 0; font-size: 2rem; letter-spacing: -0.02em;">Latest Stories</h2>
+        <a href="stories.html" style="font-weight: 600; color: var(--color-accent);">View All &rarr;</a>
+      </div>
+      <div class="grid-3col">
+        <article class="card-article">
+          <div class="card-article-img hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Abstract financial chart"></div>
+          <div class="card-article-content">
+            <span class="card-tag">Venture Capital</span>
+            <h3 class="card-title"><a href="#">The Return of the Seed Round: Why Early Stage is Hot Again</a></h3>
+            <p class="card-excerpt">After a focus on late-stage profitability, investors are returning to the fundamentals of early-stage risk.</p>
+            <div class="card-meta">
+              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>Sarah Jenkins</span></div>
+              <span>5 min read</span>
+            </div>
+          </div>
+        </article>
+        <article class="card-article">
+          <div class="card-article-img hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Designers working on software"></div>
+          <div class="card-article-content">
+            <span class="card-tag">Design</span>
+            <h3 class="card-title"><a href="#">Why B2B Software Finally Looks Good</a></h3>
+            <p class="card-excerpt">The consumerization of enterprise IT has forced legacy players to rethink their design systems.</p>
+            <div class="card-meta">
+              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>Alex Rivera</span></div>
+              <span>7 min read</span>
+            </div>
+          </div>
+        </article>
+        <article class="card-article">
+          <div class="card-article-img hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Team collaborating effectively"></div>
+          <div class="card-article-content">
+            <span class="card-tag">Productivity</span>
+            <h3 class="card-title"><a href="#">Asynchronous Communication as a Competitive Advantage</a></h3>
+            <p class="card-excerpt">Companies that master async workflows are outpacing their meeting-heavy competitors.</p>
+            <div class="card-meta">
+              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>David Chen</span></div>
+              <span>4 min read</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 5. Startup Spotlight -->
+    <section class="spotlight-section" aria-labelledby="spotlight-heading">
+      <div class="spotlight-content">
+        <h2 id="spotlight-heading" style="font-size: 1rem; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-4);">Startup Spotlight</h2>
+        <h3 style="font-size: clamp(2rem, 3vw, 2.5rem); margin-bottom: var(--spacing-6);"><a href="#">Linear: Reimagining the Issue Tracker for High-Performance Teams</a></h3>
+        <p style="font-size: 1.125rem; color: var(--color-text-mute); margin-bottom: var(--spacing-8);">How a small team built a cult-favorite tool by focusing on speed, keyboard-first navigation, and an uncompromising aesthetic standard.</p>
+        <a href="#" class="btn btn-primary">Read Case Study</a>
+      </div>
+      <div class="spotlight-media">
+        <div class="hero-media-wrapper" style="aspect-ratio: 1 / 1; background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Dark mode coding workspace setup"></div>
+      </div>
+    </section>
+
+    <!-- 6. AI & Innovation Vertical -->
+    <section aria-labelledby="ai-heading" style="margin-bottom: var(--spacing-16);">
+      <h2 id="ai-heading" style="margin-bottom: var(--spacing-6);">AI & Innovation</h2>
+      <div class="split-layout-2col">
+        <!-- Feature Card -->
+        <article class="card-article" style="height: 100%;">
+          <div class="card-article-img hero-media-wrapper" style="height: 250px; background-image: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Abstract neural network"></div>
+          <div class="card-article-content">
+            <span class="card-tag">Generative AI</span>
+            <h3 class="card-title" style="font-size: 1.5rem;"><a href="#">Beyond Chatbots: Autonomous Agents in the Enterprise</a></h3>
+            <p class="card-excerpt">The next phase of AI deployment involves autonomous systems that can execute multi-step workflows without human intervention.</p>
+            <div class="card-meta">
+              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>Dr. Alan Vance</span></div>
+              <span>10 min read</span>
+            </div>
+          </div>
+        </article>
+        <!-- Stacked Feed -->
+        <div class="feed-stacked">
+          <article class="feed-stacked-item">
+            <span class="card-tag">Hardware</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-2);"><a href="#">Nvidia's Next-Gen Architecture Explained</a></h4>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">4 min read</span>
+          </article>
+          <article class="feed-stacked-item">
+            <span class="card-tag">Regulation</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-2);"><a href="#">Navigating the AI Act: What Startups Need to Know</a></h4>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">7 min read</span>
+          </article>
+          <article class="feed-stacked-item">
+            <span class="card-tag">Open Source</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-2);"><a href="#">The Rise of Small, Specialized Language Models</a></h4>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">5 min read</span>
+          </article>
+          <article class="feed-stacked-item">
+            <span class="card-tag">Healthcare</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-2);"><a href="#">AI in Drug Discovery: A Progress Report</a></h4>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">8 min read</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Funding Tracker Dashboard -->
+    <section aria-labelledby="funding-heading" style="margin-bottom: var(--spacing-16);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6);">
+        <h2 id="funding-heading" style="margin-bottom: 0;">Funding Tracker</h2>
+        <a href="funding.html" style="font-weight: 600; color: var(--color-accent);">Full Report &rarr;</a>
+      </div>
+      <div class="funding-dashboard">
+        <div class="widget-funding">
+          <div class="widget-funding-header">
+            <span class="widget-funding-company">DataOrb</span>
+            <span class="widget-funding-round">Series B</span>
+          </div>
+          <div class="widget-funding-amount">$45M</div>
+          <div class="widget-funding-investors">Led by Sequoia Capital, Andreessen Horowitz</div>
+        </div>
+        <div class="widget-funding">
+          <div class="widget-funding-header">
+            <span class="widget-funding-company">CarbonClear</span>
+            <span class="widget-funding-round">Series A</span>
+          </div>
+          <div class="widget-funding-amount">$15M</div>
+          <div class="widget-funding-investors">Led by Benchmark, Lowercarbon Capital</div>
+        </div>
+        <div class="widget-funding">
+          <div class="widget-funding-header">
+            <span class="widget-funding-company">SyncFlow</span>
+            <span class="widget-funding-round">Seed</span>
+          </div>
+          <div class="widget-funding-amount">$4.2M</div>
+          <div class="widget-funding-investors">Led by Y Combinator, AngelList</div>
+        </div>
+        <div class="widget-funding">
+          <div class="widget-funding-header">
+            <span class="widget-funding-company">OmniHealth</span>
+            <span class="widget-funding-round">Series C</span>
+          </div>
+          <div class="widget-funding-amount">$120M</div>
+          <div class="widget-funding-investors">Led by Founders Fund, Khosla Ventures</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Founder Interviews -->
+    <section aria-labelledby="interviews-heading" style="margin-bottom: var(--spacing-16);">
+      <h2 id="interviews-heading" style="margin-bottom: var(--spacing-6);">Founder Interviews</h2>
+      <div class="media-grid">
+        <a href="#" class="card-media" aria-label="Watch interview with Sam Altman">
+          <div class="card-media-bg"></div>
+          <div class="play-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="card-media-content">
+            <div class="card-media-title">Sam Altman on AGI and Global Infrastructure</div>
+            <div class="card-media-meta">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>45:20</span>
+              <span style="margin: 0 var(--spacing-2);">&middot;</span>
+              <span>Video Interview</span>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="card-media" aria-label="Listen to podcast with Brian Chesky">
+          <div class="card-media-bg" style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);"></div>
+          <div class="play-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+            </svg>
+          </div>
+          <div class="card-media-content">
+            <div class="card-media-title">Brian Chesky: Designing for Trust at Scale</div>
+            <div class="card-media-meta">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>1:12:45</span>
+              <span style="margin: 0 var(--spacing-2);">&middot;</span>
+              <span>Podcast Episode</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 9. Newsletter Subscription Block -->
+    <section class="newsletter-block" aria-labelledby="newsletter-heading">
+      <h2 id="newsletter-heading">Intelligence for the Modern Operator</h2>
+      <p>Join 50,000+ founders, investors, and product leaders who receive our weekly analysis on the trends shaping the business ecosystem.</p>
+      <form class="newsletter-form-group" novalidate>
+        <div class="form-floating">
+          <input type="email" id="newsletter-email-main" placeholder=" " required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+          <label for="newsletter-email-main">Email Address</label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="background-color: var(--color-bg-main); color: var(--color-primary); border-radius: 8px;">Subscribe</button>
+      </form>
+    </section>
+
+    <!-- 10. Featured Categories Taxonomy Grid -->
+    <section aria-labelledby="taxonomy-heading" style="margin-bottom: var(--spacing-16);">
+      <h2 id="taxonomy-heading" class="visually-hidden">Featured Categories</h2>
+      <div class="tag-container">
+        <a href="stories.html" class="pill">Startups</a>
+        <a href="ai-innovation.html" class="pill">Artificial Intelligence</a>
+        <a href="funding.html" class="pill">Venture Capital</a>
+        <a href="#" class="pill">Product Management</a>
+        <a href="#" class="pill">Engineering</a>
+        <a href="#" class="pill">Design</a>
+        <a href="#" class="pill">Growth Marketing</a>
+        <a href="#" class="pill">Policy & Regulation</a>
+        <a href="#" class="pill">Web3 & Crypto</a>
+        <a href="#" class="pill">ClimateTech</a>
+      </div>
+    </section>
+
+    <!-- 11. Dynamic Post Engine (Latest Articles Feed) -->
+    <section aria-labelledby="feed-heading">
+      <h2 id="feed-heading" style="margin-bottom: var(--spacing-6);">Latest Articles</h2>
+      <div id="articles-feed-container" class="dynamic-feed">
+        <!-- Initial static cards -->
+        <article class="card-article-horizontal">
+          <div class="card-article-img hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Empty modern office"></div>
+          <div class="card-article-content">
+            <span class="card-tag">Culture</span>
+            <h3 class="card-title"><a href="#">The Return to Office Mandate vs. Remote Reality</a></h3>
+            <p class="card-excerpt">Data shows a growing disconnect between executive mandates and employee retention in top-tier tech firms.</p>
+            <div class="card-meta">
+              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>Elena Rodriguez</span></div>
+              <span>6 min read</span>
+            </div>
+          </div>
+        </article>
+        <article class="card-article-horizontal">
+          <div class="card-article-img hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Payment terminal"></div>
+          <div class="card-article-content">
+            <span class="card-tag">Fintech</span>
+            <h3 class="card-title"><a href="#">Embedded Finance is Eating the World</a></h3>
+            <p class="card-excerpt">Why every SaaS company is eventually becoming a financial services provider.</p>
+            <div class="card-meta">
+              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>Marcus Reid</span></div>
+              <span>8 min read</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="dynamic-feed-actions">
+        <button id="load-more-articles" class="btn btn-primary" style="padding: var(--spacing-3) var(--spacing-12);">Load More Articles</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 12. Footer Component -->
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+</body>
+</html>
