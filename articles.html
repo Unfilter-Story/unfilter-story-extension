@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Articles | UnfilterStory</title>
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    function syncTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    }
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  </script>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'cyber-blue': '#0099FF',
+            'electric-violet': '#8B5CF6',
+            'brand-red': '#DC2626',
+            'slate-dark': '#0B0F19',
+            'slate-card': '#0D121F',
+            'slate-border': '#1E293B'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-white dark:bg-[#0B0F19] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+  
+  <app-header></app-header>
+
+  <main class="pt-16 pb-24">
+    <!-- Header Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+      <div class="border-b border-gray-200 dark:border-gray-800 pb-8">
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4 text-gray-900 dark:text-white">Editorial <span class="text-brand-red">Archive</span></h1>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl">Explore our complete collection of deep-dives, architectural analyses, and founder playbooks.</p>
+      </div>
+    </section>
+
+    <!-- Articles Grid -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Article 1 -->
+        <a href="article.html" class="group flex flex-col bg-white dark:bg-[#0D121F] rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300">
+          <div class="w-full aspect-[16/10] overflow-hidden relative bg-gray-100 dark:bg-gray-900">
+            <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80" alt="Autonomous AI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur-md text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded">Fintech AI</div>
+          </div>
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-brand-red transition-colors line-clamp-2">The Next Generation of Autonomous Architectures</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-6 flex-1">How agentic AI systems are completely rewriting the infrastructure of global payments and bypassing traditional regulatory hurdles in 2026.</p>
+            <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=50&h=50&q=80" alt="Author" class="w-6 h-6 rounded-full">
+                <span class="text-xs font-bold text-gray-500">Sarah Lin</span>
+              </div>
+              <span class="text-xs font-bold text-brand-red flex items-center gap-1 group-hover:translate-x-1 transition-transform">Read <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Article 2 -->
+        <a href="100m-seed-round.html" class="group flex flex-col bg-white dark:bg-[#0D121F] rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300">
+          <div class="w-full aspect-[16/10] overflow-hidden relative bg-gray-100 dark:bg-gray-900">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80" alt="Venture Capital" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur-md text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded">Venture Capital</div>
+          </div>
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-brand-red transition-colors line-clamp-2">The $100M Seed Round: A New Era of Funding</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-6 flex-1">How sovereign wealth and mega-funds are bypassing traditional Series A/B rounds to dominate the cap tables of generational startups.</p>
+            <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=50&h=50&q=80" alt="Author" class="w-6 h-6 rounded-full">
+                <span class="text-xs font-bold text-gray-500">Marcus Vance</span>
+              </div>
+              <span class="text-xs font-bold text-brand-red flex items-center gap-1 group-hover:translate-x-1 transition-transform">Read <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Article 3 -->
+        <a href="neo-brutalism-resurgence.html" class="group flex flex-col bg-white dark:bg-[#0D121F] rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300">
+          <div class="w-full aspect-[16/10] overflow-hidden relative bg-gray-100 dark:bg-gray-900">
+            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80" alt="Design" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur-md text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded">UI/UX Design</div>
+          </div>
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-brand-red transition-colors line-clamp-2">Beyond Dark Mode: The Neo-Brutalism Resurgence</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-6 flex-1">A deep dive into why enterprise SaaS platforms are dropping soft shadows for high-contrast, structural boundaries.</p>
+            <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=50&h=50&q=80" alt="Author" class="w-6 h-6 rounded-full">
+                <span class="text-xs font-bold text-gray-500">Alex Chen</span>
+              </div>
+              <span class="text-xs font-bold text-brand-red flex items-center gap-1 group-hover:translate-x-1 transition-transform">Read <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Article 4 -->
+        <a href="article.html" class="group flex flex-col bg-white dark:bg-[#0D121F] rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300">
+          <div class="w-full aspect-[16/10] overflow-hidden relative bg-gray-100 dark:bg-gray-900">
+            <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80" alt="Culture" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur-md text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded">Culture</div>
+          </div>
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-brand-red transition-colors line-clamp-2">The Return to Office Mandate vs. Remote Reality</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-6 flex-1">Data shows a growing disconnect between executive mandates and employee retention in top-tier tech firms.</p>
+            <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=50&h=50&q=80" alt="Author" class="w-6 h-6 rounded-full">
+                <span class="text-xs font-bold text-gray-500">Elena Rodriguez</span>
+              </div>
+              <span class="text-xs font-bold text-brand-red flex items-center gap-1 group-hover:translate-x-1 transition-transform">Read <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Article 5 -->
+        <a href="article.html" class="group flex flex-col bg-white dark:bg-[#0D121F] rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300">
+          <div class="w-full aspect-[16/10] overflow-hidden relative bg-gray-100 dark:bg-gray-900">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Hardware" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur-md text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded">Hardware</div>
+          </div>
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-brand-red transition-colors line-clamp-2">The Great Re-Platforming</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-6 flex-1">How enterprise tech is evolving in 2026. Hardware is making a massive comeback as compute demands outstrip SaaS capacity.</p>
+            <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=50&h=50&q=80" alt="Author" class="w-6 h-6 rounded-full">
+                <span class="text-xs font-bold text-gray-500">David M.</span>
+              </div>
+              <span class="text-xs font-bold text-brand-red flex items-center gap-1 group-hover:translate-x-1 transition-transform">Read <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Article 6 -->
+        <a href="article.html" class="group flex flex-col bg-white dark:bg-[#0D121F] rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300">
+          <div class="w-full aspect-[16/10] overflow-hidden relative bg-gray-100 dark:bg-gray-900">
+            <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800&q=80" alt="Markets" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur-md text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded">Markets</div>
+          </div>
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-brand-red transition-colors line-clamp-2">The Liquidity Crisis of 2027</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-6 flex-1">Pre-empting the secondary market collapse as mega-seeds fail to find Series B exits in a highly constrained environment.</p>
+            <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=50&h=50&q=80" alt="Author" class="w-6 h-6 rounded-full">
+                <span class="text-xs font-bold text-gray-500">Marcus Reid</span>
+              </div>
+              <span class="text-xs font-bold text-brand-red flex items-center gap-1 group-hover:translate-x-1 transition-transform">Read <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+      
+      <!-- Load More Button -->
+      <div class="mt-12 text-center">
+        <button class="px-8 py-3 rounded-xl border border-gray-300 dark:border-gray-700 font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#1E293B] hover:text-brand-red dark:hover:text-brand-red transition-all shadow-sm">Load More Articles</button>
+      </div>
+    </section>
+
+  </main>
+
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+
+  <script type="module" src="js/main.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

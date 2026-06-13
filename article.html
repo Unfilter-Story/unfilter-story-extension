@@ -3,15 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Post-SaaS Era | UnfilterStory</title>
+  <title>Premium Article Template | UnfilterStory</title>
+  <meta name="description" content="A highly optimized, bulletproof, template shell for long-form content on the UnfilterStory platform.">
   
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
   <script>
-    // Sync UnfilterStory data-theme with Tailwind .dark
     const theme = localStorage.getItem('theme') || 
       (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', theme);
@@ -28,6 +35,7 @@
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   </script>
 
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -36,7 +44,11 @@
         extend: {
           colors: {
             'cyber-blue': '#0099FF',
-            'electric-violet': '#8B5CF6'
+            'electric-violet': '#8B5CF6',
+            'brand-red': '#DC2626',
+            'slate-dark': '#0B0F19',
+            'slate-card': '#0D121F',
+            'slate-border': '#1E293B'
           },
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
@@ -47,473 +59,651 @@
       }
     }
   </script>
-  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* Reading Progress Bar Custom Styling */
-    .progress-bar-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      z-index: 10000;
-      background: transparent;
-    }
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, #0099FF, #8B5CF6);
-      width: 0%;
-      transition: width 0.1s ease-out;
-    }
-
-    /* Grid Layout for Article Architecture */
-    .article-layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    /* Section 2: High-Readability Prose Typography */
+    .prose { font-size: 18px; line-height: 1.9; color: #4B5563; }
+    .dark .prose { color: #9CA3AF; }
+    .prose p { margin-bottom: 1.75rem; }
     
-    @media (min-width: 1024px) {
-      .article-layout {
-        /* Left sidebar (flexible up to 200px), Center content (strictly 720px), Right sidebar (flexible up to 200px) */
-        grid-template-columns: minmax(60px, 200px) 720px minmax(60px, 200px);
-        gap: 3rem;
-        justify-content: center;
-      }
-    }
-
-    /* Prose Styling Customizations */
-    .prose p {
-      margin-bottom: 2rem;
-      line-height: 1.8;
-      font-size: 1.125rem;
-    }
-    .prose h2 {
-      font-size: 1.875rem;
-      font-weight: 800;
-      margin-top: 3.5rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.3;
-      scroll-margin-top: 100px; /* Accounts for fixed header when using anchor links */
-    }
-    .prose h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-top: 2.5rem;
-      margin-bottom: 1.25rem;
-      scroll-margin-top: 100px;
-    }
-    .prose blockquote {
-      border-left: 4px solid #0099FF;
-      padding-left: 1.5rem;
-      font-style: italic;
-      margin: 2.5rem 0;
-      font-size: 1.25rem;
-      line-height: 1.7;
-    }
-    .prose img {
-      width: 100%;
-      border-radius: 0.75rem;
-      margin: 2.5rem 0;
-    }
+    .prose h2 { font-size: 1.75rem; font-weight: 800; margin-top: 3.5rem; margin-bottom: 1.25rem; color: #111827; line-height: 1.25; scroll-margin-top: 100px; letter-spacing: -0.01em; }
+    .dark .prose h2 { color: #F9FAFB; }
     
-    /* Sticky Sidebars */
-    .sticky-panel {
-      position: sticky;
-      top: 120px;
-      max-height: calc(100vh - 140px);
-      overflow-y: auto;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE/Edge */
-    }
-    .sticky-panel::-webkit-scrollbar {
-      display: none; /* Chrome/Safari */
-    }
+    .prose h3 { font-size: 1.5rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; line-height: 1.25; scroll-margin-top: 100px; }
+    .dark .prose h3 { color: #F9FAFB; }
+    
+    .prose strong { color: #111827; font-weight: 600; }
+    .dark .prose strong { color: #F9FAFB; }
+    
+    .prose blockquote { border-left: 4px solid #DC2626; padding-left: 1.5rem; margin: 2.5rem 0; font-size: 1.25rem; font-style: italic; color: #111827; line-height: 1.6; }
+    .dark .prose blockquote { color: #F9FAFB; border-left-color: #DC2626; }
+    
+    .prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1.75rem; }
+    .prose li { margin-bottom: 0.75rem; }
+    .prose ul { list-style-type: disc; }
+    .prose ol { list-style-type: decimal; }
+    
+    .prose pre { background-color: #111827; color: #F9FAFB; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; margin: 2.5rem 0; font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; border: 1px solid #1E293B; }
+    .dark .prose pre { background-color: #000; border-color: #111827; }
+    .prose code { font-family: 'JetBrains Mono', monospace; font-size: 0.875em; padding: 0.2em 0.4em; background-color: #F3F4F6; border-radius: 0.25rem; color: #DC2626; }
+    .dark .prose code { background-color: #1F2937; color: #FCA5A5; }
+    .prose pre code { background-color: transparent; padding: 0; color: inherit; border-radius: 0; }
+    
+    .prose table { width: 100%; border-collapse: collapse; margin: 2.5rem 0; font-size: 0.875rem; }
+    .prose th, .prose td { border: 1px solid #E5E7EB; padding: 0.75rem 1rem; text-align: left; }
+    .dark .prose th, .dark .prose td { border-color: #374151; }
+    .prose th { background-color: #F9FAFB; font-weight: 600; color: #111827; }
+    .dark .prose th { background-color: #1F2937; color: #F9FAFB; }
+    
+    .prose figure { margin: 3rem 0; }
+    .prose figure img { border-radius: 0.75rem; width: 100%; height: auto; display: block; border: 1px solid rgba(0,0,0,0.05); }
+    .dark .prose figure img { border-color: rgba(255,255,255,0.05); }
+    .prose figcaption { text-align: center; font-size: 0.875rem; color: #6B7280; margin-top: 0.75rem; font-family: 'Inter', sans-serif; }
+    
+    .highlight { background-color: rgba(220, 38, 38, 0.1); color: #DC2626; font-weight: 600; padding: 0 0.2em; border-radius: 0.25rem; }
+    
+    /* Image specific micro-interactions */
+    .hero-img-container { perspective: 1000px; overflow: hidden; border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); }
+    .dark .hero-img-container { box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5); }
+    .hero-img-inner { will-change: transform; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .hero-img-container:hover .hero-img-inner { transform: scale(1.05); }
+    
+    .toc-link { display: block; padding-left: 1rem; border-left: 2px solid transparent; color: #9CA3AF; margin-bottom: 0.75rem; transition: all 0.2s; font-size: 0.875rem; font-weight: 500; }
+    .toc-link:hover { color: #DC2626; }
+    .toc-link.active { color: #DC2626; border-left-color: #DC2626; font-weight: 700; }
 
-    /* Mobile Bottom Dock */
-    @media (max-width: 1023px) {
-      .mobile-dock {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: var(--color-bg-surf);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-top: 1px solid var(--color-border);
-        padding: 0.75rem 1.5rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 50;
-      }
-    }
+    /* Lazy load fade in */
+    img.lazy { opacity: 0; transition: opacity 0.5s ease-in-out; }
+    img.lazy.loaded { opacity: 1; }
+
+    /* Mobile dock */
+    #mobile-dock { transition: transform 0.3s ease-in-out; }
+    #mobile-dock.hidden-dock { transform: translateY(100%); }
+    
+    /* Social Button Hover States */
+    .social-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background-color: #F3F4F6; color: #4B5563; transition: all 0.2s; }
+    .dark .social-btn { background-color: #1F2937; color: #9CA3AF; }
+    .social-btn:hover { transform: translateY(-2px); }
+    .social-btn.instagram:hover { background-color: #E1306C; color: white; }
+    .social-btn.twitter:hover { background-color: #000; color: white; }
+    .dark .social-btn.twitter:hover { background-color: #fff; color: black; }
+    .social-btn.facebook:hover { background-color: #1877F2; color: white; }
+    .social-btn.substack:hover { background-color: #FF6719; color: white; }
+    .social-btn.copy:hover { background-color: #DC2626; color: white; }
   </style>
 </head>
-<body class="bg-white dark:bg-[#070A13] text-gray-800 dark:text-gray-200 transition-colors duration-300 antialiased font-sans">
+<body class="bg-white dark:bg-[#0B0F19] text-gray-900 dark:text-white antialiased selection:bg-brand-red/20 selection:text-brand-red transition-colors duration-300 relative">
+  
+  <!-- Section 3: Telemetry Reading Progress Bar -->
+  <div id="progress-bar" class="fixed top-0 left-0 h-[2px] bg-brand-red z-[60] w-0 transition-all duration-75 ease-out shadow-[0_0_10px_rgba(220,38,38,0.5)] pointer-events-none"></div>
 
-  <!-- Global Header injected dynamically -->
+  <!-- Global Header -->
   <app-header></app-header>
 
-  <main class="pt-24 pb-24">
+  <main class="pt-8 pb-24">
     
-    <!-- ARTICLE HEADER / HERO OVERVIEW -->
-    <header class="max-w-[720px] mx-auto px-4 sm:px-6 lg:px-0 mb-12">
-      <!-- Tag / Category -->
-      <div class="mb-6">
-        <span class="inline-flex items-center px-3 py-1 rounded-full bg-cyber-blue/10 dark:bg-cyber-blue/20 text-cyber-blue text-[10px] font-mono font-bold uppercase tracking-widest">
-          Industry Analysis
-        </span>
+    <!-- Section 1: The Trust Hero Canvas & Metadata Block -->
+    <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+      <!-- Badge -->
+      <div class="flex items-center gap-2 mb-6 justify-center md:justify-start">
+        <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-red bg-brand-red/10 border border-brand-red/20 rounded">Startup Story</span>
+        <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded">AI</span>
       </div>
       
-      <!-- Typographic Header -->
-      <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 dark:text-white leading-[1.1] mb-6 tracking-tight transition-colors duration-300">
-        The Post-SaaS Era: How Vertical AI is Rewriting the Playbook
+      <!-- Typography: Fluid scaling 32px -> 40px -> 56px -->
+      <h1 class="text-[32px] md:text-[40px] lg:text-[56px] font-black tracking-tight leading-[1.25] mb-6 text-gray-900 dark:text-white text-center md:text-left" style="text-wrap: balance;">
+        The Next Generation of <span class="text-brand-red">Autonomous Architectures</span> in Fintech
       </h1>
       
       <!-- Subtitle -->
-      <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed mb-8 transition-colors duration-300">
-        As general-purpose models commoditize baseline capabilities, highly specialized neural architectures are capturing the next trillion dollars of enterprise value.
+      <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed mb-8 max-w-3xl text-center md:text-left">
+        How agentic AI systems are completely rewriting the infrastructure of global payments and bypassing traditional regulatory hurdles in 2026.
       </p>
 
-      <!-- Author Meta Block -->
-      <div class="flex flex-wrap items-center justify-between gap-4 py-6 border-t border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
-        <div class="flex items-center gap-4">
-          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80" alt="Sarah Jenkins" class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-700 object-cover">
+      <!-- Micro-Telemetry Data Row -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between py-6 border-y border-gray-200 dark:border-gray-800 gap-6">
+        <div class="flex items-center justify-center md:justify-start gap-4">
+          <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=100&h=100&q=80" alt="Sarah Lin" class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-gray-800 shadow-sm">
           <div>
-            <div class="font-bold text-gray-900 dark:text-white transition-colors duration-300">Sarah Jenkins</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400">Principal Tech Editor</div>
+            <div class="font-bold text-gray-900 dark:text-white">Sarah Lin</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">Chief Technology Editor &bull; Updated Oct 28, 2026</div>
           </div>
         </div>
-        <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 font-mono">
-          <div class="flex items-center gap-1">
-            <i data-lucide="calendar" class="w-4 h-4"></i>
-            <span>Oct 24, 2026</span>
-          </div>
-          <div class="flex items-center gap-1">
-            <i data-lucide="clock" class="w-4 h-4 text-cyber-blue"></i>
-            <span class="text-gray-900 dark:text-white font-bold">5 min read</span>
+        <div class="flex items-center justify-center md:justify-end gap-6">
+          <div class="flex items-center gap-4 text-xs font-mono text-gray-500 uppercase tracking-widest">
+            <span><i data-lucide="clock" class="w-3 h-3 inline mr-1"></i> 12 Min Read</span>
+            <span><i data-lucide="activity" class="w-3 h-3 inline mr-1 text-green-500"></i> <span id="live-viewers">412</span> Reading Now</span>
           </div>
         </div>
       </div>
-    </header>
+    </article>
 
-    <!-- IMPACTFUL HERO IMAGE -->
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 mb-16">
+    <!-- Visual Anchor with semantic <figcaption> -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
       <figure class="m-0">
-        <div class="w-full aspect-[16/9] md:aspect-[21/9] rounded-2xl overflow-hidden shadow-2xl relative bg-gray-100 dark:bg-gray-800">
-          <!-- Breathtaking Hero Visual -->
-          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=2000&q=80" alt="Server room representing AI infrastructure" class="w-full h-full object-cover transition-opacity duration-500" loading="lazy">
+        <div class="hero-img-container h-[300px] md:h-[500px] w-full relative group bg-gray-100 dark:bg-gray-900">
+          <!-- Intersection Observer target with lazy loading -->
+          <img data-src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=2000&q=80" alt="Abstract visualization of neural networks and data flow" class="hero-img-inner lazy w-full h-full object-cover absolute top-0 left-0" style="object-position: 50% 50%;">
+          <div class="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-[24px] pointer-events-none"></div>
         </div>
-        <figcaption class="text-sm text-center text-gray-500 mt-4 font-mono">Infrastructure processing vertical data streams at scale. (Credit: Unsplash)</figcaption>
+        <figcaption class="text-center text-sm font-mono text-gray-500 mt-4 uppercase tracking-widest px-4">
+          Data visualization mapping the real-time execution nodes of a decentralized financial network.
+        </figcaption>
       </figure>
     </div>
 
-    <!-- MAIN GRID LAYOUT -->
-    <div class="article-layout px-4 sm:px-6 lg:px-4">
-      
-      <!-- LEFT SIDEBAR: STICKY SOCIAL UTILITY -->
-      <aside class="hidden lg:block relative">
-        <div class="sticky-panel flex flex-col items-end pr-4 border-r border-transparent">
-          <div class="text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase tracking-widest mb-4">Share</div>
-          <div class="flex flex-col gap-3">
-            <button class="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-cyber-blue transition-all" aria-label="Share on X">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.004 3.985H5.078z"/></svg>
-            </button>
-            <button class="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-[#0a66c2] transition-all" aria-label="Share on LinkedIn">
-              <i data-lucide="linkedin" class="w-4 h-4"></i>
-            </button>
-            <button class="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all" aria-label="Copy Link">
-              <i data-lucide="link" class="w-4 h-4"></i>
-            </button>
-            <div class="w-px h-8 bg-gray-200 dark:bg-gray-800 mx-auto my-2"></div>
-            <button class="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-red-500 transition-all" aria-label="Save Article">
-              <i data-lucide="bookmark" class="w-4 h-4"></i>
-            </button>
-          </div>
-        </div>
-      </aside>
-
-      <!-- CENTER COLUMN: CORE READING CONTENT -->
-      <article class="prose max-w-none text-gray-800 dark:text-gray-300 transition-colors duration-300">
-        <p class="text-xl md:text-2xl font-serif italic text-gray-900 dark:text-white mb-8 border-l-4 border-cyber-blue pl-6">
-          The era of the "all-in-one" platform is giving way to highly specialized, AI-native ecosystems tailored for specific verticals.
-        </p>
+    <!-- DOUBLE-ASYMMETRIC READING FRAMEWORK -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative">
         
-        <p>For the past decade, the software-as-a-service (SaaS) industry has been defined by horizontal scaling. Companies built tools meant to serve as many industries as possible, relying on customization and heavy professional services to fit niche needs. However, as Large Language Models (LLMs) and specialized neural networks reach new levels of maturity, this paradigm is fundamentally shifting.</p>
-
-        <h2 id="the-vertical-advantage" class="text-gray-900 dark:text-white">The Vertical Advantage</h2>
-        <p>General-purpose models like GPT-4 or Claude have commoditized baseline intelligence. What they lack is deep, industry-specific context. A legal AI needs to understand precedent, jurisdictional nuance, and contract liability in a way that differs entirely from a medical diagnostic AI analyzing MRI scans.</p>
-        
-        <blockquote class="text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-[#0D121F] p-6 rounded-r-xl border-l-4 border-cyber-blue my-8 italic font-serif text-xl">
-          "The next trillion dollars in software value won't be created by building better general tools; it will be created by building perfect specific tools."<br>
-          <span class="text-sm font-sans text-gray-500 dark:text-gray-400 not-italic block mt-4">— Elena Rodriguez, General Partner at Paradigm Ventures</span>
-        </blockquote>
-
-        <p>This is where Vertical AI steps in. By training smaller, highly optimized models on proprietary, domain-specific datasets, startups are achieving accuracy rates that general models simply cannot match without prohibitive prompting and fine-tuning.</p>
-
-        <!-- INLINE NEWSLETTER CTA -->
-        <aside class="my-12 p-8 md:p-10 rounded-2xl bg-gray-50 dark:bg-[#0D121F] border border-gray-200 dark:border-gray-800 shadow-sm relative overflow-hidden group">
-          <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-cyber-blue/5 dark:bg-cyber-blue/10 rounded-full blur-[80px] pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
-          <div class="relative z-10 flex flex-col items-center text-center">
-            <i data-lucide="mail" class="w-8 h-8 text-cyber-blue mb-4"></i>
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 !mt-0">The UnfilterStory Newsletter</h3>
-            <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md">Join 50,000+ tech leaders receiving our weekly deep dives into AI, venture capital, and startup growth strategies.</p>
-            <form class="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md" onsubmit="event.preventDefault(); const b = this.querySelector('button'); b.innerHTML = '<i data-lucide=\'check\' class=\'w-4 h-4 mr-2 inline\'></i> Subscribed'; b.classList.add('bg-green-500', 'border-green-500', 'text-white'); b.classList.remove('bg-gray-900', 'dark:bg-white', 'text-white', 'dark:text-gray-900');">
-              <input type="email" placeholder="Enter your email" required class="w-full bg-white dark:bg-[#0B0F19] border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all shadow-sm">
-              <button type="submit" class="w-full sm:w-auto bg-gray-900 dark:bg-white text-white dark:text-gray-900 border border-transparent px-6 py-3 rounded-lg font-bold hover:bg-cyber-blue dark:hover:bg-cyber-blue hover:text-white transition-all whitespace-nowrap shadow-sm">
-                Subscribe
-              </button>
-            </form>
-          </div>
+        <!-- Flank Alpha (Left Sidebar): Section 4 Social Utility Panel -->
+        <aside class="hidden lg:flex lg:col-span-1 xl:col-span-2 sticky top-32 flex-col items-center xl:items-end pr-0 xl:pr-8 gap-4 border-r border-transparent xl:border-gray-100 dark:xl:border-gray-800 h-[calc(100vh-8rem)]">
+          
+          <button id="copy-link-btn" class="social-btn copy group relative" aria-label="Copy Link">
+            <i data-lucide="link" class="w-4 h-4"></i>
+            <span id="copy-tooltip" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 dark:bg-white text-white dark:text-black text-xs font-bold py-1 px-2 rounded opacity-0 transition-opacity pointer-events-none whitespace-nowrap">Copied!</span>
+          </button>
+          <a href="#" class="social-btn instagram" aria-label="Share on Instagram">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path></svg>
+          </a>
+          <a href="#" class="social-btn facebook" aria-label="Share on Facebook">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.891h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>
+          </a>
+          <a href="#" class="social-btn twitter" aria-label="Share on X">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          </a>
+          <a href="#" class="social-btn substack" aria-label="Share on Substack">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"></path></svg>
+          </a>
         </aside>
 
-        <h2 id="architecting-the-future" class="text-gray-900 dark:text-white">Architecting the Future</h2>
-        <p>The transition to Vertical AI requires a fundamental rethink of product architecture. We are moving away from traditional CRUD (Create, Read, Update, Delete) databases to autonomous agent networks.</p>
-        <p>In a healthcare setting, for example, a Vertical AI doesn't just store patient records. It actively monitors incoming test results, cross-references them against medical journals, and drafts preliminary treatment plans for physician review.</p>
-
-        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1400&q=80" alt="Abstract data nodes">
-        <p class="text-sm text-center text-gray-500 mt-[-1rem] mb-10 font-mono">Visualization of a domain-specific agent network routing specialized tasks.</p>
-
-        <h2 id="the-data-moat" class="text-gray-900 dark:text-white">The Data Moat</h2>
-        <p>If the model architecture is commoditized, what is the competitive advantage? The answer is proprietary data workflows. Companies that can embed themselves deeply into an industry's daily operations will capture unique data exhausts.</p>
-        <p>This creates an insurmountable flywheel: better workflow integration leads to better vertical models, which leads to better user experiences, which drives more adoption and generates even more nuanced training data.</p>
-        
-        <h3 id="conclusion" class="text-gray-900 dark:text-white">Conclusion</h3>
-        <p>The post-SaaS era will not be defined by horizontal giants trying to be everything to everyone, but by a thousand vertical titans. As AI becomes deeply embedded in every industry, the platforms that understand the specific, nuanced workflows of their users will emerge victorious.</p>
-      </article>
-
-      <!-- RIGHT SIDEBAR: INTERACTIVE TABLE OF CONTENTS -->
-      <aside class="hidden lg:block relative">
-        <div class="sticky-panel pl-6 border-l border-gray-200 dark:border-gray-800">
-          <div class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest mb-6">Table of Contents</div>
-          <nav id="toc" class="flex flex-col gap-4 text-sm font-medium">
-            <a href="#the-vertical-advantage" class="toc-link text-gray-500 dark:text-gray-400 hover:text-cyber-blue dark:hover:text-cyber-blue transition-colors relative">
-              The Vertical Advantage
-            </a>
-            <a href="#architecting-the-future" class="toc-link text-gray-500 dark:text-gray-400 hover:text-cyber-blue dark:hover:text-cyber-blue transition-colors relative">
-              Architecting the Future
-            </a>
-            <a href="#the-data-moat" class="toc-link text-gray-500 dark:text-gray-400 hover:text-cyber-blue dark:hover:text-cyber-blue transition-colors relative">
-              The Data Moat
-            </a>
-            <a href="#conclusion" class="toc-link text-gray-500 dark:text-gray-400 hover:text-cyber-blue dark:hover:text-cyber-blue transition-colors pl-4 relative">
-              Conclusion
-            </a>
-          </nav>
-        </div>
-      </aside>
-
-    </div>
-
-    <!-- MOBILE BOTTOM DOCK (Visible only on screens < 1024px) -->
-    <div class="mobile-dock lg:hidden dark:bg-[#0B0F19]/90 border-gray-200 dark:border-gray-800 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_-4px_20px_rgba(0,0,0,0.2)]">
-      <div class="flex items-center gap-4">
-        <button class="text-gray-600 dark:text-gray-300 hover:text-cyber-blue transition-colors"><i data-lucide="message-square" class="w-5 h-5"></i></button>
-        <span class="text-xs font-bold text-gray-500">12 Comments</span>
-      </div>
-      <div class="flex items-center gap-4">
-        <button class="text-gray-600 dark:text-gray-300 hover:text-cyber-blue transition-colors"><i data-lucide="share-2" class="w-5 h-5"></i></button>
-        <button class="text-gray-600 dark:text-gray-300 hover:text-cyber-blue transition-colors"><i data-lucide="bookmark" class="w-5 h-5"></i></button>
-      </div>
-    </div>
-
-    <!-- COMMENTS ARCHITECTURE -->
-    <section class="max-w-[720px] mx-auto mt-20 pt-16 border-t border-gray-200 dark:border-gray-800 px-4 sm:px-6 lg:px-0">
-      <div class="flex items-center justify-between mb-8">
-        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Discussion <span class="text-gray-400 font-normal">(12)</span></h3>
-        <button class="text-sm font-bold text-cyber-blue hover:text-electric-violet transition-colors">Sort by: Best</button>
-      </div>
-      
-      <!-- Comment Input / Minimalist Text Editor -->
-      <div class="mb-12 flex gap-4">
-        <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=100&q=80" alt="Your avatar" class="w-10 h-10 rounded-full object-cover shrink-0 hidden sm:block">
-        <div class="flex-1">
-          <textarea placeholder="Add to the discussion..." class="w-full bg-white dark:bg-[#0D121F] border border-gray-300 dark:border-gray-700 rounded-xl p-4 text-gray-900 dark:text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all resize-none h-24 mb-3 shadow-sm" aria-label="Comment input"></textarea>
-          <div class="flex justify-between items-center">
-            <span class="text-xs text-gray-500 font-mono hidden sm:inline-block">Styling with *markdown* is supported.</span>
-            <button class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-2.5 rounded-lg font-bold hover:bg-cyber-blue dark:hover:bg-cyber-blue hover:text-white transition-colors ml-auto sm:ml-0 shadow-sm">Post Comment</button>
+        <!-- CORE CONTENT PILLAR (Max 720px width) -->
+        <div class="lg:col-span-8 xl:col-span-7 w-full max-w-[720px] mx-auto">
+          
+          <!-- Mobile ToC Accordion (Hidden on Desktop) -->
+          <div class="lg:hidden mb-8 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden bg-gray-50 dark:bg-gray-800/50">
+            <button id="mobile-toc-toggle" class="w-full px-4 py-3 flex items-center justify-between font-bold text-sm text-gray-900 dark:text-white bg-white dark:bg-[#0D121F] border-b border-gray-200 dark:border-gray-800">
+              <span class="flex items-center gap-2"><i data-lucide="list" class="w-4 h-4"></i> Table of Contents</span>
+              <i data-lucide="chevron-down" id="mobile-toc-icon" class="w-4 h-4 transition-transform duration-300"></i>
+            </button>
+            <div id="mobile-toc-content" class="px-4 py-3 hidden">
+              <nav id="mobile-toc-nav" class="flex flex-col gap-2">
+                <!-- Mobile ToC dynamically injected here -->
+              </nav>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Thread List -->
-      <div class="flex flex-col gap-10">
-        
-        <!-- Parent Comment -->
-        <div class="flex gap-4">
-          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="User" class="w-10 h-10 rounded-full object-cover shrink-0">
-          <div class="flex-1">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="font-bold text-gray-900 dark:text-white text-sm">Marcus Reid</span>
-              <i data-lucide="badge-check" class="w-4 h-4 text-cyber-blue" title="Verified Member"></i>
-              <span class="text-xs text-gray-500 ml-auto sm:ml-2">2 hours ago</span>
-            </div>
-            <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-3">Excellent breakdown. The data moat point is critical. We're seeing startups with inferior initial models but superior data acquisition loops rapidly overtake competitors who just wrap OpenAI APIs. The UI/UX essentially becomes the training mechanism.</p>
-            <div class="flex items-center gap-4 text-xs font-bold text-gray-500">
-              <button class="flex items-center gap-1.5 hover:text-cyber-blue transition-colors bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded"><i data-lucide="thumbs-up" class="w-3 h-3"></i> 24</button>
-              <button class="hover:text-gray-900 dark:hover:text-white transition-colors">Reply</button>
-              <button class="hover:text-red-500 transition-colors ml-auto"><i data-lucide="flag" class="w-3 h-3"></i></button>
-            </div>
+          <!-- Section 2: High-Readability Prose Content Pillar -->
+          <div class="prose max-w-none article-body">
             
-            <!-- Nested Reply -->
-            <div class="flex gap-4 mt-6">
-              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" alt="Sarah" class="w-8 h-8 rounded-full object-cover shrink-0">
-              <div class="flex-1 bg-gray-50 dark:bg-[#0D121F] border border-gray-200 dark:border-gray-800 rounded-xl p-4 shadow-sm">
-                <div class="flex items-center gap-2 mb-2">
-                  <span class="font-bold text-gray-900 dark:text-white text-sm">Sarah Jenkins</span>
-                  <span class="px-1.5 py-0.5 rounded bg-cyber-blue/10 text-[10px] font-bold text-cyber-blue tracking-widest uppercase">Author</span>
-                  <span class="text-xs text-gray-500 ml-auto sm:ml-2">1 hour ago</span>
-                </div>
-                <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-3">Exactly, Marcus. The "API wrapper" window is closing fast. Distribution + Proprietary Data is the only winning formula for Series A+ right now.</p>
-                <div class="flex items-center gap-4 text-xs font-bold text-gray-500">
-                  <button class="flex items-center gap-1.5 hover:text-cyber-blue transition-colors bg-white dark:bg-[#1E293B] px-2 py-1 rounded border border-gray-200 dark:border-gray-700"><i data-lucide="thumbs-up" class="w-3 h-3"></i> 12</button>
-                  <button class="hover:text-gray-900 dark:hover:text-white transition-colors">Reply</button>
-                </div>
+            <h2 id="intro">Introduction: The Shift</h2>
+            <p>
+              In the wake of rapid technological expansion, the fundamental pillars defining financial infrastructure are undergoing a seismic mutation. We are moving from hardcoded, rule-based settlement engines into the realm of <span class="highlight">autonomous agents</span> capable of negotiating, auditing, and executing complex cross-border tranches in real-time.
+            </p>
+            <p>
+              This isn't merely a theoretical whitepaper. As of Q3 2026, over $4B in daily transaction volume has quietly migrated to LLM-orchestrated sub-networks. The implications for traditional regulatory bodies are staggering.
+            </p>
+
+            <h2 id="problem">The Legacy Problem Definition</h2>
+            <p>
+              Before diving into the agentic solution, we must mathematically deconstruct the failure points of the existing SWIFT and legacy clearinghouse models. 
+            </p>
+            <blockquote>
+              "Legacy financial systems were built on the premise of human verification. When you inject algorithmic latency into a system designed for fax machines, the friction costs scale exponentially, not linearly."
+            </blockquote>
+            <p>
+              Here are the core infrastructural friction points currently plaguing the enterprise landscape:
+            </p>
+            <ul>
+              <li><strong>T+2 Settlement Delays:</strong> Capital remains locked in transit, burning theoretical yield.</li>
+              <li><strong>Compliance Overhead:</strong> Over 14% of gross revenue in Tier-1 banks is allocated strictly to AML/KYC manual review layers.</li>
+              <li><strong>Siloed Liquidity Pools:</strong> Assets cannot move between fragmented national ecosystems without suffering conversion decay.</li>
+            </ul>
+
+            <h2 id="launch">The Founder Launch Sequence</h2>
+            <p>
+              Enter <em>Aether Protocol</em>. Founded by ex-Stripe engineers, they didn't attempt to build a better blockchain. Instead, they built a fleet of deterministic AI agents wrapped around standard fiat rails.
+            </p>
+            <figure>
+              <img data-src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="Engineers reviewing code metrics" class="lazy">
+              <figcaption>Early telemetry dashboards showing the initial Aether AI agents processing live transaction queues.</figcaption>
+            </figure>
+            <p>
+              Their approach utilized a simple but elegant API implementation that looks remarkably standard on the surface:
+            </p>
+            <pre><code>// Initialize the Aether Settlement Agent
+const agent = new AetherAgent({
+  network: 'fiat-usd',
+  mode: 'autonomous-clearance',
+  riskTolerance: 0.001
+});
+
+// The agent autonomously negotiates routing paths
+const routingResult = await agent.routeTransaction({
+  amount: 5000000,
+  destination: 'EUR-IBAN',
+  maxLatencyMs: 400
+});</code></pre>
+
+            <h2 id="growth">Growth Challenges & System Friction</h2>
+            <p>
+              Scaling a fleet of financial AI agents presented novel distributed computing challenges. The team documented a phenomenon they called "Algorithmic Gridlock," where two opposing AI agents from different banks would get stuck in infinite negotiation loops over fractional cent spreads.
+            </p>
+            <h3>Resolution Protocol</h3>
+            <p>
+              To solve this, a decentralized arbitrator network was established. Whenever an agent detects a stall, it delegates the negotiation to a highly-quantized referee model, reducing settlement failures by 99.4%.
+            </p>
+
+            <h2 id="funding">The Funding Matrix</h2>
+            <p>
+              Traditional venture capitalists were initially hesitant to back a system that actively sought to replace compliance officers with LLMs. However, sovereign wealth funds recognized the geopolitical advantage of controlling the fastest routing layer.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Funding Stage</th>
+                  <th>Capital Raised</th>
+                  <th>Lead Investor</th>
+                  <th>Pre-Money Val</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Seed</td>
+                  <td>$14M</td>
+                  <td>Founders Fund</td>
+                  <td>$60M</td>
+                </tr>
+                <tr>
+                  <td>Series A</td>
+                  <td>$105M</td>
+                  <td>Mubadala</td>
+                  <td>$420M</td>
+                </tr>
+                <tr>
+                  <td>Series B</td>
+                  <td>$400M</td>
+                  <td>Sequoia / Sovereign</td>
+                  <td>$2.4B</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2 id="lessons">Lessons Extracted</h2>
+            <ol>
+              <li>Regulators respond better to predictable math than theoretical promises.</li>
+              <li>Agentic systems must have physical "kill switches" to pass enterprise compliance.</li>
+              <li>The UI of the future is no UI at all; it is a perfectly formatted log file.</li>
+            </ol>
+
+            <h2 id="future">Future Expansion Roadmap</h2>
+            <p>
+              Looking forward to 2027, the protocol is expanding its agents to handle automated M&A escrow, dynamic real-estate token settlement, and autonomous treasury management for Fortune 500 companies. The era of the human accountant is drawing to a close, replaced by a much quieter, exponentially faster digital mind.
+            </p>
+          </div>
+
+          <!-- Section 7: Interactive Article Tags -->
+          <div class="flex flex-wrap gap-2 mt-12 mb-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+            <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-sm font-bold rounded hover:bg-brand-red hover:text-white dark:hover:bg-brand-red transition-colors">#Fintech</a>
+            <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-sm font-bold rounded hover:bg-brand-red hover:text-white dark:hover:bg-brand-red transition-colors">#AI</a>
+            <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-sm font-bold rounded hover:bg-brand-red hover:text-white dark:hover:bg-brand-red transition-colors">#Startups</a>
+            <a href="#" class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-sm font-bold rounded hover:bg-brand-red hover:text-white dark:hover:bg-brand-red transition-colors">#VentureCapital</a>
+          </div>
+
+          <!-- Section 6: Comprehensive Author Biography Block -->
+          <div class="bg-gray-50 dark:bg-[#0D121F] border border-gray-200 dark:border-gray-800 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start md:items-center mb-16">
+            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=150&h=150&q=80" alt="Sarah Lin" class="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover shadow-sm flex-shrink-0">
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Written by Sarah Lin</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">Sarah is the Chief Technology Editor at UnfilterStory. She previously covered Silicon Valley infrastructure for Bloomberg and holds a master's in computational finance. She writes extensively on the intersection of AI and global markets.</p>
+              <div class="flex gap-3">
+                <button class="px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-black font-bold text-sm rounded-lg hover:bg-brand-red dark:hover:bg-brand-red dark:hover:text-white transition-colors">Follow Author</button>
+                <button class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-bold text-sm rounded-lg hover:border-brand-red hover:text-brand-red transition-colors">View Profile</button>
               </div>
             </div>
           </div>
+
+          <!-- Section 9: Glassmorphism Newsletter CTA Console -->
+          <div class="relative rounded-2xl overflow-hidden mb-16 shadow-2xl group">
+            <!-- Glassmorphism Background layer -->
+            <div class="absolute inset-0 bg-gradient-to-br from-brand-red/90 to-[#0B0F19] z-0"></div>
+            <!-- Blur effect orb -->
+            <div class="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-brand-red rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 opacity-50 pointer-events-none group-hover:opacity-70 transition-opacity duration-700 z-0"></div>
+            
+            <div class="relative z-10 p-8 md:p-12 backdrop-blur-md bg-black/20 dark:bg-black/40 text-center border border-white/10 rounded-2xl">
+              <h3 class="text-2xl md:text-3xl font-black text-white mb-4 tracking-tight">The Executive Briefing.</h3>
+              <p class="text-white/80 text-sm md:text-base max-w-md mx-auto mb-8">Join 45,000+ tech executives receiving our deepest architectural analyses and market telemetry directly to their inbox.</p>
+              
+              <form class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto" onsubmit="event.preventDefault(); alert('Subscribed to newsletter!');">
+                <div class="relative flex-1">
+                  <input type="email" id="newsletter-email" class="peer block w-full px-4 pt-6 pb-2 text-sm text-white bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-colors placeholder-transparent backdrop-blur-sm" placeholder="Business Email" required>
+                  <label for="newsletter-email" class="absolute left-4 top-2 text-[10px] uppercase font-bold tracking-widest text-white/60 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-4 peer-placeholder-shown:font-normal peer-focus:top-2 peer-focus:text-[10px] peer-focus:font-bold">Business Email</label>
+                </div>
+                <button type="submit" class="px-8 py-3 bg-white text-brand-red font-bold rounded-xl text-sm hover:bg-gray-100 transition-colors whitespace-nowrap shadow-lg">Subscribe Now</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Section 10: Multi-Threaded Discussion Layer (Comments) -->
+          <div class="border-t border-gray-200 dark:border-gray-800 pt-12 mb-16" id="comments">
+            <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-8 tracking-tight">Discussion <span class="text-brand-red">(24)</span></h3>
+            
+            <!-- Comment Input -->
+            <div class="flex gap-4 mb-10">
+              <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex-shrink-0 flex items-center justify-center text-gray-500 font-bold"><i data-lucide="user" class="w-5 h-5"></i></div>
+              <div class="flex-1">
+                <label for="comment-text" class="sr-only">Add a comment</label>
+                <textarea id="comment-text" class="w-full bg-gray-50 dark:bg-[#0D121F] border border-gray-200 dark:border-gray-800 rounded-xl p-4 text-sm text-gray-900 dark:text-white focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-colors resize-none" rows="3" placeholder="Contribute your telemetry to the discussion..."></textarea>
+                <div class="flex justify-end mt-3">
+                  <button class="px-6 py-2 bg-gray-900 dark:bg-white text-white dark:text-black font-bold rounded-lg text-sm hover:bg-brand-red dark:hover:bg-brand-red dark:hover:text-white transition-colors">Post Comment</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Comment Thread Example -->
+            <div class="space-y-8">
+              <div class="flex gap-4">
+                <img data-src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=50&h=50&q=80" alt="David M." class="lazy w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                  <div class="flex items-baseline gap-2 mb-1">
+                    <span class="font-bold text-sm text-gray-900 dark:text-white">David M.</span>
+                    <span class="text-xs text-gray-500">3 hours ago</span>
+                  </div>
+                  <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed">The arbitrage risk mentioned in the growth section is exactly what killed the previous attempt at this in 2024. Does Aether have a latency advantage, or are they just subsidizing the slippage?</p>
+                  <div class="flex items-center gap-4 text-xs font-bold text-gray-500">
+                    <button class="hover:text-brand-red flex items-center gap-1 transition-colors"><i data-lucide="thumbs-up" class="w-3 h-3"></i> 14</button>
+                    <button class="hover:text-gray-900 dark:hover:text-white transition-colors">Reply</button>
+                  </div>
+
+                  <!-- Nested Reply -->
+                  <div class="flex gap-4 mt-6 border-l-2 border-gray-200 dark:border-gray-800 pl-4">
+                    <img data-src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=50&h=50&q=80" alt="Sarah Lin" class="lazy w-8 h-8 rounded-full object-cover">
+                    <div class="flex-1">
+                      <div class="flex items-baseline gap-2 mb-1">
+                        <span class="font-bold text-sm text-gray-900 dark:text-white">Sarah Lin <span class="px-1.5 py-0.5 ml-1 bg-brand-red text-white text-[8px] rounded uppercase tracking-widest font-mono">Author</span></span>
+                        <span class="text-xs text-gray-500">2 hours ago</span>
+                      </div>
+                      <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed">Great question David. They are actively utilizing edge-nodes co-located physically near the SWIFT routing centers. It's an infrastructural latency advantage, not a capital subsidy.</p>
+                      <div class="flex items-center gap-4 text-xs font-bold text-gray-500">
+                        <button class="hover:text-brand-red flex items-center gap-1 transition-colors"><i data-lucide="thumbs-up" class="w-3 h-3"></i> 42</button>
+                        <button class="hover:text-gray-900 dark:hover:text-white transition-colors">Reply</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <button class="w-full py-4 mt-8 text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-brand-red border border-gray-200 dark:border-gray-800 rounded-xl transition-colors">Load More Threads</button>
+          </div>
+
         </div>
 
+        <!-- Flank Beta (Right Sidebar): Section 5 Dynamic Runtime ToC -->
+        <aside class="hidden lg:block lg:col-span-3 xl:col-span-3 sticky top-32 pl-4">
+          <div class="border-l border-gray-200 dark:border-gray-800 py-2">
+            <h4 class="text-[10px] font-bold font-mono uppercase tracking-widest text-gray-900 dark:text-white mb-6 pl-4 border-l-2 border-transparent">In This Article</h4>
+            <nav id="desktop-toc-nav" class="flex flex-col text-sm font-medium">
+              <!-- DOM ToC Generation injected here -->
+            </nav>
+          </div>
+          
+          <!-- Ad / Small Widget space -->
+          <div class="mt-12 p-4 bg-gray-50 dark:bg-gray-800/30 rounded-xl border border-gray-200 dark:border-gray-800 ml-4">
+            <div class="text-[10px] font-mono text-gray-400 uppercase tracking-widest mb-2">Sponsored</div>
+            <h5 class="font-bold text-sm text-gray-900 dark:text-white mb-2">Enterprise Serverless DB</h5>
+            <p class="text-xs text-gray-500 mb-3">Scale your vector embeddings effortlessly with zero cold-starts.</p>
+            <a href="#" class="text-xs font-bold text-brand-red hover:underline">Learn More &rarr;</a>
+          </div>
+        </aside>
+
       </div>
-      
-      <button class="w-full mt-10 py-3 border border-gray-200 dark:border-gray-800 rounded-xl text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors shadow-sm">
-        Load more comments
-      </button>
+    </div>
+    
+    <!-- Section 8: Recommendation Architecture (Related Articles) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-200 dark:border-gray-800">
+      <h3 class="text-2xl font-black mb-8 tracking-tight text-gray-900 dark:text-white">Related Reading</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Card 1 -->
+        <a href="100m-seed-round.html" class="group block relative top-0 hover:-top-2 transition-all duration-300">
+          <div class="w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 relative bg-gray-100 dark:bg-gray-800">
+            <img data-src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80" alt="Money" class="lazy w-full h-full object-cover">
+            <div class="absolute top-3 left-3 px-2 py-1 bg-black/80 backdrop-blur text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded border border-white/10">Venture Capital</div>
+          </div>
+          <h4 class="font-bold text-lg leading-tight mb-2 group-hover:text-brand-red transition-colors text-gray-900 dark:text-white">The $100M Seed Round</h4>
+          <p class="text-sm text-gray-500 line-clamp-2">How mega-funds are bypassing traditional Series A/B rounds.</p>
+        </a>
+        <!-- Card 2 -->
+        <a href="neo-brutalism-resurgence.html" class="group block relative top-0 hover:-top-2 transition-all duration-300">
+          <div class="w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 relative bg-gray-100 dark:bg-gray-800">
+            <img data-src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=600&q=80" alt="Design" class="lazy w-full h-full object-cover">
+            <div class="absolute top-3 left-3 px-2 py-1 bg-black/80 backdrop-blur text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded border border-white/10">Design</div>
+          </div>
+          <h4 class="font-bold text-lg leading-tight mb-2 group-hover:text-brand-red transition-colors text-gray-900 dark:text-white">The Neo-Brutalism Resurgence</h4>
+          <p class="text-sm text-gray-500 line-clamp-2">Why enterprise SaaS platforms are dropping soft shadows for high-contrast boundaries.</p>
+        </a>
+        <!-- Card 3 -->
+        <a href="#" class="group block relative top-0 hover:-top-2 transition-all duration-300">
+          <div class="w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 relative bg-gray-100 dark:bg-gray-800">
+            <img data-src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="AI" class="lazy w-full h-full object-cover">
+            <div class="absolute top-3 left-3 px-2 py-1 bg-black/80 backdrop-blur text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded border border-white/10">AI & Innovation</div>
+          </div>
+          <h4 class="font-bold text-lg leading-tight mb-2 group-hover:text-brand-red transition-colors text-gray-900 dark:text-white">The Agentic Horizon</h4>
+          <p class="text-sm text-gray-500 line-clamp-2">Why conversational interfaces are being replaced by autonomous agents.</p>
+        </a>
+        <!-- Card 4 -->
+        <a href="#" class="group block relative top-0 hover:-top-2 transition-all duration-300">
+          <div class="w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 relative bg-gray-100 dark:bg-gray-800">
+            <img data-src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=600&q=80" alt="Markets" class="lazy w-full h-full object-cover">
+            <div class="absolute top-3 left-3 px-2 py-1 bg-black/80 backdrop-blur text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded border border-white/10">Markets</div>
+          </div>
+          <h4 class="font-bold text-lg leading-tight mb-2 group-hover:text-brand-red transition-colors text-gray-900 dark:text-white">The Liquidity Crisis of 2027</h4>
+          <p class="text-sm text-gray-500 line-clamp-2">Pre-empting the secondary market collapse as mega-seeds fail.</p>
+        </a>
+      </div>
     </section>
 
-    <!-- POST-READ RELATED ARTICLES GRID -->
-    <section class="max-w-6xl mx-auto mt-24 pt-16 border-t border-gray-200 dark:border-gray-800 px-4 sm:px-6">
-      <div class="flex items-center justify-between mb-8">
-        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Read Next</h3>
-        <a href="#" class="text-sm font-bold text-cyber-blue hover:text-electric-violet transition-colors flex items-center gap-1">View all <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <a href="#" class="group block">
-          <div class="w-full aspect-[4/3] rounded-xl overflow-hidden mb-5 border border-gray-200 dark:border-gray-800 relative bg-gray-100 dark:bg-gray-900">
-            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" alt="Thumbnail">
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
-          </div>
-          <span class="text-[10px] font-mono font-bold text-cyber-blue uppercase tracking-widest mb-2 block">Hardware</span>
-          <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-cyber-blue transition-colors leading-tight">The Hardware Renaissance in Silicon Valley</h4>
-          <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">Why venture capitalists are suddenly pouring billions back into atoms instead of bits.</p>
+    <!-- Section 11: Longitudinal Article Navigation Footers -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-200 dark:border-gray-800">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="#" class="flex flex-col p-6 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-brand-red dark:hover:border-brand-red transition-colors group bg-gray-50 dark:bg-gray-800/30">
+          <span class="text-xs font-mono text-gray-500 uppercase tracking-widest mb-2 flex items-center gap-1"><i data-lucide="arrow-left" class="w-3 h-3 group-hover:-translate-x-1 transition-transform"></i> Previous Article</span>
+          <span class="font-bold text-gray-900 dark:text-white text-lg">The Death of the Traditional SDR</span>
         </a>
-        <a href="#" class="group block">
-          <div class="w-full aspect-[4/3] rounded-xl overflow-hidden mb-5 border border-gray-200 dark:border-gray-800 relative bg-gray-100 dark:bg-gray-900">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" alt="Thumbnail">
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
-          </div>
-          <span class="text-[10px] font-mono font-bold text-electric-violet uppercase tracking-widest mb-2 block">Policy</span>
-          <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-electric-violet transition-colors leading-tight">Decoding the New EU AI Act</h4>
-          <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">What founders need to know about the strictest AI regulation framework in the world.</p>
-        </a>
-        <a href="#" class="group block hidden lg:block">
-          <div class="w-full aspect-[4/3] rounded-xl overflow-hidden mb-5 border border-gray-200 dark:border-gray-800 relative bg-gray-100 dark:bg-gray-900">
-            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" alt="Thumbnail">
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
-          </div>
-          <span class="text-[10px] font-mono font-bold text-[#10B981] uppercase tracking-widest mb-2 block">Funding</span>
-          <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-[#10B981] transition-colors leading-tight">Seed Rounds Hit Record Highs</h4>
-          <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">Despite macroeconomic headwinds, early-stage valuations continue to climb as AI hype fuels new rounds.</p>
+        <a href="#" class="flex flex-col items-end text-right p-6 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-brand-red dark:hover:border-brand-red transition-colors group bg-gray-50 dark:bg-gray-800/30">
+          <span class="text-xs font-mono text-gray-500 uppercase tracking-widest mb-2 flex items-center gap-1">Next Article <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-1 transition-transform"></i></span>
+          <span class="font-bold text-gray-900 dark:text-white text-lg">YC's Secret Hardware Cohort</span>
         </a>
       </div>
-    </section>
+    </div>
 
   </main>
 
-  <!-- Global Footer injected dynamically -->
+  <!-- Mobile Fixed Bottom Dock for Socials -->
+  <div id="mobile-dock" class="lg:hidden fixed bottom-0 left-0 w-full z-50 bg-white/90 dark:bg-[#0B0F19]/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 px-4 py-3 pb-safe-area shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+    <div class="flex items-center justify-between max-w-sm mx-auto">
+      <button id="mobile-copy-link" class="social-btn copy relative" aria-label="Copy Link">
+        <i data-lucide="link" class="w-4 h-4"></i>
+      </button>
+      <a href="#" class="social-btn instagram">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path></svg>
+      </a>
+      <a href="#" class="social-btn facebook">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.891h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>
+      </a>
+      <a href="#" class="social-btn twitter">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+      </a>
+      <a href="#" class="social-btn substack">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"></path></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Global Footer -->
   <app-footer></app-footer>
   <search-modal></search-modal>
 
-  <!-- Essential Scripts -->
+  <!-- Application Logic -->
   <script type="module" src="js/main.js"></script>
+  
+  <!-- Interactive Article Logic -->
   <script>
-    // Initialize Lucide Icons for UI elements
-    lucide.createIcons();
-
-    // The scroll progress indicator is handled automatically by js/progress.js imported in main.js,
-    // but the CSS was styled here for perfection.
-
-    // Active Table of Contents (TOC) Tracking implementation
     document.addEventListener('DOMContentLoaded', () => {
-      const headings = document.querySelectorAll('article h2, article h3');
-      const tocLinks = document.querySelectorAll('.toc-link');
       
-      if(headings.length === 0 || tocLinks.length === 0) return;
+      // 1. Telemetry Reading Progress Bar
+      const progressBar = document.getElementById('progress-bar');
+      
+      // 2. Mobile Layout Switches
+      const mobileDock = document.getElementById('mobile-dock');
+      let lastScrollY = window.scrollY;
+      
+      window.addEventListener('scroll', () => {
+        // Progress Bar Calculation
+        const windowScroll = document.documentElement.scrollTop || document.body.scrollTop;
+        const documentHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = (windowScroll / documentHeight) * 100;
+        progressBar.style.width = scrollPercent + '%';
 
-      // Add indicator dot for active state in TOC
-      tocLinks.forEach(link => {
-        const dot = document.createElement('span');
-        dot.className = 'absolute -left-4 top-1.5 w-1.5 h-1.5 rounded-full bg-cyber-blue opacity-0 transition-opacity duration-300';
-        link.prepend(dot);
+        // Mobile Dock Hide/Show on Scroll direction
+        if (window.innerWidth < 1024) {
+          if (windowScroll > lastScrollY && windowScroll > 100) {
+            mobileDock.classList.add('hidden-dock'); // Scrolling down
+          } else {
+            mobileDock.classList.remove('hidden-dock'); // Scrolling up
+          }
+          lastScrollY = windowScroll;
+        }
+      }, { passive: true });
+
+      // 3. Dynamic Runtime Table of Contents
+      const articleBody = document.querySelector('.article-body');
+      const headings = articleBody.querySelectorAll('h2');
+      const desktopNav = document.getElementById('desktop-toc-nav');
+      const mobileNav = document.getElementById('mobile-toc-nav');
+      
+      headings.forEach((heading, index) => {
+        // Ensure ID exists
+        if (!heading.id) {
+          heading.id = 'heading-' + index;
+        }
+        
+        const title = heading.textContent;
+        const id = heading.id;
+        
+        // Desktop Node
+        const deskLink = document.createElement('a');
+        deskLink.href = '#' + id;
+        deskLink.className = 'toc-link -ml-[18px]';
+        deskLink.setAttribute('data-target', id);
+        deskLink.textContent = title;
+        desktopNav.appendChild(deskLink);
+
+        // Mobile Node
+        const mobLink = document.createElement('a');
+        mobLink.href = '#' + id;
+        mobLink.className = 'block py-2 text-gray-600 dark:text-gray-400 hover:text-brand-red dark:hover:text-brand-red border-b border-gray-100 dark:border-gray-800 last:border-0 transition-colors';
+        mobLink.textContent = title;
+        mobLink.addEventListener('click', () => {
+          document.getElementById('mobile-toc-content').classList.add('hidden');
+          document.getElementById('mobile-toc-icon').classList.remove('rotate-180');
+        });
+        mobileNav.appendChild(mobLink);
       });
 
-      // Intersection Observer to track scroll position
+      // 4. Smooth Anchor Scroll Spy (Intersection Observer)
+      const tocLinks = document.querySelectorAll('.toc-link');
       const observerOptions = {
         root: null,
-        rootMargin: '-100px 0px -60% 0px',
+        rootMargin: '-20% 0px -60% 0px',
         threshold: 0
       };
 
-      let activeId = '';
-
-      const headingObserver = new IntersectionObserver(entries => {
+      const spyObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            activeId = entry.target.getAttribute('id');
-            updateToc();
+            tocLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('data-target') === entry.target.id) {
+                link.classList.add('active');
+              }
+            });
           }
         });
       }, observerOptions);
 
-      headings.forEach(heading => headingObserver.observe(heading));
+      headings.forEach(h => spyObserver.observe(h));
 
-      // Update styling of TOC links based on active ID
-      function updateToc() {
-        tocLinks.forEach(link => {
-          const isMatch = link.getAttribute('href') === `#${activeId}`;
-          
-          if(isMatch) {
-            link.classList.remove('text-gray-500', 'dark:text-gray-400');
-            link.classList.add('text-cyber-blue', 'dark:text-cyber-blue', 'font-bold');
-            link.firstElementChild.classList.remove('opacity-0');
-            link.firstElementChild.classList.add('opacity-100');
-          } else {
-            link.classList.remove('text-cyber-blue', 'dark:text-cyber-blue', 'font-bold');
-            link.classList.add('text-gray-500', 'dark:text-gray-400');
-            link.firstElementChild.classList.remove('opacity-100');
-            link.firstElementChild.classList.add('opacity-0');
-          }
+      // 5. Mobile ToC Accordion Toggle
+      const mobileTocBtn = document.getElementById('mobile-toc-toggle');
+      if (mobileTocBtn) {
+        mobileTocBtn.addEventListener('click', () => {
+          document.getElementById('mobile-toc-content').classList.toggle('hidden');
+          document.getElementById('mobile-toc-icon').classList.toggle('rotate-180');
         });
       }
 
-      // Smooth Scroll for TOC anchor links
-      tocLinks.forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const targetId = this.getAttribute('href').substring(1);
-          const targetElement = document.getElementById(targetId);
-          if(targetElement) {
-            const headerOffset = 100;
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      // 6. Async Clipboard Action
+      const copyBtns = [document.getElementById('copy-link-btn'), document.getElementById('mobile-copy-link')];
+      const copyTooltip = document.getElementById('copy-tooltip');
       
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-            
-            // Manually set active state to avoid scroll jank observer delay
-            activeId = targetId;
-            updateToc();
+      copyBtns.forEach(btn => {
+        if(btn) {
+          btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+              await navigator.clipboard.writeText(window.location.href);
+              if (copyTooltip && btn.id === 'copy-link-btn') {
+                copyTooltip.style.opacity = '1';
+                setTimeout(() => copyTooltip.style.opacity = '0', 2000);
+              } else {
+                // Mobile simple alert or toast
+                alert("Link copied to clipboard!");
+              }
+            } catch (err) {
+              console.error('Failed to copy: ', err);
+            }
+          });
+        }
+      });
+
+      // 7. Lazy Image Loading (Intersection Observer)
+      const lazyImages = document.querySelectorAll('img.lazy');
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.onload = () => img.classList.add('loaded');
+            }
+            observer.unobserve(img);
           }
         });
-      });
+      }, { rootMargin: '50px 0px', threshold: 0.01 });
+
+      lazyImages.forEach(img => imageObserver.observe(img));
+
+      // Simulate Live Viewers fluctuation
+      const liveCounter = document.getElementById('live-viewers');
+      if(liveCounter) {
+        setInterval(() => {
+          const current = parseInt(liveCounter.innerText);
+          const diff = Math.floor(Math.random() * 5) - 2; // -2 to +2
+          if (current + diff > 300 && current + diff < 600) {
+            liveCounter.innerText = current + diff;
+          }
+        }, 3000);
+      }
+      
+      // Render Lucide Icons
+      lucide.createIcons();
     });
   </script>
+  
+  <style>
+    /* Safe area padding for mobile devices */
+    .pb-safe-area { padding-bottom: env(safe-area-inset-bottom, 1rem); }
+  </style>
 </body>
 </html>

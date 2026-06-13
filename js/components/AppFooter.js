@@ -13,7 +13,7 @@ class AppFooter extends HTMLElement {
           <div class="footer-grid">
             <div class="footer-col">
               <a href="index.html" class="logo" style="margin-bottom: var(--spacing-4);">
-                Unfilter<span>Story</span>
+                <span class="logo-text">Unfilter<span>Story</span></span>
               </a>
               <p style="font-size: 0.95rem;">Premium digital journalism and insights for modern startup ecosystems and enterprise innovators.</p>
             </div>
