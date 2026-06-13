@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Stories | UnfilterStory</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (v3 CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#0B0F19',
+                        surface: '#111827', // Tailwind gray-900 equivalent for surface
+                        border: '#1E293B', // Tailwind slate-800
+                        accent: '#E11D48', // Editorial Red
+                        success: '#10B981', // Emerald
+                        failure: '#F59E0B'  // Amber
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Embedded Custom CSS for Typography, Layout Grids, and Micro-interactions -->
+    <style>
+        /* Strict High-Density Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0F19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+
+        body {
+            background-color: #0B0F19;
+            color: #F8FAFC;
+        }
+
+        /* Glassmorphism Header Effect */
+        .glass-header {
+            background: rgba(11, 15, 25, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #1E293B;
+        }
+
+        /* Asymmetric Magazine Grids */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 70% 1fr;
+            }
+        }
+
+        .growth-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 1024px) {
+            .growth-grid {
+                grid-template-columns: 1fr 350px;
+            }
+        }
+
+        /* Micro-interactions */
+        .post-card {
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease;
+        }
+        .post-card:hover {
+            transform: translateY(-2px);
+            border-color: #334155;
+        }
+        
+        .playbook-card {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(17, 24, 39, 0.5) 100%);
+            border: 1px solid #1E293B;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .playbook-card:hover {
+            border-color: #E11D48;
+            box-shadow: 0 10px 30px -10px rgba(225, 29, 72, 0.15);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-accent selection:text-white">
+
+<!-- Global Navigation -->
+<header class="fixed top-0 w-full z-50 glass-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <i data-lucide="layers" class="w-6 h-6 text-white"></i>
+            <span class="font-sans font-bold text-xl tracking-tight text-white">Unfilter<span class="text-accent">Story</span></span>
+        </div>
+        <nav class="hidden md:flex gap-8 text-sm font-medium text-slate-300">
+            <a href="index.html" class="hover:text-white transition-colors">Home</a>
+            <a href="news.html" class="hover:text-white transition-colors">News</a>
+            <a href="startup-stories.html" class="text-white">Startup Stories</a>
+            <a href="funding.html" class="hover:text-white transition-colors">Funding</a>
+        </nav>
+        <div class="flex items-center gap-4 text-slate-300">
+            <button class="hover:text-white transition-colors" aria-label="Search"><i data-lucide="search" class="w-5 h-5"></i></button>
+            <a href="login.html" class="hover:text-white transition-colors" aria-label="Login"><i data-lucide="user" class="w-5 h-5"></i></a>
+        </div>
+    </div>
+</header>
+
+<main class="pt-24 pb-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- 1. Hero Story (The Front Page Cover - 70/30 Split) -->
+        <section class="mb-20">
+            <div class="hero-grid">
+                <!-- Main Feature -->
+                <article class="relative group cursor-pointer border border-border rounded-xl overflow-hidden bg-surface">
+                    <div class="aspect-[16/9] lg:aspect-auto lg:h-[500px] w-full bg-slate-800 relative">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="Data dashboard" class="w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-opacity duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/60 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 md:p-10 w-full">
+                            <span class="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-widest uppercase bg-accent text-white rounded">Deep Dive</span>
+                            <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight mb-4 text-white group-hover:text-accent transition-colors duration-300">The Invisible Infrastructure Eating Global Logistics</h1>
+                            <p class="font-sans text-base md:text-lg text-slate-300 mb-6 max-w-3xl line-clamp-2 md:line-clamp-3">How a stealth startup out of Berlin bypassed traditional freight forwarders by leveraging satellite telemetry and edge AI to predict supply chain fractures before they happen.</p>
+                            <div class="flex items-center gap-4 text-xs md:text-sm font-medium text-slate-400">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Author Elena Rodriguez" class="w-8 h-8 rounded-full border border-border">
+                                    <span class="text-white">Elena Rodriguez</span>
+                                </div>
+                                <span>&bull;</span>
+                                <span>14 min read</span>
+                                <span class="hidden sm:inline">&bull;</span>
+                                <span class="hidden sm:inline">Updated Oct 12, 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Sidebar Features -->
+                <div class="flex flex-col gap-6">
+                    <h3 class="font-sans font-bold text-sm tracking-widest uppercase text-slate-500 border-b border-border pb-2">Editors' Picks</h3>
+                    
+                    <article class="post-card flex gap-4 cursor-pointer group">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80" class="w-24 h-24 object-cover rounded-lg border border-border" alt="Hardware">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-xs font-bold text-accent uppercase tracking-wider mb-1 block">Hardware</span>
+                            <h4 class="font-serif text-lg font-semibold leading-snug mb-2 text-white group-hover:underline">Silicon Valley's Return to Physical Atoms</h4>
+                            <span class="text-xs text-slate-400 font-medium">6 min read</span>
+                        </div>
+                    </article>
+                    
+                    <article class="post-card flex gap-4 cursor-pointer group">
+                        <img src="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=400&q=80" class="w-24 h-24 object-cover rounded-lg border border-border" alt="Web3">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-xs font-bold text-accent uppercase tracking-wider mb-1 block">Fintech</span>
+                            <h4 class="font-serif text-lg font-semibold leading-snug mb-2 text-white group-hover:underline">DeFi Meets Institutional Capital</h4>
+                            <span class="text-xs text-slate-400 font-medium">8 min read</span>
+                        </div>
+                    </article>
+                    
+                    <article class="post-card flex gap-4 cursor-pointer group">
+                        <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=400&q=80" class="w-24 h-24 object-cover rounded-lg border border-border" alt="SaaS">
+                        <div class="flex flex-col justify-center">
+                            <span class="text-xs font-bold text-accent uppercase tracking-wider mb-1 block">SaaS</span>
+                            <h4 class="font-serif text-lg font-semibold leading-snug mb-2 text-white group-hover:underline">The Death of Per-Seat Pricing Models</h4>
+                            <span class="text-xs text-slate-400 font-medium">5 min read</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Founder Journeys (The Human Element) -->
+        <section class="mb-24">
+            <div class="flex items-baseline justify-between border-b border-border pb-4 mb-8">
+                <h2 class="font-serif text-3xl font-bold text-white">Founder Journeys</h2>
+                <a href="#" class="text-sm font-semibold text-accent hover:text-white transition-colors">View Directory &rarr;</a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Founder Profile 1 -->
+                <div class="border border-border rounded-xl p-6 md:p-8 bg-surface relative overflow-hidden group cursor-pointer hover:border-slate-600 transition-colors">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i data-lucide="quote" class="w-24 h-24 text-white"></i>
+                    </div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Marcus Reid" class="w-14 h-14 rounded-full border-2 border-border grayscale group-hover:grayscale-0 transition-all duration-300">
+                        <div>
+                            <h3 class="font-sans font-bold text-white text-lg">Marcus Reid</h3>
+                            <p class="text-xs text-slate-400 uppercase tracking-wide">CEO, Vault Protocol</p>
+                        </div>
+                    </div>
+                    <div class="mb-8 border-l-2 border-accent pl-4">
+                        <p class="font-serif text-lg italic text-slate-300 leading-relaxed">"We burned $2M trying to educate the market. The turning point was realizing we weren't selling software, we were selling compliance sleep-insurance."</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="px-2 py-1 bg-[#1E293B] text-slate-300 text-xs font-medium rounded">Series A</span>
+                        <span class="px-2 py-1 bg-[#1E293B] text-slate-300 text-xs font-medium rounded">Fintech</span>
+                        <span class="px-2 py-1 bg-[#1E293B] text-slate-300 text-xs font-medium rounded text-accent border border-accent/30">Pivoted</span>
+                    </div>
+                </div>
+
+                <!-- Founder Profile 2 -->
+                <div class="border border-border rounded-xl p-6 md:p-8 bg-surface relative overflow-hidden group cursor-pointer hover:border-slate-600 transition-colors">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i data-lucide="quote" class="w-24 h-24 text-white"></i>
+                    </div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Sarah Chen" class="w-14 h-14 rounded-full border-2 border-border grayscale group-hover:grayscale-0 transition-all duration-300">
+                        <div>
+                            <h3 class="font-sans font-bold text-white text-lg">Sarah Chen</h3>
+                            <p class="text-xs text-slate-400 uppercase tracking-wide">CTO, NeuroStack</p>
+                        </div>
+                    </div>
+                    <div class="mb-8 border-l-2 border-accent pl-4">
+                        <p class="font-serif text-lg italic text-slate-300 leading-relaxed">"Everyone told us the architecture was impossible to scale. We spent 8 months in stealth completely rewriting the core engine in Rust."</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="px-2 py-1 bg-[#1E293B] text-slate-300 text-xs font-medium rounded">Seed</span>
+                        <span class="px-2 py-1 bg-[#1E293B] text-slate-300 text-xs font-medium rounded">DeepTech</span>
+                        <span class="px-2 py-1 bg-[#1E293B] text-slate-300 text-xs font-medium rounded">Bootstrapped</span>
+                    </div>
+                </div>
+
+                <!-- Founder Profile 3 -->
+                <div class="border border-border rounded-xl p-6 md:p-8 bg-surface relative overflow-hidden group cursor-pointer hover:border-slate-600 transition-colors">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i data-lucide="quote" class="w-24 h-24 text-white"></i>
+                    </div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="David Okafor" class="w-14 h-14 rounded-full border-2 border-border grayscale group-hover:grayscale-0 transition-all duration-300">
+                        <div>
+                            <h3 class="font-sans font-bold text-white text-lg">David Okafor</h3>
+                            <p class="text-xs text-slate-400 uppercase tracking-wide">Founder, OmniLogix</p>
+                        </div>
+                    </div>
+                    <div class="mb-8 border-l-2 border-accent pl-4">
+                        <p class="font-serif text-lg italic text-slate-300 leading-relaxed">"The first 50 customers came from doing things that didn't scale. I literally flew to Omaha to manually install sensors in their warehouses."</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="px-2 py-1 bg-[#1E293B] text-slate-300 text-xs font-medium rounded">Series B</span>
+                        <span class="px-2 py-1 bg-[#1E293B] text-slate-300 text-xs font-medium rounded">Logistics</span>
+                        <span class="px-2 py-1 bg-[#1E293B] text-slate-300 text-xs font-medium rounded">Scale-Up</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Startup Case Studies (The Tactical Playbooks) -->
+        <section class="mb-24">
+            <h2 class="font-serif text-3xl font-bold text-white mb-8 border-b border-border pb-4">Tactical Playbooks</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Case Study 1 -->
+                <a href="#" class="playbook-card rounded-xl p-8 block group">
+                    <div class="flex justify-between items-start mb-8">
+                        <div>
+                            <span class="text-xs font-bold text-accent tracking-widest uppercase mb-2 block">Case Study // Infrastructure</span>
+                            <h3 class="font-serif text-2xl font-bold text-white leading-tight">ScaleFlow's Migration to the Edge</h3>
+                        </div>
+                        <div class="text-right shrink-0 ml-4">
+                            <span class="bg-success/10 text-success border border-success/20 px-3 py-1 rounded text-sm font-bold block mb-1 tracking-tight">-94% Latency</span>
+                            <span class="text-[10px] text-slate-500 uppercase font-semibold tracking-wider">Key Outcome</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm mb-8">
+                        <div class="bg-[#0B0F19] p-5 rounded-lg border border-border">
+                            <h4 class="text-slate-500 font-bold uppercase tracking-wider text-xs mb-3 flex items-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4 text-failure"></i> The Problem</h4>
+                            <p class="text-slate-300 leading-relaxed">Centralized US-East databases caused 400ms+ latency for European and Asian enterprise customers, leading to a critical 12% churn rate in Q2.</p>
+                        </div>
+                        <div class="bg-[#0B0F19] p-5 rounded-lg border border-border">
+                            <h4 class="text-slate-500 font-bold uppercase tracking-wider text-xs mb-3 flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-success"></i> The Solution</h4>
+                            <p class="text-slate-300 leading-relaxed">Implemented a globally distributed edge compute layer using Cloudflare Workers and Turso SQLite, pushing data directly to the user's edge.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-accent text-sm font-bold group-hover:translate-x-1 transition-transform">
+                        Read Full Playbook <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                    </div>
+                </a>
+
+                <!-- Case Study 2 -->
+                <a href="#" class="playbook-card rounded-xl p-8 block group">
+                    <div class="flex justify-between items-start mb-8">
+                        <div>
+                            <span class="text-xs font-bold text-accent tracking-widest uppercase mb-2 block">Case Study // Monetization</span>
+                            <h3 class="font-serif text-2xl font-bold text-white leading-tight">Aura's Transition to PLG</h3>
+                        </div>
+                        <div class="text-right shrink-0 ml-4">
+                            <span class="bg-success/10 text-success border border-success/20 px-3 py-1 rounded text-sm font-bold block mb-1 tracking-tight">+$4.8M ARR</span>
+                            <span class="text-[10px] text-slate-500 uppercase font-semibold tracking-wider">Key Outcome</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm mb-8">
+                        <div class="bg-[#0B0F19] p-5 rounded-lg border border-border">
+                            <h4 class="text-slate-500 font-bold uppercase tracking-wider text-xs mb-3 flex items-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4 text-failure"></i> The Problem</h4>
+                            <p class="text-slate-300 leading-relaxed">A heavy top-down enterprise sales motion resulted in 6-month sales cycles and unsustainable CAC, stalling revenue growth at $2M ARR.</p>
+                        </div>
+                        <div class="bg-[#0B0F19] p-5 rounded-lg border border-border">
+                            <h4 class="text-slate-500 font-bold uppercase tracking-wider text-xs mb-3 flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-success"></i> The Solution</h4>
+                            <p class="text-slate-300 leading-relaxed">Introduced a self-serve freemium tier with viral multiplayer collaboration loops, reducing CAC by 70% and accelerating expansion.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-accent text-sm font-bold group-hover:translate-x-1 transition-transform">
+                        Read Full Playbook <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 4. Success vs Failure Stories (The Dual Perspectives) -->
+        <section class="mb-24">
+            <h2 class="font-serif text-3xl font-bold text-white mb-8 border-b border-border pb-4">The Dual Perspectives</h2>
+            
+            <!-- Side-by-Side 50/50 Panel -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-px bg-border rounded-xl overflow-hidden border border-border">
+                
+                <!-- Success Panel -->
+                <div class="bg-surface p-8 lg:p-12 relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-success/5 blur-3xl rounded-full"></div>
+                    
+                    <div class="flex items-center gap-4 mb-10">
+                        <div class="w-12 h-12 rounded-lg bg-success/10 border border-success/20 flex items-center justify-center">
+                            <i data-lucide="trending-up" class="w-6 h-6 text-success"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-sans font-bold text-xl text-white">High Velocity Scale</h3>
+                            <p class="text-xs text-slate-400 uppercase tracking-wider mt-1">Growth Mechanics & Triumphs</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-8">
+                        <article class="border-l-2 border-success/30 pl-5 hover:border-success transition-colors cursor-pointer group">
+                            <h4 class="font-serif text-xl font-bold text-white mb-2 group-hover:text-success transition-colors">How Notion Bootstrapped to $10M ARR</h4>
+                            <p class="text-sm text-slate-400 mb-3 leading-relaxed">A masterclass in community-led growth, template economies, and refusing venture capital early on to maintain product vision.</p>
+                            <span class="inline-block px-2 py-1 bg-[#0B0F19] text-xs font-bold text-success uppercase tracking-wider rounded border border-border">Growth Loop Analysis</span>
+                        </article>
+                        
+                        <article class="border-l-2 border-success/30 pl-5 hover:border-success transition-colors cursor-pointer group">
+                            <h4 class="font-serif text-xl font-bold text-white mb-2 group-hover:text-success transition-colors">The Linear Interface Revolution</h4>
+                            <p class="text-sm text-slate-400 mb-3 leading-relaxed">Focusing on sub-100ms interactions and keyboard-first navigation to win the hearts of elite developers over legacy giants.</p>
+                            <span class="inline-block px-2 py-1 bg-[#0B0F19] text-xs font-bold text-success uppercase tracking-wider rounded border border-border">Product Strategy</span>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- Failure Panel -->
+                <div class="bg-surface p-8 lg:p-12 relative overflow-hidden">
+                    <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-failure/5 blur-3xl rounded-full"></div>
+                    
+                    <div class="flex items-center gap-4 mb-10">
+                        <div class="w-12 h-12 rounded-lg bg-failure/10 border border-failure/20 flex items-center justify-center">
+                            <i data-lucide="trending-down" class="w-6 h-6 text-failure"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-sans font-bold text-xl text-white">Critical Post-Mortems</h3>
+                            <p class="text-xs text-slate-400 uppercase tracking-wider mt-1">Autopsies & Hard Lessons</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-8">
+                        <article class="border-l-2 border-failure/30 pl-5 hover:border-failure transition-colors cursor-pointer group">
+                            <h4 class="font-serif text-xl font-bold text-white mb-2 group-hover:text-failure transition-colors">Fast's $120M Collapse</h4>
+                            <p class="text-sm text-slate-400 mb-3 leading-relaxed">An autopsy of hyper-aggressive burn rates, premature scaling, and a product that failed to process meaningful payment volume.</p>
+                            <span class="inline-block px-2 py-1 bg-[#0B0F19] text-xs font-bold text-failure uppercase tracking-wider rounded border border-border">Burn Rate Breakdown</span>
+                        </article>
+                        
+                        <article class="border-l-2 border-failure/30 pl-5 hover:border-failure transition-colors cursor-pointer group">
+                            <h4 class="font-serif text-xl font-bold text-white mb-2 group-hover:text-failure transition-colors">Quibi: The Billion Dollar Misread</h4>
+                            <p class="text-sm text-slate-400 mb-3 leading-relaxed">Ignoring shifting consumer behaviors during the pandemic and betting heavily against established user-generated content trends.</p>
+                            <span class="inline-block px-2 py-1 bg-[#0B0F19] text-xs font-bold text-failure uppercase tracking-wider rounded border border-border">Market Misfit</span>
+                        </article>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 5. Growth Stories & Popular Articles (The Engine Room) -->
+        <section>
+            <div class="growth-grid">
+                
+                <!-- Left: Growth Stories (Micro-dashboards) -->
+                <div>
+                    <h2 class="font-serif text-3xl font-bold text-white mb-8 border-b border-border pb-4">Distribution & Growth Engines</h2>
+                    <div class="space-y-6">
+                        
+                        <!-- Growth Dashboard Card 1 -->
+                        <article class="post-card border border-border bg-surface p-6 rounded-xl flex flex-col sm:flex-row gap-6 cursor-pointer">
+                            <div class="w-full sm:w-1/3 bg-[#0B0F19] rounded-lg p-5 flex flex-col justify-center items-center border border-border text-center">
+                                <span class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-2">CAC Payback</span>
+                                <span class="text-4xl font-bold text-white mb-2 tracking-tight">2.4<span class="text-xl text-slate-400 font-normal">mo</span></span>
+                                <div class="w-full bg-slate-800 h-2 rounded-full mt-2 overflow-hidden">
+                                    <div class="bg-accent w-[80%] h-full rounded-full"></div>
+                                </div>
+                            </div>
+                            <div class="w-full sm:w-2/3 flex flex-col justify-center">
+                                <span class="text-xs font-bold text-accent tracking-widest uppercase mb-2 block">SEO Dominance</span>
+                                <h3 class="font-serif text-2xl font-bold text-white mb-3">Engineering Programmatic SEO at Scale</h3>
+                                <p class="text-sm text-slate-400 leading-relaxed">How Zapier created thousands of landing pages dynamically to capture long-tail integration intent, driving 70% of organic signups without ad spend.</p>
+                            </div>
+                        </article>
+
+                        <!-- Growth Dashboard Card 2 -->
+                        <article class="post-card border border-border bg-surface p-6 rounded-xl flex flex-col sm:flex-row gap-6 cursor-pointer">
+                            <div class="w-full sm:w-1/3 bg-[#0B0F19] rounded-lg p-5 flex flex-col justify-center items-center border border-border text-center">
+                                <span class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-2">Viral K-Factor</span>
+                                <span class="text-4xl font-bold text-white mb-2 tracking-tight">1.14</span>
+                                <div class="flex items-end gap-1.5 mt-2 h-8">
+                                    <div class="w-2.5 h-[30%] bg-success/20 rounded-t-sm"></div>
+                                    <div class="w-2.5 h-[50%] bg-success/40 rounded-t-sm"></div>
+                                    <div class="w-2.5 h-[70%] bg-success/60 rounded-t-sm"></div>
+                                    <div class="w-2.5 h-[100%] bg-success rounded-t-sm"></div>
+                                </div>
+                            </div>
+                            <div class="w-full sm:w-2/3 flex flex-col justify-center">
+                                <span class="text-xs font-bold text-accent tracking-widest uppercase mb-2 block">Product-Led Growth</span>
+                                <h3 class="font-serif text-2xl font-bold text-white mb-3">The Figma Multiplayer Loop</h3>
+                                <p class="text-sm text-slate-400 leading-relaxed">Breaking down the exact collaboration mechanics that forced teams to invite external stakeholders, turning everyday users into a sales engine.</p>
+                            </div>
+                        </article>
+                        
+                    </div>
+                </div>
+
+                <!-- Right: Trending Sidebar -->
+                <div class="relative mt-12 lg:mt-0">
+                    <div class="sticky top-24 bg-surface border border-border rounded-xl p-8">
+                        <h3 class="font-sans font-bold text-xs tracking-widest uppercase text-slate-500 mb-8 flex items-center gap-2 border-b border-border pb-4">
+                            <i data-lucide="zap" class="w-4 h-4 text-accent fill-accent"></i> Trending Velocity
+                        </h3>
+                        
+                        <div class="space-y-8">
+                            <article class="flex gap-5 group cursor-pointer">
+                                <div class="font-serif text-4xl font-bold text-slate-700 group-hover:text-accent transition-colors">01</div>
+                                <div>
+                                    <h4 class="font-sans font-semibold text-white leading-snug mb-2 group-hover:underline text-base">Anthropic's Context Window Expansion Strategy</h4>
+                                    <span class="text-xs font-medium text-slate-500">124K Views</span>
+                                </div>
+                            </article>
+                            
+                            <article class="flex gap-5 group cursor-pointer">
+                                <div class="font-serif text-4xl font-bold text-slate-700 group-hover:text-accent transition-colors">02</div>
+                                <div>
+                                    <h4 class="font-sans font-semibold text-white leading-snug mb-2 group-hover:underline text-base">The Vercel Framework Ecosystem Lock-in</h4>
+                                    <span class="text-xs font-medium text-slate-500">98K Views</span>
+                                </div>
+                            </article>
+                            
+                            <article class="flex gap-5 group cursor-pointer">
+                                <div class="font-serif text-4xl font-bold text-slate-700 group-hover:text-accent transition-colors">03</div>
+                                <div>
+                                    <h4 class="font-sans font-semibold text-white leading-snug mb-2 group-hover:underline text-base">Why Stripe Acquired Bridge for $1.1B</h4>
+                                    <span class="text-xs font-medium text-slate-500">82K Views</span>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<!-- Global Footer -->
+<footer class="bg-surface border-t border-border pt-16 pb-8 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-16">
+            <div class="col-span-2 lg:col-span-2 pr-8">
+                <a href="index.html" class="flex items-center gap-2 mb-6">
+                    <i data-lucide="layers" class="w-6 h-6 text-white"></i>
+                    <span class="font-sans font-bold text-xl tracking-tight text-white">Unfilter<span class="text-accent">Story</span></span>
+                </a>
+                <p class="text-slate-400 text-sm mb-8 max-w-sm leading-relaxed">The leading editorial platform for deep-dive analysis into the mechanics, failures, and triumphs of the modern startup ecosystem. Designed for the operators.</p>
+                <div class="flex gap-4">
+                    <a href="#" aria-label="Twitter" class="w-10 h-10 rounded-full bg-[#0B0F19] border border-border flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-600 transition-all"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                    <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-full bg-[#0B0F19] border border-border flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-600 transition-all"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                    <a href="#" aria-label="Github" class="w-10 h-10 rounded-full bg-[#0B0F19] border border-border flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-600 transition-all"><i data-lucide="github" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-white mb-6 uppercase text-xs tracking-widest">Editorial</h4>
+                <ul class="space-y-4 text-sm text-slate-400">
+                    <li><a href="#" class="hover:text-accent transition-colors">Latest News</a></li>
+                    <li><a href="#" class="hover:text-accent transition-colors">Startup Stories</a></li>
+                    <li><a href="#" class="hover:text-accent transition-colors">Founder Interviews</a></li>
+                    <li><a href="#" class="hover:text-accent transition-colors">Funding Tracker</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-white mb-6 uppercase text-xs tracking-widest">Categories</h4>
+                <ul class="space-y-4 text-sm text-slate-400">
+                    <li><a href="#" class="hover:text-accent transition-colors">AI & Innovation</a></li>
+                    <li><a href="#" class="hover:text-accent transition-colors">Fintech & Web3</a></li>
+                    <li><a href="#" class="hover:text-accent transition-colors">SaaS & Enterprise</a></li>
+                    <li><a href="#" class="hover:text-accent transition-colors">DeepTech</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-white mb-6 uppercase text-xs tracking-widest">Company</h4>
+                <ul class="space-y-4 text-sm text-slate-400">
+                    <li><a href="#" class="hover:text-accent transition-colors">About Us</a></li>
+                    <li><a href="#" class="hover:text-accent transition-colors">Careers</a></li>
+                    <li><a href="#" class="hover:text-accent transition-colors">Privacy</a></li>
+                    <li><a href="#" class="hover:text-accent transition-colors">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
+            <p>&copy; 2026 UnfilterStory Media. All rights reserved.</p>
+            <p>Designed with absolute precision.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Initialize Lucide geometric UI icons
+    lucide.createIcons();
+</script>
+
+</body>
+</html>

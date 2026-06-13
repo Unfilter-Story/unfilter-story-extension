@@ -24,7 +24,7 @@ class AppFooter extends HTMLElement {
                 <li><a href="about.html">About</a></li>
                 <li><a href="#">Careers</a></li>
                 <li><a href="#">Press</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
               </ul>
             </div>
 
@@ -39,7 +39,7 @@ class AppFooter extends HTMLElement {
             </div>
 
             <div class="footer-col">
-              <h4>Newsletter</h4>
+              <h4><a href="newsletter.html" style="color: inherit; text-decoration: none;">Newsletter</a></h4>
               <p style="font-size: 0.875rem; margin-bottom: var(--spacing-2);">Join 50,000+ innovators.</p>
               <form id="newsletter-form" class="input-group" novalidate>
                 <label for="newsletter-email" class="visually-hidden">Email Address</label>

@@ -3,47 +3,667 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI & Innovation | UnfilterStory</title>
-  <meta name="description" content="Frontier technologies and AI advancements reshaping industries.">
-  <script>
-    const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', theme);
-  </script>
+  <title>AI Intelligence Hub | UnfilterStory</title>
+  
+  <!-- Global CSS (For Header/Footer Continuity) -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/layout.css">
-  <script type="module" src="js/main.js"></script>
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+
+    function syncTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    }
+    syncTheme(); // run immediately to prevent flash
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  </script>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'cyber-blue': '#0ea5e9',
+            'electric-violet': '#8b5cf6',
+            'deep-emerald': '#10b981',
+            'neon-magenta': '#d946ef'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Custom Scoped Styles for AI Hub */
+    .ai-hub-container {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    .dark .glass-card {
+      background: rgba(17, 24, 39, 0.7);
+      border-color: #374151;
+      box-shadow: none;
+    }
+    
+    .hover-glow:hover {
+      box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.15), 0 8px 10px -6px rgba(14, 165, 233, 0.1);
+      border-color: rgba(14, 165, 233, 0.3);
+    }
+    .dark .hover-glow:hover {
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+      border-color: rgba(0, 240, 255, 0.4);
+    }
+
+    /* Override standard link color */
+    .ai-hub-container a {
+      color: inherit;
+      text-decoration: none;
+    }
+  </style>
 </head>
-<body>
+<body class="bg-white dark:bg-[#070A13] text-gray-600 dark:text-gray-400 transition-colors duration-300">
+
+  <!-- Global Header injected dynamically -->
   <app-header></app-header>
-  <main class="container">
-    <header style="margin: var(--spacing-12) 0 var(--spacing-8);">
-      <h1>AI & Innovation</h1>
-      <p style="font-size: 1.25rem;">Frontier technologies reshaping the enterprise landscape.</p>
+
+  <main class="ai-hub-container min-h-screen pt-32 pb-20 px-4 md:px-8 max-w-[1440px] mx-auto">
+    
+    <!-- HEADER INTRO (DARK THEMED REFACTOR) -->
+    <header class="relative mb-20 p-8 md:p-12 rounded-3xl border border-gray-200 dark:border-[#1E293B] bg-gray-50 dark:bg-[#0B0F19] overflow-hidden shadow-lg dark:shadow-2xl transition-colors duration-300">
+      <style>
+        @keyframes dash-flow {
+          to { stroke-dashoffset: -12; }
+        }
+        @keyframes pulse-core {
+          0%, 100% { box-shadow: 0 0 20px 0px rgba(0, 153, 255, 0.2); }
+          50% { box-shadow: 0 0 40px 10px rgba(0, 153, 255, 0.4); }
+        }
+      </style>
+      <!-- Decorative background glow -->
+      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-[#0099FF]/5 dark:bg-[#0099FF]/10 rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/3 transition-colors duration-300"></div>
+      <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#8B5CF6]/5 dark:bg-[#8B5CF6]/10 rounded-full blur-[100px] pointer-events-none -translate-x-1/2 translate-y-1/3 transition-colors duration-300"></div>
+      
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        <!-- Left Column: Content -->
+        <div class="flex flex-col">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-white dark:bg-[#0D121F] border border-gray-200 dark:border-[#1E293B] w-max mb-8 shadow-sm transition-colors duration-300">
+            <div class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]"></span>
+            </div>
+            <span class="font-mono text-[10px] text-[#0099FF] font-bold uppercase tracking-widest">Live Intelligence Feed</span>
+          </div>
+          
+          <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-6 leading-[1.1] text-gray-900 dark:text-white transition-colors duration-300">
+            AI Innovation<br/>
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#0099FF] to-[#8B5CF6]">Engine</span>
+          </h1>
+          
+          <p class="text-base md:text-lg text-gray-600 dark:text-slate-400 max-w-xl leading-relaxed font-medium mb-12 transition-colors duration-300">
+            High-density telemetry and breakthrough analytics mapping the neural frontier, compute paradigms, and algorithmic physics.
+          </p>
+          
+          <!-- Telemetry Stats (Terminal Component) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+             <!-- Stat 1 -->
+             <div class="bg-white dark:bg-[#0D121F] border border-gray-200 dark:border-[#1E293B] rounded-lg p-5 relative overflow-hidden group hover:border-[#0099FF]/50 transition-colors shadow-sm dark:shadow-none">
+               <div class="absolute top-3 right-3 text-[10px] font-mono text-gray-400 dark:text-slate-600 transition-colors duration-300">SYS.ND</div>
+               <span class="block text-3xl font-black text-gray-900 dark:text-white tracking-tight mb-1 transition-colors duration-300">142</span>
+               <div class="flex items-center gap-2">
+                 <div class="h-1.5 w-1.5 rounded-full bg-[#0099FF]"></div>
+                 <span class="text-[10px] font-mono text-gray-500 dark:text-slate-400 uppercase tracking-wider font-bold transition-colors duration-300">Active Nodes</span>
+               </div>
+               <div class="w-full bg-gray-100 dark:bg-[#1E293B] h-1 mt-4 rounded-full overflow-hidden transition-colors duration-300">
+                 <div class="bg-[#0099FF] h-full w-[85%] rounded-full shadow-[0_0_8px_#0099FF]"></div>
+               </div>
+             </div>
+             <!-- Stat 2 -->
+             <div class="bg-white dark:bg-[#0D121F] border border-gray-200 dark:border-[#1E293B] rounded-lg p-5 relative overflow-hidden group hover:border-[#10B981]/50 transition-colors shadow-sm dark:shadow-none">
+               <div class="absolute top-3 right-3 text-[10px] font-mono text-gray-400 dark:text-slate-600 transition-colors duration-300">UP.SYN</div>
+               <span class="block text-3xl font-black text-[#10B981] tracking-tight mb-1 transition-colors duration-300">99.9%</span>
+               <div class="flex items-center gap-2">
+                 <div class="h-1.5 w-1.5 rounded-full bg-[#10B981] animate-pulse"></div>
+                 <span class="text-[10px] font-mono text-gray-500 dark:text-slate-400 uppercase tracking-wider font-bold transition-colors duration-300">Synapse Uptime</span>
+               </div>
+               <div class="w-full bg-gray-100 dark:bg-[#1E293B] h-1 mt-4 rounded-full overflow-hidden transition-colors duration-300">
+                 <div class="bg-[#10B981] h-full w-[99%] rounded-full shadow-[0_0_8px_#10B981]"></div>
+               </div>
+             </div>
+             <!-- Stat 3 -->
+             <div class="bg-white dark:bg-[#0D121F] border border-gray-200 dark:border-[#1E293B] rounded-lg p-5 relative overflow-hidden group hover:border-[#8B5CF6]/50 transition-colors shadow-sm dark:shadow-none">
+               <div class="absolute top-3 right-3 text-[10px] font-mono text-gray-400 dark:text-slate-600 transition-colors duration-300">LT.AVG</div>
+               <span class="block text-3xl font-black text-[#8B5CF6] tracking-tight mb-1 transition-colors duration-300">2.4ms</span>
+               <div class="flex items-center gap-2">
+                 <div class="h-1.5 w-1.5 rounded-full bg-[#8B5CF6]"></div>
+                 <span class="text-[10px] font-mono text-gray-500 dark:text-slate-400 uppercase tracking-wider font-bold transition-colors duration-300">Avg Latency</span>
+               </div>
+               <div class="w-full bg-gray-100 dark:bg-[#1E293B] h-1 mt-4 rounded-full overflow-hidden transition-colors duration-300">
+                 <div class="bg-[#8B5CF6] h-full w-[15%] rounded-full shadow-[0_0_8px_#8B5CF6]"></div>
+               </div>
+             </div>
+          </div>
+        </div>
+        
+        <!-- Right Column: Visual Anchor -->
+        <div class="relative h-[450px] w-full rounded-2xl border border-gray-200 dark:border-[#1E293B] bg-gradient-to-b from-gray-50 to-white dark:from-[#0D121F] dark:to-[#0B0F19] overflow-hidden flex items-center justify-center shadow-inner transition-colors duration-300">
+          <!-- Subtle Grid Background -->
+          <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" style="background-image: linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px); background-size: 20px 20px;"></div>
+          
+          <!-- Animated Neural Network Canvas -->
+          <div class="relative w-full h-full">
+             <!-- Connective Lines -->
+             <svg class="absolute inset-0 w-full h-full dark:mix-blend-screen" style="pointer-events: none;">
+               <line x1="25%" y1="35%" x2="45%" y2="65%" stroke="#0099FF" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4 6" class="animate-[dash-flow_3s_linear_infinite]" />
+               <line x1="45%" y1="65%" x2="70%" y2="45%" stroke="#8B5CF6" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4 6" class="animate-[dash-flow_4s_linear_infinite]" />
+               <line x1="70%" y1="45%" x2="35%" y2="25%" stroke="#10B981" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4 6" class="animate-[dash-flow_2.5s_linear_infinite_reverse]" />
+               <line x1="45%" y1="65%" x2="60%" y2="85%" stroke="#0099FF" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4 6" class="animate-[dash-flow_3.5s_linear_infinite]" />
+             </svg>
+             
+             <!-- Floating Nodes -->
+             <div class="absolute top-[35%] left-[25%] w-3 h-3 bg-[#0099FF] rounded-full shadow-[0_0_15px_#0099FF] animate-pulse -translate-x-1/2 -translate-y-1/2"></div>
+             <div class="absolute top-[45%] left-[70%] w-4 h-4 bg-[#8B5CF6] rounded-full shadow-[0_0_20px_#8B5CF6] animate-[pulse_3s_infinite] -translate-x-1/2 -translate-y-1/2"></div>
+             <div class="absolute top-[25%] left-[35%] w-2 h-2 bg-[#10B981] rounded-full shadow-[0_0_10px_#10B981] animate-[pulse_1.5s_infinite] -translate-x-1/2 -translate-y-1/2"></div>
+             <div class="absolute top-[85%] left-[60%] w-3 h-3 bg-[#0099FF] rounded-full shadow-[0_0_15px_#0099FF] animate-[pulse_2.5s_infinite] -translate-x-1/2 -translate-y-1/2"></div>
+             
+             <!-- Core Processor -->
+             <div class="absolute top-[65%] left-[45%] -translate-x-1/2 -translate-y-1/2 w-32 h-32 flex items-center justify-center">
+               <div class="absolute inset-0 rounded-full border border-[#0099FF]/20 animate-[spin_10s_linear_infinite]"></div>
+               <div class="absolute inset-2 rounded-full border border-[#8B5CF6]/30 border-dashed animate-[spin_7s_linear_reverse_infinite]"></div>
+               <div class="absolute inset-6 rounded-full bg-gradient-to-tr from-[#0099FF]/10 to-[#8B5CF6]/10 backdrop-blur-sm animate-[pulse-core_4s_ease-in-out_infinite]"></div>
+               <div class="w-8 h-8 rounded-full bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-[#1E293B] shadow-[inset_0_0_10px_rgba(0,153,255,0.2)] dark:shadow-[inset_0_0_10px_rgba(0,153,255,0.5)] flex items-center justify-center z-10 transition-colors duration-300">
+                 <div class="w-2 h-2 rounded-full bg-[#0099FF] animate-ping"></div>
+               </div>
+             </div>
+             
+             <!-- Terminal Overlay -->
+             <div class="absolute bottom-5 left-5 bg-white/90 dark:bg-[#0B0F19]/80 backdrop-blur-md border border-gray-200 dark:border-[#1E293B] rounded-lg p-3 shadow-xl transition-colors duration-300">
+               <div class="flex items-center gap-2 mb-2 border-b border-gray-200 dark:border-[#1E293B] pb-2 transition-colors duration-300">
+                 <div class="w-2 h-2 rounded-full bg-[#EF4444]"></div>
+                 <div class="w-2 h-2 rounded-full bg-[#F59E0B]"></div>
+                 <div class="w-2 h-2 rounded-full bg-[#10B981]"></div>
+               </div>
+               <div class="font-mono text-[10px] leading-relaxed text-[#0099FF]">
+                 <span class="text-gray-500 dark:text-slate-500">root@ai-core:~#</span> ./init_nexus<br/>
+                 <span class="text-gray-400 dark:text-slate-400">> loading parameters...</span> [OK]<br/>
+                 <span class="text-gray-400 dark:text-slate-400">> syncing latent space...</span> [OK]<br/>
+                 <span class="text-[#10B981]">> connection established.</span>
+               </div>
+             </div>
+          </div>
+        </div>
+      </div>
     </header>
-    <section class="grid-cards">
-      <script>
-        for(let i=0; i<6; i++) {
-          document.write(`
-            <article class="card-article">
-              <div class="card-article-img"></div>
-              <div class="card-article-content">
-                <span class="card-tag">AI</span>
-                <h2 class="card-title"><a href="#">The Enterprise Guide to Generative AI</a></h2>
-                <p class="card-excerpt">Moving beyond chat interfaces to programmatic intelligence embedded in daily workflows.</p>
-                <div class="card-meta">
-                  <div class="author-meta"><div class="author-avatar"></div><span>Dr. Alan Vance</span></div>
-                  <span>10 min read</span>
+
+    <!-- 1. FEATURED AI STORY (THE NEXUS EVENT) -->
+    <section class="mb-20">
+      <div class="relative rounded-2xl overflow-hidden glass-card group cursor-pointer transition-all duration-500 hover:border-cyber-blue/50 hover:shadow-[0_10px_40px_rgba(14,165,233,0.15)] dark:hover:shadow-[0_0_40px_rgba(0,240,255,0.1)]">
+        <!-- Background Image/Texture -->
+        <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-transparent dark:from-[#111827] dark:via-[#111827]/90 transition-colors duration-300 z-10"></div>
+        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80" alt="AI Neural Interface" class="absolute inset-0 w-full h-full object-cover opacity-10 dark:opacity-40 mix-blend-luminosity group-hover:opacity-20 dark:group-hover:opacity-50 transition-opacity duration-500" />
+        
+        <div class="relative z-20 p-8 md:p-12 lg:p-16 flex flex-col md:flex-row gap-12">
+          <!-- Main Content 60% -->
+          <div class="w-full md:w-[60%] flex flex-col justify-center">
+            <span class="inline-flex items-center px-3 py-1 rounded-full bg-cyber-blue/10 border border-cyber-blue/30 text-cyber-blue font-bold text-[10px] font-mono uppercase tracking-widest w-max mb-6">
+              <i data-lucide="cpu" class="w-3 h-3 mr-2"></i> Nexus Event
+            </span>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight transition-colors duration-300">The Self-Healing Latent Space: GPT-5's Autonomous Alignment</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-2xl transition-colors duration-300">By implementing a recursive synthetic feedback loop across 400 billion parameters, researchers have stabilized gradient decay entirely. The model identifies alignment drift during inference and self-corrects without catastrophic forgetting.</p>
+            
+            <div class="flex items-center gap-6 mt-auto">
+              <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Dr. Aris Thorne" class="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+                <div>
+                  <div class="text-gray-900 dark:text-white text-sm font-bold transition-colors duration-300">Dr. Aris Thorne</div>
+                  <div class="text-[10px] text-gray-500 dark:text-gray-400 font-mono transition-colors duration-300">Lead Research Architect</div>
                 </div>
               </div>
-            </article>
-          `);
-        }
-      </script>
+              <div class="w-px h-8 bg-gray-200 dark:bg-gray-700 transition-colors duration-300"></div>
+              <div class="text-[10px] text-gray-500 dark:text-gray-400 font-mono flex items-center gap-2 uppercase font-semibold transition-colors duration-300">
+                <i data-lucide="clock" class="w-3 h-3"></i> 14 Min Parse
+              </div>
+            </div>
+          </div>
+          
+          <!-- Analytical Abstract 40% -->
+          <div class="w-full md:w-[40%] bg-gray-50 dark:bg-[#070A13]/90 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm dark:shadow-none transition-colors duration-300 backdrop-blur-md">
+            <h3 class="text-[10px] text-gray-500 dark:text-gray-400 font-bold font-mono uppercase tracking-widest mb-6 border-b border-gray-200 dark:border-gray-800 pb-3 transition-colors duration-300">Telemetry Abstract</h3>
+            <div class="space-y-6">
+              <div>
+                <div class="flex justify-between text-[10px] font-mono mb-2 uppercase font-semibold">
+                  <span class="text-gray-600 dark:text-gray-400 transition-colors duration-300">Inference Latency</span>
+                  <span class="text-deep-emerald">-34.2%</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-1.5 dark:h-1 transition-colors duration-300">
+                  <div class="bg-deep-emerald h-full rounded-full" style="width: 68%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-[10px] font-mono mb-2 uppercase font-semibold">
+                  <span class="text-gray-600 dark:text-gray-400 transition-colors duration-300">Context Window Yield</span>
+                  <span class="text-cyber-blue">1.2M Tokens</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-1.5 dark:h-1 transition-colors duration-300">
+                  <div class="bg-cyber-blue h-full rounded-full" style="width: 92%"></div>
+                </div>
+              </div>
+              <div class="pt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+                <div class="text-[10px] text-gray-600 dark:text-gray-500 font-mono leading-relaxed bg-white dark:bg-transparent p-3 dark:p-0 rounded border border-gray-200 dark:border-transparent transition-colors duration-300">
+                  <span class="text-electric-violet font-bold">System Log:</span> Convergence mapped successfully across primary clusters. Attention sparsity improved by 2.1x over previous epoch runs.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
+
+    <!-- 2. AI TOOLS (THE UTILITY MATRIX) -->
+    <section class="mb-20">
+      <div class="flex justify-between items-end mb-8 border-b border-gray-200 dark:border-gray-800 pb-4 transition-colors duration-300">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3 transition-colors duration-300">
+            <i data-lucide="terminal" class="w-5 h-5 text-cyber-blue"></i>
+            The Utility Matrix
+          </h2>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 font-mono uppercase tracking-wider font-semibold transition-colors duration-300">Developer infrastructure & enterprise tooling deployments.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Tool 1 -->
+        <a href="#" class="block glass-card rounded-xl p-6 transition-all duration-300 hover-glow group">
+          <div class="flex justify-between items-start mb-6">
+            <div class="w-10 h-10 rounded bg-white dark:bg-[#070A13] border border-gray-200 dark:border-gray-700 shadow-sm dark:shadow-none flex items-center justify-center group-hover:border-cyber-blue/50 transition-colors">
+              <i data-lucide="database" class="w-5 h-5 text-gray-500 dark:text-gray-300 group-hover:text-cyber-blue transition-colors duration-300"></i>
+            </div>
+            <span class="text-[9px] font-mono font-bold border border-gray-200 dark:border-gray-700 px-2 py-1 rounded bg-gray-50 dark:bg-[#070A13]/50 text-gray-500 dark:text-gray-400 uppercase transition-colors duration-300">Vector Indexing</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Pinecone Serverless</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 line-clamp-2 transition-colors duration-300">High-performance vector database optimized for massive-scale RAG pipelines and semantic search.</p>
+          <div class="pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center transition-colors duration-300">
+            <div class="flex flex-col">
+              <span class="text-[9px] text-gray-500 font-mono uppercase font-semibold">Read/Write Latency</span>
+              <span class="text-xs text-deep-emerald font-bold font-mono">~12ms P99</span>
+            </div>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-cyber-blue transition-colors"></i>
+          </div>
+        </a>
+
+        <!-- Tool 2 -->
+        <a href="#" class="block glass-card rounded-xl p-6 transition-all duration-300 hover-glow group">
+          <div class="flex justify-between items-start mb-6">
+            <div class="w-10 h-10 rounded bg-white dark:bg-[#070A13] border border-gray-200 dark:border-gray-700 shadow-sm dark:shadow-none flex items-center justify-center group-hover:border-cyber-blue/50 transition-colors">
+              <i data-lucide="zap" class="w-5 h-5 text-gray-500 dark:text-gray-300 group-hover:text-cyber-blue transition-colors duration-300"></i>
+            </div>
+            <span class="text-[9px] font-mono font-bold border border-gray-200 dark:border-gray-700 px-2 py-1 rounded bg-gray-50 dark:bg-[#070A13]/50 text-gray-500 dark:text-gray-400 uppercase transition-colors duration-300">LLM Fine-Tuning</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Unsloth</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 line-clamp-2 transition-colors duration-300">Mathematics optimization engine for making Llama-3 and Mistral training 2x faster with 70% less VRAM.</p>
+          <div class="pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center transition-colors duration-300">
+            <div class="flex flex-col">
+              <span class="text-[9px] text-gray-500 font-mono uppercase font-semibold">VRAM Efficiency</span>
+              <span class="text-xs text-cyber-blue font-bold font-mono">70% Reduction</span>
+            </div>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-cyber-blue transition-colors"></i>
+          </div>
+        </a>
+
+        <!-- Tool 3 -->
+        <a href="#" class="block glass-card rounded-xl p-6 transition-all duration-300 hover-glow group">
+          <div class="flex justify-between items-start mb-6">
+            <div class="w-10 h-10 rounded bg-white dark:bg-[#070A13] border border-gray-200 dark:border-gray-700 shadow-sm dark:shadow-none flex items-center justify-center group-hover:border-cyber-blue/50 transition-colors">
+              <i data-lucide="layout-template" class="w-5 h-5 text-gray-500 dark:text-gray-300 group-hover:text-cyber-blue transition-colors duration-300"></i>
+            </div>
+            <span class="text-[9px] font-mono font-bold border border-gray-200 dark:border-gray-700 px-2 py-1 rounded bg-gray-50 dark:bg-[#070A13]/50 text-gray-500 dark:text-gray-400 uppercase transition-colors duration-300">Agent Framework</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">LangChain v0.2</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 line-clamp-2 transition-colors duration-300">Standardized architecture for building context-aware, reasoning applications and multi-agent workflows.</p>
+          <div class="pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center transition-colors duration-300">
+            <div class="flex flex-col">
+              <span class="text-[9px] text-gray-500 font-mono uppercase font-semibold">Agent Throughput</span>
+              <span class="text-xs text-gray-900 dark:text-white font-bold font-mono transition-colors duration-300">4.2k req/sec</span>
+            </div>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-cyber-blue transition-colors"></i>
+          </div>
+        </a>
+
+        <!-- Tool 4 -->
+        <a href="#" class="block glass-card rounded-xl p-6 transition-all duration-300 hover-glow group">
+          <div class="flex justify-between items-start mb-6">
+            <div class="w-10 h-10 rounded bg-white dark:bg-[#070A13] border border-gray-200 dark:border-gray-700 shadow-sm dark:shadow-none flex items-center justify-center group-hover:border-cyber-blue/50 transition-colors">
+              <i data-lucide="shield-check" class="w-5 h-5 text-gray-500 dark:text-gray-300 group-hover:text-cyber-blue transition-colors duration-300"></i>
+            </div>
+            <span class="text-[9px] font-mono font-bold border border-gray-200 dark:border-gray-700 px-2 py-1 rounded bg-gray-50 dark:bg-[#070A13]/50 text-gray-500 dark:text-gray-400 uppercase transition-colors duration-300">Safety Protocol</span>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Llama Guard 3</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 line-clamp-2 transition-colors duration-300">Input/output moderation pipeline designed to sanitize malicious prompts and prevent hallucinations.</p>
+          <div class="pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center transition-colors duration-300">
+            <div class="flex flex-col">
+              <span class="text-[9px] text-gray-500 font-mono uppercase font-semibold">Detection Accuracy</span>
+              <span class="text-xs text-deep-emerald font-bold font-mono">99.4% F1 Score</span>
+            </div>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-cyber-blue transition-colors"></i>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 3. MACHINE LEARNING & 4. ROBOTICS (ASMMYETRIC LAYOUT) -->
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 mb-20">
+      
+      <!-- 3. Machine Learning (The Core Architectures) - 7 Columns -->
+      <section class="xl:col-span-7">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3 mb-8 border-b border-gray-200 dark:border-gray-800 pb-4 transition-colors duration-300">
+          <i data-lucide="network" class="w-5 h-5 text-electric-violet"></i>
+          Core Architectures
+        </h2>
+        
+        <div class="space-y-6">
+          <!-- Architecture Card 1 -->
+          <div class="glass-card rounded-xl p-6 md:p-8 relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-electric-violet/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
+            
+            <div class="flex flex-col md:flex-row gap-8 relative z-10">
+              <div class="flex-grow">
+                <div class="flex items-center gap-2 mb-4">
+                  <span class="w-1.5 h-1.5 rounded-full bg-electric-violet dark:shadow-[0_0_8px_rgba(139,92,246,0.8)]"></span>
+                  <span class="text-[10px] font-mono font-bold text-electric-violet uppercase tracking-widest">MoE Breakthrough</span>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3 leading-tight transition-colors duration-300">Sparse Mixture of Experts: The 1.8T Router</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mb-6 leading-relaxed transition-colors duration-300">Scaling laws indicate that dense models plateau at 1T parameters due to compute constraints. The novel Top-2 gating network selectively activates only 32B parameters per token, enabling massive capacity without proportional inference costs.</p>
+                
+                <div class="grid grid-cols-2 gap-4 border-t border-gray-200 dark:border-gray-700 pt-5 transition-colors duration-300">
+                  <div>
+                    <div class="text-[9px] text-gray-500 font-mono uppercase font-bold tracking-widest mb-1">Parameter Scale</div>
+                    <div class="text-base font-bold font-mono text-gray-900 dark:text-white transition-colors duration-300">1.8 Trillion</div>
+                  </div>
+                  <div>
+                    <div class="text-[9px] text-gray-500 font-mono uppercase font-bold tracking-widest mb-1">Token Throughput</div>
+                    <div class="text-base font-bold font-mono text-gray-900 dark:text-white transition-colors duration-300">2.4k tok/s / A100</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Code Abstract -->
+              <div class="w-full md:w-64 flex-shrink-0 bg-gray-50 dark:bg-[#04060A] border border-gray-200 dark:border-gray-700 rounded-lg p-5 font-mono text-[10px] text-gray-600 dark:text-gray-300 shadow-inner overflow-x-auto transition-colors duration-300">
+                <div class="text-gray-500 font-bold mb-3 border-b border-gray-200 dark:border-gray-800 pb-2 uppercase tracking-widest text-[9px] transition-colors duration-300"># PyTorch MoE Router Abstract</div>
+                <div class="text-electric-violet font-bold">def</div> <div class="inline text-blue-600 dark:text-blue-300">route_tokens</div>(x, gates):<br>
+                &nbsp;&nbsp;logits = torch.matmul(x, gates)<br>
+                &nbsp;&nbsp;probs = F.softmax(logits, dim=-1)<br>
+                &nbsp;&nbsp;top_k_probs, indices = \<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;torch.topk(probs, k=2)<br>
+                <br>
+                &nbsp;&nbsp;<div class="text-gray-400 dark:text-gray-500"># Dynamic capacity alloc</div><br>
+                &nbsp;&nbsp;<div class="text-electric-violet font-bold">return</div> combine(top_k_probs)
+              </div>
+            </div>
+          </div>
+
+          <!-- Architecture Card 2 -->
+          <div class="glass-card rounded-xl p-6 relative overflow-hidden group">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyber-blue dark:shadow-[0_0_8px_rgba(0,240,255,0.8)]"></span>
+                <span class="text-[10px] font-mono font-bold text-cyber-blue uppercase tracking-widest">State Space Models</span>
+              </div>
+              <span class="text-[9px] border border-gray-200 dark:border-gray-700 px-2 py-1 rounded bg-white dark:bg-[#070A13] font-bold text-gray-500 dark:text-gray-400 font-mono uppercase tracking-widest transition-colors duration-300">Mamba-3 Arch</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Sub-Quadratic Scaling in Sequence Modeling</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-5 transition-colors duration-300">Transformers degrade geometrically at 1M+ contexts. State Space Models process sequences with linear complexity, offering infinite context horizons for continuous video generation and genome mapping.</p>
+            <div class="flex gap-6 border-t border-gray-200 dark:border-gray-700 pt-4 transition-colors duration-300">
+               <div class="flex items-center gap-2">
+                  <i data-lucide="activity" class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500"></i>
+                  <span class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-widest transition-colors duration-300">O(N) Complexity</span>
+               </div>
+               <div class="flex items-center gap-2">
+                  <i data-lucide="server" class="w-3.5 h-3.5 text-gray-400 dark:text-gray-500"></i>
+                  <span class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-widest transition-colors duration-300">Constant Memory</span>
+               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Robotics (The Physical Layer) - 5 Columns -->
+      <section class="xl:col-span-5">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3 mb-8 border-b border-gray-200 dark:border-gray-800 pb-4 transition-colors duration-300">
+          <i data-lucide="bot" class="w-5 h-5 text-neon-magenta"></i>
+          The Physical Layer
+        </h2>
+
+        <div class="glass-card rounded-xl overflow-hidden h-[calc(100%-4rem)] flex flex-col">
+          <!-- Schematic / Image area -->
+          <div class="relative h-56 bg-gray-100 dark:bg-[#04060A] border-b border-gray-200 dark:border-gray-700 p-4 transition-colors duration-300">
+            <!-- Grid Background -->
+            <div class="absolute inset-0 opacity-40 dark:opacity-20 bg-[linear-gradient(to_right,#E2E8F0_1px,transparent_1px),linear-gradient(to_bottom,#E2E8F0_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#FF00FF10_1px,transparent_1px),linear-gradient(to_bottom,#FF00FF10_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+            
+            <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=80" alt="Robotic Hardware" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay dark:mix-blend-screen opacity-50 grayscale contrast-125 filter">
+            
+            <!-- HUD Overlays -->
+            <div class="absolute top-4 left-4 border border-neon-magenta/30 bg-white/90 dark:bg-[#04060A]/80 backdrop-blur text-[9px] font-mono font-bold text-neon-magenta px-2 py-1 rounded tracking-widest uppercase transition-colors duration-300">
+              DOF PROFILE: ACTIVE [24]
+            </div>
+            <div class="absolute bottom-4 right-4 flex gap-1 items-end">
+               <div class="w-1.5 h-3 bg-neon-magenta"></div>
+               <div class="w-1.5 h-4 bg-neon-magenta"></div>
+               <div class="w-1.5 h-6 bg-neon-magenta"></div>
+               <div class="w-1.5 h-2 bg-gray-300 dark:bg-gray-700 transition-colors duration-300"></div>
+               <span class="text-[9px] font-mono font-bold text-neon-magenta ml-2 uppercase">Telemetry Sync</span>
+            </div>
+          </div>
+          
+          <div class="p-6 md:p-8 flex-grow flex flex-col">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 transition-colors duration-300">Figure 03: End-to-End Neural Kinematics</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-8 leading-relaxed transition-colors duration-300">Replacing programmatic IK (Inverse Kinematics) solvers with pure vision-language-action (VLA) models. The robot observes, predicts, and actuates entirely through neural pathways running locally at 200hz.</p>
+            
+            <div class="mt-auto grid grid-cols-2 gap-4">
+              <div class="bg-gray-50 dark:bg-[#070A13]/80 rounded p-4 border border-gray-200 dark:border-gray-700 shadow-sm dark:shadow-none transition-colors duration-300">
+                <div class="text-[9px] text-gray-500 font-mono font-bold mb-2 uppercase tracking-widest">Edge Inference</div>
+                <div class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2 font-mono transition-colors duration-300">
+                  <span class="w-2 h-2 rounded-full bg-deep-emerald dark:shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>
+                  ENABLED
+                </div>
+              </div>
+              <div class="bg-gray-50 dark:bg-[#070A13]/80 rounded p-4 border border-gray-200 dark:border-gray-700 shadow-sm dark:shadow-none transition-colors duration-300">
+                <div class="text-[9px] text-gray-500 font-mono font-bold mb-2 uppercase tracking-widest">Actuation Latency</div>
+                <div class="text-sm font-bold text-gray-900 dark:text-white font-mono transition-colors duration-300">4.8ms</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 5. FUTURE TECH & INDUSTRY ANALYSIS -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+      <!-- Left: Future Technology -->
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3 mb-8 border-b border-gray-200 dark:border-gray-800 pb-4 transition-colors duration-300">
+          <i data-lucide="milestone" class="w-5 h-5 text-gray-400 dark:text-gray-300"></i>
+          Future Technology
+        </h2>
+        
+        <div class="space-y-4">
+          <!-- Horizon Card 1 -->
+          <div class="glass-card rounded-xl p-6 hover:border-cyber-blue/50 transition-colors cursor-pointer flex flex-col sm:flex-row gap-6 group">
+            <div class="w-16 h-16 rounded-lg bg-white dark:bg-[#04060A] shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-700 flex-shrink-0 flex items-center justify-center group-hover:border-cyber-blue/30 dark:group-hover:border-gray-400 transition-colors">
+              <i data-lucide="atom" class="w-8 h-8 text-gray-400 group-hover:text-cyber-blue dark:group-hover:text-white transition-colors"></i>
+            </div>
+            <div>
+              <div class="text-[10px] font-mono font-bold text-cyber-blue uppercase mb-2 tracking-widest">Horizon: 2028-2030</div>
+              <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Quantum-Classical Hybrid Nodes</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 leading-relaxed transition-colors duration-300">Offloading complex optimization tensors from standard GPUs to quantum annealers to achieve quadratic speedups in model weight initializations.</p>
+            </div>
+          </div>
+
+          <!-- Horizon Card 2 -->
+          <div class="glass-card rounded-xl p-6 hover:border-deep-emerald/50 transition-colors cursor-pointer flex flex-col sm:flex-row gap-6 group">
+            <div class="w-16 h-16 rounded-lg bg-white dark:bg-[#04060A] shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-700 flex-shrink-0 flex items-center justify-center group-hover:border-deep-emerald/30 dark:group-hover:border-gray-400 transition-colors">
+              <i data-lucide="dna" class="w-8 h-8 text-gray-400 group-hover:text-deep-emerald dark:group-hover:text-white transition-colors"></i>
+            </div>
+            <div>
+              <div class="text-[10px] font-mono font-bold text-deep-emerald uppercase mb-2 tracking-widest">Horizon: 2032+</div>
+              <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Synthetic Wetware Computing</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 leading-relaxed transition-colors duration-300">Utilizing lab-grown neuron clusters mapped to silicon interfaces to perform energy-efficient, true-analog neural net processing.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Industry Analysis -->
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3 mb-8 border-b border-gray-200 dark:border-gray-800 pb-4 transition-colors duration-300">
+          <i data-lucide="bar-chart-3" class="w-5 h-5 text-deep-emerald"></i>
+          Industry Analysis
+        </h2>
+        
+        <div class="glass-card rounded-xl p-6 md:p-8">
+          <div class="flex items-end justify-between mb-8 pb-6 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
+            <div>
+              <div class="text-[10px] font-mono font-bold text-gray-500 uppercase tracking-widest mb-2">Global H100/B200 Allocation</div>
+              <div class="text-4xl font-bold text-gray-900 dark:text-white transition-colors duration-300">3.2M <span class="text-sm font-normal text-gray-500 tracking-normal">Units Active</span></div>
+            </div>
+            <div class="text-deep-emerald font-bold font-mono text-xs bg-deep-emerald/10 border border-deep-emerald/30 px-3 py-1.5 rounded flex items-center gap-2 uppercase tracking-widest">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> +14.2% QoQ
+            </div>
+          </div>
+
+          <div class="space-y-5">
+            <!-- Metric Row -->
+            <div class="flex justify-between items-center group cursor-pointer pb-4 border-b border-gray-200 dark:border-gray-700/50 last:border-0 last:pb-0 transition-colors duration-300">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 rounded bg-white dark:bg-[#04060A] shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 font-mono text-[10px] font-bold transition-colors duration-300">01</div>
+                <div class="text-sm font-medium text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Hyperscaler Compute Spend</div>
+              </div>
+              <div class="text-sm font-bold font-mono text-gray-900 dark:text-white transition-colors duration-300">$142.5B</div>
+            </div>
+            <!-- Metric Row -->
+            <div class="flex justify-between items-center group cursor-pointer pb-4 border-b border-gray-200 dark:border-gray-700/50 last:border-0 last:pb-0 transition-colors duration-300">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 rounded bg-white dark:bg-[#04060A] shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 font-mono text-[10px] font-bold transition-colors duration-300">02</div>
+                <div class="text-sm font-medium text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Enterprise Fine-Tuning Adoption</div>
+              </div>
+              <div class="text-sm font-bold font-mono text-gray-900 dark:text-white transition-colors duration-300">68.4%</div>
+            </div>
+            <!-- Metric Row -->
+            <div class="flex justify-between items-center group cursor-pointer pb-4 border-b border-gray-200 dark:border-gray-700/50 last:border-0 last:pb-0 transition-colors duration-300">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 rounded bg-white dark:bg-[#04060A] shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 font-mono text-[10px] font-bold transition-colors duration-300">03</div>
+                <div class="text-sm font-medium text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Open Source Model Market Share</div>
+              </div>
+              <div class="text-sm font-bold font-mono text-gray-900 dark:text-white transition-colors duration-300">41.2%</div>
+            </div>
+            <!-- Metric Row -->
+            <div class="flex justify-between items-center group cursor-pointer pb-4 border-b border-gray-200 dark:border-gray-700/50 last:border-0 last:pb-0 transition-colors duration-300">
+              <div class="flex items-center gap-4">
+                <div class="w-8 h-8 rounded bg-white dark:bg-[#04060A] shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 font-mono text-[10px] font-bold transition-colors duration-300">04</div>
+                <div class="text-sm font-medium text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">Average RAG Pipeline Latency</div>
+              </div>
+              <div class="text-sm font-bold font-mono text-deep-emerald">450ms</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 6. PRODUCT LAUNCHES (THE PRODUCTION ENVIRONMENT) -->
+    <section>
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-8 border-b border-gray-200 dark:border-gray-800 pb-4 gap-4 transition-colors duration-300">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3 transition-colors duration-300">
+          <i data-lucide="git-merge" class="w-5 h-5 text-gray-400"></i>
+          The Production Environment
+        </h2>
+        <a href="#" class="text-[10px] font-bold font-mono text-cyber-blue hover:text-blue-700 dark:hover:text-white transition-colors flex items-center gap-1 uppercase tracking-widest border border-cyber-blue/30 bg-cyber-blue/5 px-3 py-1.5 rounded">
+          View Full Changelog <i data-lucide="chevron-right" class="w-3 h-3"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Release Card 1 -->
+        <div class="glass-card rounded-xl p-6 border-l-[4px] border-l-cyber-blue flex flex-col h-full">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-[10px] font-bold font-mono bg-cyber-blue/10 text-cyber-blue px-2 py-1 rounded border border-cyber-blue/30 uppercase tracking-widest">v4.2-Stable</span>
+            <span class="text-[10px] font-bold font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest transition-colors duration-300">T-minus 2h</span>
+          </div>
+          <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Anthropic Claude 3.5 Opus</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 line-clamp-2 transition-colors duration-300">Major vision-language upgrade. Zero-shot reasoning on unstructured financial charts improved by 22%.</p>
+          <button class="mt-auto w-full py-2.5 bg-white dark:bg-[#04060A] shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-700 rounded text-xs font-bold font-mono text-gray-600 dark:text-gray-300 hover:text-cyber-blue dark:hover:text-white hover:border-cyber-blue/50 transition-colors flex items-center justify-center gap-2 uppercase tracking-widest">
+            <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Read Docs
+          </button>
+        </div>
+
+        <!-- Release Card 2 -->
+        <div class="glass-card rounded-xl p-6 border-l-[4px] border-l-electric-violet flex flex-col h-full">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-[10px] font-bold font-mono bg-electric-violet/10 text-electric-violet px-2 py-1 rounded border border-electric-violet/30 uppercase tracking-widest">v1.0-Beta</span>
+            <span class="text-[10px] font-bold font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest transition-colors duration-300">T-minus 14h</span>
+          </div>
+          <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">OpenAI Sora API</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 line-clamp-2 transition-colors duration-300">Developer endpoints now active. Supports 1080p generation with 60-second temporal consistency.</p>
+          <button class="mt-auto w-full py-2.5 bg-white dark:bg-[#04060A] shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-700 rounded text-xs font-bold font-mono text-gray-600 dark:text-gray-300 hover:text-electric-violet dark:hover:text-white hover:border-electric-violet/50 transition-colors flex items-center justify-center gap-2 uppercase tracking-widest">
+            <i data-lucide="code" class="w-3.5 h-3.5"></i> Open Instance
+          </button>
+        </div>
+
+        <!-- Release Card 3 -->
+        <div class="glass-card rounded-xl p-6 border-l-[4px] border-l-deep-emerald flex flex-col h-full">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-[10px] font-bold font-mono bg-deep-emerald/10 text-deep-emerald px-2 py-1 rounded border border-deep-emerald/30 uppercase tracking-widest">v8.1-Deploy</span>
+            <span class="text-[10px] font-bold font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest transition-colors duration-300">T-minus 1d</span>
+          </div>
+          <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Nvidia TensorRT-LLM</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 line-clamp-2 transition-colors duration-300">Paging KV cache optimization. Throughput on Blackwell architecture increased by 1.5x in batch inference.</p>
+          <button class="mt-auto w-full py-2.5 bg-white dark:bg-[#04060A] shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-700 rounded text-xs font-bold font-mono text-gray-600 dark:text-gray-300 hover:text-deep-emerald dark:hover:text-white hover:border-deep-emerald/50 transition-colors flex items-center justify-center gap-2 uppercase tracking-widest">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i> Pull Image
+          </button>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <!-- Global Footer -->
   <app-footer></app-footer>
+
+  <!-- Global Modals / Scripts -->
   <search-modal></search-modal>
+  
+  <script type="module" src="js/main.js"></script>
+  
+  <!-- Initialize Icons -->
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>

@@ -76,10 +76,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  background: var(--gradient-hz);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: var(--color-accent); /* Fallback */
+  color: var(--color-accent);
   margin-bottom: var(--spacing-2);
   display: inline-block;
 }
@@ -120,6 +117,7 @@
   height: 24px;
   border-radius: 50%;
   background-color: var(--color-border);
+  object-fit: cover;
 }
 
 /* Category Card */
@@ -200,13 +198,16 @@
 .widget-funding {
   background-color: var(--color-bg-main);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: var(--spacing-6);
+  border-radius: 8px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  min-width: 220px;
+  flex-shrink: 0;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
 }
-.widget-funding:hover {
+.widget-funding:hover,
+.widget-funding.is-active {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
   border-color: var(--color-accent);
@@ -218,7 +219,7 @@
   margin-bottom: var(--spacing-4);
 }
 .widget-funding-company {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-text-main);
 }
@@ -231,15 +232,18 @@
   color: var(--color-text-mute);
 }
 .widget-funding-amount {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--color-success);
   margin-bottom: var(--spacing-2);
 }
 .widget-funding-investors {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: var(--color-text-mute);
   margin-top: auto;
+}
+.widget-funding-cta {
+  display: none;
 }
 
 /* Media Card (Interviews) */
@@ -247,7 +251,7 @@
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   background-color: var(--color-bg-surf);
   display: flex;
   align-items: flex-end;
@@ -268,13 +272,14 @@
 .card-media-content {
   position: relative;
   z-index: 2;
-  padding: var(--spacing-6);
+  padding: var(--spacing-4);
   width: 100%;
 }
 .card-media-title {
   color: #FFFFFF;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
+  line-height: 1.4;
   margin-bottom: var(--spacing-2);
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
@@ -287,11 +292,11 @@
 }
 .play-icon {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   background-color: rgba(255,255,255,0.2);
   backdrop-filter: blur(4px);
   border-radius: 50%;
@@ -332,9 +337,9 @@
 .card-article-horizontal {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--spacing-6);
+  gap: var(--spacing-4);
   background-color: var(--color-bg-main);
-  border: 2px solid var(--color-border);
+  border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
   border-radius: 12px;
   overflow: hidden;
@@ -342,7 +347,7 @@
 }
 @media (min-width: 768px) {
   .card-article-horizontal {
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 240px 1fr;
   }
 }
 .card-article-horizontal:hover {
@@ -352,10 +357,10 @@
 }
 .card-article-horizontal .card-article-img {
   height: 100%;
-  min-height: 200px;
+  min-height: 160px;
 }
 .card-article-horizontal .card-article-content {
-  padding: var(--spacing-6);
+  padding: var(--spacing-4);
   justify-content: center;
 }
 
@@ -430,6 +435,9 @@
   border-radius: 12px;
 }
 .img-zoom-wrapper img, .img-zoom-wrapper .bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -438,9 +446,20 @@
 .card-news {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
+  gap: var(--spacing-6);
   padding-bottom: var(--spacing-8);
   border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--spacing-8);
+}
+@media (min-width: 768px) {
+  .card-news {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .card-news > .img-zoom-wrapper {
+    width: 280px;
+    flex-shrink: 0;
+  }
 }
 .card-news:last-child {
   border-bottom: none;
@@ -452,8 +471,10 @@
   transform: scale(1.03);
 }
 .card-news .card-title {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   transition: color var(--transition-fast);
+  line-height: 1.4;
+  margin-bottom: var(--spacing-2);
 }
 .card-news:hover .card-title a {
   color: var(--color-accent);
@@ -475,8 +496,9 @@
   font-size: 2.5rem;
   font-weight: 800;
   line-height: 1;
-  color: var(--color-border);
+  color: var(--color-accent);
   flex-shrink: 0;
+  opacity: 0.9;
 }
 .card-trending .card-title {
   font-size: 1.125rem;
@@ -484,6 +506,26 @@
 }
 .card-trending:hover .card-title a {
   color: var(--color-accent);
+}
+
+.trending-dark-box {
+  background-color: var(--color-primary);
+  border-radius: 12px;
+  padding: var(--spacing-6);
+  border: 1px solid var(--color-primary);
+}
+.trending-dark-box .card-title {
+  color: var(--color-bg-main);
+}
+.trending-dark-box .card-trending {
+  border-bottom-color: rgba(255,255,255,0.1);
+}
+.trending-dark-box h2 {
+  color: var(--color-bg-main);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.trending-dark-box span {
+  color: rgba(255,255,255,0.6) !important;
 }
 
 /* Inline Search */
@@ -602,20 +644,29 @@
 .card-founder {
   display: flex;
   flex-direction: column;
+  padding: var(--spacing-4);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-bg-surf);
 }
 .card-founder .img-zoom-wrapper {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   margin-bottom: var(--spacing-4);
-  border-radius: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+.card-founder .img-zoom-wrapper img {
+  object-position: center 15% !important;
 }
 .card-founder-quote {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-style: italic;
   font-weight: 600;
-  margin-bottom: var(--spacing-4);
+  margin-bottom: var(--spacing-3);
   color: var(--color-text-main);
-  border-left: 3px solid var(--color-accent);
-  padding-left: var(--spacing-4);
+  border-left: 2px solid var(--color-accent);
+  padding-left: var(--spacing-3);
 }
 
 /* Teardown Analysis Card Elements */
@@ -649,11 +700,12 @@
 .card-stream {
   padding: var(--spacing-6);
   border-radius: 12px;
-  border-top: 4px solid var(--color-border);
-  background-color: var(--color-bg-surf);
-  height: 100%;
+  border: 1px solid var(--color-border);
+  border-top-width: 4px;
+  background-color: var(--color-bg-main);
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 .card-stream-success {
   border-top-color: var(--color-success);
@@ -670,17 +722,28 @@
   padding: var(--spacing-6);
   background-color: var(--color-bg-main);
   border: 1px solid var(--color-border);
+  border-top: 4px solid var(--color-accent);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+.card-step:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 20px -4px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 .step-number {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: var(--spacing-2);
+  color: var(--color-bg-main);
+  background-color: var(--color-accent);
+  display: inline-block;
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: 20px;
+  margin-bottom: var(--spacing-4);
   letter-spacing: 0.05em;
+  align-self: flex-start;
 }
 
 /* Popular Articles Sidebar Card */
@@ -696,16 +759,18 @@
   margin-bottom: 0;
 }
 .popular-rank {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 800;
-  line-height: 1;
-  color: var(--color-border);
+  line-height: 1.2;
+  color: var(--color-accent);
   flex-shrink: 0;
+  width: 2rem;
 }
 .card-popular .card-title {
   font-size: 1.125rem;
   margin-bottom: var(--spacing-2);
 }
 .card-popular:hover .card-title a {
-  color: var(--color-accent);
+  color: var(--color-accent) !important;
+  transition: color var(--transition-base);
 }

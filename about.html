@@ -1,40 +1,487 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About | UnfilterStory</title>
   <meta name="description" content="About UnfilterStory, our mission, and our editorial team.">
-  <script>
-    const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', theme);
-  </script>
+  
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/layout.css">
-  <script type="module" src="js/main.js"></script>
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    function syncTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    }
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  </script>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'cyber-blue': '#0099FF',
+            'electric-violet': '#8B5CF6',
+            'slate-dark': '#0B0F19',
+            'slate-card': '#0D121F',
+            'slate-border': '#1E293B'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Custom utility classes for About page */
+    .border-struct {
+      border-color: #E5E7EB;
+    }
+    .dark .border-struct {
+      border-color: #1E293B;
+    }
+    .bg-canvas {
+      background-color: #FFFFFF;
+    }
+    .dark .bg-canvas {
+      background-color: #0B0F19;
+    }
+    .bg-surface {
+      background-color: #F9FAFB;
+    }
+    .dark .bg-surface {
+      background-color: #0D121F;
+    }
+    
+    /* Grayscale transition for team grid */
+    .grayscale-hover {
+      filter: grayscale(100%);
+      transition: filter 0.5s ease, transform 0.5s ease;
+    }
+    .group:hover .grayscale-hover {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
+
+    /* Timeline animations */
+    .timeline-node {
+      transition: all 0.5s ease;
+    }
+    .timeline-node.active {
+      background-color: #0099FF;
+      box-shadow: 0 0 15px rgba(0, 153, 255, 0.6);
+      transform: scale(1.2);
+    }
+    .timeline-content {
+      opacity: 0.5;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+    .timeline-content.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
-<body>
+<body class="bg-canvas text-gray-900 dark:text-gray-100 transition-colors duration-300 antialiased font-sans selection:bg-cyber-blue/30">
+
+  <!-- Global Header injected dynamically -->
   <app-header></app-header>
-  <main class="container">
-    <article class="editorial-content">
-      <header style="margin-bottom: var(--spacing-8); text-align: center;">
-        <h1>About UnfilterStory</h1>
-        <p style="font-size: 1.25rem;">Premium journalism for the builders of tomorrow.</p>
-      </header>
-      
-      <h2>Our Mission</h2>
-      <p>UnfilterStory was founded with a singular purpose: to cut through the noise of the modern tech ecosystem. We believe that true innovation requires deep understanding, not just surface-level headlines. Our team of veteran journalists and industry insiders are dedicated to providing unparalleled insights into startups, artificial intelligence, venture capital, and the people driving these sectors forward.</p>
-      
-      <h2>Editorial Standards</h2>
-      <p>We hold ourselves to the highest standards of journalistic integrity. Every story we publish is meticulously fact-checked, sourced from primary interviews, and analyzed for its broader impact on the business landscape. We don't chase clicks; we chase truth.</p>
-      
-      <h2>Join the Conversation</h2>
-      <p>Whether you're a founder scaling your first company, an investor looking for the next big trend, or an operator navigating the complexities of hyper-growth, UnfilterStory is your platform. <a href="#newsletter-form" style="color: var(--color-accent); font-weight: 600;">Subscribe to our newsletter</a> to get our latest insights delivered straight to your inbox.</p>
-    </article>
+
+  <main class="pt-24 pb-20">
+    
+    <!-- SECTION 1: THE MISSION & VISION CANVAS (HERO LAYOUT) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24 border-b border-struct transition-colors duration-300">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <!-- Mission Block -->
+        <div class="flex flex-col">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-8 h-px bg-cyber-blue"></div>
+            <span class="font-mono text-[10px] text-cyber-blue font-bold uppercase tracking-widest">Brand Narrative</span>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-[1.1] mb-8 text-gray-900 dark:text-white transition-colors duration-300">
+            Decoding the <br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-electric-violet">Neural Frontier.</span>
+          </h1>
+          <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed max-w-lg transition-colors duration-300">
+            UnfilterStory is the premium intelligence layer for the builders, operators, and investors defining the next decade of technology.
+          </p>
+        </div>
+        
+        <!-- Vision Block / Split Screen -->
+        <div class="relative w-full h-[500px] rounded-3xl overflow-hidden bg-surface border border-struct p-10 flex flex-col justify-between transition-colors duration-300 group shadow-lg dark:shadow-2xl">
+          <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80')] opacity-[0.03] dark:opacity-20 bg-cover mix-blend-overlay group-hover:scale-105 transition-transform duration-700"></div>
+          <div class="relative z-10">
+            <i data-lucide="crosshair" class="w-8 h-8 text-electric-violet mb-6"></i>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Our Vision</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed font-serif italic">
+              "To construct the most high-fidelity, uncompromising media matrix mapping the convergence of venture capital, algorithmic breakthroughs, and human ingenuity."
+            </p>
+          </div>
+          <div class="relative z-10 flex items-center justify-between border-t border-struct pt-6 mt-auto transition-colors duration-300">
+            <div class="font-mono text-xs font-bold text-gray-500 uppercase tracking-widest">Est. 2024</div>
+            <div class="flex gap-2">
+              <span class="w-2 h-2 rounded-full bg-cyber-blue animate-pulse"></span>
+              <span class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">System Online</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE CORE THESIS ("Why UnfilterStory") -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-b border-struct transition-colors duration-300">
+      <div class="mb-16 md:w-1/2">
+        <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">The Core Thesis</h2>
+        <p class="text-xl text-gray-600 dark:text-gray-400">Why we exist in a crowded landscape of tech journalism.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="bg-surface border border-struct p-8 rounded-2xl group hover:border-cyber-blue transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,153,255,0.1)] flex flex-col h-full">
+          <div class="w-12 h-12 rounded-xl bg-cyber-blue/10 flex items-center justify-center text-cyber-blue mb-8 group-hover:scale-110 transition-transform">
+            <i data-lucide="layers" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">High-Density Intelligence</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 flex-grow">We bypass the superficial. Our analysis is engineered for operators who demand rigorous data, architectural deep-dives, and untempered market truths.</p>
+          <div class="w-full h-1 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden mt-auto">
+            <div class="w-1/3 h-full bg-cyber-blue group-hover:w-full transition-all duration-500"></div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-surface border border-struct p-8 rounded-2xl group hover:border-electric-violet transition-all duration-300 hover:shadow-[0_10px_30px_rgba(139,92,246,0.1)] flex flex-col h-full md:translate-y-8">
+          <div class="w-12 h-12 rounded-xl bg-electric-violet/10 flex items-center justify-center text-electric-violet mb-8 group-hover:scale-110 transition-transform">
+            <i data-lucide="shield-alert" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Absolute Independence</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 flex-grow">No pay-for-play. No access journalism. We are beholden only to our readers, ensuring uncompromised reporting on the entities we cover.</p>
+          <div class="w-full h-1 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden mt-auto">
+            <div class="w-1/3 h-full bg-electric-violet group-hover:w-full transition-all duration-500"></div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-surface border border-struct p-8 rounded-2xl group hover:border-[#10B981] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(16,185,129,0.1)] flex flex-col h-full">
+          <div class="w-12 h-12 rounded-xl bg-[#10B981]/10 flex items-center justify-center text-[#10B981] mb-8 group-hover:scale-110 transition-transform">
+            <i data-lucide="network" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ecosystem Perspective</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 flex-grow">We map the second-order effects. Understanding a single startup requires mapping the entire venture, policy, and computational matrix it exists within.</p>
+          <div class="w-full h-1 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden mt-auto">
+            <div class="w-1/3 h-full bg-[#10B981] group-hover:w-full transition-all duration-500"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: EDITORIAL STANDARDS & INTEGRITY MANIFEST -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-b border-struct transition-colors duration-300">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-4">
+          <div class="sticky top-32">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Integrity Manifest</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">Our unyielding framework for editorial governance. In an era of AI-generated content and PR spin, verifiable trust is our primary asset.</p>
+            <div class="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg w-max font-mono text-xs text-gray-600 dark:text-gray-300">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-[#10B981]"></i>
+              <span>v2.4.1 Compliant</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="lg:col-span-8 bg-surface border border-struct rounded-3xl p-8 md:p-12 shadow-sm">
+          <div class="flex flex-col gap-10">
+            <!-- Standard 1 -->
+            <div class="flex gap-6">
+              <div class="w-8 h-8 rounded bg-cyber-blue/10 flex items-center justify-center text-cyber-blue shrink-0 font-mono text-xs font-bold">01</div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Primary Sourcing Protocols</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">We require on-the-record, primary verification for all technical and financial claims. Secondary aggregation is strictly labeled. Anonymous sources are only permitted when corroborated by encrypted documentary evidence.</p>
+              </div>
+            </div>
+            <div class="w-full h-px bg-gray-200 dark:bg-gray-800"></div>
+            <!-- Standard 2 -->
+            <div class="flex gap-6">
+              <div class="w-8 h-8 rounded bg-cyber-blue/10 flex items-center justify-center text-cyber-blue shrink-0 font-mono text-xs font-bold">02</div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Capital & Equity Disclosures</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Any editorial staff holding equity, tokens, or advisory roles in a covered entity must declare it in the article metadata. Coverage of direct competitors to investments is restricted.</p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="px-2 py-1 bg-gray-200 dark:bg-gray-800 rounded text-[10px] font-mono text-gray-500 uppercase">Policy: Fin-04</span>
+                  <span class="px-2 py-1 bg-gray-200 dark:bg-gray-800 rounded text-[10px] font-mono text-gray-500 uppercase">Strict Enforcement</span>
+                </div>
+              </div>
+            </div>
+            <div class="w-full h-px bg-gray-200 dark:bg-gray-800"></div>
+            <!-- Standard 3 -->
+            <div class="flex gap-6">
+              <div class="w-8 h-8 rounded bg-cyber-blue/10 flex items-center justify-center text-cyber-blue shrink-0 font-mono text-xs font-bold">03</div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">AI & Synthetic Media Usage</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">LLMs may be used for data structuring and stylistic editing. All analytical conclusions and subjective journalism are exclusively human-authored. Synthetically generated imagery is watermarked natively.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: INTERACTIVE MILESTONE TIMELINE -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-b border-struct transition-colors duration-300">
+      <div class="text-center mb-20">
+        <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">Evolution Matrix</h2>
+        <p class="text-xl text-gray-600 dark:text-gray-400">The milestones mapping our growth trajectory.</p>
+      </div>
+
+      <div class="relative max-w-4xl mx-auto py-10">
+        <!-- Central Line -->
+        <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 md:-translate-x-1/2"></div>
+        
+        <!-- Nodes -->
+        <div class="flex flex-col gap-16 md:gap-20">
+          
+          <!-- Node 1 -->
+          <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between w-full timeline-row pl-12 md:pl-0">
+            <div class="w-full md:w-[45%] md:text-right timeline-content md:pr-8 mb-4 md:mb-0">
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Alpha Launch</h3>
+              <p class="text-gray-600 dark:text-gray-400">Deployed the initial V1 architecture focusing exclusively on seed-stage deep tech.</p>
+            </div>
+            <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 -translate-x-1/2 mt-1.5 md:mt-0 timeline-node z-10 border-4 border-white dark:border-[#0B0F19]"></div>
+            <div class="w-full md:w-[45%] md:pl-8 timeline-content">
+              <span class="font-mono text-sm font-bold text-cyber-blue tracking-widest uppercase">Q1 2024</span>
+            </div>
+          </div>
+
+          <!-- Node 2 -->
+          <div class="relative flex flex-col md:flex-row-reverse items-start md:items-center justify-between w-full timeline-row pl-12 md:pl-0">
+            <div class="w-full md:w-[45%] text-left timeline-content md:pl-8 mb-4 md:mb-0">
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">The "Nexus" Investigation</h3>
+              <p class="text-gray-600 dark:text-gray-400">Published our breakthrough 10,000-word expose on GPU allocation monopolies, driving 2M+ unique reads.</p>
+            </div>
+            <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 -translate-x-1/2 mt-1.5 md:mt-0 timeline-node z-10 border-4 border-white dark:border-[#0B0F19]"></div>
+            <div class="w-full md:w-[45%] md:text-right md:pr-8 timeline-content">
+              <span class="font-mono text-sm font-bold text-electric-violet tracking-widest uppercase">Q3 2024</span>
+            </div>
+          </div>
+
+          <!-- Node 3 -->
+          <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between w-full timeline-row pl-12 md:pl-0">
+            <div class="w-full md:w-[45%] md:text-right timeline-content md:pr-8 mb-4 md:mb-0">
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Series A Integration</h3>
+              <p class="text-gray-600 dark:text-gray-400">Secured $12M to expand the editorial matrix and build proprietary data scraping infrastructure.</p>
+            </div>
+            <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 -translate-x-1/2 mt-1.5 md:mt-0 timeline-node z-10 border-4 border-white dark:border-[#0B0F19]"></div>
+            <div class="w-full md:w-[45%] md:pl-8 timeline-content">
+              <span class="font-mono text-sm font-bold text-[#10B981] tracking-widest uppercase">Q2 2025</span>
+            </div>
+          </div>
+          
+          <!-- Node 4 -->
+          <div class="relative flex flex-col md:flex-row-reverse items-start md:items-center justify-between w-full timeline-row pl-12 md:pl-0">
+            <div class="w-full md:w-[45%] text-left timeline-content md:pl-8 mb-4 md:mb-0">
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">AI Innovation Engine</h3>
+              <p class="text-gray-600 dark:text-gray-400">Launched our live telemetry dashboard tracking real-time neural network advancements and latency benchmarks.</p>
+            </div>
+            <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 -translate-x-1/2 mt-1.5 md:mt-0 timeline-node z-10 border-4 border-white dark:border-[#0B0F19]"></div>
+            <div class="w-full md:w-[45%] md:text-right md:pr-8 timeline-content">
+              <span class="font-mono text-sm font-bold text-cyber-blue tracking-widest uppercase">Q4 2026 (Present)</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: HIGH-DENSITY TEAM GRID -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-b border-struct transition-colors duration-300">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-16 gap-6">
+        <div>
+          <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Neural Architects</h2>
+          <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl">The journalists, data scientists, and engineers powering the platform.</p>
+        </div>
+        <a href="#" class="inline-flex items-center gap-2 font-bold text-cyber-blue hover:text-electric-violet transition-colors">
+          View Open Roles <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Profile 1 -->
+        <div class="group cursor-pointer">
+          <div class="w-full aspect-[4/5] rounded-2xl overflow-hidden mb-6 bg-surface border border-struct relative">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="David Chen" class="w-full h-full object-cover grayscale-hover">
+            <div class="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-2xl"></div>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-cyber-blue transition-colors">David Chen</h3>
+          <p class="font-mono text-[10px] text-gray-500 tracking-widest uppercase mb-3">Editor-in-Chief</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">Former NYT tech correspondent. Specializes in silicon supply chains and compute monopolization.</p>
+          <div class="flex gap-4 text-gray-400">
+            <a href="#" class="hover:text-cyber-blue transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+            <a href="#" class="hover:text-[#0077b5] transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+          </div>
+        </div>
+        
+        <!-- Profile 2 -->
+        <div class="group cursor-pointer">
+          <div class="w-full aspect-[4/5] rounded-2xl overflow-hidden mb-6 bg-surface border border-struct relative">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&q=80" alt="Sarah Jenkins" class="w-full h-full object-cover grayscale-hover">
+            <div class="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-2xl"></div>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-cyber-blue transition-colors">Sarah Jenkins</h3>
+          <p class="font-mono text-[10px] text-gray-500 tracking-widest uppercase mb-3">Principal Tech Editor</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">Architect of the AI Innovation Engine. Leads our algorithmic physics research desk.</p>
+          <div class="flex gap-4 text-gray-400">
+            <a href="#" class="hover:text-cyber-blue transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+            <a href="#" class="hover:text-gray-900 dark:hover:text-white transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+          </div>
+        </div>
+
+        <!-- Profile 3 -->
+        <div class="group cursor-pointer">
+          <div class="w-full aspect-[4/5] rounded-2xl overflow-hidden mb-6 bg-surface border border-struct relative">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" alt="Marcus Reid" class="w-full h-full object-cover grayscale-hover">
+            <div class="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-2xl"></div>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-cyber-blue transition-colors">Marcus Reid</h3>
+          <p class="font-mono text-[10px] text-gray-500 tracking-widest uppercase mb-3">Lead Data Scientist</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">Builds the proprietary scraping architecture that powers our funding matrices.</p>
+          <div class="flex gap-4 text-gray-400">
+            <a href="#" class="hover:text-gray-900 dark:hover:text-white transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+            <a href="#" class="hover:text-[#0077b5] transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+          </div>
+        </div>
+
+        <!-- Profile 4 -->
+        <div class="group cursor-pointer">
+          <div class="w-full aspect-[4/5] rounded-2xl overflow-hidden mb-6 bg-surface border border-struct relative">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="Elena Rodriguez" class="w-full h-full object-cover grayscale-hover">
+            <div class="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-2xl"></div>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-cyber-blue transition-colors">Elena Rodriguez</h3>
+          <p class="font-mono text-[10px] text-gray-500 tracking-widest uppercase mb-3">Venture Analyst</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">Tracks capital flows. Ex-Sequoia analyst focused on deep tech valuations.</p>
+          <div class="flex gap-4 text-gray-400">
+            <a href="#" class="hover:text-cyber-blue transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+            <a href="#" class="hover:text-[#0077b5] transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: CONVERSATIONAL CONTACT CTA CONSOLE -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="bg-gray-900 dark:bg-[#0D121F] rounded-3xl p-8 md:p-14 border border-gray-800 shadow-2xl relative overflow-hidden">
+        <!-- Terminal Glow -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-cyber-blue/10 rounded-full blur-[100px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
+          
+          <!-- Terminal Form -->
+          <div class="flex flex-col">
+            <div class="flex items-center gap-2 mb-8">
+              <div class="w-3 h-3 rounded-full bg-red-500"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <h2 class="text-3xl font-bold text-white mb-4">Initiate Contact</h2>
+            <p class="text-gray-400 mb-8 font-mono text-sm">> Awaiting input...</p>
+            
+            <form class="flex flex-col gap-4" onsubmit="event.preventDefault(); alert('Message encrypted and sent.');">
+              <input type="text" placeholder="Designation (Name)" required class="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue font-mono text-sm transition-all">
+              <input type="email" placeholder="Return Vector (Email)" required class="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue font-mono text-sm transition-all">
+              <textarea placeholder="Payload (Message)..." required class="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue font-mono text-sm transition-all resize-none h-32"></textarea>
+              <button type="submit" class="bg-cyber-blue hover:bg-[#0077b5] text-white px-6 py-3 rounded-lg font-bold font-mono text-sm transition-colors flex justify-center items-center gap-2 mt-2 w-full sm:w-auto self-start">
+                Transmit <i data-lucide="send" class="w-4 h-4"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- PGP / Directory -->
+          <div class="flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-gray-800 pt-12 lg:pt-0 lg:pl-16">
+            <h3 class="text-xl font-bold text-white mb-8">Secure Directory</h3>
+            
+            <div class="flex flex-col gap-8">
+              <div>
+                <span class="text-[10px] font-mono text-gray-500 uppercase tracking-widest block mb-1">General Inquiries</span>
+                <a href="mailto:hello@unfilterstory.com" class="text-lg text-cyber-blue hover:text-white transition-colors font-medium break-all">hello@unfilterstory.com</a>
+              </div>
+              
+              <div>
+                <span class="text-[10px] font-mono text-gray-500 uppercase tracking-widest block mb-1">Tips & Leaks (Secure)</span>
+                <a href="mailto:tips@unfilterstory.com" class="text-lg text-[#10B981] hover:text-white transition-colors font-medium break-all">tips@unfilterstory.com</a>
+              </div>
+
+              <div class="mt-2 p-5 bg-black/40 border border-gray-800 rounded-xl">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">PGP Public Key</span>
+                  <i data-lucide="lock" class="w-3 h-3 text-gray-500"></i>
+                </div>
+                <code class="text-xs text-gray-400 break-all select-all block leading-relaxed">-----BEGIN PGP PUBLIC KEY BLOCK-----<br>mQENBF/W4b8BCAC... (TRUNCATED)</code>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <!-- Global Footer injected dynamically -->
   <app-footer></app-footer>
   <search-modal></search-modal>
+
+  <!-- Essential Scripts -->
+  <script type="module" src="js/main.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Timeline Scroll Interaction Observer
+    document.addEventListener('DOMContentLoaded', () => {
+      const timelineRows = document.querySelectorAll('.timeline-row');
+      
+      const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const node = entry.target.querySelector('.timeline-node');
+          const contents = entry.target.querySelectorAll('.timeline-content');
+          
+          if (entry.isIntersecting) {
+            node.classList.add('active');
+            contents.forEach(c => c.classList.add('active'));
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '-20% 0px -20% 0px',
+        threshold: 0.2
+      });
+
+      timelineRows.forEach(row => timelineObserver.observe(row));
+    });
+  </script>
 </body>
 </html>

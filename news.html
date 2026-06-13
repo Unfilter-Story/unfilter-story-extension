@@ -56,32 +56,41 @@
       <h2 id="breaking-heading" class="visually-hidden">Breaking News</h2>
       
       <!-- Primary Breaking -->
-      <article class="hero-primary" style="background-color: var(--color-bg-surf); padding: var(--spacing-8); border-radius: 12px; border: 1px solid var(--color-border);">
-        <span class="card-tag" style="color: var(--color-success); margin-bottom: var(--spacing-4);">Breaking</span>
-        <h3 class="card-title" style="font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: var(--spacing-4);"><a href="#">Global Regulators Announce Unified AI Safety Framework</a></h3>
-        <p style="font-size: 1.125rem; color: var(--color-text-mute); margin-bottom: var(--spacing-6);">In a landmark decision, 15 nations have agreed to a common standard for testing and deploying frontier AI models, potentially reshaping the global tech landscape.</p>
+      <article class="hero-primary" style="background: linear-gradient(to bottom, rgba(17,17,17,0.1) 0%, rgba(17,17,17,0.95) 100%), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80') center / cover; padding: var(--spacing-8); border-radius: 12px; border: none; min-height: 400px; display: flex; flex-direction: column; justify-content: flex-end;">
+        <span class="card-tag" style="color: var(--color-accent); margin-bottom: var(--spacing-4);">Breaking</span>
+        <h3 class="card-title" style="font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: var(--spacing-4);"><a href="#" style="color: #fff;">Global Regulators Announce Unified AI Safety Framework</a></h3>
+        <p style="font-size: 1.125rem; color: #E5E5E5; margin-bottom: var(--spacing-6); max-width: 800px;">In a landmark decision, 15 nations have agreed to a common standard for testing and deploying frontier AI models, potentially reshaping the global tech landscape.</p>
         <div class="card-meta" style="border-top: none; padding-top: 0; justify-content: flex-start; gap: var(--spacing-4);">
-          <div class="author-meta"><div class="author-avatar"></div><span style="font-weight: 600; color: var(--color-text-main);">Policy Desk</span></div>
-          <span>Just now</span>
+          <div class="author-meta"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80" class="author-avatar" style="border: 2px solid #fff;" alt="Policy Desk"><span style="font-weight: 600; color: #fff;">Policy Desk</span></div>
+          <span style="color: #A1A1AA;">Just now</span>
         </div>
       </article>
 
       <!-- Secondary Breaking Sub-stream -->
-      <div class="feed-stacked" style="justify-content: center;">
-        <article class="feed-stacked-item">
-          <span class="card-tag">Market Update</span>
-          <h4 style="font-size: 1.25rem; margin-bottom: var(--spacing-2);"><a href="#">Tech Valuations See Stabilization in Q3</a></h4>
-          <span style="font-size: 0.875rem; color: var(--color-text-mute);">15 min ago</span>
+      <div class="feed-stacked" style="justify-content: center; display: flex; flex-direction: column; gap: var(--spacing-6);">
+        <article class="feed-stacked-item" style="display: flex; gap: var(--spacing-4); align-items: center; padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--color-border);">
+          <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=200&q=80" alt="Stock market trends" style="width: 80px; height: 80px; border-radius: 8px; object-fit: cover; flex-shrink: 0;">
+          <div>
+            <span class="card-tag">Market Update</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-1); font-weight: 700; line-height: 1.4;"><a href="#">Tech Valuations See Stabilization in Q3</a></h4>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">15 min ago</span>
+          </div>
         </article>
-        <article class="feed-stacked-item">
-          <span class="card-tag">Funding</span>
-          <h4 style="font-size: 1.25rem; margin-bottom: var(--spacing-2);"><a href="#">Quantum Startup Q-Core Exits Stealth with $80M Series A</a></h4>
-          <span style="font-size: 0.875rem; color: var(--color-text-mute);">45 min ago</span>
+        <article class="feed-stacked-item" style="display: flex; gap: var(--spacing-4); align-items: center; padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--color-border);">
+          <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=200&q=80" alt="Quantum computing chip" style="width: 80px; height: 80px; border-radius: 8px; object-fit: cover; flex-shrink: 0;">
+          <div>
+            <span class="card-tag">Funding</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-1); font-weight: 700; line-height: 1.4;"><a href="#">Quantum Startup Q-Core Exits Stealth with $80M Series A</a></h4>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">45 min ago</span>
+          </div>
         </article>
-        <article class="feed-stacked-item">
-          <span class="card-tag">M&A</span>
-          <h4 style="font-size: 1.25rem; margin-bottom: var(--spacing-2);"><a href="#">Salesforce to Acquire Productivity Tool 'Flow' for $1.2B</a></h4>
-          <span style="font-size: 0.875rem; color: var(--color-text-mute);">1 hr ago</span>
+        <article class="feed-stacked-item" style="display: flex; gap: var(--spacing-4); align-items: center;">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=200&q=80" alt="Data flow representation" style="width: 80px; height: 80px; border-radius: 8px; object-fit: cover; flex-shrink: 0;">
+          <div>
+            <span class="card-tag">M&A</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-1); font-weight: 700; line-height: 1.4;"><a href="#">Salesforce to Acquire Productivity Tool 'Flow' for $1.2B</a></h4>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">1 hr ago</span>
+          </div>
         </article>
       </div>
     </section>
@@ -94,14 +103,14 @@
         
         <article class="card-news">
           <div class="img-zoom-wrapper">
-            <div class="bg-img" style="background: linear-gradient(135deg, var(--color-bg-surf) 0%, var(--color-border) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="Hardware circuit board">
           </div>
           <div>
             <span class="card-tag">Startups</span>
             <h3 class="card-title"><a href="#">The Pivot to Hardware: Why Software Startups are Building Physical Products</a></h3>
             <p class="card-excerpt line-clamp-2">As software margins compress, a new wave of founders is finding defensibility in integrated hardware and software ecosystems, challenging the conventional wisdom of the past decade.</p>
             <div class="card-meta">
-              <div class="author-meta"><div class="author-avatar"></div><span>Elena Rodriguez</span></div>
+              <div class="author-meta"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" class="author-avatar" alt="Elena Rodriguez"><span>Elena Rodriguez</span></div>
               <span>2026-06-12</span>
               <span>4 min read</span>
             </div>
@@ -110,14 +119,14 @@
 
         <article class="card-news">
           <div class="img-zoom-wrapper">
-            <div class="bg-img" style="background: linear-gradient(135deg, var(--color-bg-surf) 0%, var(--color-border) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" alt="Server room and databases">
           </div>
           <div>
             <span class="card-tag">AI & Tech</span>
             <h3 class="card-title"><a href="#">Vector Databases Secure Record Funding Amid AI Boom</a></h3>
             <p class="card-excerpt line-clamp-2">The infrastructure supporting Large Language Models is becoming the most lucrative layer of the modern tech stack, with vector DB providers seeing massive valuation markups.</p>
             <div class="card-meta">
-              <div class="author-meta"><div class="author-avatar"></div><span>Marcus Reid</span></div>
+              <div class="author-meta"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" class="author-avatar" alt="Marcus Reid"><span>Marcus Reid</span></div>
               <span>2026-06-11</span>
               <span>3 min read</span>
             </div>
@@ -126,14 +135,14 @@
 
         <article class="card-news">
           <div class="img-zoom-wrapper">
-            <div class="bg-img" style="background: linear-gradient(135deg, var(--color-bg-surf) 0%, var(--color-border) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80" alt="Austin tech city skyline">
           </div>
           <div>
             <span class="card-tag">Ecosystems</span>
             <h3 class="card-title"><a href="#">Austin's Tech Scene Matures Beyond the Hype</a></h3>
             <p class="card-excerpt line-clamp-2">Five years after the great migration, the Texas capital has established its own distinct identity, focusing on deep tech, defense, and sustainable infrastructure startups.</p>
             <div class="card-meta">
-              <div class="author-meta"><div class="author-avatar"></div><span>David Chen</span></div>
+              <div class="author-meta"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" class="author-avatar" alt="David Chen"><span>David Chen</span></div>
               <span>2026-06-11</span>
               <span>6 min read</span>
             </div>
@@ -159,8 +168,8 @@
 
       <!-- Trending Articles Sidebar (Secondary) -->
       <aside class="hub-secondary sticky-sidebar" aria-labelledby="trending-sidebar-heading">
-        <div style="background-color: var(--color-bg-surf); border-radius: 12px; padding: var(--spacing-6); border: 1px solid var(--color-border);">
-          <h2 id="trending-sidebar-heading" style="font-size: 1.25rem; margin-bottom: var(--spacing-6); padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--color-border);">Trending Today</h2>
+        <div class="trending-dark-box">
+          <h2 id="trending-sidebar-heading" style="font-size: 1.25rem; margin-bottom: var(--spacing-6); padding-bottom: var(--spacing-4);">Trending Today</h2>
           
           <article class="card-trending">
             <div class="trending-number">01</div>

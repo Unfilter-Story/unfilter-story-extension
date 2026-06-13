@@ -49,10 +49,6 @@ a {
   transition: color var(--transition-fast);
 }
 
-a:hover, a:focus-visible {
-  color: var(--color-accent);
-}
-
 /* Focus Management for Accessibility */
 :focus-visible {
   outline: 2px solid var(--color-accent);
