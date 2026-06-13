@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Great Re-Platforming: Enterprise Tech in 2026 | UnfilterStory</title>
+  <meta name="description" content="A comprehensive analysis of why Fortune 500 companies are dismantling their legacy monoliths in favor of composable, AI-native architectures.">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    function syncTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    }
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  </script>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'cyber-blue': '#0099FF',
+            'electric-violet': '#8B5CF6',
+            'brand-red': '#DC2626',
+            'slate-dark': '#0B0F19',
+            'slate-card': '#0D121F',
+            'slate-border': '#1E293B',
+            'struct': '#e5e7eb', // Light mode border
+            'struct-dark': '#1e293b' // Dark mode border
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Content formatting for the article */
+    .prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #4B5563; }
+    .dark .prose p { color: #9CA3AF; }
+    .prose h3 { font-size: 1.5rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; }
+    .dark .prose h3 { color: #F9FAFB; }
+    .prose strong { color: #111827; font-weight: 600; }
+    .dark .prose strong { color: #F9FAFB; }
+
+    /* Custom classes for specific border rules */
+    .border-struct { border-color: var(--color-border); }
+
+    /* Parallax & Zoom image */
+    .hero-img-container {
+      perspective: 1000px;
+      overflow: hidden;
+    }
+    .hero-img-inner {
+      will-change: transform;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .hero-img-container:hover .hero-img-inner {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body class="bg-white dark:bg-[#0B0F19] text-gray-900 dark:text-white antialiased selection:bg-brand-red/20 selection:text-brand-red transition-colors duration-300">
+  
+  <!-- Hardware-Accelerated Progress Indicator -->
+  <div id="progress-bar" class="fixed top-0 left-0 h-[2px] bg-brand-red z-[60] w-0 transition-all duration-75 ease-out shadow-[0_0_10px_rgba(220,38,38,0.5)]"></div>
+
+  <!-- Global Header injected dynamically -->
+  <app-header></app-header>
+
+  <main class="pt-8 pb-20">
+    
+    <!-- THE EDITORIAL HERO CANVAS -->
+    <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+      <!-- Badge -->
+      <div class="flex items-center gap-2 mb-6">
+        <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-red bg-brand-red/10 border border-brand-red/20 rounded">Exclusive Feature</span>
+      </div>
+      
+      <!-- Title -->
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] mb-6 text-gray-900 dark:text-white" style="text-wrap: balance;">
+        The Great <span class="text-brand-red">Re-Platforming:</span> How Enterprise Tech is Evolving in 2026
+      </h1>
+      
+      <!-- Subtitle -->
+      <p class="text-xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed mb-8 max-w-3xl">
+        A comprehensive analysis of why Fortune 500 companies are dismantling their legacy monoliths in favor of composable, AI-native architectures, and the startups leading the charge.
+      </p>
+
+      <!-- Metadata & Social Flank -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between py-6 border-y border-gray-200 dark:border-gray-800 gap-6">
+        <div class="flex items-center gap-4">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&h=100&q=80" alt="Sarah Mitchell" class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-gray-800 shadow-sm">
+          <div>
+            <div class="font-bold text-gray-900 dark:text-white">Sarah Mitchell</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">Senior Technology Editor &bull; Oct 24, 2026</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-6">
+          <div class="flex items-center gap-4 text-xs font-mono text-gray-500 uppercase tracking-widest">
+            <span><i data-lucide="clock" class="w-3 h-3 inline mr-1"></i> 12 Min Read</span>
+            <span><i data-lucide="bar-chart-2" class="w-3 h-3 inline mr-1"></i> 18,500+ Views</span>
+          </div>
+          <!-- Social Directives -->
+          <div class="flex items-center gap-3 border-l border-gray-200 dark:border-gray-800 pl-6">
+            <button class="text-gray-400 hover:text-[#0077b5] transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></button>
+            <button class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></button>
+            <button class="text-gray-400 hover:text-[#1877f2] transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></button>
+            <button class="text-gray-400 hover:text-brand-red transition-colors ml-2"><i data-lucide="link" class="w-4 h-4"></i></button>
+            <button class="text-gray-400 hover:text-brand-red transition-colors"><i data-lucide="bookmark" class="w-4 h-4"></i></button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- VISUAL ANCHOR (Featured Image) -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="hero-img-container rounded-[24px] shadow-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 h-[300px] md:h-[450px] w-full relative group">
+        <img id="hero-image" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2000&q=80" alt="Circuit board visualization" class="hero-img-inner w-full h-full object-cover absolute top-0 left-0" style="object-position: 50% 0%;">
+        <div class="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-[24px]"></div>
+      </div>
+      <p class="text-center text-xs font-mono text-gray-500 mt-4 uppercase tracking-widest">Enterprise technology is shifting toward modular, AI-native infrastructure.</p>
+    </div>
+
+    <!-- DOUBLE-ASYMMETRIC READING GRID -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start relative">
+        
+        <!-- LEFT SIDEBAR: Table of Contents -->
+        <aside class="hidden lg:block lg:col-span-3 sticky top-32">
+          <div class="border-l border-gray-200 dark:border-gray-800 pl-6 py-2">
+            <h4 class="text-xs font-bold font-mono uppercase tracking-widest text-gray-900 dark:text-white mb-6">In This Article</h4>
+            <nav id="toc-nav" class="flex flex-col gap-3 text-sm font-medium">
+              <a href="#section-intro" class="toc-link text-gray-400 hover:text-brand-red transition-colors" data-target="section-intro">1. The Inflection Point</a>
+              <a href="#section-legacy" class="toc-link text-gray-400 hover:text-brand-red transition-colors" data-target="section-legacy">2. Legacy Failures & Telemetry</a>
+              <a href="#section-composable" class="toc-link text-gray-400 hover:text-brand-red transition-colors" data-target="section-composable">3. The Composable Shift</a>
+              <a href="#section-ai-native" class="toc-link text-gray-400 hover:text-brand-red transition-colors" data-target="section-ai-native">4. AI-Native Infrastructure</a>
+              <a href="#section-timeline" class="toc-link text-gray-400 hover:text-brand-red transition-colors" data-target="section-timeline">5. Fortune 500 Transition Timeline</a>
+              <a href="#section-startups" class="toc-link text-gray-400 hover:text-brand-red transition-colors" data-target="section-startups">6. The Startup Catalyst Grid</a>
+              <a href="#section-risks" class="toc-link text-gray-400 hover:text-brand-red transition-colors" data-target="section-risks">7. Risk & Governance Vectors</a>
+              <a href="#section-forecast" class="toc-link text-gray-400 hover:text-brand-red transition-colors" data-target="section-forecast">8. Future Horizon Forecasts</a>
+            </nav>
+          </div>
+        </aside>
+
+        <!-- CORE CONTENT PILLAR (Max 720px width) -->
+        <div class="lg:col-span-8 xl:col-span-7 max-w-[720px] mx-auto w-full prose text-lg">
+          
+          <!-- Section 1 -->
+          <div id="section-intro" class="scroll-mt-32 mb-16">
+            <p>
+              For the past twenty years, enterprise software has been dominated by massive, monolithic systems. Organizations locked themselves into multi-year contracts with vendors providing all-in-one solutions that, while robust, proved incredibly rigid. Today, as we navigate through 2026, this paradigm is completely fracturing. 
+            </p>
+            <p>
+              The catalyst? The exponential compounding of AI capabilities meeting the limit of traditional database architectures. We are witnessing a systemic "Re-Platforming"—a structural shift away from integrated monoliths toward composable, event-driven, AI-native infrastructure.
+            </p>
+            
+            <!-- High Contrast Pull Quote -->
+            <blockquote class="my-10 border-l-4 border-brand-red pl-6 py-2">
+              <p class="text-2xl font-serif italic text-gray-900 dark:text-white leading-tight mb-4">"The next decade of enterprise software belongs to composable and AI-native systems. Those clinging to monoliths aren't just accumulating technical debt; they are ensuring their operational irrelevance."</p>
+              <footer class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest">— Dr. Aris Thorne, Chief Architect at Nexus Ventures</footer>
+            </blockquote>
+          </div>
+
+          <!-- Section 2 -->
+          <div id="section-legacy" class="scroll-mt-32 mb-16">
+            <h3>2. Legacy Failures & Market Telemetry</h3>
+            <p>
+              The friction costs of maintaining monolithic architectures have reached a breaking point. When a single update requires a massive, coordinated deployment across dozens of teams, agility drops to zero. As large language models (LLMs) became embedded directly into workflows, the latency inherent in legacy database querying became an existential bottleneck.
+            </p>
+            
+            <!-- 3-Column Data Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
+              <div class="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-800 rounded-xl p-6 text-center">
+                <div class="text-3xl font-black text-gray-900 dark:text-white mb-2">65%</div>
+                <div class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Infrastructure Modernization</div>
+              </div>
+              <div class="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-800 rounded-xl p-6 text-center shadow-[inset_0_-2px_0_#DC2626]">
+                <div class="text-3xl font-black text-brand-red mb-2">73%</div>
+                <div class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">AI Agent Adoption</div>
+              </div>
+              <div class="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-800 rounded-xl p-6 text-center">
+                <div class="text-3xl font-black text-gray-900 dark:text-white mb-2">58%</div>
+                <div class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Legacy Replacement by 2027</div>
+              </div>
+            </div>
+            
+            <p>
+              This telemetry isn't theoretical. The data indicates a mass migration event. Enterprises are not just "migrating to the cloud"—they are fundamentally rewriting their core operational logic to be modular.
+            </p>
+          </div>
+
+          <!-- Section 3 -->
+          <div id="section-composable" class="scroll-mt-32 mb-16">
+            <h3>3. The Composable Shift</h3>
+            <p>
+              Composable architecture implies API-first, microservice-driven ecosystems. Instead of buying an entire suite, companies are stitching together the best-in-class headless APIs for identity, payments, search, and vector storage. 
+            </p>
+            
+            <!-- Comparison Matrix -->
+            <div class="overflow-x-auto my-8 border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-[#0B0F19]">
+              <table class="w-full text-sm text-left">
+                <thead class="bg-gray-50 dark:bg-gray-800/50 text-xs uppercase font-mono tracking-widest text-gray-500 border-b border-gray-200 dark:border-gray-800">
+                  <tr>
+                    <th scope="col" class="px-6 py-4 font-bold">Vector</th>
+                    <th scope="col" class="px-6 py-4 font-bold">Legacy Monolith</th>
+                    <th scope="col" class="px-6 py-4 font-bold text-gray-900 dark:text-white border-x border-brand-red/20 bg-brand-red/5">Composable Platform</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+                  <tr>
+                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Architecture</td>
+                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">Tightly coupled codebases</td>
+                    <td class="px-6 py-4 text-brand-red font-medium border-x border-brand-red/20 bg-brand-red/5">Decoupled, API-first microservices</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Deployment</td>
+                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">Quarterly mega-releases</td>
+                    <td class="px-6 py-4 text-brand-red font-medium border-x border-brand-red/20 bg-brand-red/5">Continuous, independent delivery</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">AI Integration</td>
+                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">Bolted-on wrapper interfaces</td>
+                    <td class="px-6 py-4 text-brand-red font-medium border-x border-brand-red/20 bg-brand-red/5">Native semantic routing & RAG</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Section 4 -->
+          <div id="section-ai-native" class="scroll-mt-32 mb-16">
+            <h3>4. AI-Native Infrastructure Layers</h3>
+            <p>
+              An AI-native infrastructure isn't just about adding a chat interface. It requires an entirely new stack designed around vector mathematics, unstructured data retrieval, and automated reasoning loops.
+            </p>
+            
+            <!-- Layer Cards -->
+            <div class="flex flex-col gap-4 my-8 relative">
+              <div class="absolute left-8 top-8 bottom-8 w-px bg-gradient-to-b from-brand-red via-brand-red/50 to-transparent"></div>
+              
+              <div class="bg-gray-50 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-800 rounded-xl p-6 pl-20 relative shadow-sm">
+                <div class="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-brand-red ring-4 ring-white dark:ring-[#0B0F19]"></div>
+                <h4 class="font-bold text-gray-900 dark:text-white mb-1">1. The Data & Vector Layer</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400 m-0 leading-relaxed">Where unstructured data is transformed into multi-dimensional embeddings (e.g., Pinecone, Milvus, Databricks).</p>
+              </div>
+              
+              <div class="bg-gray-50 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-800 rounded-xl p-6 pl-20 relative shadow-sm">
+                <div class="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-brand-red ring-4 ring-white dark:ring-[#0B0F19]"></div>
+                <h4 class="font-bold text-gray-900 dark:text-white mb-1">2. The Orchestration & RAG Layer</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400 m-0 leading-relaxed">Frameworks coordinating LLM reasoning, memory, and retrieval (e.g., LangChain, LlamaIndex).</p>
+              </div>
+
+              <div class="bg-gray-50 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-800 rounded-xl p-6 pl-20 relative shadow-sm">
+                <div class="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-brand-red ring-4 ring-white dark:ring-[#0B0F19]"></div>
+                <h4 class="font-bold text-gray-900 dark:text-white mb-1">3. Agentic Workflow Layer</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400 m-0 leading-relaxed">Autonomous multi-agent systems executing business logic without human intervention.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 5 -->
+          <div id="section-timeline" class="scroll-mt-32 mb-16">
+            <h3>5. The Fortune 500 Transition Timeline</h3>
+            
+            <!-- Vertical Timeline -->
+            <div class="relative py-4 my-8 pl-6 border-l border-brand-red/30">
+              
+              <div class="relative mb-10">
+                <div class="absolute -left-[29px] top-1.5 w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-[#0B0F19]"></div>
+                <span class="text-xs font-mono font-bold text-gray-500 tracking-widest uppercase mb-1 block">Phase 1: Discovery (2024)</span>
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">The Pilot Epidemic</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400 m-0 leading-relaxed">Companies launched isolated generative AI pilots, mostly wrappers around GPT-4, realizing quickly that scaling requires foundational data restructuring.</p>
+              </div>
+
+              <div class="relative mb-10">
+                <div class="absolute -left-[29px] top-1.5 w-3 h-3 rounded-full bg-brand-red shadow-[0_0_10px_rgba(220,38,38,0.5)] ring-4 ring-white dark:ring-[#0B0F19]"></div>
+                <span class="text-xs font-mono font-bold text-brand-red tracking-widest uppercase mb-1 block">Phase 2: Data Grounding (2025-26)</span>
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Vectorization Mandate</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400 m-0 leading-relaxed">Current focus. Migrating legacy knowledge bases into vector databases to prevent hallucinations and establish reliable Retrieval-Augmented Generation.</p>
+              </div>
+
+              <div class="relative">
+                <div class="absolute -left-[29px] top-1.5 w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-[#0B0F19]"></div>
+                <span class="text-xs font-mono font-bold text-gray-500 tracking-widest uppercase mb-1 block">Phase 3: Autonomy (2027+)</span>
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Agentic Operations</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400 m-0 leading-relaxed">Deploying multi-agent systems to replace routine operational decision-making across supply chain and HR.</p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Section 6 -->
+          <div id="section-startups" class="scroll-mt-32 mb-16">
+            <h3>6. The Startup Catalyst Grid</h3>
+            <p>
+              The enterprise transition is not being built by the incumbents. It is being supplied by a specialized cohort of infrastructure startups that have rapidly achieved decacorn status.
+            </p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
+              <!-- Profile 1 -->
+              <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-5 hover:border-brand-red transition-colors group">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 rounded bg-black flex items-center justify-center text-white font-bold">OA</div>
+                  <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white m-0 leading-none">OpenAI</h4>
+                    <span class="text-[10px] font-mono text-gray-500 uppercase">Foundation Models</span>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 m-0">Providing the core reasoning engine via API.</p>
+              </div>
+
+              <!-- Profile 2 -->
+              <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-5 hover:border-brand-red transition-colors group">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 rounded bg-[#f2e7dd] text-[#2c2c2c] flex items-center justify-center font-bold">AN</div>
+                  <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white m-0 leading-none">Anthropic</h4>
+                    <span class="text-[10px] font-mono text-gray-500 uppercase">Enterprise Alignment</span>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 m-0">Focusing on constitutional AI and secure context windows.</p>
+              </div>
+
+              <!-- Profile 3 -->
+              <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-5 hover:border-brand-red transition-colors group">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 rounded bg-cyber-blue flex items-center justify-center text-white font-bold">SF</div>
+                  <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white m-0 leading-none">Snowflake</h4>
+                    <span class="text-[10px] font-mono text-gray-500 uppercase">Data Cloud</span>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 m-0">Unified architecture for structured and unstructured data.</p>
+              </div>
+
+              <!-- Profile 4 -->
+              <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-5 hover:border-brand-red transition-colors group">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 rounded bg-gray-800 flex items-center justify-center text-white font-bold">LC</div>
+                  <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white m-0 leading-none">LangChain</h4>
+                    <span class="text-[10px] font-mono text-gray-500 uppercase">Orchestration</span>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 m-0">The connective tissue binding LLMs to proprietary tools.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 7 -->
+          <div id="section-risks" class="scroll-mt-32 mb-16">
+            <h3>7. Risk Governance Vectors</h3>
+            
+            <!-- Warn Blocks -->
+            <div class="bg-amber-50 dark:bg-amber-900/10 border-l-4 border-amber-500 rounded-r-xl p-6 my-6">
+              <div class="flex items-center gap-3 mb-2 text-amber-700 dark:text-amber-500">
+                <i data-lucide="triangle-alert" class="w-5 h-5"></i>
+                <h4 class="font-bold m-0 text-amber-900 dark:text-amber-400">Vendor Lock-In Resurgence</h4>
+              </div>
+              <p class="text-amber-800 dark:text-amber-200/80 text-sm m-0">While companies escape monolithic databases, they risk binding themselves exclusively to a single model provider. Multi-LLM switching architecture is mandatory.</p>
+            </div>
+
+            <div class="bg-red-50 dark:bg-brand-red/10 border-l-4 border-brand-red rounded-r-xl p-6 my-6">
+              <div class="flex items-center gap-3 mb-2 text-brand-red">
+                <i data-lucide="shield-x" class="w-5 h-5"></i>
+                <h4 class="font-bold m-0 text-red-900 dark:text-red-400">Agentic Security Anomalies</h4>
+              </div>
+              <p class="text-red-800 dark:text-red-200/80 text-sm m-0">Autonomous agents executing code or writing database queries create entirely new attack surfaces. Identity access management for non-human entities is currently underdeveloped.</p>
+            </div>
+          </div>
+
+          <!-- Section 8 -->
+          <div id="section-forecast" class="scroll-mt-32 mb-16">
+            <h3>8. Future Horizon Forecasts</h3>
+            <p>
+              By 2030, the "interface" as we know it will be radically diminished. The re-platforming effort underway today builds the foundation for zero-UI enterprise software.
+            </p>
+            
+            <div class="bg-slate-dark text-white rounded-2xl p-8 my-8 relative overflow-hidden group">
+              <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand-red/20 blur-[50px] rounded-full group-hover:bg-brand-red/40 transition-colors duration-500"></div>
+              <h4 class="text-xl font-bold mb-4 relative z-10">Prediction: Autonomous Operations</h4>
+              <p class="text-gray-400 text-sm leading-relaxed m-0 relative z-10">
+                Within 36 months, over 40% of standard B2B procurement, supply chain routing, and Level 1 financial auditing will be executed system-to-system by agentic clusters, completely bypassing human dashboards.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 9: Key Insights Console -->
+          <div id="section-key-insights" class="scroll-mt-32 mb-16 border border-brand-red bg-brand-red/5 rounded-2xl p-8">
+            <h3 class="mt-0 text-brand-red flex items-center gap-2">
+              <i data-lucide="zap" class="w-5 h-5"></i>
+              Key Insights Console
+            </h3>
+            <ul class="space-y-4 m-0 p-0 list-none mt-6">
+              <li class="flex items-start gap-3">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-brand-red shrink-0 mt-0.5"></i>
+                <span class="text-gray-900 dark:text-gray-200 text-sm font-medium">Monolithic software architecture is fundamentally incompatible with the latency demands of real-time AI generation.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-brand-red shrink-0 mt-0.5"></i>
+                <span class="text-gray-900 dark:text-gray-200 text-sm font-medium">Vector databases are becoming as critical to the enterprise stack as relational databases were in the 2010s.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-brand-red shrink-0 mt-0.5"></i>
+                <span class="text-gray-900 dark:text-gray-200 text-sm font-medium">Startups providing orchestration and middleware (LangChain, etc.) are capturing massive value by connecting models to proprietary data.</span>
+              </li>
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- GROWTH INGESTION & POST-READ HUB -->
+    <div class="border-t border-gray-200 dark:border-gray-800 mt-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 space-y-24">
+        
+        <!-- Author Manifest Block -->
+        <div class="max-w-3xl mx-auto bg-surface border border-gray-200 dark:border-gray-800 rounded-3xl p-8 md:p-12 flex flex-col sm:flex-row gap-8 items-center sm:items-start text-center sm:text-left shadow-sm">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&h=200&q=80" alt="Sarah Mitchell" class="w-24 h-24 rounded-full object-cover border-4 border-gray-100 dark:border-gray-800 shrink-0">
+          <div>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
+              <h4 class="text-2xl font-bold text-gray-900 dark:text-white">Sarah Mitchell</h4>
+              <button class="px-4 py-1.5 rounded-full border border-gray-300 dark:border-gray-700 text-xs font-bold font-mono uppercase tracking-widest hover:border-brand-red hover:text-brand-red transition-colors self-center">Follow</button>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6">
+              Senior Technology Editor at UnfilterStory. Sarah focuses on enterprise cloud architecture, the physical compute supply chain, and applied AI in Fortune 500 companies. Previously a lead analyst at Gartner.
+            </p>
+            <div class="flex items-center justify-center sm:justify-start gap-4">
+              <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+              <a href="#" class="text-gray-400 hover:text-[#0077b5] transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+              <a href="#" class="text-xs font-mono text-brand-red hover:underline ml-2">View 42 Published Articles →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Premium Newsletter CTA -->
+        <div class="bg-gray-900 dark:bg-[#0D121F] rounded-3xl p-8 md:p-14 border border-gray-800 shadow-2xl relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-red/10 rounded-full blur-[100px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10 items-center">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-brand-red/10 flex items-center justify-center text-brand-red mb-6">
+                <i data-lucide="mail" class="w-6 h-6"></i>
+              </div>
+              <h2 class="text-3xl font-bold text-white mb-4">The Executive Briefing</h2>
+              <p class="text-gray-400 leading-relaxed mb-0">Join 85,000+ technical founders and operators. Receive our deep-dive architectural analysis and unvarnished market telemetry directly in your inbox, twice a week.</p>
+            </div>
+            <div class="flex flex-col gap-4">
+              <form class="flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); alert('Subscribed!');">
+                <div class="relative flex-grow">
+                  <input type="email" id="newsletter-email" placeholder=" " required class="block w-full px-4 pt-6 pb-2 text-white bg-black/50 border border-gray-700 rounded-xl appearance-none focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red peer transition-colors">
+                  <label for="newsletter-email" class="absolute text-sm text-gray-400 duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">Business Email</label>
+                </div>
+                <button type="submit" class="px-8 py-4 bg-brand-red hover:bg-red-700 text-white font-bold rounded-xl whitespace-nowrap transition-colors flex items-center justify-center gap-2">
+                  Subscribe Now <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              </form>
+              <p class="text-[10px] text-gray-500 font-mono uppercase tracking-widest text-center sm:text-left">No spam. One-click unsubscribe.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Articles Grid -->
+        <div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 border-l-4 border-brand-red pl-4">Continue Reading</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Article 1 -->
+            <a href="#" class="group block">
+              <div class="w-full aspect-[16/10] rounded-2xl overflow-hidden mb-4 bg-gray-100 dark:bg-gray-800 relative">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80" alt="Cyber security" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded border border-white/10">Cybersecurity</div>
+              </div>
+              <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-red transition-colors line-clamp-2">The Zero-Trust Architecture Mandate for 2027</h4>
+              <p class="text-sm font-mono text-gray-500 uppercase tracking-widest">8 Min Read</p>
+            </a>
+            <!-- Article 2 -->
+            <a href="#" class="group block">
+              <div class="w-full aspect-[16/10] rounded-2xl overflow-hidden mb-4 bg-gray-100 dark:bg-gray-800 relative">
+                <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80" alt="AI Chip" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded border border-white/10">Hardware</div>
+              </div>
+              <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-red transition-colors line-clamp-2">Inside the Custom Silicon Race: Beyond GPUs</h4>
+              <p class="text-sm font-mono text-gray-500 uppercase tracking-widest">14 Min Read</p>
+            </a>
+            <!-- Article 3 -->
+            <a href="#" class="group block">
+              <div class="w-full aspect-[16/10] rounded-2xl overflow-hidden mb-4 bg-gray-100 dark:bg-gray-800 relative">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="Data Analytics" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded border border-white/10">Data Engineering</div>
+              </div>
+              <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-red transition-colors line-clamp-2">Why Your Data Lake is Already Obsolete</h4>
+              <p class="text-sm font-mono text-gray-500 uppercase tracking-widest">10 Min Read</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Multi-Threaded Comment System -->
+        <div class="max-w-3xl mx-auto border-t border-gray-200 dark:border-gray-800 pt-16">
+          <div class="flex items-center justify-between mb-8">
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Discussion (24)</h3>
+            <div class="text-sm text-gray-500 flex gap-4">
+              <button class="font-bold text-brand-red">Newest</button>
+              <button class="hover:text-gray-900 dark:hover:text-white transition-colors">Top</button>
+            </div>
+          </div>
+
+          <!-- Comment Input -->
+          <div class="flex gap-4 mb-12">
+            <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 shrink-0 flex items-center justify-center text-gray-500">
+              <i data-lucide="user" class="w-5 h-5"></i>
+            </div>
+            <div class="flex-grow relative">
+              <textarea placeholder="Join the discussion..." class="w-full bg-white dark:bg-[#0B0F19] border border-gray-300 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-brand-red focus:border-brand-red min-h-[100px] resize-none transition-colors"></textarea>
+              <div class="absolute bottom-3 right-3">
+                <button class="px-4 py-1.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold rounded-lg text-xs hover:bg-brand-red dark:hover:bg-brand-red dark:hover:text-white transition-colors">Post</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comments List -->
+          <div class="space-y-8">
+            <!-- Comment Thread 1 -->
+            <div class="flex gap-4">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-10 h-10 rounded-full object-cover shrink-0">
+              <div class="flex-grow">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-bold text-gray-900 dark:text-white text-sm">Michael Chang</span>
+                  <span class="text-xs text-gray-500">VP Eng, TechFlow</span>
+                  <span class="text-[10px] text-gray-400 ml-auto">2 hours ago</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Excellent breakdown. We hit the exact friction point described in Phase 1 trying to wrap GPT-4 around our legacy PostgreSQL cluster. The vectorization mandate is very real.</p>
+                <div class="flex items-center gap-4 text-xs font-bold text-gray-500">
+                  <button class="flex items-center gap-1 hover:text-brand-red transition-colors"><i data-lucide="thumbs-up" class="w-3 h-3"></i> 14</button>
+                  <button class="hover:text-gray-900 dark:hover:text-white transition-colors">Reply</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nested Reply -->
+            <div class="flex gap-4 ml-14 relative">
+              <div class="absolute -left-10 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800"></div>
+              <div class="absolute -left-10 top-5 w-6 h-px bg-gray-200 dark:bg-gray-800"></div>
+              
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-8 h-8 rounded-full object-cover shrink-0">
+              <div class="flex-grow">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-bold text-gray-900 dark:text-white text-sm">Sarah Mitchell</span>
+                  <span class="px-1.5 py-0.5 bg-brand-red/10 text-brand-red text-[9px] font-bold uppercase rounded border border-brand-red/20">Author</span>
+                  <span class="text-[10px] text-gray-400 ml-auto">1 hour ago</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Thanks Michael. Did you end up going with a dedicated vector DB or a pgvector extension?</p>
+                <div class="flex items-center gap-4 text-xs font-bold text-gray-500">
+                  <button class="flex items-center gap-1 hover:text-brand-red transition-colors"><i data-lucide="thumbs-up" class="w-3 h-3"></i> 5</button>
+                  <button class="hover:text-gray-900 dark:hover:text-white transition-colors">Reply</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Comment Thread 2 -->
+            <div class="flex gap-4">
+              <div class="w-10 h-10 rounded-full bg-cyber-blue text-white flex items-center justify-center font-bold shrink-0 text-sm">AD</div>
+              <div class="flex-grow">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-bold text-gray-900 dark:text-white text-sm">Alex D.</span>
+                  <span class="text-[10px] text-gray-400 ml-auto">5 hours ago</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">The section on agentic security anomalies is spot on. We are struggling to define IAM policies for autonomous processes that need dynamic write-access.</p>
+                <div class="flex items-center gap-4 text-xs font-bold text-gray-500">
+                  <button class="flex items-center gap-1 hover:text-brand-red transition-colors"><i data-lucide="thumbs-up" class="w-3 h-3"></i> 8</button>
+                  <button class="hover:text-gray-900 dark:hover:text-white transition-colors">Reply</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <button class="w-full mt-8 py-3 border border-gray-300 dark:border-gray-700 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-300 hover:border-brand-red hover:text-brand-red transition-colors">
+            Load More Comments
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Global Footer injected dynamically -->
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+
+  <!-- Essential Scripts -->
+  <script type="module" src="js/main.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Hardware-Accelerated Progress Indicator
+    const progressBar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      progressBar.style.width = scrolled + '%';
+    }, { passive: true });
+
+
+
+    // Scrollspy functionality for Table of Contents
+    const sections = document.querySelectorAll('main [id^="section-"]');
+    const navLinks = document.querySelectorAll('.toc-link');
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: 0
+    };
+
+    const tocObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Remove active class from all
+          navLinks.forEach(link => {
+            link.classList.remove('text-brand-red', 'font-bold');
+            link.classList.add('text-gray-400');
+          });
+          
+          // Add active class to intersecting link
+          const activeId = entry.target.getAttribute('id');
+          const activeLink = document.querySelector(`.toc-link[data-target="${activeId}"]`);
+          if (activeLink) {
+            activeLink.classList.remove('text-gray-400');
+            activeLink.classList.add('text-brand-red', 'font-bold');
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      tocObserver.observe(section);
+    });
+
+    // Header sticky styling transition
+    const header = document.querySelector('app-header');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 50) {
+        // Assume header is wrapped in the component, we can dispatch a custom event or apply a class body
+        document.body.classList.add('scrolled-past-top');
+      } else {
+        document.body.classList.remove('scrolled-past-top');
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>
