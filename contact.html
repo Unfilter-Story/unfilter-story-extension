@@ -101,7 +101,10 @@
       grid-template-rows: 1fr;
     }
     .faq-item.active .faq-icon {
-      transform: rotate(180deg);
+      transform: rotate(45deg);
+    }
+    .faq-item.active {
+      border-color: #DC2626;
     }
     
     /* Loading Spinner */
@@ -136,94 +139,131 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16">
       <div class="flex flex-col items-center text-center max-w-3xl mx-auto">
         
-        <!-- Status Badge -->
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-form-bg dark:bg-form-bg-dark border border-struct mb-8 shadow-sm">
-          <div class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]"></span>
-          </div>
-          <span class="font-mono text-xs text-gray-600 dark:text-gray-300 font-medium">Systems nominal. Avg response: <span class="text-gray-900 dark:text-white font-bold">&lt; 2 hours</span></span>
-        </div>
 
-        <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-gray-900 dark:text-white">
-          Initiate <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-electric-violet">Connection.</span>
+
+        <h1 class="text-3xl md:text-5xl font-black tracking-tight leading-tight mb-6 text-gray-900 dark:text-white">
+          Initiate <span class="text-[#DC2626]">Connection.</span>
         </h1>
-        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
+        <p class="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
           Whether you're leaking the next major computing breakthrough, seeking enterprise syndication, or just saying hello—our communication nodes are open.
         </p>
       </div>
     </section>
 
     <!-- SECTION 2 & 3: HIGH-CONVERSION CONTACT FORM & CHANNELS -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-      <div class="bg-white dark:bg-[#0B0F19] rounded-3xl border border-struct shadow-2xl overflow-hidden flex flex-col lg:flex-row">
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <div class="bg-white dark:bg-[#0B0F19] rounded-3xl border border-struct shadow-2xl overflow-hidden flex flex-col">
         
-        <!-- Form Area (Left) -->
-        <div class="flex-1 p-8 md:p-16 lg:pr-20 relative">
+        <!-- Form Area (Top) -->
+        <div class="p-8 md:p-16 relative">
           <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Secure Transmission</h2>
           <p class="text-gray-500 dark:text-gray-400 text-sm mb-10">Direct line to the editorial desk. All data is encrypted in transit.</p>
           
-          <form id="contactForm" class="flex flex-col gap-8" onsubmit="handleContactSubmit(event)" novalidate>
+          <form id="contactForm" class="flex flex-col gap-6" onsubmit="handleContactSubmit(event)" novalidate>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <!-- Name Input -->
-              <div class="relative">
-                <input type="text" id="name" class="floating-input w-full bg-transparent border-b-2 border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white pt-4 pb-2 focus:outline-none focus:border-cyber-blue transition-colors" placeholder=" " required aria-required="true" minlength="2">
-                <label for="name" class="floating-label absolute left-0 top-4 text-gray-500 font-medium transition-all duration-200 pointer-events-none origin-left">Full Name</label>
+            <!-- Row 1: Identity -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex flex-col gap-2">
+                <label for="firstName" class="font-mono text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">First Name <span class="text-[#DC2626]">*</span></label>
+                <input type="text" id="firstName" class="w-full bg-transparent border border-gray-200 dark:border-gray-800 rounded-lg text-gray-900 dark:text-white px-4 py-3 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all shadow-sm" placeholder="Jane" required aria-required="true">
               </div>
-
-              <!-- Email Input -->
-              <div class="relative">
-                <input type="email" id="email" class="floating-input w-full bg-transparent border-b-2 border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white pt-4 pb-2 focus:outline-none focus:border-cyber-blue transition-colors" placeholder=" " required aria-required="true">
-                <label for="email" class="floating-label absolute left-0 top-4 text-gray-500 font-medium transition-all duration-200 pointer-events-none origin-left">Email Address</label>
+              <div class="flex flex-col gap-2">
+                <label for="lastName" class="font-mono text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Last Name <span class="text-[#DC2626]">*</span></label>
+                <input type="text" id="lastName" class="w-full bg-transparent border border-gray-200 dark:border-gray-800 rounded-lg text-gray-900 dark:text-white px-4 py-3 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all shadow-sm" placeholder="Doe" required aria-required="true">
               </div>
             </div>
 
-            <!-- Subject / Inquiry Type -->
-            <div class="relative group">
-              <select id="inquiryType" required class="w-full bg-transparent border-b-2 border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white pt-4 pb-2 focus:outline-none focus:border-cyber-blue transition-colors appearance-none cursor-pointer font-medium" aria-required="true">
-                <option value="" disabled selected hidden>Select Inquiry Vector</option>
-                <option value="editorial" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">Editorial Tip / Lead</option>
-                <option value="partnership" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">Enterprise Partnership</option>
-                <option value="press" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">Press / Media</option>
-                <option value="support" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">General Support</option>
-              </select>
-              <i data-lucide="chevron-down" class="absolute right-0 top-5 w-4 h-4 text-gray-400 pointer-events-none group-focus-within:text-cyber-blue transition-colors"></i>
+            <!-- Row 2: Communication -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex flex-col gap-2">
+                <label for="email" class="font-mono text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Work Email <span class="text-[#DC2626]">*</span></label>
+                <input type="email" id="email" class="w-full bg-transparent border border-gray-200 dark:border-gray-800 rounded-lg text-gray-900 dark:text-white px-4 py-3 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all shadow-sm" placeholder="jane@company.com" required aria-required="true">
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="phone" class="font-mono text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Phone Number</label>
+                <input type="tel" id="phone" class="w-full bg-transparent border border-gray-200 dark:border-gray-800 rounded-lg text-gray-900 dark:text-white px-4 py-3 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all shadow-sm" placeholder="+1 (555) 000-0000">
+              </div>
             </div>
 
-            <!-- Message Textarea -->
-            <div class="relative mt-4">
-              <textarea id="message" rows="4" class="floating-input w-full bg-form-bg dark:bg-form-bg-dark border border-struct rounded-xl p-4 text-gray-900 dark:text-white focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all resize-none shadow-sm" placeholder=" " required aria-required="true" minlength="10"></textarea>
-              <label for="message" class="floating-label absolute left-4 top-4 text-gray-500 font-medium transition-all duration-200 pointer-events-none origin-left bg-form-bg dark:bg-form-bg-dark px-1">Encrypted Payload (Message)</label>
+            <!-- Row 3: Professional Profile -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex flex-col gap-2">
+                <label for="designation" class="font-mono text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Designation <span class="text-[#DC2626]">*</span></label>
+                <input type="text" id="designation" class="w-full bg-transparent border border-gray-200 dark:border-gray-800 rounded-lg text-gray-900 dark:text-white px-4 py-3 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all shadow-sm" placeholder="e.g. VP of Product" required aria-required="true">
+              </div>
+              <div class="flex flex-col gap-2 relative">
+                <label for="seniority" class="font-mono text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Seniority <span class="text-[#DC2626]">*</span></label>
+                <div class="relative group">
+                  <select id="seniority" required class="w-full bg-transparent border border-gray-200 dark:border-gray-800 rounded-lg text-gray-900 dark:text-white px-4 py-3 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all shadow-sm appearance-none cursor-pointer" aria-required="true">
+                    <option value="" disabled selected hidden>Select level</option>
+                    <option value="founder" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">Founder / Co-Founder</option>
+                    <option value="csuite" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">C-Suite</option>
+                    <option value="vp" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">VP / SVP</option>
+                    <option value="director" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">Director</option>
+                    <option value="manager" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">Manager / IC</option>
+                  </select>
+                  <i data-lucide="chevron-down" class="absolute right-4 top-[14px] w-4 h-4 text-gray-400 pointer-events-none group-focus-within:text-cyber-blue transition-colors"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 4: Corporate Metadata -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex flex-col gap-2">
+                <label for="company" class="font-mono text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Company Name <span class="text-[#DC2626]">*</span></label>
+                <input type="text" id="company" class="w-full bg-transparent border border-gray-200 dark:border-gray-800 rounded-lg text-gray-900 dark:text-white px-4 py-3 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all shadow-sm" placeholder="Acme Corp" required aria-required="true">
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="website" class="font-mono text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Company Website <span class="text-gray-400 dark:text-gray-600 font-normal ml-1">(Optional)</span></label>
+                <input type="url" id="website" class="w-full bg-transparent border border-gray-200 dark:border-gray-800 rounded-lg text-gray-900 dark:text-white px-4 py-3 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all shadow-sm" placeholder="https://">
+              </div>
+            </div>
+
+            <!-- Row 5: Routing Vector -->
+            <div class="flex flex-col gap-2 relative">
+              <label for="inquiryType" class="font-mono text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Inquiry Type <span class="text-[#DC2626]">*</span></label>
+              <div class="relative group">
+                <select id="inquiryType" required class="w-full bg-transparent border border-gray-200 dark:border-gray-800 rounded-lg text-gray-900 dark:text-white px-4 py-3 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all shadow-sm appearance-none cursor-pointer" aria-required="true">
+                  <option value="" disabled selected hidden>Select routing vector</option>
+                  <option value="general" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">General Inquiry</option>
+                  <option value="partnership" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">Partnership</option>
+                  <option value="editorial" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">Editorial Tip</option>
+                  <option value="press" class="text-gray-900 dark:text-white bg-white dark:bg-[#0B0F19]">Press</option>
+                </select>
+                <i data-lucide="chevron-down" class="absolute right-4 top-[14px] w-4 h-4 text-gray-400 pointer-events-none group-focus-within:text-cyber-blue transition-colors"></i>
+              </div>
+            </div>
+
+            <!-- Row 6: Message -->
+            <div class="flex flex-col gap-2">
+              <label for="message" class="font-mono text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Message <span class="text-[#DC2626]">*</span></label>
+              <textarea id="message" rows="5" class="w-full bg-transparent border border-gray-200 dark:border-gray-800 rounded-lg text-gray-900 dark:text-white px-4 py-3 focus:outline-none focus:border-cyber-blue focus:ring-1 focus:ring-cyber-blue transition-all shadow-sm resize-y" placeholder="Detail your transmission..." required aria-required="true" minlength="10"></textarea>
             </div>
 
             <!-- Submit Action -->
-            <div class="flex items-center justify-between pt-4 border-t border-struct">
-              <p class="text-xs text-gray-500 font-mono hidden md:block">Protected by standard SSL/TLS encryption.</p>
-              <button type="submit" id="submitBtn" class="w-full md:w-auto bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-8 py-3.5 rounded-xl font-bold hover:bg-cyber-blue dark:hover:bg-cyber-blue hover:text-white transition-all shadow-md flex justify-center items-center gap-2">
-                <span class="btn-text">Transmit Signal</span>
-                <span class="spinner"></span>
-                <i data-lucide="arrow-right" class="w-4 h-4 btn-text"></i>
+            <div class="flex items-center justify-center pt-6 mt-2 border-t border-struct">
+              <button type="submit" id="submitBtn" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-10 py-3.5 rounded-full font-bold hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 w-full md:w-auto">
+                <span class="btn-text">Submit Transmission</span>
               </button>
             </div>
             
-            <!-- Success Message Container -->
-            <div id="formSuccess" class="hidden items-center gap-3 p-4 bg-[#10B981]/10 text-[#10B981] rounded-xl border border-[#10B981]/20 mt-4">
-              <i data-lucide="check-circle" class="w-5 h-5 shrink-0"></i>
-              <span class="font-medium text-sm">Transmission received. Our routing matrix will allocate this to the appropriate desk.</span>
-            </div>
+
 
           </form>
         </div>
+      </div>
+    </section>
 
-        <!-- Structural Channels (Right) -->
-        <div class="lg:w-[400px] bg-form-bg dark:bg-form-bg-dark border-t lg:border-t-0 lg:border-l border-struct p-8 md:p-12 relative overflow-hidden flex flex-col justify-center">
+    <!-- SECTION 3: STRUCTURAL CHANNELS -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <div class="bg-form-bg dark:bg-[#0B0F19] border border-struct rounded-3xl shadow-sm p-8 md:p-12 relative overflow-hidden flex flex-col justify-center">
           <div class="absolute top-0 right-0 w-64 h-64 bg-electric-violet/5 rounded-full blur-[80px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
+          <div class="absolute bottom-0 left-0 w-64 h-64 bg-cyber-blue/5 rounded-full blur-[80px] pointer-events-none -translate-x-1/3 translate-y-1/3"></div>
           
-          <div class="relative z-10 flex flex-col gap-12">
+          <div class="relative z-10 flex flex-col md:flex-row gap-12 md:gap-16">
             
             <!-- Structural B2B: Partnerships -->
-            <div>
+            <div class="flex-1">
               <div class="flex items-center gap-2 mb-4">
                 <div class="w-8 h-8 rounded-lg bg-electric-violet/10 flex items-center justify-center text-electric-violet">
                   <i data-lucide="briefcase" class="w-4 h-4"></i>
@@ -233,15 +273,16 @@
               <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">For enterprise API access, content syndication, or strategic media alignments.</p>
               <a href="mailto:partners@unfilterstory.com" class="font-mono text-sm font-bold text-gray-900 dark:text-white hover:text-electric-violet dark:hover:text-electric-violet transition-colors break-all">partners@unfilterstory.com</a>
               
-              <button class="mt-5 flex items-center justify-center gap-2 text-xs font-bold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors bg-white dark:bg-slate-dark border border-struct px-4 py-2.5 rounded-lg shadow-sm w-full">
+              <button class="mt-5 flex items-center justify-center gap-2 text-xs font-bold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors bg-white dark:bg-slate-dark border border-struct px-4 py-2.5 rounded-lg shadow-sm w-full md:w-auto">
                 <i data-lucide="download" class="w-4 h-4"></i> Media Kit v2.4 (PDF)
               </button>
             </div>
 
-            <div class="w-full h-px bg-gray-200 dark:bg-gray-800"></div>
+            <div class="w-full md:w-px h-px md:h-auto bg-gray-200 dark:bg-gray-800 shrink-0 hidden md:block"></div>
+            <div class="w-full h-px bg-gray-200 dark:bg-gray-800 shrink-0 md:hidden block"></div>
 
             <!-- Structural B2B: Press Inquiries -->
-            <div>
+            <div class="flex-1">
               <div class="flex items-center gap-2 mb-4">
                 <div class="w-8 h-8 rounded-lg bg-cyber-blue/10 flex items-center justify-center text-cyber-blue">
                   <i data-lucide="mic" class="w-4 h-4"></i>
@@ -251,106 +292,163 @@
               <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">For interview requests, podcast appearances, or comment on industry developments.</p>
               <a href="mailto:press@unfilterstory.com" class="font-mono text-sm font-bold text-gray-900 dark:text-white hover:text-cyber-blue dark:hover:text-cyber-blue transition-colors break-all mb-5 block">press@unfilterstory.com</a>
               
-              <div class="bg-gray-200/50 dark:bg-black/30 p-4 rounded-lg border border-struct/50">
-                <span class="text-[10px] font-mono text-gray-500 uppercase tracking-widest block mb-2 flex items-center gap-1"><i data-lucide="lock" class="w-3 h-3"></i> Secure Vector (PGP)</span>
-                <code class="text-[10px] text-gray-500 break-all leading-tight block">F9A8 B2C4 D6E7 F1G3 H9J2 K4L5 M6N8 P2Q1</code>
-              </div>
+
             </div>
 
           </div>
         </div>
         
-      </div>
     </section>
 
-    <!-- SECTION 4: MINIMALIST SOCIAL DIRECTORY -->
-    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-      <div class="text-center mb-10">
-        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest font-mono">Distributed Network Nodes</h3>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-0 border border-struct rounded-2xl overflow-hidden bg-white dark:bg-transparent shadow-sm">
-        
-        <a href="#" class="flex flex-col items-center justify-center py-10 px-4 border-b md:border-b-0 md:border-r border-struct text-gray-500 hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-all group duration-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-400">
-          <svg class="w-8 h-8 mb-4 opacity-70 group-hover:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.004 3.985H5.078z"/></svg>
-          <span class="text-[10px] font-bold uppercase tracking-widest group-hover:scale-105 transition-transform">X/Twitter</span>
-        </a>
-        
-        <a href="#" class="flex flex-col items-center justify-center py-10 px-4 border-b md:border-b-0 md:border-r border-struct text-gray-500 hover:text-white hover:bg-[#0a66c2] transition-all group duration-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#0a66c2]">
-          <i data-lucide="linkedin" class="w-8 h-8 mb-4 opacity-70 group-hover:opacity-100 transition-opacity"></i>
-          <span class="text-[10px] font-bold uppercase tracking-widest group-hover:scale-105 transition-transform">LinkedIn</span>
-        </a>
-        
-        <a href="#" class="flex flex-col items-center justify-center py-10 px-4 border-r-0 md:border-r border-struct text-gray-500 hover:text-white hover:bg-[#333] transition-all group duration-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#333]">
-          <i data-lucide="github" class="w-8 h-8 mb-4 opacity-70 group-hover:opacity-100 transition-opacity"></i>
-          <span class="text-[10px] font-bold uppercase tracking-widest group-hover:scale-105 transition-transform">GitHub</span>
-        </a>
-        
-        <a href="#" class="flex flex-col items-center justify-center py-10 px-4 text-gray-500 hover:text-white hover:bg-[#FF0000] transition-all group duration-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#FF0000]">
-          <i data-lucide="youtube" class="w-8 h-8 mb-4 opacity-70 group-hover:opacity-100 transition-opacity"></i>
-          <span class="text-[10px] font-bold uppercase tracking-widest group-hover:scale-105 transition-transform">YouTube</span>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- SECTION 5: HIGH-DENSITY CONTEXTUAL FAQ -->
-    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-      <div class="mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Routing Protocols (FAQ)</h2>
-        <p class="text-gray-600 dark:text-gray-400">Resolve common queries instantly before initiating manual transmission.</p>
+    <!-- SECTION 4: PRE-SUBMISSION PROTOCOLS (FAQ) & SOCIAL DIRECTORY -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="mb-10">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Pre-Submission Protocols</h2>
+        <p class="text-gray-500 dark:text-gray-400 text-sm">Frequently requested parameters.</p>
       </div>
 
-      <div class="flex flex-col gap-4 border-t border-struct pt-4">
+      <!-- FAQ 2x2 Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12 items-start">
         
         <!-- FAQ 1 -->
-        <div class="faq-item border-b border-struct pb-4">
-          <button class="w-full flex items-center justify-between text-left py-4 focus:outline-none group" aria-expanded="false" onclick="toggleFaq(this)">
-            <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-cyber-blue transition-colors">Do you accept unsolicited guest editorials?</h3>
-            <div class="w-8 h-8 rounded-full bg-form-bg dark:bg-form-bg-dark border border-struct flex items-center justify-center shrink-0">
-              <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500 faq-icon transition-transform duration-300"></i>
-            </div>
+        <div class="faq-item border border-struct rounded-2xl bg-white dark:bg-[#0D121F] shadow-sm relative overflow-hidden transition-all duration-300 text-left">
+          <button class="w-full flex items-center justify-between text-left py-4 px-6 focus:outline-none group relative z-10" aria-expanded="false" onclick="toggleFaq(this)">
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-[#DC2626] transition-colors pr-4">How do I submit an anonymous news tip?</h3>
+            <i data-lucide="plus" class="w-4 h-4 text-gray-400 group-hover:text-[#DC2626] shrink-0 faq-icon transition-transform duration-300"></i>
           </button>
-          <div class="faq-answer">
-            <div class="text-gray-600 dark:text-gray-400 leading-relaxed pr-12 pb-4">
-              We highly curate our external contributions. If you are an operator or technical founder with a contrarian, data-backed thesis, you may submit an outline via the "Editorial Tip" vector in the form above. Do not send full drafts.
+          <div class="faq-answer px-6">
+            <div>
+              <div class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed pb-5 pt-1">
+                Do not use your corporate network or hardware. Use a public WiFi connection, route your traffic through Tor, and encrypt your payload using our PGP Public Key.
+              </div>
             </div>
           </div>
         </div>
 
         <!-- FAQ 2 -->
-        <div class="faq-item border-b border-struct pb-4">
-          <button class="w-full flex items-center justify-between text-left py-4 focus:outline-none group" aria-expanded="false" onclick="toggleFaq(this)">
-            <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-cyber-blue transition-colors">How can I ensure my leak remains perfectly anonymous?</h3>
-            <div class="w-8 h-8 rounded-full bg-form-bg dark:bg-form-bg-dark border border-struct flex items-center justify-center shrink-0">
-              <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500 faq-icon transition-transform duration-300"></i>
-            </div>
+        <div class="faq-item border border-struct rounded-2xl bg-white dark:bg-[#0D121F] shadow-sm relative overflow-hidden transition-all duration-300 text-left">
+          <button class="w-full flex items-center justify-between text-left py-4 px-6 focus:outline-none group relative z-10" aria-expanded="false" onclick="toggleFaq(this)">
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-[#DC2626] transition-colors pr-4">What are your editorial syndication guidelines?</h3>
+            <i data-lucide="plus" class="w-4 h-4 text-gray-400 group-hover:text-[#DC2626] shrink-0 faq-icon transition-transform duration-300"></i>
           </button>
-          <div class="faq-answer">
-            <div class="text-gray-600 dark:text-gray-400 leading-relaxed pr-12 pb-4">
-              Do not use your corporate network or hardware. Use a public WiFi connection, route your traffic through Tor, and encrypt your payload using our PGP Public Key provided in the Secure Directory before transmitting to our tips email.
+          <div class="faq-answer px-6">
+            <div>
+              <div class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed pb-5 pt-1">
+                We selectively partner with enterprise networks. Please reach out to the partnerships email above for terms and API integration specifications.
+              </div>
             </div>
           </div>
         </div>
 
         <!-- FAQ 3 -->
-        <div class="faq-item border-b border-struct pb-4">
-          <button class="w-full flex items-center justify-between text-left py-4 focus:outline-none group" aria-expanded="false" onclick="toggleFaq(this)">
-            <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-cyber-blue transition-colors">What is your turnaround time for PR inquiries?</h3>
-            <div class="w-8 h-8 rounded-full bg-form-bg dark:bg-form-bg-dark border border-struct flex items-center justify-center shrink-0">
-              <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500 faq-icon transition-transform duration-300"></i>
-            </div>
+        <div class="faq-item border border-struct rounded-2xl bg-white dark:bg-[#0D121F] shadow-sm relative overflow-hidden transition-all duration-300 text-left">
+          <button class="w-full flex items-center justify-between text-left py-4 px-6 focus:outline-none group relative z-10" aria-expanded="false" onclick="toggleFaq(this)">
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-[#DC2626] transition-colors pr-4">Do you accept guest op-eds?</h3>
+            <i data-lucide="plus" class="w-4 h-4 text-gray-400 group-hover:text-[#DC2626] shrink-0 faq-icon transition-transform duration-300"></i>
           </button>
-          <div class="faq-answer">
-            <div class="text-gray-600 dark:text-gray-400 leading-relaxed pr-12 pb-4">
-              Our automated routing system prioritizes urgent media requests. Standard response latency is &lt; 2 hours during EST business hours. For immediate broadcast corrections, bypass the form and use the direct press email.
+          <div class="faq-answer px-6">
+            <div>
+              <div class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed pb-5 pt-1">
+                We highly curate external contributions. If you are a technical founder with a contrarian thesis, submit an outline via the "Editorial Tip" vector.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item border border-struct rounded-2xl bg-white dark:bg-[#0D121F] shadow-sm relative overflow-hidden transition-all duration-300 text-left">
+          <button class="w-full flex items-center justify-between text-left py-4 px-6 focus:outline-none group relative z-10" aria-expanded="false" onclick="toggleFaq(this)">
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-[#DC2626] transition-colors pr-4">Response Time SLA</h3>
+            <i data-lucide="plus" class="w-4 h-4 text-gray-400 group-hover:text-[#DC2626] shrink-0 faq-icon transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer px-6">
+            <div>
+              <div class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed pb-5 pt-1">
+                Standard response latency is &lt; 2 hours during EST business hours. For immediate broadcast corrections, bypass the form and use the direct press email.
+              </div>
             </div>
           </div>
         </div>
 
       </div>
+
+      <!-- Social Directory Pill -->
+      <div class="inline-flex flex-wrap items-center justify-center gap-6 py-5 px-10 bg-white dark:bg-[#0D121F] rounded-full border border-struct shadow-sm">
+        
+        <!-- X / Twitter -->
+        <a href="#" aria-label="X (formerly Twitter)" class="flex items-center gap-3 text-slate-500 dark:text-slate-400 transition-colors duration-250 hover:text-black dark:hover:text-white cursor-pointer">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span class="font-bold text-sm">X/Twitter</span>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="#" aria-label="LinkedIn" class="flex items-center gap-3 text-slate-500 dark:text-slate-400 transition-colors duration-250 hover:text-[#0077B5] cursor-pointer">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <span class="font-bold text-sm">LinkedIn</span>
+        </a>
+
+        <!-- Crunchbase -->
+        <a href="#" aria-label="Crunchbase" class="flex items-center gap-3 text-slate-500 dark:text-slate-400 transition-colors duration-250 hover:text-[#0A66C2] cursor-pointer">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M21.6 0H2.4A2.4 2.4 0 000 2.4v19.2A2.4 2.4 0 002.4 24h19.2a2.4 2.4 0 002.4-2.4V2.4A2.4 2.4 0 0021.6 0zM12 18.6c-3.64 0-6.6-2.96-6.6-6.6s2.96-6.6 6.6-6.6 6.6 2.96 6.6 6.6-2.96 6.6-6.6 6.6zm0-10.8c-2.32 0-4.2 1.88-4.2 4.2s1.88 4.2 4.2 4.2 4.2-1.88 4.2-4.2-1.88-4.2-4.2-4.2z"/></svg>
+          <span class="font-bold text-sm">Crunchbase</span>
+        </a>
+
+        <!-- Instagram -->
+        <a href="#" aria-label="Instagram" class="flex items-center gap-3 text-slate-500 dark:text-slate-400 transition-colors duration-250 hover:text-[#E1306C] cursor-pointer">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          <span class="font-bold text-sm">Instagram</span>
+        </a>
+
+        <!-- GitHub -->
+        <a href="#" aria-label="GitHub" class="flex items-center gap-3 text-slate-500 dark:text-slate-400 transition-colors duration-250 hover:text-gray-900 dark:hover:text-white cursor-pointer">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          <span class="font-bold text-sm">GitHub</span>
+        </a>
+
+        <!-- Facebook -->
+        <a href="#" aria-label="Facebook" class="flex items-center gap-3 text-slate-500 dark:text-slate-400 transition-colors duration-250 hover:text-[#1877F2] cursor-pointer">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          <span class="font-bold text-sm">Facebook</span>
+        </a>
+
+      </div>
     </section>
 
   </main>
+
+  <!-- Premium Confirmation Console Modal -->
+  <div id="confirmationModal" class="fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 ease-out backdrop-blur-md bg-slate-900/40" role="dialog" aria-modal="true">
+    <!-- Modal Backdrop Click Area -->
+    <div class="absolute inset-0" onclick="closeModal()"></div>
+    
+    <!-- Modal Card -->
+    <div id="modalCard" class="relative bg-white dark:bg-[#0B0F19] w-11/12 max-w-md rounded-3xl border border-[#E2E8F0] dark:border-[#1E293B] shadow-2xl p-8 md:p-10 transform scale-95 transition-transform duration-300 ease-out">
+      
+      <!-- Close Button -->
+      <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors focus:outline-none" aria-label="Close modal">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Success Indicator -->
+      <div class="mx-auto w-16 h-16 rounded-full bg-cyber-blue/10 border border-cyber-blue/20 flex items-center justify-center mb-6 text-cyber-blue relative">
+        <div class="absolute inset-0 rounded-full animate-ping bg-cyber-blue/20 opacity-75" style="animation-duration: 2s;"></div>
+        <i data-lucide="check" class="w-8 h-8 relative z-10"></i>
+      </div>
+
+      <!-- Copy Block -->
+      <div class="text-center">
+        <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-3">Transmission Successful</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-8">
+          Thank you for reaching out. Your transmission has been securely routed to our team. A tracking ticket has been assigned to your inquiry, and a representative will respond within our system nominal average of &lt; 2 hours.
+        </p>
+
+        <!-- Action Consolidation -->
+        <button onclick="closeModal()" class="w-full py-3.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold rounded-full hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white transition-all shadow-md active:scale-95 flex items-center justify-center gap-2">
+          Return to Console
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Global Footer injected dynamically -->
   <app-footer></app-footer>
@@ -385,6 +483,25 @@
       }
     };
 
+    // Modal Interaction Logic
+    window.openModal = function() {
+      const modal = document.getElementById('confirmationModal');
+      const card = document.getElementById('modalCard');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-95');
+      card.classList.add('scale-100');
+      // Render Lucide icons inside modal if not already rendered
+      lucide.createIcons();
+    };
+
+    window.closeModal = function() {
+      const modal = document.getElementById('confirmationModal');
+      const card = document.getElementById('modalCard');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-100');
+      card.classList.add('scale-95');
+    };
+
     // Form Submission Simulation with Validation and Micro-interactions
     window.handleContactSubmit = function(e) {
       e.preventDefault();
@@ -397,7 +514,6 @@
       }
 
       const submitBtn = document.getElementById('submitBtn');
-      const successMsg = document.getElementById('formSuccess');
 
       // Set Loading State
       submitBtn.classList.add('is-loading');
@@ -408,18 +524,9 @@
         submitBtn.classList.remove('is-loading');
         submitBtn.classList.remove('pointer-events-none', 'opacity-90');
         
-        // Show Success state
+        // Show Success Modal
         form.reset();
-        successMsg.classList.remove('hidden');
-        successMsg.classList.add('flex');
-        
-        // Reset floating labels (since inputs are cleared, they drop back down if untouched, handled by CSS)
-        
-        // Hide success message after 5 seconds
-        setTimeout(() => {
-          successMsg.classList.add('hidden');
-          successMsg.classList.remove('flex');
-        }, 5000);
+        window.openModal();
         
       }, 1500);
     };
