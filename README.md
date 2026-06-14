@@ -58,12 +58,12 @@ Since this is a static frontend project utilizing CDN-delivered frameworks and v
    - Alternatively, use Python or Node.js from your terminal:
      ```bash
      # Using Python 3
-     python -m http.server 8000
+     python -m http.server 3000
      
      # Using Node.js
-     npx http-server
+     npx http-server -p 3000
      ```
-   - Navigate to `http://localhost:8000` in your browser.
+   - Navigate to `http://localhost:3000` in your browser.
 
 ## 🎨 Design System
 
