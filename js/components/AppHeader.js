@@ -73,6 +73,49 @@ class AppHeader extends HTMLElement {
           </ul>
         </nav>
       </header>
+  <!-- Breaking News Ticker Strip -->
+  <section aria-labelledby="trending-heading" class="ticker-feed-wrapper">
+    <h2 id="trending-heading" class="visually-hidden">Trending Now</h2>
+    <div class="ticker-feed">
+      <!-- Original Track -->
+      <div class="ticker-track" aria-hidden="false">
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Market Update</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="article.html?id=nasdaq-surge" style="font-weight: 600;">Nasdaq 100 sees 5% surge on AI earnings</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">2 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-success); text-transform: uppercase;">Funding</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="article.html?id=stripe-acquires" style="font-weight: 600;">Stripe acquires another checkout startup</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">4 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">Policy</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="article.html?id=eu-passes" style="font-weight: 600;">EU passes comprehensive data framework</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">5 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Startups</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="article.html?id=yc-cohort" style="font-weight: 600;">Y Combinator announces new cohort</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">7 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">AI</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="article.html?id=openai-gpt5" style="font-weight: 600;">OpenAI releases GPT-5 preview to developers</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">12 hrs ago</span>
+        </div>
+      </div>
+      <!-- Duplicated Track for Seamless Loop -->
+      <div class="ticker-track" aria-hidden="true">
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Market Update</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="article.html?id=nasdaq-surge" style="font-weight: 600;">Nasdaq 100 sees 5% surge on AI earnings</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">2 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-success); text-transform: uppercase;">Funding</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="article.html?id=stripe-acquires" style="font-weight: 600;">Stripe acquires another checkout startup</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">4 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">Policy</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="article.html?id=eu-passes" style="font-weight: 600;">EU passes comprehensive data framework</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">5 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Startups</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="article.html?id=yc-cohort" style="font-weight: 600;">Y Combinator announces new cohort</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">7 hrs ago</span>
+        </div>
+        <div class="strip-ticker">
+          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">AI</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="article.html?id=openai-gpt5" style="font-weight: 600;">OpenAI releases GPT-5 preview to developers</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">12 hrs ago</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
     `;
   }
 

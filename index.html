@@ -28,48 +28,6 @@
   <!-- 1. Header Component -->
   <app-header></app-header>
 
-  <!-- Breaking News Ticker Strip -->
-  <section aria-labelledby="trending-heading" class="ticker-feed-wrapper">
-    <h2 id="trending-heading" class="visually-hidden">Trending Now</h2>
-    <div class="ticker-feed">
-      <!-- Original Track -->
-      <div class="ticker-track" aria-hidden="false">
-        <div class="strip-ticker">
-          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Market Update</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Nasdaq 100 sees 5% surge on AI earnings</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">2 hrs ago</span>
-        </div>
-        <div class="strip-ticker">
-          <span style="font-weight: 700; color: var(--color-success); text-transform: uppercase;">Funding</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Stripe acquires another checkout startup</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">4 hrs ago</span>
-        </div>
-        <div class="strip-ticker">
-          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">Policy</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">EU passes comprehensive data framework</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">5 hrs ago</span>
-        </div>
-        <div class="strip-ticker">
-          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Startups</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Y Combinator announces new cohort</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">7 hrs ago</span>
-        </div>
-        <div class="strip-ticker">
-          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">AI</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">OpenAI releases GPT-5 preview to developers</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">12 hrs ago</span>
-        </div>
-      </div>
-      <!-- Duplicated Track for Seamless Loop -->
-      <div class="ticker-track" aria-hidden="true">
-        <div class="strip-ticker">
-          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Market Update</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Nasdaq 100 sees 5% surge on AI earnings</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">2 hrs ago</span>
-        </div>
-        <div class="strip-ticker">
-          <span style="font-weight: 700; color: var(--color-success); text-transform: uppercase;">Funding</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Stripe acquires another checkout startup</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">4 hrs ago</span>
-        </div>
-        <div class="strip-ticker">
-          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">Policy</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">EU passes comprehensive data framework</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">5 hrs ago</span>
-        </div>
-        <div class="strip-ticker">
-          <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Startups</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">Y Combinator announces new cohort</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">7 hrs ago</span>
-        </div>
-        <div class="strip-ticker">
-          <span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">AI</span><span style="margin: 0 var(--spacing-2);">&middot;</span><a href="#" style="font-weight: 600;">OpenAI releases GPT-5 preview to developers</a><span style="margin: 0 var(--spacing-2);">&middot;</span><span style="color: var(--color-text-mute);">12 hrs ago</span>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <main class="container">
     <!-- 2. Hero Section (Editorial Slider) -->
@@ -130,62 +88,311 @@
     </section>
 
 
-    <!-- 4. Latest Stories Section -->
-    <section aria-labelledby="latest-stories-heading" style="margin-bottom: var(--spacing-16);">
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6);">
-        <h2 id="latest-stories-heading" style="margin-bottom: 0; letter-spacing: -0.02em;">Latest Stories</h2>
-        <a href="stories.html" style="font-weight: 600; color: var(--color-accent);">View All &rarr;</a>
-      </div>
-      <div class="grid-3col">
-        <article class="card-article">
-          <div class="card-article-img hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Abstract financial chart"></div>
-          <div class="card-article-content">
-            <span class="card-tag">Venture Capital</span>
-            <h3 class="card-title"><a href="#">The Return of the Seed Round: Why Early Stage is Hot Again</a></h3>
-            <p class="card-excerpt">After a focus on late-stage profitability, investors are returning to the fundamentals of early-stage risk.</p>
-            <div class="card-meta">
-              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>Sarah Jenkins</span></div>
-              <span>5 min read</span>
+    <!-- Combined Spotlight and Latest Stories Section -->
+    <section class="container" style="margin-bottom: var(--spacing-16);">
+      <div class="grid-latest-spotlight">
+        
+        <!-- Latest Stories (Left) -->
+        <div>
+          <aside class="hub-secondary" aria-labelledby="latest-stories-heading" style="height: 100%;">
+            <div class="trending-dark-box" style="border-radius: 1rem; height: 100%; display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6); border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-4);">
+                <h2 id="latest-stories-heading" style="font-size: 1.5rem; margin-bottom: 0;">Latest Stories</h2>
+                <a href="stories.html" style="font-size: 0.875rem; font-weight: 600; color: var(--color-accent);">View All &rarr;</a>
+              </div>
+              
+              <article class="card-trending">
+                <div class="trending-number">01</div>
+                <div>
+                  <h3 class="card-title" style="font-size: 1.125rem; line-height: 1.3;"><a href="article.html?id=the-pivot-to-hardware">The Return of the Seed Round: Why Early Stage is Hot Again</a></h3>
+                  <span style="font-size: 0.875rem; color: var(--color-text-mute);">5 min read</span>
+                </div>
+              </article>
+              
+              <article class="card-trending">
+                <div class="trending-number">02</div>
+                <div>
+                  <h3 class="card-title" style="font-size: 1.125rem; line-height: 1.3;"><a href="article.html?id=autonomous-architectures">Why B2B Software Finally Looks Good</a></h3>
+                  <span style="font-size: 0.875rem; color: var(--color-text-mute);">7 min read</span>
+                </div>
+              </article>
+
+              <article class="card-trending">
+                <div class="trending-number">03</div>
+                <div>
+                  <h3 class="card-title" style="font-size: 1.125rem; line-height: 1.3;"><a href="article.html?id=vector-databases">Asynchronous Communication as a Competitive Advantage</a></h3>
+                  <span style="font-size: 0.875rem; color: var(--color-text-mute);">4 min read</span>
+                </div>
+              </article>
+              
+              <article class="card-trending" style="border-bottom: none; padding-bottom: 0;">
+                <div class="trending-number">04</div>
+                <div>
+                  <h3 class="card-title" style="font-size: 1.125rem; line-height: 1.3;"><a href="article.html?id=ai-custom-chips">Why AI Startups Are Building Custom Chips</a></h3>
+                  <span style="font-size: 0.875rem; color: var(--color-text-mute);">6 min read</span>
+                </div>
+              </article>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Spotlight (Right) -->
+        <div>
+          <div class="spotlight-card" style="border: 1px solid var(--color-border); display: grid; grid-template-columns: 1fr; gap: var(--spacing-8);">
+            <!-- Mobile: Stacks text then image. Desktop: Grid 1fr 1fr -->
+            <style>
+              @media (min-width: 1024px) {
+                .spotlight-card-split {
+                  display: grid !important;
+                  grid-template-columns: 1fr 1fr !important;
+                  align-items: center;
+                  gap: var(--spacing-12) !important;
+                }
+              }
+            </style>
+            <div class="spotlight-card-split" style="display: flex; flex-direction: column; gap: var(--spacing-8); height: 100%;">
+              <div style="display: flex; flex-direction: column; justify-content: center;">
+                <h2 id="spotlight-heading" style="font-size: 1rem; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-4);">Startup Spotlight</h2>
+                <h3 style="font-size: 1.75rem; margin-bottom: var(--spacing-4); line-height: 1.25; font-weight: 800;"><a href="article.html?id=autonomous-architectures"><span style="color: var(--color-accent);">Linear:</span> Reimagining the Issue Tracker for High-Performance Teams</a></h3>
+                <p style="font-size: 1rem; color: var(--color-text-mute); margin-bottom: var(--spacing-6);">How a small team built a cult-favorite tool by focusing on speed, keyboard-first navigation, and an uncompromising aesthetic standard.</p>
+                <div>
+                  <a href="article.html?id=autonomous-architectures" class="btn btn-primary">Read Case Study</a>
+                </div>
+              </div>
+              <div class="hero-media-wrapper" style="aspect-ratio: 1 / 1; max-height: 500px; background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; border-radius: 12px;" aria-label="Dark mode coding workspace setup"></div>
             </div>
           </div>
-        </article>
-        <article class="card-article">
-          <div class="card-article-img hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Designers working on software"></div>
-          <div class="card-article-content">
-            <span class="card-tag">Design</span>
-            <h3 class="card-title"><a href="#">Why B2B Software Finally Looks Good</a></h3>
-            <p class="card-excerpt">The consumerization of enterprise IT has forced legacy players to rethink their design systems.</p>
-            <div class="card-meta">
-              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>Alex Rivera</span></div>
-              <span>7 min read</span>
-            </div>
-          </div>
-        </article>
-        <article class="card-article">
-          <div class="card-article-img hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Team collaborating effectively"></div>
-          <div class="card-article-content">
-            <span class="card-tag">Productivity</span>
-            <h3 class="card-title"><a href="#">Asynchronous Communication as a Competitive Advantage</a></h3>
-            <p class="card-excerpt">Companies that master async workflows are outpacing their meeting-heavy competitors.</p>
-            <div class="card-meta">
-              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>David Chen</span></div>
-              <span>4 min read</span>
-            </div>
-          </div>
-        </article>
+        </div>
+
       </div>
     </section>
 
-    <!-- 5. Startup Spotlight -->
-    <section class="spotlight-section" aria-labelledby="spotlight-heading">
-      <div class="spotlight-content">
-        <h2 id="spotlight-heading" style="font-size: 1rem; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-4);">Startup Spotlight</h2>
-        <h3 style="font-size: clamp(2rem, 3vw, 2.5rem); margin-bottom: var(--spacing-6);"><a href="#"><span style="color: var(--color-accent);">Linear:</span> Reimagining the Issue Tracker for High-Performance Teams</a></h3>
-        <p style="font-size: 1.125rem; color: var(--color-text-mute); margin-bottom: var(--spacing-8);">How a small team built a cult-favorite tool by focusing on speed, keyboard-first navigation, and an uncompromising aesthetic standard.</p>
-        <a href="#" class="btn btn-primary">Read Case Study</a>
-      </div>
-      <div class="spotlight-media">
-        <div class="hero-media-wrapper" style="aspect-ratio: 1 / 1; background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Dark mode coding workspace setup"></div>
+    <!-- Our Partners Section -->
+    <section aria-labelledby="partners-heading" class="partners-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style="padding: var(--spacing-8) 0 var(--spacing-16) 0; text-align: center; margin-bottom: var(--spacing-16); overflow: hidden;">
+      <h2 id="partners-heading" style="font-size: 2.25rem; margin-bottom: var(--spacing-12); font-weight: 800; letter-spacing: -0.02em; font-family: var(--font-sans);">Trusted By Leaders From Brands Like</h2>
+      
+      <div class="funding-marquee-wrapper" style="margin-bottom: 0;">
+        <div class="funding-marquee-track" style="gap: 5rem; padding-right: 5rem; align-items: center;">
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+        </div>
+        
+        <div class="funding-marquee-track" style="gap: 5rem; padding-right: 5rem; align-items: center;" aria-hidden="true">
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+        </div>
       </div>
     </section>
 

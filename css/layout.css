@@ -391,6 +391,36 @@ app-header::before {
   margin-bottom: var(--spacing-16);
 }
 
+
+/* Combined Latest Stories & Spotlight Grid */
+.grid-latest-spotlight {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-8);
+  margin-bottom: var(--spacing-16);
+  align-items: stretch;
+}
+@media (min-width: 1024px) {
+  .grid-latest-spotlight {
+    grid-template-columns: 350px 1fr; /* Left: 350px, Right: 1fr */
+  }
+}
+
+.spotlight-card {
+  background-color: var(--color-bg-surf);
+  padding: var(--spacing-8);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+@media (min-width: 768px) {
+  .spotlight-card {
+    padding: var(--spacing-12);
+  }
+}
+
 /* Startup Spotlight */
 .spotlight-section {
   background-color: var(--color-bg-surf);
