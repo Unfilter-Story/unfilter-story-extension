@@ -88,8 +88,10 @@ class AppFooter extends HTMLElement {
               <h4>Categories</h4>
               <ul>
                 <li><a href="stories.html">Startups</a></li>
+                <!--
                 <li><a href="ai-innovation.html">AI & Innovation</a></li>
                 <li><a href="funding.html">Funding</a></li>
+                -->
                 <li><a href="interviews.html">Interviews</a></li>
               </ul>
             </div>
