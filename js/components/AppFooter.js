@@ -9,10 +9,26 @@ class AppFooter extends HTMLElement {
   render() {
     const isNewsletterPage = window.location.pathname.includes('newsletter');
     const isStartupNewsPage = window.location.pathname.includes('startup-news');
+    const isAiTechNewsPage = window.location.pathname.includes('ai-tech-news');
+    const isEcosystemsNewsPage = window.location.pathname.includes('ecosystems-news');
     
-    const footerHeading = isStartupNewsPage ? 'Never Miss a Founder Story' : 'Get the Funding Intel First.';
-    const footerParagraph = isStartupNewsPage ? 'Join 50,000+ builders getting the definitive terminal brief on launches, failures, and pivotal ecosystem shifts.' : 'Join 50,000+ venture capitalists, founders, and operators receiving our weekly terminal brief.';
-    const footerSubtext = isStartupNewsPage ? '' : '<p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); margin: 0;">No fluff, just verified capital flows.</p>';
+    let footerHeading = 'Get the Funding Intel First.';
+    let footerParagraph = 'Join 50,000+ venture capitalists, founders, and operators receiving our weekly terminal brief.';
+    let footerSubtext = '<p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); margin: 0;">No fluff, just verified capital flows.</p>';
+
+    if (isStartupNewsPage) {
+      footerHeading = 'Never Miss a Founder Story';
+      footerParagraph = 'Join 50,000+ builders getting the definitive terminal brief on launches, failures, and pivotal ecosystem shifts.';
+      footerSubtext = '';
+    } else if (isAiTechNewsPage) {
+      footerHeading = 'Stay Ahead of the Neural Curve';
+      footerParagraph = 'Join elite engineers getting the definitive terminal brief on papers, architectural shifts, and deep tech launches.';
+      footerSubtext = '';
+    } else if (isEcosystemsNewsPage) {
+      footerHeading = 'Track the Evolution of Global Tech Hubs';
+      footerParagraph = 'Join elite engineers and founders getting the definitive terminal brief on regional policies, infrastructure shifts, and talent migrations.';
+      footerSubtext = '';
+    }
 
     const preFooterCta = isNewsletterPage ? '' : `
       

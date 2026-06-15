@@ -361,7 +361,6 @@ app-header::before {
   background-color: var(--color-bg-surf);
   border-bottom: 1px solid var(--color-border);
   border-top: 1px solid var(--color-border);
-  margin-bottom: var(--spacing-8);
 }
 .ticker-feed {
   display: flex;
