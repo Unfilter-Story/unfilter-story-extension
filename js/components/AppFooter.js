@@ -12,17 +12,17 @@ class AppFooter extends HTMLElement {
       
       <div class="container" style="padding-top: var(--spacing-16);">
         <!-- 9. Newsletter Subscription Block -->
-    <section aria-labelledby="newsletter-heading" style="background-color: #111; border-radius: 24px; padding: clamp(2.5rem, 6vw, 4rem); margin-bottom: var(--spacing-16); display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--spacing-12); align-items: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
+    <section aria-labelledby="newsletter-heading" style="background-color: #111; border-radius: 24px; padding: clamp(2.5rem, 6vw, 4rem); max-width: 1100px; margin-left: auto; margin-right: auto; margin-bottom: var(--spacing-16); display: flex; flex-wrap: wrap; gap: clamp(2rem, 5vw, 4rem); justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
       
       <!-- Left side: Text Content -->
-      <div style="color: white; padding-right: var(--spacing-4);">
+      <div style="color: white; flex: 1 1 300px; max-width: 500px;">
         <h2 id="newsletter-heading" style="font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; color: white; margin-bottom: var(--spacing-2); letter-spacing: -0.02em;">Get Real Startup Stories</h2>
         <p style="font-size: clamp(1.125rem, 1.5vw, 1.25rem); font-weight: 500; margin-bottom: var(--spacing-8); color: rgba(255, 255, 255, 0.95); line-height: 1.4;">No fluff. No hype. Just the truth.</p>
         <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); margin: 0;">Join 10,000+ founders and builders in the truth-first ecosystem.</p>
       </div>
 
       <!-- Right side: Subscription Card -->
-      <div style="background-color: white; border-radius: 16px; padding: var(--spacing-8); box-shadow: 0 20px 40px rgba(0,0,0,0.15);">
+      <div style="background-color: white; border-radius: 16px; padding: var(--spacing-8); box-shadow: 0 20px 40px rgba(0,0,0,0.15); flex: 1 1 320px; max-width: 450px; width: 100%;">
         <h3 style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #111; margin-bottom: var(--spacing-6); margin-top: 0;">Subscribe to Our Newsletter</h3>
         <form class="pre-footer-newsletter-form" novalidate style="display: flex; flex-direction: column; gap: var(--spacing-4); margin: 0;">
           <input type="email" placeholder="Your email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" style="width: 100%; padding: var(--spacing-4); border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; background: #fff; color: #111; outline: none; transition: border-color 0.2s;">
