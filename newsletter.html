@@ -95,10 +95,6 @@
         
         <!-- Left Column -->
         <div class="flex flex-col text-left">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyber-blue/10 border border-cyber-blue/20 mb-8 shadow-sm w-max">
-            <i data-lucide="zap" class="w-4 h-4 text-cyber-blue"></i>
-            <span class="font-mono text-[10px] text-cyber-blue font-bold uppercase tracking-widest">Intelligence Terminal</span>
-          </div>
 
           <h1 class="text-4xl md:text-6xl font-sans font-black tracking-tight leading-[1.05] mb-6 text-gray-900 dark:text-white">
             The Signal in the <br/>
@@ -127,9 +123,6 @@
                 <span class="btn-text">Initialize Connection</span>
                 <span class="spinner"></span>
               </button>
-              <div id="heroSuccess" class="hidden mt-4 text-center text-sm font-medium text-[#10B981] flex items-center justify-center gap-2 bg-[#10B981]/10 py-3 rounded-xl border border-[#10B981]/20">
-                <i data-lucide="check-circle" class="w-4 h-4"></i> Vector added to distribution matrix.
-              </div>
             </form>
           </div>
         </div>
@@ -156,12 +149,12 @@
           <p class="text-sm text-gray-600 dark:text-gray-400 font-medium hidden sm:block">Joined by <span class="font-bold text-gray-900 dark:text-white">50,000+</span> innovators from:</p>
         </div>
         
-        <div class="flex items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 mt-4">
-          <svg class="h-6" viewBox="0 0 100 30" fill="currentColor"><path d="M10,15 L20,15 L20,5 L30,5 L30,25 L10,25 Z"/></svg>
-          <svg class="h-6" viewBox="0 0 100 30" fill="currentColor"><circle cx="15" cy="15" r="10"/></svg>
-          <svg class="h-6 hidden sm:block" viewBox="0 0 100 30" fill="currentColor"><rect x="5" y="5" width="20" height="20"/></svg>
-          <svg class="h-6 hidden md:block" viewBox="0 0 100 30" fill="currentColor"><polygon points="15,5 25,25 5,25"/></svg>
-          <svg class="h-6 hidden lg:block" viewBox="0 0 100 30" fill="currentColor"><path d="M5,15 Q15,5 25,15 T45,15"/></svg>
+        <div class="flex items-center gap-8 md:gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 mt-4 text-gray-900 dark:text-white">
+          <svg class="h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          <svg class="h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z"/></svg>
+          <svg class="h-8 hidden sm:block" viewBox="0 0 24 24" fill="currentColor"><path d="M22.099 10.518H12v3.666h5.819c-.318 2.008-2.224 3.493-4.521 3.493-2.613 0-4.733-2.12-4.733-4.733s2.12-4.733 4.733-4.733c1.157 0 2.203.415 3.015 1.096l2.673-2.673C17.472 5.093 14.896 4 12 4 7.582 4 4 7.582 4 12s3.582 8 8 8c4.27 0 7.822-3.328 8-7.482z"/></svg>
+          <svg class="h-8 hidden md:block" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.05 2.53.68 3.14.68.65 0 1.98-.75 3.55-.65 1.45.05 2.76.62 3.6 1.7-3.08 1.83-2.58 5.86.32 7.02-.69 1.8-1.57 3.32-2.61 4.22zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.43 2.5-2.02 4.41-3.74 4.25z"/></svg>
+          <svg class="h-8 hidden lg:block" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         </div>
       </div>
     </section>
@@ -173,50 +166,152 @@
         <p class="text-gray-600 dark:text-gray-400 text-lg">Feedback from the network.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        
-        <!-- Review 1 -->
-        <div class="bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-cyber-blue transition-colors duration-300">
-          <div class="flex items-center gap-4 mb-6">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
-            <div>
-              <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">James T. <i data-lucide="badge-check" class="w-4 h-4 text-cyber-blue"></i></h4>
-              <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Founding Engineer, NexusAI</p>
+      <div class="funding-marquee-wrapper overflow-hidden">
+        <!-- Original Track -->
+        <div class="funding-marquee-track" aria-hidden="false">
+          <!-- Review 1 -->
+          <div class="w-[350px] md:w-[400px] shrink-0 bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-cyber-blue transition-colors duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">James T. <i data-lucide="badge-check" class="w-4 h-4 text-cyber-blue"></i></h4>
+                <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Founding Engineer, NexusAI</p>
+              </div>
             </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
+              "The only tech publication that actually understands algorithmic complexity. Their teardown of scaling laws saved us months of R&D misdirection."
+            </p>
           </div>
-          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
-            "The only tech publication that actually understands algorithmic complexity. Their teardown of scaling laws saved us months of R&D misdirection."
-          </p>
+
+          <!-- Review 2 -->
+          <div class="w-[350px] md:w-[400px] shrink-0 bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-electric-violet transition-colors duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">Sarah K. <i data-lucide="badge-check" class="w-4 h-4 text-electric-violet"></i></h4>
+                <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">General Partner, Vertex Cap</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
+              "High-density intelligence. UnfilterStory bypasses the PR fluff and delivers exactly the raw data I need to validate seed investments."
+            </p>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="w-[350px] md:w-[400px] shrink-0 bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-[#10B981] transition-colors duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">Marcus L. <i data-lucide="badge-check" class="w-4 h-4 text-[#10B981]"></i></h4>
+                <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Head of Product, DataSynergy</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
+              "I use their weekly digest to brief my entire product team on Mondays. The signal-to-noise ratio is unmatched."
+            </p>
+          </div>
+
+          <!-- Review 4 -->
+          <div class="w-[350px] md:w-[400px] shrink-0 bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-pink-500 transition-colors duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">Elena R. <i data-lucide="badge-check" class="w-4 h-4 text-pink-500"></i></h4>
+                <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">VP of Engineering, CloudScale</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
+              "Finally, a newsletter that doesn't talk down to engineers. The technical depth in the infrastructure breakdowns is phenomenal."
+            </p>
+          </div>
+
+          <!-- Review 5 -->
+          <div class="w-[350px] md:w-[400px] shrink-0 bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-yellow-500 transition-colors duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">David W. <i data-lucide="badge-check" class="w-4 h-4 text-yellow-500"></i></h4>
+                <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Founder & CEO, FinEdge</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
+              "The market analysis is always two steps ahead. I've re-aligned our Q3 strategy entirely based on their fintech regulatory report."
+            </p>
+          </div>
         </div>
 
-        <!-- Review 2 -->
-        <div class="bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-electric-violet transition-colors duration-300">
-          <div class="flex items-center gap-4 mb-6">
-            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
-            <div>
-              <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">Sarah K. <i data-lucide="badge-check" class="w-4 h-4 text-electric-violet"></i></h4>
-              <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">General Partner, Vertex Cap</p>
+        <!-- Duplicated Track for Seamless Loop -->
+        <div class="funding-marquee-track" aria-hidden="true">
+          <!-- Duplicated Review 1 -->
+          <div class="w-[350px] md:w-[400px] shrink-0 bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-cyber-blue transition-colors duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">James T. <i data-lucide="badge-check" class="w-4 h-4 text-cyber-blue"></i></h4>
+                <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Founding Engineer, NexusAI</p>
+              </div>
             </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
+              "The only tech publication that actually understands algorithmic complexity. Their teardown of scaling laws saved us months of R&D misdirection."
+            </p>
           </div>
-          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
-            "High-density intelligence. UnfilterStory bypasses the PR fluff and delivers exactly the raw data I need to validate seed investments."
-          </p>
-        </div>
 
-        <!-- Review 3 -->
-        <div class="bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-[#10B981] transition-colors duration-300">
-          <div class="flex items-center gap-4 mb-6">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
-            <div>
-              <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">Marcus L. <i data-lucide="badge-check" class="w-4 h-4 text-[#10B981]"></i></h4>
-              <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Head of Product, DataSynergy</p>
+          <!-- Duplicated Review 2 -->
+          <div class="w-[350px] md:w-[400px] shrink-0 bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-electric-violet transition-colors duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">Sarah K. <i data-lucide="badge-check" class="w-4 h-4 text-electric-violet"></i></h4>
+                <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">General Partner, Vertex Cap</p>
+              </div>
             </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
+              "High-density intelligence. UnfilterStory bypasses the PR fluff and delivers exactly the raw data I need to validate seed investments."
+            </p>
           </div>
-          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
-            "I use their weekly digest to brief my entire product team on Mondays. The signal-to-noise ratio is unmatched."
-          </p>
-        </div>
 
+          <!-- Duplicated Review 3 -->
+          <div class="w-[350px] md:w-[400px] shrink-0 bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-[#10B981] transition-colors duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">Marcus L. <i data-lucide="badge-check" class="w-4 h-4 text-[#10B981]"></i></h4>
+                <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Head of Product, DataSynergy</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
+              "I use their weekly digest to brief my entire product team on Mondays. The signal-to-noise ratio is unmatched."
+            </p>
+          </div>
+
+          <!-- Duplicated Review 4 -->
+          <div class="w-[350px] md:w-[400px] shrink-0 bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-pink-500 transition-colors duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">Elena R. <i data-lucide="badge-check" class="w-4 h-4 text-pink-500"></i></h4>
+                <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">VP of Engineering, CloudScale</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
+              "Finally, a newsletter that doesn't talk down to engineers. The technical depth in the infrastructure breakdowns is phenomenal."
+            </p>
+          </div>
+
+          <!-- Duplicated Review 5 -->
+          <div class="w-[350px] md:w-[400px] shrink-0 bg-white dark:bg-[#0D121F] border border-struct p-8 rounded-3xl shadow-sm hover:border-yellow-500 transition-colors duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80" alt="Avatar" class="w-12 h-12 rounded-full border-2 border-form-bg dark:border-form-bg-dark object-cover">
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-sm flex items-center gap-1">David W. <i data-lucide="badge-check" class="w-4 h-4 text-yellow-500"></i></h4>
+                <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Founder & CEO, FinEdge</p>
+              </div>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed italic">
+              "The market analysis is always two steps ahead. I've re-aligned our Q3 strategy entirely based on their fintech regulatory report."
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -225,18 +320,43 @@
   <app-footer></app-footer>
   <search-modal></search-modal>
 
+  <!-- Toast Notification Component -->
+  <div id="successToast" class="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 transform translate-y-24 opacity-0 transition-all duration-500 ease-out flex items-center gap-3 bg-[#E8F8F0] dark:bg-[#042F1E] border border-[#10B981]/30 text-[#047857] dark:text-[#34D399] px-6 py-4 rounded-2xl shadow-xl pointer-events-none">
+    <i data-lucide="check-circle" class="w-5 h-5 flex-shrink-0"></i>
+    <p class="text-sm font-medium font-sans">Success! Your email has been verified and your connection is now active.</p>
+    <button onclick="dismissToast()" class="ml-4 text-[#047857]/60 dark:text-[#34D399]/60 hover:text-[#047857] dark:hover:text-[#34D399] transition-colors focus:outline-none pointer-events-auto">
+      <i data-lucide="x" class="w-4 h-4"></i>
+    </button>
+  </div>
+
   <!-- Essential Scripts -->
   <script type="module" src="js/main.js"></script>
   <script>
     // Initialize Lucide Icons
     lucide.createIcons();
 
+    // Toast Logic
+    let toastTimeout;
+    window.showToast = function() {
+      const toast = document.getElementById('successToast');
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => dismissToast(), 4000);
+    }
+    
+    window.dismissToast = function() {
+      const toast = document.getElementById('successToast');
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-24', 'opacity-0');
+    }
+
     // Hero Form Submit
     window.handleHeroSubmit = function(e) {
       e.preventDefault();
       const form = e.target;
       const btn = document.getElementById('heroSubmitBtn');
-      const success = document.getElementById('heroSuccess');
       
       if (!form.checkValidity()) {
         form.reportValidity();
@@ -248,8 +368,7 @@
       setTimeout(() => {
         btn.classList.remove('is-loading', 'pointer-events-none', 'opacity-90');
         form.reset();
-        success.classList.remove('hidden');
-        setTimeout(() => success.classList.add('hidden'), 5000);
+        showToast();
       }, 1200);
     };
 
