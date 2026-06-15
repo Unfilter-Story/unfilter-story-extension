@@ -153,10 +153,10 @@
             <div class="spotlight-card-split" style="display: flex; flex-direction: column; gap: var(--spacing-8); height: 100%;">
               <div style="display: flex; flex-direction: column; justify-content: center;">
                 <h2 id="spotlight-heading" style="font-size: 1rem; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-4);">Startup Spotlight</h2>
-                <h3 style="font-size: 1.75rem; margin-bottom: var(--spacing-4); line-height: 1.25; font-weight: 800;"><a href="article.html?id=autonomous-architectures"><span style="color: var(--color-accent);">Linear:</span> Reimagining the Issue Tracker for High-Performance Teams</a></h3>
+                <h3 style="font-size: 1.75rem; margin-bottom: var(--spacing-4); line-height: 1.25; font-weight: 800;"><a href="linear-case-study.html"><span style="color: var(--color-accent);">Linear:</span> Reimagining the Issue Tracker for High-Performance Teams</a></h3>
                 <p style="font-size: 1rem; color: var(--color-text-mute); margin-bottom: var(--spacing-6);">How a small team built a cult-favorite tool by focusing on speed, keyboard-first navigation, and an uncompromising aesthetic standard.</p>
                 <div>
-                  <a href="article.html?id=autonomous-architectures" class="btn btn-primary">Read Case Study</a>
+                  <a href="linear-case-study.html" class="btn btn-primary">Read Case Study</a>
                 </div>
               </div>
               <div class="hero-media-wrapper" style="aspect-ratio: 1 / 1; max-height: 500px; background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; border-radius: 12px;" aria-label="Dark mode coding workspace setup"></div>
@@ -168,7 +168,7 @@
     </section>
 
     <!-- Our Partners Section -->
-    <section aria-labelledby="partners-heading" class="partners-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style="padding: var(--spacing-8) 0 var(--spacing-16) 0; text-align: center; margin-bottom: var(--spacing-16); overflow: hidden;">
+    <section aria-labelledby="partners-heading" class="partners-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style="display: none; padding: var(--spacing-8) 0 var(--spacing-16) 0; text-align: center; margin-bottom: var(--spacing-16); overflow: hidden;">
       <h2 id="partners-heading" style="margin-bottom: var(--spacing-12); font-family: var(--font-sans);">Trusted By Leaders From Brands Like</h2>
       
       <div class="funding-marquee-wrapper" style="margin-bottom: 0;">
@@ -447,7 +447,7 @@
     </section>
 
     <!-- 7. Funding Tracker Dashboard -->
-    <section aria-labelledby="funding-heading" style="margin-bottom: var(--spacing-16);">
+    <section aria-labelledby="funding-heading" style="display: none; margin-bottom: var(--spacing-16);">
       <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6);">
         <h2 id="funding-heading" style="margin-bottom: 0;">Funding Tracker</h2>
         <a href="funding.html" style="font-weight: 600; color: var(--color-accent);">Full Report &rarr;</a>
@@ -703,9 +703,63 @@
         </div>
       </div>
     </section>
+    </section>
+
+    <!-- 7.5 Community Guest Posts -->
+    <style>
+      .guest-post-title a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+      .guest-post-title a:hover { color: #F43F5E !important; }
+    </style>
+    <section aria-labelledby="guest-posts-heading" style="display: none; margin-bottom: var(--spacing-16);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-8); flex-wrap: wrap; gap: 16px;">
+        <div>
+          <h2 id="guest-posts-heading" style="margin-bottom: 8px;">Community Guest Posts</h2>
+          <p style="color: var(--color-text-mute); font-size: 1.125rem;">Real voices and raw experiences shared by the startup community.</p>
+        </div>
+        <a href="guest-posts.html" style="font-weight: 700; color: #F43F5E; white-space: nowrap;">Browse All Guest Posts &rarr;</a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-6);">
+        <!-- Card 1 -->
+        <article style="display: flex; flex-direction: column; gap: var(--spacing-4);">
+          <div style="position: relative; aspect-ratio: 16/10; border-radius: 16px; overflow: hidden; background-color: var(--color-bg-surf);">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Global Brand" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;" class="hover-scale">
+            <span style="position: absolute; top: 16px; left: 16px; background: white; color: black; font-size: 0.75rem; font-weight: 800; padding: 6px 12px; border-radius: 20px; letter-spacing: 0.05em; box-shadow: var(--shadow-sm);">GUEST STORY</span>
+          </div>
+          <div style="display: flex; flex-direction: column; flex-grow: 1;">
+            <h3 class="guest-post-title" style="font-size: 1.25rem; font-weight: 800; line-height: 1.3; margin-bottom: 12px;"><a href="article.html">Building a Global Brand from a Small Town</a></h3>
+            <div style="margin-top: auto; font-size: 0.875rem; color: var(--color-text-mute);"><strong style="color: var(--color-text-main);">Anshul J.</strong> &bull; Community Member</div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article style="display: flex; flex-direction: column; gap: var(--spacing-4);">
+          <div style="position: relative; aspect-ratio: 16/10; border-radius: 16px; overflow: hidden; background-color: var(--color-bg-surf);">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" alt="Unit Economics" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;" class="hover-scale">
+            <span style="position: absolute; top: 16px; left: 16px; background: white; color: black; font-size: 0.75rem; font-weight: 800; padding: 6px 12px; border-radius: 20px; letter-spacing: 0.05em; box-shadow: var(--shadow-sm);">GUEST STORY</span>
+          </div>
+          <div style="display: flex; flex-direction: column; flex-grow: 1;">
+            <h3 class="guest-post-title" style="font-size: 1.25rem; font-weight: 800; line-height: 1.3; margin-bottom: 12px;"><a href="article.html">Why Unit Economics Matter More Than Hype</a></h3>
+            <div style="margin-top: auto; font-size: 0.875rem; color: var(--color-text-mute);"><strong style="color: var(--color-text-main);">Anjali M.</strong> &bull; Community Member</div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article style="display: flex; flex-direction: column; gap: var(--spacing-4);">
+          <div style="position: relative; aspect-ratio: 16/10; border-radius: 16px; overflow: hidden; background-color: var(--color-bg-surf);">
+            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=600&q=80" alt="Solo Founder" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;" class="hover-scale">
+            <span style="position: absolute; top: 16px; left: 16px; background: white; color: black; font-size: 0.75rem; font-weight: 800; padding: 6px 12px; border-radius: 20px; letter-spacing: 0.05em; box-shadow: var(--shadow-sm);">GUEST STORY</span>
+          </div>
+          <div style="display: flex; flex-direction: column; flex-grow: 1;">
+            <h3 class="guest-post-title" style="font-size: 1.25rem; font-weight: 800; line-height: 1.3; margin-bottom: 12px;"><a href="article.html">My Journey as a Solo Founder</a></h3>
+            <div style="margin-top: auto; font-size: 0.875rem; color: var(--color-text-mute);"><strong style="color: var(--color-text-main);">Elena R.</strong> &bull; Community Member</div>
+          </div>
+        </article>
+      </div>
+    </section>
 
     <!-- 8. Founder Interviews -->
-    <section aria-labelledby="interviews-heading" style="margin-bottom: var(--spacing-16);">
+    <section aria-labelledby="interviews-heading" style="display: none; margin-bottom: var(--spacing-16);">
       <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6);">
         <h2 id="interviews-heading" style="margin-bottom: 0;">Founder Interviews</h2>
         <a href="interviews.html" style="font-weight: 600; color: var(--color-accent);">View All &rarr;</a>
@@ -785,7 +839,7 @@
     </section>
 
         <!-- 10. Featured Categories Taxonomy Grid -->
-    <section aria-labelledby="taxonomy-heading" style="margin-bottom: var(--spacing-16);">
+    <section aria-labelledby="taxonomy-heading" style="display: none; margin-bottom: var(--spacing-16);">
       <h2 id="taxonomy-heading" class="visually-hidden">Featured Categories</h2>
       <div class="tag-container">
         <a href="startup-news.html" class="pill">Startups</a>
