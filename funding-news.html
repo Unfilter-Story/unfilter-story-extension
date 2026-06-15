@@ -92,7 +92,7 @@
     <div class="container filter-matrix-inner">
       <div class="filter-pills" role="tablist">
         <a href="news.html" class="pill" role="tab" aria-selected="false">All News</a>
-        <a href="#" class="pill" role="tab" aria-selected="false">Startups</a>
+        <a href="startup-news.html" class="pill" role="tab" aria-selected="false">Startups</a>
         <a href="funding-news.html" class="pill" role="tab" aria-selected="true" style="background-color: var(--color-accent); color: white; border-color: var(--color-accent); font-weight: 600;">Funding</a>
         <a href="#" class="pill" role="tab" aria-selected="false">AI & Tech</a>
         <a href="#" class="pill" role="tab" aria-selected="false">Policy</a>
@@ -324,7 +324,7 @@
       const pills = document.querySelectorAll('.filter-pills .pill');
       pills.forEach(pill => {
           pill.addEventListener('click', (e) => {
-              if(pill.innerText !== "Funding" && pill.innerText !== "All News") {
+              if(pill.getAttribute('href') === '#' || pill.getAttribute('href') === '') {
                   e.preventDefault();
                   // In a real SPA, this would fetch new category data. 
                   // For the static demo, we just visually show interactivity.

@@ -8,6 +8,12 @@ class AppFooter extends HTMLElement {
 
   render() {
     const isNewsletterPage = window.location.pathname.includes('newsletter');
+    const isStartupNewsPage = window.location.pathname.includes('startup-news');
+    
+    const footerHeading = isStartupNewsPage ? 'Never Miss a Founder Story' : 'Get the Funding Intel First.';
+    const footerParagraph = isStartupNewsPage ? 'Join 50,000+ builders getting the definitive terminal brief on launches, failures, and pivotal ecosystem shifts.' : 'Join 50,000+ venture capitalists, founders, and operators receiving our weekly terminal brief.';
+    const footerSubtext = isStartupNewsPage ? '' : '<p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); margin: 0;">No fluff, just verified capital flows.</p>';
+
     const preFooterCta = isNewsletterPage ? '' : `
       
       <div class="container" style="padding-top: var(--spacing-16);">
@@ -16,9 +22,9 @@ class AppFooter extends HTMLElement {
       
       <!-- Left side: Text Content -->
       <div style="color: white; flex: 1 1 300px; max-width: 550px;">
-        <h2 id="newsletter-heading" style="font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; color: white; margin-bottom: var(--spacing-2); letter-spacing: -0.02em;">Get the Funding Intel First.</h2>
-        <p style="font-size: clamp(1.125rem, 1.5vw, 1.25rem); margin-bottom: var(--spacing-8); color: rgba(255, 255, 255, 0.95); line-height: 1.4;">Join 50,000+ venture capitalists, founders, and operators receiving our weekly terminal brief.</p>
-        <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); margin: 0;">No fluff, just verified capital flows.</p>
+        <h2 id="newsletter-heading" style="font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; color: white; margin-bottom: var(--spacing-2); letter-spacing: -0.02em;">${footerHeading}</h2>
+        <p style="font-size: clamp(1.125rem, 1.5vw, 1.25rem); margin-bottom: var(--spacing-8); color: rgba(255, 255, 255, 0.95); line-height: 1.4;">${footerParagraph}</p>
+        ${footerSubtext}
       </div>
 
       <!-- Right side: Subscription Card -->
