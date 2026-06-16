@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beyond Dark Mode: The Neo-Brutalism Resurgence | UnfilterStory</title>
+  <meta name="description" content="A deep dive into why enterprise SaaS platforms are dropping soft shadows for high-contrast, structural boundaries that enforce clarity over comfort.">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    function syncTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    }
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  </script>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'cyber-blue': '#0099FF',
+            'electric-violet': '#8B5CF6',
+            'brand-red': '#DC2626',
+            'slate-dark': '#0B0F19',
+            'slate-card': '#0D121F',
+            'slate-border': '#1E293B'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Content formatting for the article */
+    .prose p { margin-bottom: 1.5rem; line-height: 1.8; color: #4B5563; }
+    .dark .prose p { color: #9CA3AF; }
+    .prose h3 { font-size: 1.5rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; }
+    .dark .prose h3 { color: #F9FAFB; }
+    .prose strong { color: #111827; font-weight: 600; }
+    .dark .prose strong { color: #F9FAFB; }
+
+    /* Zoom image */
+    .hero-img-container {
+      perspective: 1000px;
+      overflow: hidden;
+    }
+    .hero-img-inner {
+      will-change: transform;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .hero-img-container:hover .hero-img-inner {
+      transform: scale(1.05);
+    }
+    
+    .toc-link.active {
+      color: #DC2626;
+      border-left-color: #DC2626;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-white dark:bg-[#0B0F19] text-gray-900 dark:text-white antialiased selection:bg-brand-red/20 selection:text-brand-red transition-colors duration-300 relative">
+  
+  <!-- Hardware-Accelerated Progress Indicator -->
+  <div id="progress-bar" class="fixed top-0 left-0 h-[2px] bg-brand-red z-[60] w-0 transition-all duration-75 ease-out shadow-[0_0_10px_rgba(220,38,38,0.5)] pointer-events-none"></div>
+
+  <!-- Global Header -->
+  <app-header></app-header>
+
+  <main class="pt-8 pb-20">
+    
+    <!-- THE EDITORIAL HERO CANVAS -->
+    <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+      <!-- Badge -->
+      <div class="flex items-center gap-2 mb-6">
+        <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-red bg-brand-red/10 border border-brand-red/20 rounded">Design</span>
+      </div>
+      
+      <!-- Title -->
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] mb-6 text-gray-900 dark:text-white" style="text-wrap: balance;">
+        Beyond Dark Mode: The <span style="background: linear-gradient(to right, #FF007F, #FF0000); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">Neo-Brutalism</span> Resurgence
+      </h1>
+      
+      <!-- Subtitle -->
+      <p class="text-xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed mb-8 max-w-3xl">
+        A deep dive into why enterprise SaaS platforms are dropping soft shadows for high-contrast, structural boundaries that enforce clarity over comfort.
+      </p>
+
+      <!-- Metadata & Social Flank -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between py-6 border-y border-gray-200 dark:border-gray-800 gap-6">
+        <div class="flex items-center gap-4">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&h=100&q=80" alt="Elena Rostova" class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-gray-800 shadow-sm">
+          <div>
+            <div class="font-bold text-gray-900 dark:text-white">Elena Rostova</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">Principal Design Editor &bull; Oct 26, 2026</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-6">
+          <div class="flex items-center gap-4 text-xs font-mono text-gray-500 uppercase tracking-widest">
+            <span><i data-lucide="clock" class="w-3 h-3 inline mr-1"></i> 9 Min Read</span>
+            <span><i data-lucide="bar-chart-2" class="w-3 h-3 inline mr-1"></i> 31,700+ Views</span>
+          </div>
+          <!-- Social Directives -->
+          <div class="flex items-center gap-3 border-l border-gray-200 dark:border-gray-800 pl-6">
+            <button class="text-gray-400 hover:text-brand-red transition-colors mr-2" aria-label="Copy Link"><i data-lucide="link" class="w-4 h-4"></i></button>
+            <button class="text-gray-400 hover:text-[#E1306C] transition-colors" aria-label="Share on Instagram">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path></svg>
+            </button>
+            <button class="text-gray-400 hover:text-[#1877f2] transition-colors" aria-label="Share on Facebook">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.891h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>
+            </button>
+            <button class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" aria-label="Share on X">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+            </button>
+            <button class="text-gray-400 hover:text-[#FF6719] transition-colors" aria-label="Share on Substack">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- VISUAL ANCHOR (Featured Image) -->
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="hero-img-container rounded-[24px] shadow-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 h-[300px] md:h-[450px] w-full relative group">
+        <img id="hero-image" src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=2000&q=80" alt="Design System Swatches" class="hero-img-inner w-full h-full object-cover absolute top-0 left-0" style="object-position: 50% 50%;">
+        <div class="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-[24px] pointer-events-none"></div>
+      </div>
+      <p class="text-center text-xs font-mono text-gray-500 mt-4 uppercase tracking-widest max-w-2xl mx-auto">The cross-over between tangible print swatches and digital interface architecture enforces raw clarity over synthetic comfort.</p>
+    </div>
+
+    <!-- DOUBLE-ASYMMETRIC READING GRID -->
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start relative">
+        
+        <!-- LEFT SIDEBAR: Table of Contents -->
+        <aside class="hidden lg:block lg:col-span-3 sticky top-32">
+          <div class="border-l border-gray-200 dark:border-gray-800 pl-6 py-2">
+            <h4 class="text-xs font-bold font-mono uppercase tracking-widest text-gray-900 dark:text-white mb-6">In This Article</h4>
+            <nav id="toc-nav" class="flex flex-col gap-3 text-sm font-medium">
+              <a href="#section-intro" class="toc-link text-gray-400 hover:text-brand-red transition-colors border-l-2 border-transparent -ml-[26px] pl-[24px]" data-target="section-intro">1. Introduction</a>
+              <a href="#section-metrics" class="toc-link text-gray-400 hover:text-brand-red transition-colors border-l-2 border-transparent -ml-[26px] pl-[24px]" data-target="section-metrics">2. UX Cognitive Load Data</a>
+              <a href="#section-matrix" class="toc-link text-gray-400 hover:text-brand-red transition-colors border-l-2 border-transparent -ml-[26px] pl-[24px]" data-target="section-matrix">3. Architecture Matrix</a>
+              <a href="#section-pipeline" class="toc-link text-gray-400 hover:text-brand-red transition-colors border-l-2 border-transparent -ml-[26px] pl-[24px]" data-target="section-pipeline">4. 8px Grid Framework</a>
+              <a href="#section-risks" class="toc-link text-gray-400 hover:text-brand-red transition-colors border-l-2 border-transparent -ml-[26px] pl-[24px]" data-target="section-risks">5. Accessibility Rules</a>
+              <a href="#section-insights" class="toc-link text-gray-400 hover:text-brand-red transition-colors border-l-2 border-transparent -ml-[26px] pl-[24px]" data-target="section-insights">6. Key Insights</a>
+            </nav>
+          </div>
+        </aside>
+
+        <!-- CORE CONTENT PILLAR (Max 720px width) -->
+        <div class="lg:col-span-8 xl:col-span-7 max-w-[720px] mx-auto w-full text-lg">
+          <div class="prose max-w-none">
+          
+          <!-- Section 1: Introduction -->
+          <div id="section-intro" class="scroll-mt-32 mb-16">
+            <p>
+              For the past five years, the reigning paradigm in interface design was built on softness. We saw massive drops in border contrast, an over-reliance on 40px feathered box-shadows to indicate depth, and pastel background washes meant to make software feel less intimidating.
+            </p>
+            <p>
+              But as SaaS platforms evolved into complex, high-density workspaces handling millions of data points, that aesthetic began to critically fail. Users aren't looking for "approachable" software anymore; they need surgical precision. Enter the Neo-Brutalism resurgence—a shift toward high-contrast, structural boundaries that strip away visual noise in favor of raw utility.
+            </p>
+            
+            <!-- High Contrast Pull Quote -->
+            <blockquote class="my-10 border-l-4 border-brand-red pl-6 py-2">
+              <p class="text-2xl font-serif italic text-gray-900 dark:text-white leading-tight mb-4">"Neo-Brutalism isn't an anti-design movement; it is a declaration of structural honesty in an era buried under gradient blurs."</p>
+            </blockquote>
+          </div>
+
+          <!-- Section 2: The Metric Grid -->
+          <div id="section-metrics" class="scroll-mt-32 mb-16">
+            <h3>2. The Metric Grid: UX Cognitive Load Data</h3>
+            <p>
+              The shift isn't just aesthetic; it's heavily backed by quantitative performance telemetry. When evaluating users navigating dense dashboards, blurred boundaries cause micro-hesitations. By enforcing strict 1px solid borders around interactive elements, cognitive processing speed increases dramatically.
+            </p>
+            
+            <!-- 3-Column Data Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
+              <div class="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-800 rounded-xl p-6 text-center shadow-[inset_0_-2px_0_#DC2626]">
+                <div class="text-3xl font-black text-brand-red mb-2">42%</div>
+                <div class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Lower Cognitive Load</div>
+              </div>
+              <div class="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-800 rounded-xl p-6 text-center">
+                <div class="text-3xl font-black text-gray-900 dark:text-white mb-2">2.4x</div>
+                <div class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Faster Scannability</div>
+              </div>
+              <div class="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-800 rounded-xl p-6 text-center">
+                <div class="text-3xl font-black text-gray-900 dark:text-white mb-2">88%</div>
+                <div class="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Focus Retention Growth</div>
+              </div>
+            </div>
+            
+            <p>
+              These metrics point to a massive consolidation event in UI architecture. Trading platforms, developer tools, and heavy data ingestion SaaS have already made the jump.
+            </p>
+          </div>
+
+          <!-- Section 3: Funding Matrix -->
+          <div id="section-matrix" class="scroll-mt-32 mb-16">
+            <h3>3. Minimalist vs Neo-Brutal UI Matrix</h3>
+            <p>
+              To understand the mechanical differences, we have to look at the CSS and layout foundations. Minimalist UI relies on negative space and shading. Neo-Brutalism relies on explicit linework and harsh contrast ratios.
+            </p>
+            
+            <!-- Comparison Matrix -->
+            <div class="overflow-x-auto my-8 border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-[#0B0F19]">
+              <table class="w-full text-sm text-left">
+                <thead class="bg-gray-50 dark:bg-gray-800/50 text-xs uppercase font-mono tracking-widest text-gray-500 border-b border-gray-200 dark:border-gray-800">
+                  <tr>
+                    <th scope="col" class="px-6 py-4 font-bold">Element</th>
+                    <th scope="col" class="px-6 py-4 font-bold">Standard Minimalist UI</th>
+                    <th scope="col" class="px-6 py-4 font-bold text-gray-900 dark:text-white border-x border-brand-red/20 bg-brand-red/5">Neo-Brutal Architecture</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+                  <tr>
+                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Depth Indicators</td>
+                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">Soft, feathered drop-shadows (0 4px 6px -1px)</td>
+                    <td class="px-6 py-4 text-brand-red font-medium border-x border-brand-red/20 bg-brand-red/5">Hard, solid offsets (4px 4px 0px #000)</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Component Bounds</td>
+                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">Defined by background color contrast</td>
+                    <td class="px-6 py-4 text-brand-red font-medium border-x border-brand-red/20 bg-brand-red/5">Defined by explicit 1px-2px solid borders</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">Typography</td>
+                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">Low-contrast gray text (color: #6B7280)</td>
+                    <td class="px-6 py-4 text-brand-red font-medium border-x border-brand-red/20 bg-brand-red/5">High-contrast black/white (color: #000)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Section 4: Pipeline Architecture -->
+          <div id="section-pipeline" class="scroll-mt-32 mb-16">
+            <h3>4. The 8px Grid Framework Pipeline</h3>
+            <p>
+              Executing this style requires ruthless adherence to the grid. Because you can no longer "hide" misalignment with soft blurs, every pixel must be mathematically justified.
+            </p>
+            
+            <!-- Flow Cards -->
+            <div class="flex flex-col sm:flex-row gap-4 my-8">
+              <div class="flex-1 p-6 border-2 border-gray-900 dark:border-gray-100 rounded-xl bg-white dark:bg-gray-900 shadow-[4px_4px_0px_#111] dark:shadow-[4px_4px_0px_#fff] flex flex-col justify-center text-center">
+                <div class="w-12 h-12 mx-auto rounded bg-gray-100 dark:bg-gray-800 flex items-center justify-center font-bold font-mono text-gray-400 mb-4 border border-gray-300 dark:border-gray-700">01</div>
+                <h4 class="text-sm font-bold text-gray-900 dark:text-white m-0">Strict Baseline Bounds</h4>
+                <p class="text-xs text-gray-500 m-0 mt-2">All typography locked to a 4px baseline rhythm.</p>
+              </div>
+              <div class="flex items-center justify-center -mx-2 relative z-10"><i data-lucide="arrow-right" class="w-5 h-5 text-gray-400 hidden sm:block"></i><i data-lucide="arrow-down" class="w-5 h-5 text-gray-400 sm:hidden"></i></div>
+              
+              <div class="flex-1 p-6 border-2 border-brand-red rounded-xl bg-white dark:bg-gray-900 shadow-[4px_4px_0px_#DC2626] flex flex-col justify-center text-center">
+                <div class="w-12 h-12 mx-auto rounded bg-brand-red/10 flex items-center justify-center font-bold font-mono text-brand-red mb-4 border border-brand-red/30">02</div>
+                <h4 class="text-sm font-bold text-gray-900 dark:text-white m-0">Thick Card Strokes</h4>
+                <p class="text-xs text-gray-500 m-0 mt-2">Interactive elements demand 2px hover states.</p>
+              </div>
+              <div class="flex items-center justify-center -mx-2 relative z-10"><i data-lucide="arrow-right" class="w-5 h-5 text-gray-400 hidden sm:block"></i><i data-lucide="arrow-down" class="w-5 h-5 text-gray-400 sm:hidden"></i></div>
+
+              <div class="flex-1 p-6 border-2 border-gray-900 dark:border-gray-100 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 shadow-[4px_4px_0px_#8B5CF6] flex flex-col justify-center text-center">
+                <div class="w-12 h-12 mx-auto rounded bg-white/10 dark:bg-black/10 flex items-center justify-center font-bold font-mono mb-4 border border-white/30 dark:border-black/30">03</div>
+                <h4 class="text-sm font-bold m-0">State Transmutations</h4>
+                <p class="text-xs text-gray-300 dark:text-gray-600 m-0 mt-2">Instantaneous, non-eased color inversions on click.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 5: Risk Governance -->
+          <div id="section-risks" class="scroll-mt-32 mb-16">
+            <h3>5. The Accessibility & Contrast Warning Blocks</h3>
+            <p>
+              While Neo-Brutalism naturally excels at WCAG contrast requirements, the sheer density of borders can introduce new accessibility hazards if improperly executed.
+            </p>
+            
+            <!-- Warning Blocks -->
+            <div class="bg-yellow-50 dark:bg-[#2A2A0D] border-l-4 border-yellow-400 p-6 rounded-r-xl my-6 shadow-sm">
+              <h4 class="flex items-center gap-2 text-yellow-800 dark:text-yellow-400 font-bold m-0 text-base">
+                <i data-lucide="eye" class="w-5 h-5"></i> Color Vibration Traps
+              </h4>
+              <p class="text-yellow-900 dark:text-yellow-200 text-sm mt-3 m-0">
+                Placing pure black text (#000000) directly on top of highly saturated primary colors (like pure #FF0000 or #0000FF) can cause optical chromatic aberration (color vibration), making text painful to read for neurodivergent users.
+              </p>
+            </div>
+
+            <div class="bg-blue-50 dark:bg-[#0D182A] border-l-4 border-cyber-blue p-6 rounded-r-xl my-6 shadow-sm">
+              <h4 class="flex items-center gap-2 text-blue-800 dark:text-blue-400 font-bold m-0 text-base">
+                <i data-lucide="layout" class="w-5 h-5"></i> Boundary Overload
+              </h4>
+              <p class="text-blue-900 dark:text-blue-200 text-sm mt-3 m-0">
+                If every element on the screen possesses a 2px stroke, the visual hierarchy collapses entirely. You must selectively apply heavy strokes only to primary interactive conduits, leaving secondary data encapsulated in lighter 1px or invisible bounding boxes.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 6: Key Insights Console -->
+          <div id="section-insights" class="scroll-mt-32 mb-16">
+            <h3>6. The Key Insights</h3>
+            
+            <!-- Takeaways Box -->
+            <div class="p-8 border-[3px] border-gray-900 dark:border-white rounded-xl bg-[#F8F9FA] dark:bg-[#111827] my-8 shadow-[6px_6px_0px_#111] dark:shadow-[6px_6px_0px_#fff]">
+              <h4 class="font-black text-xl mb-6 text-gray-900 dark:text-white uppercase tracking-tight">Executive Takeaways</h4>
+              <ul class="space-y-4 m-0 p-0 list-none text-base">
+                <li class="flex items-start gap-3">
+                  <div class="mt-1 bg-gray-900 dark:bg-white rounded p-1"><i data-lucide="check" class="w-3 h-3 text-white dark:text-black"></i></div>
+                  <span class="text-gray-700 dark:text-gray-300"><strong>Function Over Form:</strong> Neo-brutalism prioritizes rapid data ingestion over aesthetic comfort.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <div class="mt-1 bg-gray-900 dark:bg-white rounded p-1"><i data-lucide="check" class="w-3 h-3 text-white dark:text-black"></i></div>
+                  <span class="text-gray-700 dark:text-gray-300"><strong>Performance Gains:</strong> Removing complex CSS filters (like wide-spread blur) measurably reduces client-side GPU rendering loads.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <div class="mt-1 bg-brand-red rounded p-1"><i data-lucide="check" class="w-3 h-3 text-white"></i></div>
+                  <span class="text-gray-700 dark:text-gray-300"><strong>The End of the Pastel Era:</strong> Enterprise tools must look like instruments, not consumer social networks.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div> <!-- End prose -->
+
+          <!-- Post-Read Engagement Hubs -->
+          
+          <!-- Newsletter CTA Ribbon -->
+          <div class="bg-[#0B0F19] dark:bg-white rounded-2xl p-8 lg:p-12 text-white dark:text-gray-900 my-16 relative overflow-hidden group">
+            <div class="absolute top-1/2 left-1/2 w-full max-w-[500px] h-[500px] bg-brand-red/10 rounded-full blur-[80px] pointer-events-none -translate-x-1/2 -translate-y-1/2 group-hover:bg-brand-red/20 transition-colors duration-700"></div>
+            <div class="relative z-10 max-w-2xl mx-auto text-center">
+              <h3 class="text-2xl lg:text-3xl font-black mb-4 tracking-tight text-white dark:text-gray-900">Subscribe to the Executive Briefing.</h3>
+              <p class="text-sm text-gray-400 dark:text-gray-600 mb-8">Get deep-dive architectural analysis and unvarnished market telemetry in your inbox every Tuesday.</p>
+              
+              <form class="flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); alert('Subscribed!');">
+                <div class="relative flex-1">
+                  <input type="email" id="email-input" class="peer block w-full px-4 pt-6 pb-2 text-sm text-white dark:text-gray-900 bg-white/10 dark:bg-black/5 border border-white/20 dark:border-black/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent transition-colors placeholder-transparent" placeholder="Business Email" required>
+                  <label for="email-input" class="absolute left-4 top-2 text-[10px] uppercase font-bold tracking-widest text-gray-400 dark:text-gray-500 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-4 peer-placeholder-shown:font-normal peer-focus:top-2 peer-focus:text-[10px] peer-focus:font-bold">Business Email</label>
+                </div>
+                <button type="submit" class="px-8 py-3 bg-brand-red hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-colors whitespace-nowrap">Subscribe Now</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Multi-Threaded Comment System -->
+          <div class="border-t border-gray-200 dark:border-gray-800 pt-12 mt-16 mb-24">
+            <h3 class="text-xl font-bold mb-8">Discussion (12)</h3>
+            
+            <!-- Comment Input -->
+            <div class="flex gap-4 mb-10">
+              <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex-shrink-0"></div>
+              <div class="flex-1">
+                <textarea class="w-full bg-gray-50 dark:bg-[#0D121F] border border-gray-200 dark:border-gray-800 rounded-xl p-4 text-sm focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-colors resize-none" rows="3" placeholder="Join the discussion..."></textarea>
+                <div class="flex justify-end mt-3">
+                  <button class="px-6 py-2 bg-gray-900 dark:bg-white text-white dark:text-black font-bold rounded-lg text-sm hover:bg-brand-red dark:hover:bg-brand-red dark:hover:text-white transition-colors">Post Comment</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Comment Thread -->
+            <div class="space-y-8">
+              <!-- Comment -->
+              <div class="flex gap-4">
+                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=50&h=50&q=80" alt="Avatar" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                  <div class="flex items-baseline gap-2 mb-1">
+                    <span class="font-bold text-sm text-gray-900 dark:text-white">James Hall</span>
+                    <span class="text-xs text-gray-500">4 hours ago</span>
+                  </div>
+                  <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed">I've been noticing this across the board. Linear was definitely the pioneer here, but now even standard B2B tooling is adopting the thick borders and high contrast. It makes parsing data so much faster.</p>
+                  <div class="flex items-center gap-4 text-xs font-bold text-gray-500">
+                    <button class="hover:text-brand-red flex items-center gap-1"><i data-lucide="arrow-up" class="w-3 h-3"></i> 45</button>
+                    <button class="hover:text-gray-900 dark:hover:text-white">Reply</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <button class="w-full py-4 mt-8 text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-brand-red border border-gray-200 dark:border-gray-800 rounded-xl transition-colors">Load More Comments</button>
+          </div>
+
+      </div>
+    </div>
+    
+    <!-- Related Articles Grid -->
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <h3 class="text-xl font-black mb-8 border-t border-gray-200 dark:border-gray-800 pt-12">Read Next</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href="the-great-re-platforming-enterprise-tech-evolving-2026.html" class="group block">
+          <div class="w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 relative bg-gray-100 dark:bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-3 left-3 px-2 py-1 bg-black/80 backdrop-blur text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded border border-white/10">Exclusive Feature</div>
+          </div>
+          <h4 class="font-bold text-lg leading-tight mb-2 group-hover:text-brand-red transition-colors">The Great Re-Platforming</h4>
+          <p class="text-sm text-gray-500 line-clamp-2">How enterprise tech is evolving in 2026.</p>
+        </a>
+        <a href="100m-seed-round.html" class="group block">
+          <div class="w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 relative bg-gray-100 dark:bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-3 left-3 px-2 py-1 bg-black/80 backdrop-blur text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded border border-white/10">Venture Capital</div>
+          </div>
+          <h4 class="font-bold text-lg leading-tight mb-2 group-hover:text-brand-red transition-colors">The $100M Seed Round</h4>
+          <p class="text-sm text-gray-500 line-clamp-2">How mega-funds are bypassing traditional Series A/B rounds.</p>
+        </a>
+        <a href="#" class="group block">
+          <div class="w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 relative bg-gray-100 dark:bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-3 left-3 px-2 py-1 bg-black/80 backdrop-blur text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded border border-white/10">AI & Innovation</div>
+          </div>
+          <h4 class="font-bold text-lg leading-tight mb-2 group-hover:text-brand-red transition-colors">The Agentic Horizon</h4>
+          <p class="text-sm text-gray-500 line-clamp-2">Why conversational interfaces are being replaced by autonomous agents.</p>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+
+  <!-- Application Logic -->
+  <script type="module" src="js/main.js"></script>
+  
+  <!-- Interactive Article Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Setup Scroll Progress Bar
+      const progressBar = document.getElementById('progress-bar');
+      window.addEventListener('scroll', () => {
+        const windowScroll = document.documentElement.scrollTop || document.body.scrollTop;
+        const documentHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = (windowScroll / documentHeight) * 100;
+        progressBar.style.width = scrollPercent + '%';
+      }, { passive: true });
+
+      // Scrollspy functionality for Table of Contents
+      const sections = document.querySelectorAll('main [id^="section-"]');
+      const navLinks = document.querySelectorAll('.toc-link');
+
+      const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('data-target') === entry.target.id) {
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(section => observer.observe(section));
+    });
+  </script>
+</body>
+</html>

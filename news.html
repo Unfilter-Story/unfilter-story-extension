@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News Hub | UnfilterStory</title>
+  <meta name="description" content="Real-time coverage of the global startup ecosystem, funding rounds, and AI innovation.">
+  
+  <script>
+    const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <app-header></app-header>
+
+  <!-- Filter Bar Matrix -->
+  <nav class="filter-matrix" aria-label="Category Filters">
+    <div class="container filter-matrix-inner">
+      <div class="filter-pills" role="tablist">
+        <a href="#" class="pill" role="tab" aria-selected="true" style="background-color: var(--color-primary); color: var(--color-bg-main); border-color: var(--color-primary);">All News</a>
+        <a href="startup-news.html" class="pill" role="tab" aria-selected="false">Startups</a>
+        <a href="funding-news.html" class="pill" role="tab" aria-selected="false">Funding</a>
+        <a href="ai-tech-news.html" class="pill" role="tab" aria-selected="false">AI & Tech</a>
+        <!-- <a href="#" class="pill" role="tab" aria-selected="false">Policy</a> -->
+        <a href="ecosystems-news.html" class="pill" role="tab" aria-selected="false">Ecosystems</a>
+      </div>
+      <form class="search-inline" onsubmit="event.preventDefault();">
+        <svg class="search-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <label for="hub-search" class="visually-hidden">Search News</label>
+        <input type="text" id="hub-search" class="search-inline-input" placeholder="Search news..." required>
+        <button type="reset" class="search-inline-reset" aria-label="Clear Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </nav>
+
+  <main class="container">
+    
+    <!-- Breaking News Hero Matrix -->
+    <section class="news-hero-grid" aria-labelledby="breaking-heading">
+      <h2 id="breaking-heading" class="visually-hidden">Breaking News</h2>
+      
+      <!-- Primary Breaking -->
+      <article class="hero-primary" style="background: linear-gradient(to bottom, rgba(17,17,17,0.1) 0%, rgba(17,17,17,0.95) 100%), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80') center / cover; padding: var(--spacing-8); border-radius: 12px; border: none; min-height: 400px; display: flex; flex-direction: column; justify-content: flex-end;">
+        <span class="card-tag" style="color: var(--color-accent); margin-bottom: var(--spacing-4);">Breaking</span>
+        <h3 class="card-title" style="font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: var(--spacing-4);"><a href="article.html?id=global-regulators" style="color: #fff;">Global Regulators Announce Unified AI Safety Framework</a></h3>
+        <p style="font-size: 1.125rem; color: #E5E5E5; margin-bottom: var(--spacing-6); max-width: 800px;">In a landmark decision, 15 nations have agreed to a common standard for testing and deploying frontier AI models, potentially reshaping the global tech landscape.</p>
+        <div class="card-meta" style="border-top: none; padding-top: 0; justify-content: flex-start; gap: var(--spacing-4);">
+          <div class="author-meta"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80" class="author-avatar" style="border: 2px solid #fff;" alt="Policy Desk"><span style="font-weight: 600; color: #fff;">Policy Desk</span></div>
+          <span style="color: #A1A1AA;">Just now</span>
+        </div>
+      </article>
+
+      <!-- Secondary Breaking Sub-stream -->
+      <div class="feed-stacked" style="justify-content: center; display: flex; flex-direction: column; gap: var(--spacing-6);">
+        <article class="feed-stacked-item" style="display: flex; gap: var(--spacing-4); align-items: center; padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--color-border);">
+          <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=200&q=80" alt="Stock market trends" style="width: 80px; height: 80px; border-radius: 8px; object-fit: cover; flex-shrink: 0;">
+          <div>
+            <span class="card-tag">Market Update</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-1); font-weight: 700; line-height: 1.4;"><a href="article.html?id=nasdaq-surge">Tech Valuations See Stabilization in Q3</a></h4>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">15 min ago</span>
+          </div>
+        </article>
+        <article class="feed-stacked-item" style="display: flex; gap: var(--spacing-4); align-items: center; padding-bottom: var(--spacing-4); border-bottom: 1px solid var(--color-border);">
+          <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=200&q=80" alt="Quantum computing chip" style="width: 80px; height: 80px; border-radius: 8px; object-fit: cover; flex-shrink: 0;">
+          <div>
+            <span class="card-tag">Funding</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-1); font-weight: 700; line-height: 1.4;"><a href="article.html?id=100m-seed-round">Quantum Startup Q-Core Exits Stealth with $80M Series A</a></h4>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">45 min ago</span>
+          </div>
+        </article>
+        <article class="feed-stacked-item" style="display: flex; gap: var(--spacing-4); align-items: center;">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=200&q=80" alt="Data flow representation" style="width: 80px; height: 80px; border-radius: 8px; object-fit: cover; flex-shrink: 0;">
+          <div>
+            <span class="card-tag">M&A</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-1); font-weight: 700; line-height: 1.4;"><a href="article.html?id=stripe-acquires">Salesforce to Acquire Productivity Tool 'Flow' for $1.2B</a></h4>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">1 hr ago</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Main Content Hub Grid -->
+    <div class="hub-grid">
+      
+      <!-- Primary News Stream -->
+      <section class="hub-primary" aria-label="Latest News Stream">
+        
+        <article class="card-news">
+          <div class="img-zoom-wrapper">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="Hardware circuit board">
+          </div>
+          <div>
+            <span class="card-tag">Startups</span>
+            <h3 class="card-title"><a href="article.html?id=the-pivot-to-hardware">The Pivot to Hardware: Why Software Startups are Building Physical Products</a></h3>
+            <p class="card-excerpt line-clamp-2">As software margins compress, a new wave of founders is finding defensibility in integrated hardware and software ecosystems, challenging the conventional wisdom of the past decade.</p>
+            <div class="card-meta">
+              <div class="author-meta"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" class="author-avatar" alt="Elena Rodriguez"><span>Elena Rodriguez</span></div>
+              <span>2026-06-12</span>
+              <span>4 min read</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-news">
+          <div class="img-zoom-wrapper">
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" alt="Server room and databases">
+          </div>
+          <div>
+            <span class="card-tag">AI & Tech</span>
+            <h3 class="card-title"><a href="article.html?id=vector-databases">Vector Databases Secure Record Funding Amid AI Boom</a></h3>
+            <p class="card-excerpt line-clamp-2">The infrastructure supporting Large Language Models is becoming the most lucrative layer of the modern tech stack, with vector DB providers seeing massive valuation markups.</p>
+            <div class="card-meta">
+              <div class="author-meta"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" class="author-avatar" alt="Marcus Reid"><span>Marcus Reid</span></div>
+              <span>2026-06-11</span>
+              <span>3 min read</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-news">
+          <div class="img-zoom-wrapper">
+            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80" alt="Austin tech city skyline">
+          </div>
+          <div>
+            <span class="card-tag">Ecosystems</span>
+            <h3 class="card-title"><a href="article.html?id=austin-tech">Austin's Tech Scene Matures Beyond the Hype</a></h3>
+            <p class="card-excerpt line-clamp-2">Five years after the great migration, the Texas capital has established its own distinct identity, focusing on deep tech, defense, and sustainable infrastructure startups.</p>
+            <div class="card-meta">
+              <div class="author-meta"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" class="author-avatar" alt="David Chen"><span>David Chen</span></div>
+              <span>2026-06-11</span>
+              <span>6 min read</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Pagination UI -->
+        <nav class="pagination" aria-label="News Pagination">
+          <a href="#" class="page-link" aria-disabled="true" aria-label="Previous Page">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </a>
+          <a href="#" class="page-link" aria-current="page">1</a>
+          <a href="#" class="page-link">2</a>
+          <a href="#" class="page-link">3</a>
+          <span style="color: var(--color-text-mute);">...</span>
+          <a href="#" class="page-link">12</a>
+          <a href="#" class="page-link" aria-label="Next Page">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+        </nav>
+
+      </section>
+
+      <!-- Trending Articles Sidebar (Secondary) -->
+      <aside class="hub-secondary sticky-sidebar" aria-labelledby="trending-sidebar-heading">
+        <div class="trending-dark-box">
+          <h2 id="trending-sidebar-heading" style="font-size: 1.25rem; margin-bottom: var(--spacing-6); padding-bottom: var(--spacing-4);">Trending Today</h2>
+          
+          <article class="card-trending">
+            <div class="trending-number">01</div>
+            <div>
+              <h3 class="card-title"><a href="#">The Remote Work Consensus is Fracturing</a></h3>
+              <span style="font-size: 0.875rem; color: var(--color-text-mute);">5 min read</span>
+            </div>
+          </article>
+          
+          <article class="card-trending">
+            <div class="trending-number">02</div>
+            <div>
+              <h3 class="card-title"><a href="#">Why Developers Are Rejecting Complex Build Tools</a></h3>
+              <span style="font-size: 0.875rem; color: var(--color-text-mute);">7 min read</span>
+            </div>
+          </article>
+
+          <article class="card-trending">
+            <div class="trending-number">03</div>
+            <div>
+              <h3 class="card-title"><a href="#">The Economics of Open Source in the AI Era</a></h3>
+              <span style="font-size: 0.875rem; color: var(--color-text-mute);">8 min read</span>
+            </div>
+          </article>
+
+          <article class="card-trending">
+            <div class="trending-number">04</div>
+            <div>
+              <h3 class="card-title"><a href="#">Series A Valuations Revert to 2019 Means</a></h3>
+              <span style="font-size: 0.875rem; color: var(--color-text-mute);">4 min read</span>
+            </div>
+          </article>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+</body>
+</html>

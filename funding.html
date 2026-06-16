@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funding Intelligence | UnfilterStory</title>
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    function syncTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    }
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'brand-red': '#DC2626',
+            'slate-dark': '#0B0F19',
+            'slate-card': '#0D121F',
+            'slate-border': '#1E293B',
+            'slate-gradient': '#0F172A',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            serif: ['Playfair Display', 'serif'],
+          },
+          animation: {
+            'ticker': 'ticker 30s linear infinite',
+          },
+          keyframes: {
+            ticker: {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(-50%)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    .carousel-container { scroll-snap-type: x mandatory; }
+    .carousel-slide { scroll-snap-align: center; }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-slate-dark text-gray-900 dark:text-white transition-colors duration-300 font-sans antialiased overflow-x-hidden">
+  
+  <app-header></app-header>
+
+  <main>
+    <!-- Section 1: The Funding Hero Dashboard -->
+    <section class="w-full bg-white dark:bg-slate-gradient relative pt-12 pb-16 lg:pt-16 lg:pb-24 overflow-hidden border-b border-gray-200 dark:border-slate-border transition-colors duration-300">
+      <!-- Decor -->
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-[0.02] dark:opacity-50"></div>
+      
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Left Column: The Intelligence Directive -->
+          <div class="lg:col-span-7 flex flex-col gap-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 dark:bg-white/10 backdrop-blur-md rounded-full border border-gray-200 dark:border-white/20 w-max transition-colors">
+              <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
+              <span class="text-[10px] font-bold text-gray-900 dark:text-white tracking-widest uppercase">Startup Funding Intelligence</span>
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl lg:text-[48px] font-black text-gray-900 dark:text-white leading-tight tracking-tight transition-colors">
+              Track Capital.<br>Discover Unicorns.<br>Follow Startup Investments.
+            </h1>
+            
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl leading-relaxed transition-colors">
+              Real-time terminal for venture capital activity. Filter across seed rounds, mega-series, and strategic M&A to spot market momentum before it makes headlines.
+            </p>
+            
+            <div class="flex flex-wrap items-center gap-4 mt-4">
+              <button onclick="window.location.href='funding-news.html'" class="px-8 py-3.5 rounded-xl bg-brand-red text-white font-bold hover:bg-red-700 hover:-translate-y-0.5 transition-all duration-300 shadow-lg hover:shadow-[0_10px_20px_rgba(220,38,38,0.3)]">
+                Explore Funding News
+              </button>
+              <button class="px-8 py-3.5 rounded-xl bg-gray-50 dark:bg-white/10 backdrop-blur-md text-gray-900 dark:text-white font-bold hover:bg-gray-200 dark:hover:bg-white dark:hover:text-black border border-gray-200 dark:border-white/20 transition-all duration-300">
+                View Funding Tracker
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: The Metric Terminal -->
+          <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+            <!-- Card 1 -->
+            <div class="bg-white dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/10 rounded-[18px] p-6 hover:shadow-md dark:hover:shadow-none dark:hover:bg-white/10 transition-all duration-300">
+              <div class="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 transition-colors">Capital Raised (Month)</div>
+              <div class="text-3xl font-black text-gray-900 dark:text-white flex items-baseline gap-1 transition-colors">
+                $<span class="count-up" data-target="2.5">0</span>B
+              </div>
+              <div class="text-[10px] text-green-600 dark:text-green-400 mt-2 font-mono transition-colors">+14% vs Last Month</div>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-white dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/10 rounded-[18px] p-6 hover:shadow-md dark:hover:shadow-none dark:hover:bg-white/10 transition-all duration-300">
+              <div class="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 transition-colors">Funding Deals</div>
+              <div class="text-3xl font-black text-gray-900 dark:text-white transition-colors">
+                <span class="count-up" data-target="120">0</span>
+              </div>
+              <div class="text-[10px] text-green-600 dark:text-green-400 mt-2 font-mono transition-colors">Active Transactions</div>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-white dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/10 rounded-[18px] p-6 hover:shadow-md dark:hover:shadow-none dark:hover:bg-white/10 transition-all duration-300">
+              <div class="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 transition-colors">New Startups Funded</div>
+              <div class="text-3xl font-black text-gray-900 dark:text-white transition-colors">
+                <span class="count-up" data-target="25">0</span>
+              </div>
+              <div class="text-[10px] text-brand-red mt-2 font-mono">Seed & Pre-Seed</div>
+            </div>
+            <!-- Card 4 -->
+            <div class="bg-white dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/10 rounded-[18px] p-6 hover:shadow-md dark:hover:shadow-none dark:hover:bg-white/10 transition-all duration-300">
+              <div class="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-widest mb-2 transition-colors">New Unicorns</div>
+              <div class="text-3xl font-black text-gray-900 dark:text-white transition-colors">
+                <span class="count-up" data-target="15">0</span>
+              </div>
+              <div class="text-[10px] text-gray-500 mt-2 font-mono transition-colors">Valuations > $1B</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Funding Market Ticker -->
+    <div class="w-full bg-gray-900 border-b border-gray-800 py-3 overflow-hidden sticky top-[72px] z-40">
+      <div class="flex w-[200%] animate-ticker hover:[animation-play-state:paused]">
+        <!-- Ticker Content 1 -->
+        <div class="flex w-1/2 justify-around items-center text-sm font-mono text-gray-300">
+          <span class="flex items-center gap-2"><strong class="text-white">Perplexity</strong> <span class="text-brand-red font-bold">$100M</span> <span class="text-gray-500">| Series C | Anthropic</span></span>
+          <span class="text-gray-700">&bull;</span>
+          <span class="flex items-center gap-2"><strong class="text-white">PhysicsWallah</strong> <span class="text-brand-red font-bold">₹500 Cr</span> <span class="text-gray-500">| Series B</span></span>
+          <span class="text-gray-700">&bull;</span>
+          <span class="flex items-center gap-2"><strong class="text-white">Stripe</strong> <span class="text-brand-red font-bold">$2B</span> <span class="text-gray-500">| Strategic</span></span>
+          <span class="text-gray-700">&bull;</span>
+          <span class="flex items-center gap-2"><strong class="text-white">Scale AI</strong> <span class="text-brand-red font-bold">$400M</span> <span class="text-gray-500">| Series F | Founders Fund</span></span>
+        </div>
+        <!-- Duplicate for seamless scroll -->
+        <div class="flex w-1/2 justify-around items-center text-sm font-mono text-gray-300">
+          <span class="flex items-center gap-2"><strong class="text-white">Perplexity</strong> <span class="text-brand-red font-bold">$100M</span> <span class="text-gray-500">| Series C | Anthropic</span></span>
+          <span class="text-gray-700">&bull;</span>
+          <span class="flex items-center gap-2"><strong class="text-white">PhysicsWallah</strong> <span class="text-brand-red font-bold">₹500 Cr</span> <span class="text-gray-500">| Series B</span></span>
+          <span class="text-gray-700">&bull;</span>
+          <span class="flex items-center gap-2"><strong class="text-white">Stripe</strong> <span class="text-brand-red font-bold">$2B</span> <span class="text-gray-500">| Strategic</span></span>
+          <span class="text-gray-700">&bull;</span>
+          <span class="flex items-center gap-2"><strong class="text-white">Scale AI</strong> <span class="text-brand-red font-bold">$400M</span> <span class="text-gray-500">| Series F | Founders Fund</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Featured Funding Story -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8 md:pt-12 md:pb-12 lg:pt-16 lg:pb-16">
+      <div class="max-w-[1280px] mx-auto">
+        <div class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[20px] overflow-hidden flex flex-col lg:flex-row h-auto lg:h-[520px] shadow-xl hover:shadow-2xl transition-all duration-300">
+          
+          <!-- Left: Cover Image -->
+          <div class="w-full lg:w-1/2 h-64 lg:h-full relative overflow-hidden group">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80" alt="Featured Story" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-6 left-6">
+              <span class="px-3 py-1 bg-brand-red text-white text-[10px] font-bold uppercase tracking-widest rounded-md">Series C</span>
+            </div>
+          </div>
+
+          <!-- Right: Content Cluster -->
+          <div class="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center p-2 border border-gray-200 dark:border-gray-700">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 22h20L12 2z"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-900 dark:text-white">Apex Robotics</h3>
+                <p class="text-xs text-gray-500">San Francisco, CA</p>
+              </div>
+            </div>
+
+            <h2 class="text-3xl lg:text-4xl font-black text-gray-900 dark:text-white leading-tight mb-4 hover:text-brand-red transition-colors cursor-pointer" onclick="window.location.href='article.html'">
+              Apex Robotics Secures $150M to Scale Autonomous Manufacturing
+            </h2>
+            
+            <div class="flex flex-wrap items-center gap-y-2 gap-x-6 mb-6 font-mono text-sm">
+              <div>
+                <span class="text-gray-500 text-xs">Amount Raised</span>
+                <div class="font-bold text-brand-red text-xl">$150,000,000</div>
+              </div>
+              <div>
+                <span class="text-gray-500 text-xs">Lead Investors</span>
+                <div class="font-bold text-gray-900 dark:text-white">Sequoia Capital, a16z</div>
+              </div>
+            </div>
+
+            <p class="text-gray-600 dark:text-gray-400 mb-8 line-clamp-3 leading-relaxed">
+              The round brings Apex Robotics' valuation to $1.2B, making it the latest unicorn in the industrial automation space. The capital will be deployed to expand their flagship facility in Texas and accelerate the development of next-generation tactile sensors.
+            </p>
+
+            <div class="mt-auto flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-6">
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-medium text-gray-900 dark:text-white">Oct 24, 2026</span>
+                <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+                <span class="text-sm text-gray-500">6 min read</span>
+              </div>
+              <a href="article.html" class="flex items-center gap-2 font-bold text-brand-red hover:text-red-700 group transition-colors">
+                Read Full Story <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+              </a>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 10: Interactive Taxonomy Filter Bar -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 sticky top-[120px] z-30">
+      <div class="max-w-[1280px] mx-auto bg-white/80 dark:bg-slate-dark/80 backdrop-blur-md py-4 border-b border-gray-200 dark:border-slate-border">
+        <div class="flex items-center gap-3 overflow-x-auto hide-scrollbar" id="taxonomy-filters">
+          <button class="filter-btn active px-5 py-2 rounded-full font-bold text-sm bg-gray-900 text-white dark:bg-white dark:text-black whitespace-nowrap transition-all" data-filter="all">All</button>
+          <button class="filter-btn px-5 py-2 rounded-full font-medium text-sm border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-900 dark:hover:border-white whitespace-nowrap transition-all" data-filter="seed">Seed & Pre-Seed</button>
+          <button class="filter-btn px-5 py-2 rounded-full font-medium text-sm border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-900 dark:hover:border-white whitespace-nowrap transition-all" data-filter="series-a">Series A</button>
+          <button class="filter-btn px-5 py-2 rounded-full font-medium text-sm border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-900 dark:hover:border-white whitespace-nowrap transition-all" data-filter="series-b">Series B</button>
+          <button class="filter-btn px-5 py-2 rounded-full font-medium text-sm border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-900 dark:hover:border-white whitespace-nowrap transition-all" data-filter="series-c">Series C+</button>
+          <button class="filter-btn px-5 py-2 rounded-full font-medium text-sm border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-900 dark:hover:border-white whitespace-nowrap transition-all" data-filter="strategic">Strategic / M&A</button>
+          <button class="filter-btn px-5 py-2 rounded-full font-medium text-sm border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-900 dark:hover:border-white whitespace-nowrap transition-all" data-filter="ipo">IPO</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: The Funding Tracker Console -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 md:mb-12 lg:mb-16">
+      <div class="max-w-[1280px] mx-auto">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-2xl font-black text-gray-900 dark:text-white">Funding Tracker Ledger</h2>
+          <a href="#" class="text-sm font-bold text-gray-500 hover:text-brand-red transition-colors flex items-center gap-1">View Full Database <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Ledger Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" id="funding-ledger">
+          
+          <!-- Ledger Item -->
+          <article class="ledger-item bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 hover:shadow-lg dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.05)] transition-all duration-300 flex flex-col gap-4 cursor-pointer" data-category="series-b">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center font-bold text-lg text-brand-red">N</div>
+                <div>
+                  <h4 class="font-bold text-gray-900 dark:text-white">Nexus Data</h4>
+                  <span class="text-[10px] uppercase font-bold text-gray-500 tracking-wider">AI Infrastructure</span>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-bold rounded">Series B</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mt-2">
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Amount Raised</span>
+                <span class="font-mono font-bold text-lg text-gray-900 dark:text-white">$65.0M</span>
+              </div>
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Lead Investor</span>
+                <span class="font-bold text-sm text-gray-900 dark:text-white truncate block">Lightspeed</span>
+              </div>
+            </div>
+            <div class="text-xs text-gray-400 mt-2 text-right">Oct 24, 2026</div>
+          </article>
+
+          <!-- Ledger Item -->
+          <article class="ledger-item bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 hover:shadow-lg transition-all duration-300 flex flex-col gap-4 cursor-pointer" data-category="seed">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center font-bold text-lg text-brand-red">V</div>
+                <div>
+                  <h4 class="font-bold text-gray-900 dark:text-white">Vortex Space</h4>
+                  <span class="text-[10px] uppercase font-bold text-gray-500 tracking-wider">Aerospace</span>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-bold rounded">Seed</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mt-2">
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Amount Raised</span>
+                <span class="font-mono font-bold text-lg text-gray-900 dark:text-white">$4.5M</span>
+              </div>
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Lead Investor</span>
+                <span class="font-bold text-sm text-gray-900 dark:text-white truncate block">Y Combinator</span>
+              </div>
+            </div>
+            <div class="text-xs text-gray-400 mt-2 text-right">Oct 23, 2026</div>
+          </article>
+
+          <!-- Ledger Item -->
+          <article class="ledger-item bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 hover:shadow-lg transition-all duration-300 flex flex-col gap-4 cursor-pointer" data-category="strategic">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center font-bold text-lg text-brand-red">F</div>
+                <div>
+                  <h4 class="font-bold text-gray-900 dark:text-white">FinStack</h4>
+                  <span class="text-[10px] uppercase font-bold text-gray-500 tracking-wider">FinTech</span>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-bold rounded">Strategic</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mt-2">
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Amount Raised</span>
+                <span class="font-mono font-bold text-lg text-gray-900 dark:text-white">$210.0M</span>
+              </div>
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Lead Investor</span>
+                <span class="font-bold text-sm text-gray-900 dark:text-white truncate block">Stripe</span>
+              </div>
+            </div>
+            <div class="text-xs text-gray-400 mt-2 text-right">Oct 22, 2026</div>
+          </article>
+
+          <!-- Ledger Item -->
+          <article class="ledger-item bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 hover:shadow-lg transition-all duration-300 flex flex-col gap-4 cursor-pointer" data-category="series-a">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center font-bold text-lg text-brand-red">C</div>
+                <div>
+                  <h4 class="font-bold text-gray-900 dark:text-white">CarbonClear</h4>
+                  <span class="text-[10px] uppercase font-bold text-gray-500 tracking-wider">ClimateTech</span>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-bold rounded">Series A</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mt-2">
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Amount Raised</span>
+                <span class="font-mono font-bold text-lg text-gray-900 dark:text-white">$15.0M</span>
+              </div>
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Lead Investor</span>
+                <span class="font-bold text-sm text-gray-900 dark:text-white truncate block">Khosla Ventures</span>
+              </div>
+            </div>
+            <div class="text-xs text-gray-400 mt-2 text-right">Oct 20, 2026</div>
+          </article>
+          
+          <!-- Ledger Item -->
+          <article class="ledger-item bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 hover:shadow-lg transition-all duration-300 flex flex-col gap-4 cursor-pointer" data-category="series-c">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center font-bold text-lg text-brand-red">M</div>
+                <div>
+                  <h4 class="font-bold text-gray-900 dark:text-white">MedAssist</h4>
+                  <span class="text-[10px] uppercase font-bold text-gray-500 tracking-wider">HealthTech</span>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-bold rounded">Series C</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mt-2">
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Amount Raised</span>
+                <span class="font-mono font-bold text-lg text-gray-900 dark:text-white">$85.0M</span>
+              </div>
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Lead Investor</span>
+                <span class="font-bold text-sm text-gray-900 dark:text-white truncate block">Andreessen Horowitz</span>
+              </div>
+            </div>
+            <div class="text-xs text-gray-400 mt-2 text-right">Oct 19, 2026</div>
+          </article>
+          
+          <!-- Ledger Item -->
+          <article class="ledger-item bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 hover:shadow-lg transition-all duration-300 flex flex-col gap-4 cursor-pointer" data-category="ipo">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center font-bold text-lg text-brand-red">D</div>
+                <div>
+                  <h4 class="font-bold text-gray-900 dark:text-white">DataBrick</h4>
+                  <span class="text-[10px] uppercase font-bold text-gray-500 tracking-wider">Big Data</span>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-bold rounded">IPO</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mt-2">
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Amount Raised</span>
+                <span class="font-mono font-bold text-lg text-gray-900 dark:text-white">$1.2B</span>
+              </div>
+              <div>
+                <span class="block text-[10px] text-gray-500 uppercase tracking-widest mb-1">Lead Investor</span>
+                <span class="font-bold text-sm text-gray-900 dark:text-white truncate block">Public Market</span>
+              </div>
+            </div>
+            <div class="text-xs text-gray-400 mt-2 text-right">Oct 18, 2026</div>
+          </article>
+
+        </div>
+        
+        <div class="mt-8 text-center" id="load-more-ledger-container">
+          <button id="load-more-ledger" class="px-8 py-3 rounded-xl border border-gray-300 dark:border-gray-700 font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-border hover:text-brand-red dark:hover:text-brand-red transition-all shadow-sm">
+            Load More Deals
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Trending Funding Deals (Velocity Slider Carousel) -->
+    <section class="bg-gray-50 dark:bg-[#080B13] py-12 lg:py-16 border-y border-gray-200 dark:border-gray-800">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1280px] mx-auto">
+          <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-8">Trending Funding Velocity</h2>
+          
+          <div class="relative group overflow-hidden pb-6">
+            <div class="flex w-max animate-ticker hover:[animation-play-state:paused]">
+              <!-- Block 1 -->
+              <div class="flex gap-6 pr-6 flex-shrink-0">
+                
+                <!-- Velocity Card -->
+                <article class="carousel-slide w-[280px] sm:w-[320px] bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-6 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] transition-all duration-300 cursor-pointer group/card flex flex-col" onclick="window.location.href='article.html'">
+                  <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center font-bold text-xl text-gray-900 dark:text-white">O</div>
+                    <span class="px-2 py-1 bg-red-100 text-brand-red text-[10px] font-bold rounded uppercase tracking-widest flex items-center gap-1"><i data-lucide="trending-up" class="w-3 h-3"></i> Hot</span>
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1 group-hover/card:text-brand-red transition-colors">OmniSpace</h3>
+                  <p class="text-xs text-gray-500 mb-4">DeepTech</p>
+                  <div class="mt-auto">
+                    <div class="font-mono text-2xl font-black text-gray-900 dark:text-white mb-1">$80M</div>
+                    <p class="text-xs text-gray-500 flex justify-between items-center">Series B &bull; Index Ventures <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red opacity-0 group-hover/card:opacity-100 group-hover/card:translate-x-1 transition-all"></i></p>
+                  </div>
+                </article>
+
+                <!-- Velocity Card -->
+                <article class="carousel-slide w-[280px] sm:w-[320px] bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-6 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] transition-all duration-300 cursor-pointer group/card flex flex-col" onclick="window.location.href='article.html'">
+                  <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center font-bold text-xl text-gray-900 dark:text-white">L</div>
+                    <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] font-bold rounded uppercase tracking-widest">Trending</span>
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1 group-hover/card:text-brand-red transition-colors">LayerZero</h3>
+                  <p class="text-xs text-gray-500 mb-4">Web3 Infrastructure</p>
+                  <div class="mt-auto">
+                    <div class="font-mono text-2xl font-black text-gray-900 dark:text-white mb-1">$120M</div>
+                    <p class="text-xs text-gray-500 flex justify-between items-center">Series C &bull; a16z <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red opacity-0 group-hover/card:opacity-100 group-hover/card:translate-x-1 transition-all"></i></p>
+                  </div>
+                </article>
+                
+                <!-- Velocity Card -->
+                <article class="carousel-slide w-[280px] sm:w-[320px] bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-6 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] transition-all duration-300 cursor-pointer group/card flex flex-col" onclick="window.location.href='article.html'">
+                  <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center font-bold text-xl text-gray-900 dark:text-white">C</div>
+                    <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] font-bold rounded uppercase tracking-widest">Trending</span>
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1 group-hover/card:text-brand-red transition-colors">CoreWeave</h3>
+                  <p class="text-xs text-gray-500 mb-4">Cloud Compute</p>
+                  <div class="mt-auto">
+                    <div class="font-mono text-2xl font-black text-gray-900 dark:text-white mb-1">$2.3B</div>
+                    <p class="text-xs text-gray-500 flex justify-between items-center">Debt Facility &bull; Magnetar <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red opacity-0 group-hover/card:opacity-100 group-hover/card:translate-x-1 transition-all"></i></p>
+                  </div>
+                </article>
+
+                <!-- Velocity Card -->
+                <article class="carousel-slide w-[280px] sm:w-[320px] bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-6 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] transition-all duration-300 cursor-pointer group/card flex flex-col" onclick="window.location.href='article.html'">
+                  <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center font-bold text-xl text-gray-900 dark:text-white">G</div>
+                    <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] font-bold rounded uppercase tracking-widest">Trending</span>
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1 group-hover/card:text-brand-red transition-colors">Glean</h3>
+                  <p class="text-xs text-gray-500 mb-4">Enterprise Search</p>
+                  <div class="mt-auto">
+                    <div class="font-mono text-2xl font-black text-gray-900 dark:text-white mb-1">$200M</div>
+                    <p class="text-xs text-gray-500 flex justify-between items-center">Series D &bull; Kleiner Perkins <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red opacity-0 group-hover/card:opacity-100 group-hover/card:translate-x-1 transition-all"></i></p>
+                  </div>
+                </article>
+
+                <!-- Velocity Card -->
+                <article class="carousel-slide w-[280px] sm:w-[320px] bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-6 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] transition-all duration-300 cursor-pointer group/card flex flex-col" onclick="window.location.href='article.html'">
+                  <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center font-bold text-xl text-gray-900 dark:text-white">A</div>
+                    <span class="px-2 py-1 bg-red-100 text-brand-red text-[10px] font-bold rounded uppercase tracking-widest flex items-center gap-1"><i data-lucide="trending-up" class="w-3 h-3"></i> Hot</span>
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1 group-hover/card:text-brand-red transition-colors">Anthropic</h3>
+                  <p class="text-xs text-gray-500 mb-4">Generative AI</p>
+                  <div class="mt-auto">
+                    <div class="font-mono text-2xl font-black text-gray-900 dark:text-white mb-1">$4.0B</div>
+                    <p class="text-xs text-gray-500 flex justify-between items-center">Strategic &bull; Amazon <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red opacity-0 group-hover/card:opacity-100 group-hover/card:translate-x-1 transition-all"></i></p>
+                  </div>
+                </article>
+
+              </div>
+
+              <!-- Block 2 (Duplicate) -->
+              <div class="flex gap-6 pr-6 flex-shrink-0">
+                <!-- Velocity Card -->
+                <article class="carousel-slide w-[280px] sm:w-[320px] bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-6 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] transition-all duration-300 cursor-pointer group/card flex flex-col" onclick="window.location.href='article.html'">
+                  <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center font-bold text-xl text-gray-900 dark:text-white">O</div>
+                    <span class="px-2 py-1 bg-red-100 text-brand-red text-[10px] font-bold rounded uppercase tracking-widest flex items-center gap-1"><i data-lucide="trending-up" class="w-3 h-3"></i> Hot</span>
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1 group-hover/card:text-brand-red transition-colors">OmniSpace</h3>
+                  <p class="text-xs text-gray-500 mb-4">DeepTech</p>
+                  <div class="mt-auto">
+                    <div class="font-mono text-2xl font-black text-gray-900 dark:text-white mb-1">$80M</div>
+                    <p class="text-xs text-gray-500 flex justify-between items-center">Series B &bull; Index Ventures <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red opacity-0 group-hover/card:opacity-100 group-hover/card:translate-x-1 transition-all"></i></p>
+                  </div>
+                </article>
+
+                <!-- Velocity Card -->
+                <article class="carousel-slide w-[280px] sm:w-[320px] bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-6 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] transition-all duration-300 cursor-pointer group/card flex flex-col" onclick="window.location.href='article.html'">
+                  <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center font-bold text-xl text-gray-900 dark:text-white">L</div>
+                    <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] font-bold rounded uppercase tracking-widest">Trending</span>
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1 group-hover/card:text-brand-red transition-colors">LayerZero</h3>
+                  <p class="text-xs text-gray-500 mb-4">Web3 Infrastructure</p>
+                  <div class="mt-auto">
+                    <div class="font-mono text-2xl font-black text-gray-900 dark:text-white mb-1">$120M</div>
+                    <p class="text-xs text-gray-500 flex justify-between items-center">Series C &bull; a16z <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red opacity-0 group-hover/card:opacity-100 group-hover/card:translate-x-1 transition-all"></i></p>
+                  </div>
+                </article>
+                
+                <!-- Velocity Card -->
+                <article class="carousel-slide w-[280px] sm:w-[320px] bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-6 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] transition-all duration-300 cursor-pointer group/card flex flex-col" onclick="window.location.href='article.html'">
+                  <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center font-bold text-xl text-gray-900 dark:text-white">C</div>
+                    <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] font-bold rounded uppercase tracking-widest">Trending</span>
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1 group-hover/card:text-brand-red transition-colors">CoreWeave</h3>
+                  <p class="text-xs text-gray-500 mb-4">Cloud Compute</p>
+                  <div class="mt-auto">
+                    <div class="font-mono text-2xl font-black text-gray-900 dark:text-white mb-1">$2.3B</div>
+                    <p class="text-xs text-gray-500 flex justify-between items-center">Debt Facility &bull; Magnetar <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red opacity-0 group-hover/card:opacity-100 group-hover/card:translate-x-1 transition-all"></i></p>
+                  </div>
+                </article>
+
+                <!-- Velocity Card -->
+                <article class="carousel-slide w-[280px] sm:w-[320px] bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-6 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] transition-all duration-300 cursor-pointer group/card flex flex-col" onclick="window.location.href='article.html'">
+                  <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center font-bold text-xl text-gray-900 dark:text-white">G</div>
+                    <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] font-bold rounded uppercase tracking-widest">Trending</span>
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1 group-hover/card:text-brand-red transition-colors">Glean</h3>
+                  <p class="text-xs text-gray-500 mb-4">Enterprise Search</p>
+                  <div class="mt-auto">
+                    <div class="font-mono text-2xl font-black text-gray-900 dark:text-white mb-1">$200M</div>
+                    <p class="text-xs text-gray-500 flex justify-between items-center">Series D &bull; Kleiner Perkins <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red opacity-0 group-hover/card:opacity-100 group-hover/card:translate-x-1 transition-all"></i></p>
+                  </div>
+                </article>
+
+                <!-- Velocity Card -->
+                <article class="carousel-slide w-[280px] sm:w-[320px] bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-6 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(220,38,38,0.15)] transition-all duration-300 cursor-pointer group/card flex flex-col" onclick="window.location.href='article.html'">
+                  <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center font-bold text-xl text-gray-900 dark:text-white">A</div>
+                    <span class="px-2 py-1 bg-red-100 text-brand-red text-[10px] font-bold rounded uppercase tracking-widest flex items-center gap-1"><i data-lucide="trending-up" class="w-3 h-3"></i> Hot</span>
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-1 group-hover/card:text-brand-red transition-colors">Anthropic</h3>
+                  <p class="text-xs text-gray-500 mb-4">Generative AI</p>
+                  <div class="mt-auto">
+                    <div class="font-mono text-2xl font-black text-gray-900 dark:text-white mb-1">$4.0B</div>
+                    <p class="text-xs text-gray-500 flex justify-between items-center">Strategic &bull; Amazon <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red opacity-0 group-hover/card:opacity-100 group-hover/card:translate-x-1 transition-all"></i></p>
+                  </div>
+                </article>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Capital Category Hubs & Section 8: Heatmap Side-by-Side Grid -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:pt-12 md:pb-20 lg:pt-16 lg:pb-[120px]">
+      <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <!-- Category Hubs (8 columns wide) -->
+        <div class="lg:col-span-8">
+          <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-8">Capital Categories</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <!-- Category Box -->
+            <a href="#" class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 flex flex-col items-center justify-center text-center hover:bg-gradient-to-br hover:from-red-50 hover:to-white dark:hover:from-[#1A0B10] dark:hover:to-slate-card hover:border-brand-red/50 transition-all duration-300 group">
+              <i data-lucide="cpu" class="w-8 h-8 text-gray-400 group-hover:text-brand-red group-hover:scale-110 transition-all mb-3"></i>
+              <h4 class="font-bold text-sm text-gray-900 dark:text-white mb-1">AI</h4>
+              <span class="text-xs text-gray-500">$14.2B &bull; 342 Deals</span>
+            </a>
+            <!-- Category Box -->
+            <a href="#" class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 flex flex-col items-center justify-center text-center hover:bg-gradient-to-br hover:from-red-50 hover:to-white dark:hover:from-[#1A0B10] dark:hover:to-slate-card hover:border-brand-red/50 transition-all duration-300 group">
+              <i data-lucide="wallet" class="w-8 h-8 text-gray-400 group-hover:text-brand-red group-hover:scale-110 transition-all mb-3"></i>
+              <h4 class="font-bold text-sm text-gray-900 dark:text-white mb-1">FinTech</h4>
+              <span class="text-xs text-gray-500">$8.1B &bull; 210 Deals</span>
+            </a>
+            <!-- Category Box -->
+            <a href="#" class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 flex flex-col items-center justify-center text-center hover:bg-gradient-to-br hover:from-red-50 hover:to-white dark:hover:from-[#1A0B10] dark:hover:to-slate-card hover:border-brand-red/50 transition-all duration-300 group">
+              <i data-lucide="cloud" class="w-8 h-8 text-gray-400 group-hover:text-brand-red group-hover:scale-110 transition-all mb-3"></i>
+              <h4 class="font-bold text-sm text-gray-900 dark:text-white mb-1">SaaS</h4>
+              <span class="text-xs text-gray-500">$5.4B &bull; 412 Deals</span>
+            </a>
+            <!-- Category Box -->
+            <a href="#" class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 flex flex-col items-center justify-center text-center hover:bg-gradient-to-br hover:from-red-50 hover:to-white dark:hover:from-[#1A0B10] dark:hover:to-slate-card hover:border-brand-red/50 transition-all duration-300 group">
+              <i data-lucide="heart-pulse" class="w-8 h-8 text-gray-400 group-hover:text-brand-red group-hover:scale-110 transition-all mb-3"></i>
+              <h4 class="font-bold text-sm text-gray-900 dark:text-white mb-1">HealthTech</h4>
+              <span class="text-xs text-gray-500">$4.2B &bull; 155 Deals</span>
+            </a>
+            <!-- Category Box -->
+            <a href="#" class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 flex flex-col items-center justify-center text-center hover:bg-gradient-to-br hover:from-red-50 hover:to-white dark:hover:from-[#1A0B10] dark:hover:to-slate-card hover:border-brand-red/50 transition-all duration-300 group">
+              <i data-lucide="leaf" class="w-8 h-8 text-gray-400 group-hover:text-brand-red group-hover:scale-110 transition-all mb-3"></i>
+              <h4 class="font-bold text-sm text-gray-900 dark:text-white mb-1">ClimateTech</h4>
+              <span class="text-xs text-gray-500">$6.7B &bull; 180 Deals</span>
+            </a>
+            <!-- Category Box -->
+            <a href="#" class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 flex flex-col items-center justify-center text-center hover:bg-gradient-to-br hover:from-red-50 hover:to-white dark:hover:from-[#1A0B10] dark:hover:to-slate-card hover:border-brand-red/50 transition-all duration-300 group">
+              <i data-lucide="book-open" class="w-8 h-8 text-gray-400 group-hover:text-brand-red group-hover:scale-110 transition-all mb-3"></i>
+              <h4 class="font-bold text-sm text-gray-900 dark:text-white mb-1">EdTech</h4>
+              <span class="text-xs text-gray-500">$1.2B &bull; 90 Deals</span>
+            </a>
+            <!-- Category Box -->
+            <a href="#" class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 flex flex-col items-center justify-center text-center hover:bg-gradient-to-br hover:from-red-50 hover:to-white dark:hover:from-[#1A0B10] dark:hover:to-slate-card hover:border-brand-red/50 transition-all duration-300 group">
+              <i data-lucide="rocket" class="w-8 h-8 text-gray-400 group-hover:text-brand-red group-hover:scale-110 transition-all mb-3"></i>
+              <h4 class="font-bold text-sm text-gray-900 dark:text-white mb-1">DeepTech</h4>
+              <span class="text-xs text-gray-500">$9.5B &bull; 140 Deals</span>
+            </a>
+            <!-- Category Box -->
+            <a href="#" class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-5 flex flex-col items-center justify-center text-center hover:bg-gradient-to-br hover:from-red-50 hover:to-white dark:hover:from-[#1A0B10] dark:hover:to-slate-card hover:border-brand-red/50 transition-all duration-300 group">
+              <i data-lucide="camera" class="w-8 h-8 text-gray-400 group-hover:text-brand-red group-hover:scale-110 transition-all mb-3"></i>
+              <h4 class="font-bold text-sm text-gray-900 dark:text-white mb-1">Creator Econ</h4>
+              <span class="text-xs text-gray-500">$2.1B &bull; 112 Deals</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Heatmap (4 columns wide) -->
+        <div class="lg:col-span-4">
+          <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-8">Funding Heatmap</h2>
+          <div class="flex flex-col gap-4 relative">
+            <div class="absolute -inset-4 bg-brand-red/5 blur-3xl rounded-full z-0 pointer-events-none"></div>
+            
+            <div class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-4 flex justify-between items-center relative z-10 hover:shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:border-brand-red transition-all cursor-pointer">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">🇺🇸</span>
+                <span class="font-bold text-gray-900 dark:text-white">United States</span>
+              </div>
+              <div class="text-right">
+                <div class="font-mono font-bold text-brand-red">$24.5B</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">482 Deals</div>
+              </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-4 flex justify-between items-center relative z-10 hover:shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:border-brand-red transition-all cursor-pointer">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">🇮🇳</span>
+                <span class="font-bold text-gray-900 dark:text-white">India</span>
+              </div>
+              <div class="text-right">
+                <div class="font-mono font-bold text-brand-red">$8.2B</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">310 Deals</div>
+              </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-4 flex justify-between items-center relative z-10 hover:shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:border-brand-red transition-all cursor-pointer">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">🇪🇺</span>
+                <span class="font-bold text-gray-900 dark:text-white">Europe</span>
+              </div>
+              <div class="text-right">
+                <div class="font-mono font-bold text-brand-red">$6.4B</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">245 Deals</div>
+              </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-4 flex justify-between items-center relative z-10 hover:shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:border-brand-red transition-all cursor-pointer">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">🇸🇬</span>
+                <span class="font-bold text-gray-900 dark:text-white">Southeast Asia</span>
+              </div>
+              <div class="text-right">
+                <div class="font-mono font-bold text-brand-red">$3.1B</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">128 Deals</div>
+              </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-4 flex justify-between items-center relative z-10 hover:shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:border-brand-red transition-all cursor-pointer">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">🇦🇪</span>
+                <span class="font-bold text-gray-900 dark:text-white">Middle East</span>
+              </div>
+              <div class="text-right">
+                <div class="font-mono font-bold text-brand-red">$2.8B</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">85 Deals</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: Investor Spotlight -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-20 lg:pb-[120px]">
+      <div class="max-w-[1280px] mx-auto">
+        <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-8">Investor Spotlight</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Investor Card -->
+          <article class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[20px] p-6 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] transition-all duration-300 flex flex-col items-center text-center">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&q=80" alt="Investor" class="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-gray-50 dark:ring-gray-800">
+            <h3 class="font-bold text-xl text-gray-900 dark:text-white">Roelof Botha</h3>
+            <p class="text-sm text-brand-red font-medium mb-4">Sequoia Capital</p>
+            <div class="w-full flex justify-around border-y border-gray-100 dark:border-gray-800 py-3 mb-6">
+              <div>
+                <div class="font-mono font-bold text-lg text-gray-900 dark:text-white">45+</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Investments</div>
+              </div>
+              <div>
+                <div class="font-mono font-bold text-lg text-gray-900 dark:text-white">12</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Unicorns</div>
+              </div>
+            </div>
+            <p class="text-xs text-gray-500 mb-6 line-clamp-2">Notable portfolio includes WhatsApp, YouTube, Instagram, Square, and MongoDB.</p>
+            <button class="w-full py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 font-bold text-sm hover:bg-gray-50 dark:hover:bg-slate-border transition-colors">View Investments &rarr;</button>
+          </article>
+
+          <!-- Investor Card -->
+          <article class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[20px] p-6 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] transition-all duration-300 flex flex-col items-center text-center">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Investor" class="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-gray-50 dark:ring-gray-800">
+            <h3 class="font-bold text-xl text-gray-900 dark:text-white">Sarah Guo</h3>
+            <p class="text-sm text-brand-red font-medium mb-4">Conviction</p>
+            <div class="w-full flex justify-around border-y border-gray-100 dark:border-gray-800 py-3 mb-6">
+              <div>
+                <div class="font-mono font-bold text-lg text-gray-900 dark:text-white">28+</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Investments</div>
+              </div>
+              <div>
+                <div class="font-mono font-bold text-lg text-gray-900 dark:text-white">5</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Unicorns</div>
+              </div>
+            </div>
+            <p class="text-xs text-gray-500 mb-6 line-clamp-2">Leading early-stage AI investments globally. Focus on foundational models and infra.</p>
+            <button class="w-full py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 font-bold text-sm hover:bg-gray-50 dark:hover:bg-slate-border transition-colors">View Investments &rarr;</button>
+          </article>
+
+          <!-- Investor Card -->
+          <article class="bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[20px] p-6 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] transition-all duration-300 flex flex-col items-center text-center">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&q=80" alt="Investor" class="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-gray-50 dark:ring-gray-800">
+            <h3 class="font-bold text-xl text-gray-900 dark:text-white">Ben Horowitz</h3>
+            <p class="text-sm text-brand-red font-medium mb-4">Andreessen Horowitz</p>
+            <div class="w-full flex justify-around border-y border-gray-100 dark:border-gray-800 py-3 mb-6">
+              <div>
+                <div class="font-mono font-bold text-lg text-gray-900 dark:text-white">80+</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Investments</div>
+              </div>
+              <div>
+                <div class="font-mono font-bold text-lg text-gray-900 dark:text-white">25</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Unicorns</div>
+              </div>
+            </div>
+            <p class="text-xs text-gray-500 mb-6 line-clamp-2">Enterprise software and crypto pioneer. Author of 'The Hard Thing About Hard Things'.</p>
+            <button class="w-full py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 font-bold text-sm hover:bg-gray-50 dark:hover:bg-slate-border transition-colors">View Investments &rarr;</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 9: Most Read Funding Stories (The Large Editorial Carousel) -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-20 lg:pb-[120px]">
+      <div class="max-w-[1280px] mx-auto">
+        <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-8">Most Read Funding Analysis</h2>
+        
+        <div class="relative rounded-[20px] overflow-hidden bg-black" id="editorial-carousel">
+          <div class="flex h-[400px] lg:h-[500px] transition-transform duration-500 ease-in-out" id="ed-carousel-track">
+            
+            <!-- Slide 1 -->
+            <article class="w-full h-full shrink-0 relative group cursor-pointer" onclick="window.location.href='article.html'">
+              <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80" alt="Funding Story" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-dark via-slate-dark/60 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 w-full p-8 lg:p-12">
+                <span class="px-3 py-1 bg-white text-black text-[10px] font-bold uppercase tracking-widest rounded-md mb-4 inline-block">Analysis</span>
+                <h3 class="text-3xl lg:text-4xl font-black text-white leading-tight mb-4 max-w-3xl">The Secondary Market Collapse: Why Mega-Seeds Are Failing to Find Exits</h3>
+                <div class="flex items-center gap-4 text-sm text-gray-300">
+                  <span><i data-lucide="calendar" class="w-4 h-4 inline mr-1"></i> Oct 20</span>
+                  <span><i data-lucide="eye" class="w-4 h-4 inline mr-1"></i> 142K Views</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Slide 2 -->
+            <article class="w-full h-full shrink-0 relative group cursor-pointer" onclick="window.location.href='article.html'">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="Funding Story" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-dark via-slate-dark/60 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 w-full p-8 lg:p-12">
+                <span class="px-3 py-1 bg-white text-black text-[10px] font-bold uppercase tracking-widest rounded-md mb-4 inline-block">Deep Dive</span>
+                <h3 class="text-3xl lg:text-4xl font-black text-white leading-tight mb-4 max-w-3xl">Sovereign Wealth Enters the Chat: How States are Outbidding Top Tier VCs</h3>
+                <div class="flex items-center gap-4 text-sm text-gray-300">
+                  <span><i data-lucide="calendar" class="w-4 h-4 inline mr-1"></i> Oct 18</span>
+                  <span><i data-lucide="eye" class="w-4 h-4 inline mr-1"></i> 98K Views</span>
+                </div>
+              </div>
+            </article>
+            
+          </div>
+          
+          <!-- Carousel Dots -->
+          <div class="absolute bottom-8 right-8 flex gap-2" id="ed-carousel-dots">
+            <button class="w-2 h-2 rounded-full bg-white transition-all w-6"></button>
+            <button class="w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+  </main>
+
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+
+  <script type="module" src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+
+      // 1. Numerical Counter
+      const counters = document.querySelectorAll('.count-up');
+      const counterObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseFloat(el.getAttribute('data-target'));
+            const isFloat = target % 1 !== 0;
+            const duration = 2000;
+            const start = performance.now();
+            
+            const animate = (t) => {
+              const elapsed = t - start;
+              const progress = Math.min(elapsed / duration, 1);
+              const easeProgress = 1 - Math.pow(1 - progress, 4);
+              const current = easeProgress * target;
+              
+              if(isFloat) {
+                el.innerText = current.toFixed(1);
+              } else {
+                el.innerText = Math.floor(current);
+              }
+
+              if(progress < 1) {
+                requestAnimationFrame(animate);
+              } else {
+                el.innerText = target;
+              }
+            };
+            requestAnimationFrame(animate);
+            obs.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      counters.forEach(c => counterObserver.observe(c));
+
+      // 2. Taxonomy Filter Logic for Funding Ledger
+      const filters = document.querySelectorAll('.filter-btn');
+      const ledgerItems = document.querySelectorAll('.ledger-item');
+      
+      filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Update active state
+          filters.forEach(f => {
+            f.classList.remove('bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-black', 'active');
+            f.classList.add('border', 'border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
+          });
+          btn.classList.add('bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-black', 'active');
+          btn.classList.remove('border', 'border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
+          
+          const filterValue = btn.getAttribute('data-filter');
+          
+          // Animate and filter
+          ledgerItems.forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                item.style.display = 'flex';
+                item.offsetHeight; 
+                item.style.opacity = '1';
+                item.style.transform = 'scale(1)';
+              } else {
+                item.style.display = 'none';
+              }
+            }, 300);
+          });
+        });
+      });
+
+
+
+      // 4. Most Read Funding Stories (Automated Slider)
+      const edTrack = document.getElementById('ed-carousel-track');
+      if(edTrack) {
+        const edSlides = Array.from(edTrack.children);
+        const edDots = Array.from(document.getElementById('ed-carousel-dots').children);
+        let currentSlide = 0;
+        const total = edSlides.length;
+
+        const updateEdSlider = (idx) => {
+          currentSlide = idx;
+          edTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+          edDots.forEach((dot, i) => {
+            if (i === currentSlide) {
+              dot.classList.add('w-6', 'bg-white');
+              dot.classList.remove('bg-white/50');
+            } else {
+              dot.classList.remove('w-6', 'bg-white');
+              dot.classList.add('bg-white/50');
+            }
+          });
+        };
+
+        edDots.forEach((dot, idx) => {
+          dot.addEventListener('click', () => updateEdSlider(idx));
+        });
+
+        setInterval(() => {
+          updateEdSlider((currentSlide + 1) % total);
+        }, 5000);
+      }
+      
+      // Skeleton Load Sim for Load More
+      const loadMoreBtn = document.getElementById('load-more-ledger');
+      if(loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+          const originalText = loadMoreBtn.innerText;
+          loadMoreBtn.innerText = 'Loading Data...';
+          loadMoreBtn.classList.add('opacity-50', 'pointer-events-none');
+          
+          setTimeout(() => {
+            loadMoreBtn.innerText = originalText;
+            loadMoreBtn.classList.remove('opacity-50', 'pointer-events-none');
+          }, 1500);
+        });
+      }
+
+    });
+  </script>
+</body>
+</html>
