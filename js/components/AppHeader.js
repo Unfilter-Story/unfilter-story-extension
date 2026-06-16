@@ -59,37 +59,58 @@ class AppHeader extends HTMLElement {
             </button>
 
             <a href="newsletter.html" class="btn btn-primary">Subscribe</a>
-            <button id="mobile-menu-toggle" class="btn-icon menu-toggle" aria-label="Toggle Menu">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-              </svg>
-            </button>
           </div>
         </div>
+      </header>
 
-        <nav id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="articles.html">Articles</a></li>
-            <li><a href="interviews.html">Interviews</a></li>
-            <li><a href="stories.html">Startup Stories</a></li>
-            <!-- 
-            <li><a href="ai-innovation.html">AI & Innovation</a></li>
-            <li><a href="funding.html">Funding</a></li>
-            -->
+      <!-- Bottom Navigation Bar (Mobile Only) -->
+      <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <a href="news.html" class="bottom-nav-item ${currentPath.endsWith('news.html') ? 'active' : ''}">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+          <span>News</span>
+          <div class="active-indicator"></div>
+        </a>
+        <a href="articles.html" class="bottom-nav-item ${currentPath.endsWith('articles.html') ? 'active' : ''}">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span>Articles</span>
+          <div class="active-indicator"></div>
+        </a>
+        <a href="interviews.html" class="bottom-nav-item ${currentPath.endsWith('interviews.html') ? 'active' : ''}">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+          <span>Interviews</span>
+          <div class="active-indicator"></div>
+        </a>
+        <a href="stories.html" class="bottom-nav-item ${currentPath.endsWith('stories.html') ? 'active' : ''}">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 22L10.5 22L12 18L13.5 22Z"></path><path d="M12 18L10 14L8 10L10 6L12 2L14 6L16 10L14 14L12 18Z"></path></svg>
+          <span>Startups</span>
+          <div class="active-indicator"></div>
+        </a>
+        <button class="bottom-nav-item" id="bottom-nav-more" aria-expanded="false" aria-controls="more-bottom-sheet">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <span>More</span>
+        </button>
+      </nav>
 
-            <li class="dropdown-group">
-              <span class="dropdown-title">More</span>
-              <ul class="dropdown-items">
-                <li><a href="#">Guest Post</a></li>
-                <li><a href="feature.html" style="color: #DC2626; font-weight: 600;">Feature Your Story</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
+      <!-- More Bottom Sheet Modal -->
+      <div id="more-bottom-sheet" class="bottom-sheet-overlay" aria-hidden="true">
+        <div class="bottom-sheet-content">
+          <div class="bottom-sheet-handle"></div>
+          <div class="bottom-sheet-menu-container">
+            <h3 class="bottom-sheet-title">Explore</h3>
+            <ul class="bottom-sheet-menu">
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="categories.html">Categories</a></li>
+              <li><a href="funding.html">Funding</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="bookmarks.html">Bookmarks</a></li>
+              <!-- 
+              <li><a href="profile.html">Profile</a></li>
+              <li><a href="settings.html">Settings</a></li>
+              -->
+            </ul>
+          </div>
+        </div>
+      </div>
       </header>
   <!-- Breaking News Ticker Strip -->
   <section aria-labelledby="trending-heading" class="ticker-feed-wrapper">
@@ -138,20 +159,55 @@ class AppHeader extends HTMLElement {
   }
 
   bindEvents() {
-    const mobileMenuToggle = this.querySelector('#mobile-menu-toggle');
-    const mobileDrawer = this.querySelector('#mobile-drawer');
+    const bottomNavMore = this.querySelector('#bottom-nav-more');
+    const bottomSheet = this.querySelector('#more-bottom-sheet');
+    const bottomSheetContent = this.querySelector('.bottom-sheet-content');
     const searchToggle = this.querySelector('#search-toggle');
 
-    if (mobileMenuToggle && mobileDrawer) {
-      mobileMenuToggle.addEventListener('click', () => {
-        const isOpen = mobileDrawer.classList.contains('is-open');
-        if (isOpen) {
-          mobileDrawer.classList.remove('is-open');
-          mobileDrawer.setAttribute('aria-hidden', 'true');
-        } else {
-          mobileDrawer.classList.add('is-open');
-          mobileDrawer.setAttribute('aria-hidden', 'false');
+    if (bottomNavMore && bottomSheet) {
+      const openSheet = () => {
+        bottomSheet.classList.add('is-open');
+        bottomSheet.setAttribute('aria-hidden', 'false');
+        bottomNavMore.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeSheet = () => {
+        bottomSheet.classList.remove('is-open');
+        bottomSheet.setAttribute('aria-hidden', 'true');
+        bottomNavMore.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      };
+
+      bottomNavMore.addEventListener('click', openSheet);
+      
+      bottomSheet.addEventListener('click', (e) => {
+        if (e.target === bottomSheet) closeSheet();
+      });
+
+      // Touch gesture (swipe down to close)
+      let startY = 0;
+      let currentY = 0;
+      
+      bottomSheetContent.addEventListener('touchstart', (e) => {
+        startY = e.touches[0].clientY;
+        bottomSheetContent.style.transition = 'none';
+      }, { passive: true });
+
+      bottomSheetContent.addEventListener('touchmove', (e) => {
+        currentY = e.touches[0].clientY - startY;
+        if (currentY > 0) {
+          bottomSheetContent.style.transform = `translateY(${currentY}px)`;
         }
+      }, { passive: true });
+
+      bottomSheetContent.addEventListener('touchend', () => {
+        bottomSheetContent.style.transition = '';
+        bottomSheetContent.style.transform = '';
+        if (currentY > 100) {
+          closeSheet();
+        }
+        currentY = 0;
       });
     }
 

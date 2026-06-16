@@ -10,7 +10,7 @@ class AppFooter extends HTMLElement {
 
     this.innerHTML = `
       <footer class="app-footer">
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="footer-inner">
           <div class="footer-grid">
             <div class="footer-col">
               <a href="index.html" class="logo" style="margin-bottom: var(--spacing-4);">
