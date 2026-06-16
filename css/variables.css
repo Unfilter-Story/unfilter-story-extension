@@ -27,7 +27,9 @@
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   /* Fluid Typography Architecture */
-  --text-fluid-heading: clamp(1.5rem, 4vw, 3rem);
+  --text-fluid-h1: clamp(2rem, 5vw, 3.5rem);
+  --text-fluid-h2: clamp(1.5rem, 3vw, 2.25rem);
+  --text-fluid-h3: clamp(1.25rem, 2vw, 1.5rem);
   --line-height-heading: 1.25;
   
   --text-fluid-subheading: clamp(1rem, 2vw, 1.5rem);

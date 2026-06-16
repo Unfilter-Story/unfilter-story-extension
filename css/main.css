@@ -29,16 +29,34 @@ body {
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-main);
   font-weight: 700;
-  line-height: 1.2;
   margin-bottom: var(--spacing-4);
 }
 
-h1 { font-size: var(--text-fluid-h1); letter-spacing: -0.02em; }
-h2 { font-size: var(--text-fluid-h2); letter-spacing: -0.01em; }
-h3 { font-size: var(--text-fluid-h3); }
+h1 { 
+  font-size: var(--text-fluid-h1); 
+  line-height: var(--line-height-heading);
+  letter-spacing: -0.02em; 
+}
+
+h2 { 
+  font-size: var(--text-fluid-h2); 
+  line-height: var(--line-height-heading);
+  letter-spacing: -0.01em; 
+}
+
+h3 { 
+  font-size: var(--text-fluid-h3); 
+  line-height: var(--line-height-heading);
+}
+
+h4, h5, h6 { 
+  font-size: var(--text-fluid-subheading); 
+  line-height: var(--line-height-subheading);
+}
 
 p {
-  font-size: var(--text-body);
+  font-size: var(--text-fluid-body);
+  line-height: var(--line-height-body);
   margin-bottom: var(--spacing-4);
   color: var(--color-text-mute);
 }
