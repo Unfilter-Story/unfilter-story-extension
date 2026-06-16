@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Innovation Engine | UnfilterStory</title>
+  <meta name="description" content="High-density telemetry and breakthrough analytics mapping the neural frontier, compute paradigms, and algorithmic physics.">
+  
+  <script>
+    const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  
+  <script type="module" src="js/main.js"></script>
+
+  <style>
+    /* Innovation Hero Section Variables & Styles */
+    :root {
+      --ai-blue: #3B82F6;
+      --ai-purple: #8B5CF6;
+      --ai-green: #10B981;
+    }
+
+    .innovation-hero {
+      background-color: var(--color-bg-surf);
+      border-radius: 24px;
+      margin-top: var(--spacing-8);
+      padding: var(--spacing-12);
+      border: 1px solid var(--color-border);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-12);
+      overflow: hidden;
+      position: relative;
+    }
+
+    @media (min-width: 1024px) {
+      .innovation-hero {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+    }
+
+    /* Left Column Styles */
+    .live-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--ai-blue);
+      margin-bottom: var(--spacing-8);
+      background-color: rgba(59, 130, 246, 0.05);
+    }
+    .live-tag::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--ai-green);
+      box-shadow: 0 0 8px var(--ai-green);
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .innovation-title {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: var(--spacing-6);
+      color: var(--color-text-main);
+      letter-spacing: -0.02em;
+    }
+    .gradient-text-ai {
+      background: linear-gradient(90deg, var(--ai-blue), var(--ai-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .innovation-desc {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: var(--color-text-mute);
+      margin-bottom: var(--spacing-12);
+      max-width: 90%;
+    }
+
+    /* Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-4);
+    }
+    @media (max-width: 767px) {
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .metric-card {
+      background-color: var(--color-bg-main);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: var(--spacing-5);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: var(--spacing-4);
+    }
+    .metric-label-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--color-text-mute);
+      letter-spacing: 0.05em;
+    }
+    .metric-label-group::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+    }
+    .metric-subtag {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 0.65rem;
+      color: var(--color-text-mute);
+      font-family: monospace;
+      opacity: 0.7;
+    }
+    .metric-progress {
+      width: 100%;
+      height: 4px;
+      background-color: var(--color-border);
+      border-radius: 2px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    .metric-progress-bar {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    /* Specific Metric Colors */
+    .m-nodes .metric-value { color: var(--color-text-main); }
+    .m-nodes .metric-label-group::before { background-color: var(--ai-blue); }
+    .m-nodes .metric-progress-bar { width: 70%; background-color: var(--ai-blue); }
+    
+    .m-uptime .metric-value { color: var(--ai-green); }
+    .m-uptime .metric-label-group::before { background-color: var(--ai-green); }
+    .m-uptime .metric-progress-bar { width: 99%; background-color: var(--ai-green); }
+    
+    .m-latency .metric-value { color: var(--ai-purple); }
+    .m-latency .metric-label-group::before { background-color: var(--ai-purple); }
+    .m-latency .metric-progress-bar { width: 40%; background-color: var(--ai-purple); }
+
+    /* Right Column - Neural Canvas */
+    .neural-canvas {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background-color: var(--color-bg-main);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    /* Grid Texture */
+    .neural-canvas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(var(--color-border) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.5;
+    }
+
+    /* Abstract Nodes */
+    .node {
+      position: absolute;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+    }
+    .node-1 { top: 30%; left: 40%; width: 12px; height: 12px; background-color: var(--ai-blue); box-shadow: 0 0 16px var(--ai-blue); }
+    .node-2 { top: 70%; left: 75%; width: 16px; height: 16px; background-color: var(--ai-purple); box-shadow: 0 0 20px var(--ai-purple); }
+    .node-3 { top: 90%; left: 50%; width: 10px; height: 10px; background-color: var(--ai-blue); box-shadow: 0 0 12px var(--ai-blue); }
+    .node-4 { top: 20%; left: 60%; width: 8px; height: 8px; background-color: var(--ai-green); box-shadow: 0 0 10px var(--ai-green); }
+
+    /* Central Pulse */
+    .pulse-origin {
+      position: absolute;
+      top: 65%;
+      left: 35%;
+      width: 30px;
+      height: 30px;
+      background-color: var(--color-bg-surf);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pulse-origin::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background-color: var(--ai-blue);
+      border-radius: 50%;
+      box-shadow: 0 0 16px var(--ai-blue);
+    }
+    .pulse-ring {
+      position: absolute;
+      top: 65%;
+      left: 35%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 2px solid var(--ai-blue);
+      animation: ripple 3s infinite linear;
+      opacity: 0;
+      z-index: 4;
+    }
+    .pulse-ring:nth-child(2) { animation-delay: 1s; }
+    .pulse-ring:nth-child(3) { animation-delay: 2s; }
+    
+    @keyframes ripple {
+      0% { width: 30px; height: 30px; opacity: 0.8; border-width: 4px; }
+      100% { width: 250px; height: 250px; opacity: 0; border-width: 1px; }
+    }
+
+    /* SVG Lines */
+    .connection-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .connection-lines line {
+      stroke: var(--ai-blue);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 4;
+      opacity: 0.4;
+      animation: dash-flow 20s linear infinite;
+    }
+    .connection-lines line.purple-link { stroke: var(--ai-purple); }
+    .connection-lines line.green-link { stroke: var(--ai-green); }
+    
+    @keyframes dash-flow {
+      to { stroke-dashoffset: -100; }
+    }
+
+    /* Terminal Widget */
+    .terminal-widget {
+      position: absolute;
+      bottom: var(--spacing-6);
+      left: var(--spacing-6);
+      background-color: var(--color-bg-main);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      width: 280px;
+      box-shadow: var(--shadow-md);
+      z-index: 20;
+      overflow: hidden;
+      font-family: monospace;
+      font-size: 0.75rem;
+    }
+    .terminal-header {
+      background-color: var(--color-bg-surf);
+      padding: 8px 12px;
+      display: flex;
+      gap: 6px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .term-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .term-dot.r { background-color: #EF4444; }
+    .term-dot.y { background-color: #F59E0B; }
+    .term-dot.g { background-color: #10B981; }
+    
+    .terminal-body {
+      padding: 12px;
+      color: var(--color-text-mute);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .term-line-1 { color: var(--color-text-main); }
+    .term-cmd { color: var(--ai-blue); font-weight: 700; }
+    .term-success { color: var(--ai-blue); }
+    .term-final { color: var(--ai-green); font-weight: 700; margin-top: 4px; }
+    .term-cursor {
+      display: inline-block;
+      width: 6px;
+      height: 12px;
+      background-color: var(--color-text-main);
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* Section 2 & 3: Asymmetric Media Stream */
+    .editorial-split-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-8);
+      margin-top: var(--spacing-16);
+    }
+    @media (min-width: 1024px) {
+      .editorial-split-grid {
+        grid-template-columns: 65fr 35fr;
+      }
+    }
+
+    .main-stream-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-6);
+      margin-bottom: var(--spacing-12);
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: var(--spacing-12);
+    }
+    .main-stream-card:last-child {
+      border-bottom: none;
+    }
+    .main-stream-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 16px;
+      object-fit: cover;
+      background-color: var(--color-bg-surf);
+    }
+    
+    /* Trending Models Sidebar */
+    .trending-sidebar {
+      background-color: #09090B;
+      color: #FAFAFA;
+      border: 1px solid #27272A;
+      border-radius: 16px;
+      padding: var(--spacing-6);
+      position: sticky;
+      top: 120px;
+    }
+    .trending-sidebar h3 {
+      color: #FAFAFA;
+    }
+    .trending-sidebar .trending-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #27272A;
+    }
+    .trending-sidebar .trending-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    
+    /* Section 3: Algorithmic Feed Grid */
+    .stream-grid-3col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-6);
+      margin-top: var(--spacing-8);
+    }
+    @media (min-width: 768px) {
+      .stream-grid-3col {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .stream-grid-3col {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    .alg-card {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--color-bg-main);
+      border: 1px solid var(--color-border);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .alg-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+
+  </style>
+</head>
+<body>
+  <app-header></app-header>
+
+  <main class="container">
+    
+    <!-- Section 1: The AI Innovation Engine Canvas -->
+    <section class="innovation-hero">
+      
+      <!-- Left Column: Intelligence Metrics -->
+      <div class="hero-content">
+        <span class="live-tag">LIVE INTELLIGENCE FEED</span>
+        
+        <h1 class="innovation-title">
+          AI Innovation<br>
+          <span class="gradient-text-ai">Engine</span>
+        </h1>
+        
+        <p class="innovation-desc">
+          High-density telemetry and breakthrough analytics mapping the neural frontier, compute paradigms, and algorithmic physics.
+        </p>
+
+        <div class="metrics-grid">
+          <!-- Metric 1 -->
+          <div class="metric-card m-nodes">
+            <span class="metric-subtag">SYS.ND</span>
+            <div class="metric-value">142</div>
+            <div class="metric-label-group">ACTIVE NODES</div>
+            <div class="metric-progress"><div class="metric-progress-bar"></div></div>
+          </div>
+          <!-- Metric 2 -->
+          <div class="metric-card m-uptime">
+            <span class="metric-subtag">UP.SYN</span>
+            <div class="metric-value">99.9%</div>
+            <div class="metric-label-group">SYNAPSE UPTIME</div>
+            <div class="metric-progress"><div class="metric-progress-bar"></div></div>
+          </div>
+          <!-- Metric 3 -->
+          <div class="metric-card m-latency">
+            <span class="metric-subtag">LT.AVG</span>
+            <div class="metric-value">2.4ms</div>
+            <div class="metric-label-group">AVG LATENCY</div>
+            <div class="metric-progress"><div class="metric-progress-bar"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Neural Interface -->
+      <div class="neural-canvas">
+        <!-- SVG Connections -->
+        <svg class="connection-lines">
+          <!-- Connect Pulse to Node 1 -->
+          <line x1="35%" y1="65%" x2="40%" y2="30%" />
+          <!-- Connect Pulse to Node 2 -->
+          <line x1="35%" y1="65%" x2="75%" y2="70%" class="purple-link" />
+          <!-- Connect Pulse to Node 3 -->
+          <line x1="35%" y1="65%" x2="50%" y2="90%" />
+          <!-- Connect Node 1 to Node 4 -->
+          <line x1="40%" y1="30%" x2="60%" y2="20%" class="green-link" />
+          <!-- Connect Node 4 to Node 2 -->
+          <line x1="60%" y1="20%" x2="75%" y2="70%" class="purple-link" />
+        </svg>
+
+        <!-- Nodes -->
+        <div class="node node-1"></div>
+        <div class="node node-2"></div>
+        <div class="node node-3"></div>
+        <div class="node node-4"></div>
+
+        <!-- Pulse Origin -->
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+        <div class="pulse-origin"></div>
+
+        <!-- Terminal Widget -->
+        <div class="terminal-widget">
+          <div class="terminal-header">
+            <div class="term-dot r"></div>
+            <div class="term-dot y"></div>
+            <div class="term-dot g"></div>
+          </div>
+          <div class="terminal-body" id="term-body">
+            <div class="term-line-1">root@ai-core:~# <span class="term-cmd">./init nexus</span></div>
+            <div>> loading parameters... <span class="term-success">[OK]</span></div>
+            <div>> syncing latent space... <span class="term-success">[OK]</span></div>
+            <div class="term-final">> connection established.<span class="term-cursor"></span></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Section 2: AI Core Editorial Insights (65/35 Split) -->
+    <div class="editorial-split-grid">
+      
+      <!-- Main Stream (65%) -->
+      <div class="main-stream">
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: var(--spacing-8); border-bottom: 2px solid var(--color-border); padding-bottom: var(--spacing-4);">Deep Technical Breakthroughs</h2>
+        
+        <article class="main-stream-card">
+          <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80" alt="Neural Optics" class="main-stream-img">
+          <div>
+            <span class="live-tag" style="background: transparent; margin-bottom: 12px; padding: 4px 8px;">NEURAL ARCHITECTURE</span>
+            <h3 style="font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px;"><a href="article.html">Silicon Convergency: The Optical Interconnects Eliminating Copper Bottlenecks</a></h3>
+            <p style="font-size: 1.125rem; color: var(--color-text-mute); line-height: 1.6; margin-bottom: 16px;">As parameter sizes scale logarithmically, pure photonics research leaves the lab, promising a 40x leap in cluster bandwidth by totally replacing legacy copper rails in next-gen LLM clusters.</p>
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--color-text-mute);">By Sarah Jensen &middot; 4 hours ago</div>
+          </div>
+        </article>
+
+        <article class="main-stream-card">
+          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80" alt="Compute Core" class="main-stream-img">
+          <div>
+            <span class="live-tag" style="background: transparent; margin-bottom: 12px; padding: 4px 8px; color: var(--ai-purple); border-color: rgba(139, 92, 246, 0.3);">COMPUTE EXPANSION</span>
+            <h3 style="font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px;"><a href="article.html">Groq Achieves 800 Tokens/Sec on Llama 3 70B Infrastructure</a></h3>
+            <p style="font-size: 1.125rem; color: var(--color-text-mute); line-height: 1.6; margin-bottom: 16px;">The LPU architecture proves its deterministic advantage over traditional GPU topologies for extreme low-latency inference workloads.</p>
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--color-text-mute);">By Hardware Desk &middot; 8 hours ago</div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Trending Models Sidebar (35%) -->
+      <aside>
+        <div class="trending-sidebar">
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: var(--spacing-6); display: flex; justify-content: space-between; align-items: center;">
+            Trending Models
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--ai-blue);"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          </h3>
+          
+          <div class="trending-list">
+            <div class="trending-item">
+              <div style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-weight: 700; font-size: 1rem;">Llama 3 (70B)</span>
+                <span style="font-size: 0.85rem; color: #A1A1AA;">Open Source &middot; Meta</span>
+              </div>
+              <span style="color: var(--ai-green); font-weight: 700; font-size: 0.85rem;">+420%</span>
+            </div>
+            
+            <div class="trending-item">
+              <div style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-weight: 700; font-size: 1rem;">Claude 3.5 Sonnet</span>
+                <span style="font-size: 0.85rem; color: #A1A1AA;">Proprietary &middot; Anthropic</span>
+              </div>
+              <span style="color: var(--ai-green); font-weight: 700; font-size: 0.85rem;">+315%</span>
+            </div>
+            
+            <div class="trending-item">
+              <div style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-weight: 700; font-size: 1rem;">Mistral Large</span>
+                <span style="font-size: 0.85rem; color: #A1A1AA;">API &middot; Mistral AI</span>
+              </div>
+              <span style="color: var(--ai-green); font-weight: 700; font-size: 0.85rem;">+180%</span>
+            </div>
+            
+            <div class="trending-item">
+              <div style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-weight: 700; font-size: 1rem;">Grok 1.5V</span>
+                <span style="font-size: 0.85rem; color: #A1A1AA;">Multimodal &middot; xAI</span>
+              </div>
+              <span style="color: var(--ai-green); font-weight: 700; font-size: 0.85rem;">+145%</span>
+            </div>
+          </div>
+          
+          <button style="width: 100%; padding: 12px; margin-top: 24px; border: 1px solid #27272A; border-radius: 8px; background: #09090B; color: #FAFAFA; font-weight: 600; cursor: pointer; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#18181B'" onmouseout="this.style.backgroundColor='#09090B'">View Leaderboard</button>
+        </div>
+      </aside>
+
+    </div>
+
+    <!-- Section 3: The Algorithmic Feed Grid -->
+    <section style="margin-top: var(--spacing-16);">
+      <h2 style="font-size: 1.5rem; font-weight: 800; border-bottom: 2px solid var(--color-border); padding-bottom: var(--spacing-4);">Deep Tech Stream</h2>
+      
+      <div class="stream-grid-3col">
+        <!-- Alg Card 1 -->
+        <article class="alg-card">
+          <div style="aspect-ratio: 16/9; background-color: var(--color-bg-surf); overflow: hidden;">
+            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=600&q=80" alt="Framework" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div style="padding: var(--spacing-5); display: flex; flex-direction: column; flex-grow: 1; gap: 12px;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--ai-blue); letter-spacing: 0.05em;">FRAMEWORK UPDATE</span>
+            <h3 style="font-size: 1.25rem; font-weight: 700; line-height: 1.3;"><a href="article.html">PyTorch 2.5 Introduces Sub-Millisecond Compilation</a></h3>
+            <div style="margin-top: auto; font-size: 0.85rem; color: var(--color-text-mute); font-weight: 600;">By Dev Team</div>
+          </div>
+        </article>
+
+        <!-- Alg Card 2 -->
+        <article class="alg-card">
+          <div style="aspect-ratio: 16/9; background-color: var(--color-bg-surf); overflow: hidden;">
+            <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=600&q=80" alt="Security" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div style="padding: var(--spacing-5); display: flex; flex-direction: column; flex-grow: 1; gap: 12px;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--ai-green); letter-spacing: 0.05em;">SECURITY</span>
+            <h3 style="font-size: 1.25rem; font-weight: 700; line-height: 1.3;"><a href="article.html">Jailbreak Mitigation: New Defense Layers for Agentic Systems</a></h3>
+            <div style="margin-top: auto; font-size: 0.85rem; color: var(--color-text-mute); font-weight: 600;">By Cyber Team</div>
+          </div>
+        </article>
+
+        <!-- Alg Card 3 -->
+        <article class="alg-card">
+          <div style="aspect-ratio: 16/9; background-color: var(--color-bg-surf); overflow: hidden;">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Hardware" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div style="padding: var(--spacing-5); display: flex; flex-direction: column; flex-grow: 1; gap: 12px;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--ai-purple); letter-spacing: 0.05em;">HARDWARE</span>
+            <h3 style="font-size: 1.25rem; font-weight: 700; line-height: 1.3;"><a href="article.html">AWS Unveils 'Tranium-3' Custom ASICs for Training at Scale</a></h3>
+            <div style="margin-top: auto; font-size: 0.85rem; color: var(--color-text-mute); font-weight: 600;">By Compute Desk</div>
+          </div>
+        </article>
+      </div>
+      
+      <button style="width: 100%; padding: 16px; margin-top: 32px; background-color: transparent; border: 1px solid var(--color-border); border-radius: 8px; color: var(--color-text-main); font-weight: 700; cursor: pointer; transition: background-color 0.2s;">
+        Load More Algorithms ↓
+      </button>
+    </section>
+
+
+
+  </main>
+
+  <app-footer></app-footer>
+
+  <!-- Telemetry Interaction Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Interactive Terminal Logic
+      const terminalBody = document.getElementById('term-body');
+      const cursor = document.querySelector('.term-cursor');
+      
+      const bootSequence = [
+        { text: '> verifying compute clusters... ', delay: 2000, status: '[OK]' },
+        { text: '> calibrating weights... ', delay: 4000, status: '[OK]' },
+        { text: '> listening on port 8080.', delay: 6000, status: '', final: true }
+      ];
+
+      bootSequence.forEach(step => {
+        setTimeout(() => {
+          // Remove cursor from previous line
+          if (cursor.parentNode) cursor.parentNode.removeChild(cursor);
+          
+          const newLine = document.createElement('div');
+          if (step.final) {
+            newLine.className = 'term-final';
+            newLine.innerHTML = `${step.text}<span class="term-cursor"></span>`;
+          } else {
+            newLine.innerHTML = `${step.text}<span class="term-success">${step.status}</span><span class="term-cursor"></span>`;
+          }
+          terminalBody.appendChild(newLine);
+          
+          // Keep scrolled to bottom
+          terminalBody.scrollTop = terminalBody.scrollHeight;
+        }, step.delay);
+      });
+    });
+  </script>
+</body>
+</html>

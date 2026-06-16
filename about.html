@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | UnfilterStory</title>
+  <meta name="description" content="About UnfilterStory, our mission, and our editorial team.">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    function syncTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    }
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  </script>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'cyber-blue': '#0099FF',
+            'electric-violet': '#8B5CF6',
+            'slate-dark': '#0B0F19',
+            'slate-card': '#0D121F',
+            'slate-border': '#1E293B'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Custom utility classes for About page */
+    .border-struct {
+      border-color: #E5E7EB;
+    }
+    .dark .border-struct {
+      border-color: #1E293B;
+    }
+    .bg-canvas {
+      background-color: #FFFFFF;
+    }
+    .dark .bg-canvas {
+      background-color: #0B0F19;
+    }
+    .bg-surface {
+      background-color: #F9FAFB;
+    }
+    .dark .bg-surface {
+      background-color: #0D121F;
+    }
+    
+    /* Grayscale transition for team grid */
+    .grayscale-hover {
+      filter: grayscale(100%);
+      transition: filter 0.5s ease, transform 0.5s ease;
+    }
+    .group:hover .grayscale-hover {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
+
+    /* Timeline animations */
+    .timeline-node {
+      transition: all 0.5s ease;
+    }
+    .timeline-node.active {
+      background-color: #0099FF;
+      box-shadow: 0 0 15px rgba(0, 153, 255, 0.6);
+      transform: scale(1.2);
+    }
+    .timeline-content {
+      opacity: 0.5;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+    .timeline-content.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-canvas text-gray-900 dark:text-gray-100 transition-colors duration-300 antialiased font-sans selection:bg-cyber-blue/30">
+
+  <!-- Global Header injected dynamically -->
+  <app-header></app-header>
+
+  <main class="pt-24 pb-20">
+    
+    <!-- SECTION 1: THE BRAND MANIFEST & NORTH STAR -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <!-- Left Column: Mission Statement -->
+        <div class="lg:col-span-7 flex flex-col">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-8 h-px bg-cyber-blue"></div>
+            <span class="font-mono text-[10px] text-cyber-blue font-bold uppercase tracking-widest">Brand Narrative</span>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-[1.1] mb-8 text-gray-900 dark:text-white">
+            Decoding the <br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-400">Neural Frontier.</span>
+          </h1>
+          <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed max-w-2xl">
+            UnfilterStory is the premium intelligence layer for the builders, operators, and investors defining the next decade of technology.
+          </p>
+        </div>
+        
+        <!-- Right Column: Vision Terminal -->
+        <div class="lg:col-span-5 w-full">
+          <div class="bg-surface dark:bg-[#0B0F19] border border-struct rounded-2xl p-8 shadow-sm flex flex-col h-full relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-electric-violet/5 rounded-full blur-[40px] pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
+            <div class="relative z-10 mb-8">
+              <i data-lucide="crosshair" class="w-8 h-8 text-electric-violet"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 relative z-10">Our Vision</h2>
+            <p class="text-base text-gray-600 dark:text-gray-400 leading-relaxed font-serif italic mb-10 relative z-10">
+              "To construct the most high-fidelity, uncompromising media matrix mapping the convergence of venture capital, algorithmic breakthroughs, and human ingenuity."
+            </p>
+            <div class="flex items-center justify-between border-t border-struct pt-6 mt-auto relative z-10">
+              <div class="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-widest">Est. 2024</div>
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-electric-violet animate-pulse"></span>
+                <span class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">System Online</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: QUANTITATIVE IMPACT MATRIX (Telemetry Strip) -->
+    <section class="border-y border-struct bg-white dark:bg-[#0D121F]">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-struct -mx-4 sm:mx-0 border-x-0 sm:border-x border-struct">
+          <!-- Metric 1 -->
+          <div class="p-8 text-center flex flex-col items-center justify-center">
+            <div class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-2">2.4M</div>
+            <div class="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-widest">Monthly Readers</div>
+          </div>
+          <!-- Metric 2 -->
+          <div class="p-8 text-center flex flex-col items-center justify-center">
+            <div class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-2">150+</div>
+            <div class="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-widest">Deep-Dive Reports</div>
+          </div>
+          <!-- Metric 3 -->
+          <div class="p-8 text-center flex flex-col items-center justify-center">
+            <div class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-2">$84B</div>
+            <div class="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-widest">VC Funding Tracked</div>
+          </div>
+          <!-- Metric 4 -->
+          <div class="p-8 text-center flex flex-col items-center justify-center">
+            <div class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-2">12,000</div>
+            <div class="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-widest">Corporate Nodes</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: CONTENT PILLARS (Why UnfilterStory) -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Structural Thesis</h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400">The architectural pillars defining our intelligence network.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Pillar 1 -->
+        <div class="bg-surface dark:bg-[#0B0F19] border border-struct p-8 md:p-10 rounded-2xl group hover:border-cyber-blue transition-colors duration-300 flex flex-col h-full shadow-sm">
+          <div class="w-10 h-10 rounded-lg bg-cyber-blue/10 flex items-center justify-center text-gray-400 group-hover:text-cyber-blue transition-colors mb-6">
+            <i data-lucide="layers" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Startup Ecosystems</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-grow">
+            Mapping the foundational mechanics of early-stage builders. We analyze product velocity, architectural decisions, and the zero-to-one trajectory.
+          </p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="bg-surface dark:bg-[#0B0F19] border border-struct p-8 md:p-10 rounded-2xl group hover:border-electric-violet transition-colors duration-300 flex flex-col h-full shadow-sm">
+          <div class="w-10 h-10 rounded-lg bg-electric-violet/10 flex items-center justify-center text-gray-400 group-hover:text-electric-violet transition-colors mb-6">
+            <i data-lucide="cpu" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Deep Tech & AI</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-grow">
+            Deconstructing the compute layer. From neural network efficiency to hardware monopolization and the physical supply chain of intelligence.
+          </p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="bg-surface dark:bg-[#0B0F19] border border-struct p-8 md:p-10 rounded-2xl group hover:border-[#10B981] transition-colors duration-300 flex flex-col h-full shadow-sm">
+          <div class="w-10 h-10 rounded-lg bg-[#10B981]/10 flex items-center justify-center text-gray-400 group-hover:text-[#10B981] transition-colors mb-6">
+            <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Venture Capital</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-grow">
+            Tracking the flow of liquidity. We audit cap tables, term sheets, fund lifecycles, and the second-order effects of massive capital deployments.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: INTEGRITY MANIFEST (Editorial Standards) -->
+    <section class="border-y border-struct bg-surface dark:bg-[#0D121F] py-24">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Editorial Integrity Manifest</h2>
+          <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Our unyielding framework for governance. In an era of synthetic content, verifiable trust is our primary asset.
+          </p>
+        </div>
+
+        <div class="space-y-6">
+          <!-- Standard 1 -->
+          <div class="bg-white dark:bg-[#0B0F19] border border-struct rounded-2xl p-8 flex flex-col md:flex-row gap-6 shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center shrink-0 border border-struct font-mono text-xs font-bold text-gray-900 dark:text-white">01</div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Primary Sourcing Protocols</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                We require on-the-record, primary verification for all technical and financial claims. Secondary aggregation is strictly labeled. Anonymous sources are only permitted when corroborated by encrypted documentary evidence.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Standard 2 -->
+          <div class="bg-white dark:bg-[#0B0F19] border border-struct rounded-2xl p-8 flex flex-col md:flex-row gap-6 shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center shrink-0 border border-struct font-mono text-xs font-bold text-gray-900 dark:text-white">02</div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Capital & Equity Disclosures</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                Any editorial staff holding equity, tokens, or advisory roles in a covered entity must declare it in the article metadata. Coverage of direct competitors to investments is restricted.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 border border-struct rounded text-[10px] font-mono text-gray-600 dark:text-gray-400 uppercase tracking-widest">Policy: FIN-04</span>
+                <span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 border border-struct rounded text-[10px] font-mono text-gray-600 dark:text-gray-400 uppercase tracking-widest">Strict Enforcement</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Standard 3 -->
+          <div class="bg-white dark:bg-[#0B0F19] border border-struct rounded-2xl p-8 flex flex-col md:flex-row gap-6 shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center shrink-0 border border-struct font-mono text-xs font-bold text-gray-900 dark:text-white">03</div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Algorithmic Transparency</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                LLMs may be utilized for data structuring and syntactic optimization. However, all analytical conclusions, critical judgments, and subjective journalism are exclusively human-authored.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- SECTION 6: INTERACTIVE OPERATIONAL TIMELINE -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="text-center mb-20">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Evolution Matrix</h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400">The timeline mapping our operational trajectory.</p>
+      </div>
+
+      <div class="relative py-10">
+        <!-- Central Line -->
+        <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 md:-translate-x-1/2"></div>
+        
+        <div class="flex flex-col gap-16 md:gap-20">
+          
+          <!-- Node 1 -->
+          <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between w-full timeline-row pl-12 md:pl-0">
+            <div class="w-full md:w-[45%] md:text-right timeline-content md:pr-8 mb-4 md:mb-0">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Alpha Framework Launch</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Deployed the initial V1 architecture focusing exclusively on seed-stage deep tech.</p>
+            </div>
+            <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 -translate-x-1/2 mt-1.5 md:mt-0 timeline-node z-10 ring-4 ring-white dark:ring-[#0B0F19]"></div>
+            <div class="w-full md:w-[45%] md:pl-8 timeline-content">
+              <span class="font-mono text-xs font-bold text-gray-500 tracking-widest uppercase">Q1 2024</span>
+            </div>
+          </div>
+
+          <!-- Node 2 -->
+          <div class="relative flex flex-col md:flex-row-reverse items-start md:items-center justify-between w-full timeline-row pl-12 md:pl-0">
+            <div class="w-full md:w-[45%] text-left timeline-content md:pl-8 mb-4 md:mb-0">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">The "Nexus" Investigation</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Published our breakthrough 10,000-word expose on GPU allocation monopolies, driving 2M+ unique reads.</p>
+            </div>
+            <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 -translate-x-1/2 mt-1.5 md:mt-0 timeline-node z-10 ring-4 ring-white dark:ring-[#0B0F19]"></div>
+            <div class="w-full md:w-[45%] md:text-right md:pr-8 timeline-content">
+              <span class="font-mono text-xs font-bold text-gray-500 tracking-widest uppercase">Q3 2024</span>
+            </div>
+          </div>
+
+          <!-- Node 3 -->
+          <div class="relative flex flex-col md:flex-row items-start md:items-center justify-between w-full timeline-row pl-12 md:pl-0">
+            <div class="w-full md:w-[45%] md:text-right timeline-content md:pr-8 mb-4 md:mb-0">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Series A Integration</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Secured $12M to expand the editorial matrix and build proprietary data scraping infrastructure.</p>
+            </div>
+            <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 -translate-x-1/2 mt-1.5 md:mt-0 timeline-node z-10 ring-4 ring-white dark:ring-[#0B0F19]"></div>
+            <div class="w-full md:w-[45%] md:pl-8 timeline-content">
+              <span class="font-mono text-xs font-bold text-gray-500 tracking-widest uppercase">Q2 2025</span>
+            </div>
+          </div>
+          
+          <!-- Node 4 -->
+          <div class="relative flex flex-col md:flex-row-reverse items-start md:items-center justify-between w-full timeline-row pl-12 md:pl-0">
+            <div class="w-full md:w-[45%] text-left timeline-content md:pl-8 mb-4 md:mb-0">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Intelligence Engine</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Launched our live telemetry dashboard tracking real-time neural network advancements and latency benchmarks.</p>
+            </div>
+            <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-cyber-blue -translate-x-1/2 mt-1.5 md:mt-0 timeline-node active z-10 shadow-[0_0_15px_rgba(0,153,255,0.6)] ring-4 ring-white dark:ring-[#0B0F19]"></div>
+            <div class="w-full md:w-[45%] md:text-right md:pr-8 timeline-content">
+              <span class="font-mono text-xs font-bold text-cyber-blue tracking-widest uppercase">Present</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer injected dynamically -->
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+
+  <!-- Essential Scripts -->
+  <script type="module" src="js/main.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Timeline Scroll Interaction Observer
+    document.addEventListener('DOMContentLoaded', () => {
+      const timelineRows = document.querySelectorAll('.timeline-row');
+      
+      const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const node = entry.target.querySelector('.timeline-node');
+          const contents = entry.target.querySelectorAll('.timeline-content');
+          
+          if (entry.isIntersecting) {
+            node.classList.add('active');
+            contents.forEach(c => c.classList.add('active'));
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '-20% 0px -20% 0px',
+        threshold: 0.2
+      });
+
+      timelineRows.forEach(row => timelineObserver.observe(row));
+    });
+  </script>
+</body>
+</html>

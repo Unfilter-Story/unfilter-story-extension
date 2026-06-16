@@ -1,0 +1,87 @@
+/* d:\unfilterstory\css\variables.css */
+:root {
+  /* Brand Palette */
+  --color-red: #DC2626;
+  --color-black: #111111;
+  --color-white: #FFFFFF;
+  --color-gray: #F5F5F5;
+  --color-yellow: #F59E0B;
+
+  /* Gradients */
+  --gradient-brand: linear-gradient(135deg, var(--color-red), var(--color-black));
+  --gradient-hz: linear-gradient(90deg, var(--color-red), var(--color-black));
+  --gradient-fire: linear-gradient(135deg, var(--color-red), #991B1B);
+  --gradient-noir: linear-gradient(135deg, var(--color-black), #222222, var(--color-red));
+
+  /* Light Mode (Default) Tokens */
+  --color-primary: var(--color-black);
+  --color-accent: var(--color-red);
+  --color-success: #10B981;
+  --color-warning: var(--color-yellow);
+  --color-bg-main: var(--color-white);
+  --color-bg-surf: var(--color-gray);
+  --color-text-main: var(--color-black);
+  --color-text-mute: #52525B; /* zinc-600 */
+  --color-border: #E4E4E7; /* zinc-200 */
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Fluid Typography Architecture */
+  --text-fluid-h1: clamp(2rem, 5vw, 3.5rem);
+  --text-fluid-h2: clamp(1.5rem, 3vw, 2.25rem);
+  --text-fluid-h3: clamp(1.25rem, 2vw, 1.5rem);
+  --line-height-heading: 1.25;
+  
+  --text-fluid-subheading: clamp(1rem, 2vw, 1.5rem);
+  --line-height-subheading: 1.4;
+  
+  --text-fluid-body: clamp(0.9rem, 1.5vw, 1rem);
+  --line-height-body: 1.65;
+
+  /* Fluid Spacing & Dynamic Grid Gaps */
+  --spacing-fluid-padding: clamp(12px, 2vw, 32px);
+  /* The layout gap scales from 12px (mobile) up to 32px (ultrawide) */
+  --gap-fluid-layout: clamp(12px, 1.5vw + 6px, 32px);
+
+  /* Layout */
+  --max-width-editorial: 45rem; /* 720px */
+  --max-width-container: 90rem; /* 1440px */
+  --header-height: 4.5rem; /* 72px */
+
+  /* Spacing */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+
+  /* Elevations */
+  --shadow-sm: 0 1px 2px 0 rgb(17 17 17 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(17 17 17 / 0.1), 0 2px 4px -2px rgb(17 17 17 / 0.1);
+  --shadow-lg: 0 20px 25px -5px rgb(220 38 38 / 0.15), 0 8px 10px -6px rgb(220 38 38 / 0.1); /* Red tinted shadow */
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root[data-theme="dark"] {
+  /* Dark Mode Tokens */
+  --color-primary: var(--color-white);
+  --color-accent: var(--color-red);
+  --color-success: #34D399;
+  --color-warning: #FBBF24;
+  --color-bg-main: var(--color-black);
+  --color-bg-surf: #1C1C1C;
+  --color-text-main: #FAFAFA;
+  --color-text-mute: #A1A1AA; /* zinc-400 */
+  --color-border: #3F3F46; /* zinc-700 */
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.6);
+}
