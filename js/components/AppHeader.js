@@ -35,6 +35,18 @@ class AppHeader extends HTMLElement {
               <li><a href="funding.html" ${isPage('funding.html')}>Funding</a></li> 
               -->
 
+              <li class="dropdown">
+                <a href="#" aria-haspopup="true" aria-expanded="false" style="display:flex; align-items:center; gap:4px;">
+                  More 
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Guest Post</a></li>
+                  <li><a href="feature.html" style="color: #DC2626; font-weight: 500;">Feature Your Story</a></li>
+                </ul>
+              </li>
             </ul>
           </nav>
 
@@ -69,6 +81,13 @@ class AppHeader extends HTMLElement {
             <li><a href="funding.html">Funding</a></li>
             -->
 
+            <li class="dropdown-group">
+              <span class="dropdown-title">More</span>
+              <ul class="dropdown-items">
+                <li><a href="#">Guest Post</a></li>
+                <li><a href="feature.html" style="color: #DC2626; font-weight: 600;">Feature Your Story</a></li>
+              </ul>
+            </li>
           </ul>
         </nav>
       </header>

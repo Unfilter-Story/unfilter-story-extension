@@ -102,32 +102,32 @@
   <main class="pb-16">
     
     <!-- SECTION 1: THE BRAND MANIFEST HERO CANVAS -->
-    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pb-24">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[75vh]">
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 lg:pb-16">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <!-- Left: Editorial Pitch (60%) -->
         <div class="lg:col-span-7 flex flex-col justify-center relative z-10 lg:pr-12">
           <div class="absolute -top-20 -left-20 w-72 h-72 bg-electric-violet/20 blur-[100px] rounded-full pointer-events-none"></div>
-          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-[#DC2626] dark:text-red-400 font-bold text-xs uppercase tracking-widest mb-6 w-max border border-red-200 dark:border-red-800/30">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-[#DC2626] dark:text-red-400 font-bold text-xs uppercase tracking-widest mb-6 w-max border border-red-200 dark:border-red-800/30" style="display: none;">
             <i data-lucide="mic" class="w-3 h-3"></i> Interviews Archive
           </span>
           <h1 class="text-4xl lg:text-5xl font-bold tracking-normal leading-[1.1] mb-6 text-gray-900 dark:text-white">
             Conversations with the <br class="hidden lg:block"/>Founders, CEOs, and Innovators <br class="hidden lg:block"/><span class="text-[#DC2626]">Building Tomorrow.</span>
           </h1>
-          <p class="text-lg lg:text-xl text-gray-600 dark:text-gray-400 font-normal leading-relaxed max-w-2xl mb-8">
+          <p class="text-base text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
             Go behind the scenes of the world's fastest-growing startups. Unfiltered insights, raw execution strategies, and the real stories behind the headlines.
           </p>
           <div class="flex flex-wrap items-center gap-4">
-            <a href="#featured" class="bg-[#111] dark:bg-white text-white dark:text-[#111] px-8 py-4 rounded-xl font-bold hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+            <a href="#featured" class="bg-[#111] dark:bg-white text-white dark:text-[#111] px-8 py-4 rounded-xl font-bold hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5" style="display: none;">
               <i data-lucide="play-circle" class="w-5 h-5"></i> Watch Interviews
             </a>
-            <a href="#latest" class="bg-white dark:bg-[#1E293B] text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-8 py-4 rounded-xl font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-300 flex items-center gap-2">
+            <a href="#latest" class="bg-[#111] dark:bg-white text-white dark:text-[#111] px-8 py-4 rounded-xl font-bold hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
               Explore Stories
             </a>
           </div>
         </div>
 
         <!-- Right: Q&A Visual Anchor (40%) -->
-        <div class="lg:col-span-5 relative h-[500px] lg:h-[70vh] w-full rounded-3xl overflow-hidden shadow-2xl group">
+        <div class="lg:col-span-5 relative aspect-video lg:aspect-[4/3] w-full rounded-3xl overflow-hidden shadow-2xl group">
           <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=80" alt="Sam Altman Interview" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 skeleton-loading" onload="this.classList.remove('skeleton-loading')">
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
           
@@ -148,8 +148,8 @@
     </section>
 
     <!-- SECTION 2: FEATURED CONVERSATION -->
-    <section id="featured" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-struct">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <section id="featured" class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <!-- Image Container -->
         <div class="lg:col-span-5 relative rounded-3xl overflow-hidden shadow-lg group cursor-pointer aspect-video lg:aspect-[4/3]">
           <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80" alt="Featured Conversation" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 skeleton-loading" onload="this.classList.remove('skeleton-loading')">
@@ -188,7 +188,7 @@
     </section>
 
     <!-- SECTION 3: TRENDING THIS WEEK -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div class="flex items-center justify-between mb-8">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Trending This Week</h2>
         <div class="flex gap-2 hidden sm:flex">
@@ -209,7 +209,7 @@
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
             <div class="absolute bottom-4 left-4 right-4 text-white">
               <span class="text-[10px] font-bold uppercase tracking-wider bg-[#DC2626] px-2 py-1 rounded mb-2 inline-block">Fintech</span>
-              <h3 class="font-bold text-lg leading-snug mb-1">Redefining Payment Rails</h3>
+              <h3 class="font-bold text-lg text-white leading-snug mb-1">Redefining Payment Rails</h3>
               <p class="text-gray-300 text-xs">Sarah Jones, CTO</p>
             </div>
           </div>
@@ -221,7 +221,7 @@
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
             <div class="absolute bottom-4 left-4 right-4 text-white">
               <span class="text-[10px] font-bold uppercase tracking-wider bg-[#DC2626] px-2 py-1 rounded mb-2 inline-block">SaaS</span>
-              <h3 class="font-bold text-lg leading-snug mb-1">The Enterprise Playbook</h3>
+              <h3 class="font-bold text-lg text-white leading-snug mb-1">The Enterprise Playbook</h3>
               <p class="text-gray-300 text-xs">Michael Chang, Founder</p>
             </div>
           </div>
@@ -233,7 +233,7 @@
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
             <div class="absolute bottom-4 left-4 right-4 text-white">
               <span class="text-[10px] font-bold uppercase tracking-wider bg-[#DC2626] px-2 py-1 rounded mb-2 inline-block">Venture Capital</span>
-              <h3 class="font-bold text-lg leading-snug mb-1">Funding in a Bear Market</h3>
+              <h3 class="font-bold text-lg text-white leading-snug mb-1">Funding in a Bear Market</h3>
               <p class="text-gray-300 text-xs">Elena Rostova, Partner</p>
             </div>
           </div>
@@ -245,7 +245,7 @@
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
             <div class="absolute bottom-4 left-4 right-4 text-white">
               <span class="text-[10px] font-bold uppercase tracking-wider bg-[#DC2626] px-2 py-1 rounded mb-2 inline-block">AI/ML</span>
-              <h3 class="font-bold text-lg leading-snug mb-1">Models of Tomorrow</h3>
+              <h3 class="font-bold text-lg text-white leading-snug mb-1">Models of Tomorrow</h3>
               <p class="text-gray-300 text-xs">Anita Patel, Head of AI</p>
             </div>
           </div>
@@ -254,7 +254,7 @@
     </section>
 
     <!-- SECTION 4: BROADCAST & WATCH CONVERSATIONS -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-50 dark:bg-[#0B0F19]/50 border-y border-struct" style="display: none;">
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-50 dark:bg-[#0B0F19]/50 border-y border-struct" style="display: none;">
       <div class="mb-10">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
           <i data-lucide="video" class="w-6 h-6 text-[#DC2626]"></i> Video Series
@@ -307,7 +307,7 @@
     </section>
 
     <!-- SECTION 5: FOUNDER Q&A (MASONRY GRID) -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div class="mb-10 text-center">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Founder Q&A</h2>
         <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Short, high-impact answers to the hardest questions in company building.</p>
@@ -324,22 +324,22 @@
             </div>
           </div>
           <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">"What's the biggest red flag in a seed pitch?"</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 italic">"When founders spend 15 minutes talking about market size and 2 minutes on why their product is actually 10x better. If the product isn't visceral, the TAM doesn't matter."</p>
+          <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">"When founders spend 15 minutes talking about market size and 2 minutes on why their product is actually 10x better. If the product isn't visceral, the TAM doesn't matter."</p>
           <a href="#" class="mt-auto text-[#DC2626] text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">Read More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
         </div>
 
         <!-- Masonry Item 2 -->
-        <div class="flex flex-col h-full bg-white dark:bg-[#0D121F] border border-struct rounded-2xl p-6 hover:shadow-lg transition-shadow bg-gradient-to-br from-[#111] to-[#222] dark:border-gray-700">
-          <div class="flex items-center gap-4 mb-4 pb-4 border-b border-gray-700">
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80" class="w-12 h-12 rounded-full object-cover border-2 border-[#DC2626]">
+        <div class="flex flex-col h-full bg-white dark:bg-[#0D121F] border border-struct rounded-2xl p-6 hover:shadow-lg transition-shadow">
+          <div class="flex items-center gap-4 mb-4 pb-4 border-b border-struct">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80" class="w-12 h-12 rounded-full object-cover">
             <div>
-              <p class="font-bold text-white text-sm">Reshma Saujani</p>
-              <p class="text-xs text-gray-400">Girls Who Code</p>
+              <p class="font-bold text-gray-900 dark:text-white text-sm">Reshma Saujani</p>
+              <p class="text-xs text-gray-500">Girls Who Code</p>
             </div>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3 leading-snug">"How do you bounce back from a public failure?"</h3>
-          <p class="text-gray-300 text-sm mb-4">"You have to decouple your self-worth from the outcome of the project. The failure is an event, not an identity. Once you realize that, the sting goes away and the data remains."</p>
-          <a href="#" class="mt-auto text-white text-sm font-bold flex items-center gap-1 hover:text-[#DC2626] transition-colors">Full Response <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">"How do you bounce back from a public failure?"</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">"You have to decouple your self-worth from the outcome of the project. The failure is an event, not an identity. Once you realize that, the sting goes away and the data remains."</p>
+          <a href="#" class="mt-auto text-[#DC2626] text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">Full Response <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
         </div>
 
         <!-- Masonry Item 3 -->
@@ -352,7 +352,7 @@
             </div>
           </div>
           <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">"When did you realize it was working?"</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 italic">"When the servers melted down and people were complaining on Twitter. That's the best worst day for a founder."</p>
+          <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">"When the servers melted down and people were complaining on Twitter. That's the best worst day for a founder."</p>
           <a href="#" class="mt-auto text-[#DC2626] text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">Read More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
         </div>
       </div>
@@ -360,7 +360,7 @@
 
     <!-- SECTION 6: INVESTOR PERSPECTIVES -->
     <section class="py-20 bg-black text-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-xs font-mono tracking-widest text-gray-400 uppercase mb-12 border-b border-gray-800 pb-4">Investor Perspectives</h2>
         
         <!-- Block 1 -->
@@ -404,11 +404,11 @@
     </section>
 
     <!-- SECTION 7 & 9: EDITOR's PICKS & LATEST CONVERSATIONS -->
-    <section id="latest" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section id="latest" class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
       
       <!-- Taxonomy Filters -->
       <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 sticky top-[60px] z-40 bg-canvas/90 dark:bg-[#0B0F19]/90 backdrop-blur-md py-4 -mx-4 px-4 sm:mx-0 sm:px-0">
-        <h2 class="text-3xl font-black text-gray-900 dark:text-white shrink-0">Editorial Archive</h2>
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white shrink-0">Editorial Archive</h2>
         <div class="flex overflow-x-auto gap-2 pb-2 hide-scrollbar">
           <button class="filter-btn active px-4 py-2 rounded-full border border-struct text-sm font-medium transition-colors shrink-0" onclick="updateFilter(this)">All</button>
           <button class="filter-btn bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-2 rounded-full border border-struct text-sm font-medium transition-colors shrink-0" onclick="updateFilter(this)">Founders</button>
@@ -487,7 +487,7 @@
 
     <!-- SECTION 8: QUANTITATIVE ANALYTICS -->
     <section class="bg-gray-900 dark:bg-[#050810] py-16 border-y border-gray-800" id="stats-section">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 divide-x divide-gray-800">
           <div class="text-center px-4">
             <p class="text-4xl md:text-5xl font-black text-white mb-2 counter" data-target="500">0</p>

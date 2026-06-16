@@ -647,7 +647,7 @@ app-header::before {
 }
 @media (min-width: 1024px) {
   .stories-hero-grid {
-    grid-template-columns: 1.2fr 0.8fr;
+    grid-template-columns: 5fr 7fr;
   }
 }
 

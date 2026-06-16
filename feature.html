@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature Your Story | UnfilterStory</title>
+  <meta name="description" content="Apply to have your raw, unfiltered startup story featured on UnfilterStory.">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    function syncTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    }
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  </script>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'cyber-blue': '#0099FF',
+            'electric-violet': '#8B5CF6',
+            'slate-dark': '#0B0F19',
+            'slate-card': '#0D121F',
+            'slate-border': '#1E293B',
+            'form-bg': '#F9FAFB',
+            'form-bg-dark': '#0D121F'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Custom CSS for Contact elements */
+    .bg-canvas { background-color: #FFFFFF; }
+    .dark .bg-canvas { background-color: #0B0F19; }
+    .border-struct { border-color: #E5E7EB; }
+    .dark .border-struct { border-color: #1E293B; }
+    
+    /* Floating labels styling */
+    .floating-input:focus ~ .floating-label,
+    .floating-input:not(:placeholder-shown) ~ .floating-label {
+      transform: translateY(-1.5rem) scale(0.85);
+      color: #0099FF;
+    }
+    
+    .floating-input:not(:placeholder-shown):not(:focus):invalid ~ .floating-label {
+      color: #EF4444; /* Error red */
+    }
+
+    .floating-input:not(:placeholder-shown):not(:focus):valid ~ .floating-label {
+      color: #10B981; /* Success green */
+    }
+
+    .floating-input:not(:focus):invalid:not(:placeholder-shown) {
+      border-color: #EF4444;
+      box-shadow: 0 0 0 1px #EF4444;
+    }
+
+    .floating-input:not(:focus):valid:not(:placeholder-shown) {
+      border-color: #10B981;
+    }
+
+    /* FAQ Accordion Transitions */
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s ease;
+    }
+    .faq-answer > div {
+      overflow: hidden;
+    }
+    .faq-item.active .faq-answer {
+      grid-template-rows: 1fr;
+    }
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+    }
+    .faq-item.active {
+      border-color: #DC2626;
+    }
+    
+    /* Loading Spinner */
+    .spinner {
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 2px solid #fff;
+      width: 16px;
+      height: 16px;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .is-loading .spinner {
+      display: block;
+    }
+    .is-loading .btn-text {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-canvas text-gray-900 dark:text-gray-100 transition-colors duration-300 antialiased font-sans">
+
+  <app-header></app-header>
+
+  <main class="pb-24">
+    
+    <!-- CONTACT LAYOUT (Sections 1-3 replaced) -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        
+        <!-- LEFT COLUMN: Information -->
+        <div class="lg:col-span-6 flex flex-col gap-8">
+          <div>
+            <h1 class="text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] text-gray-900 dark:text-white mb-4" style="font-family: var(--font-serif);">Why get featured?</h1>
+            <p class="text-gray-600 dark:text-gray-400 text-base lg:text-lg leading-relaxed">Featured stories are curated editorials that go beyond the surface level.</p>
+            <div class="w-12 h-1 bg-gradient-to-r from-pink-500 to-orange-500 mt-6 rounded-full"></div>
+          </div>
+          
+          <div class="flex flex-col gap-4 mt-2 max-w-md">
+            <!-- Point 1 -->
+            <div class="bg-white dark:bg-[#0D121F] border border-gray-200 dark:border-gray-700 rounded-3xl p-6 flex gap-5 items-start shadow-sm hover:shadow-md transition-all">
+              <div class="w-12 h-12 rounded-2xl bg-[#ff4f79]/10 flex items-center justify-center shrink-0">
+                <i data-lucide="award" class="w-5 h-5 text-[#ff4f79]"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-1" style="font-family: var(--font-serif);">Editorial Spotlight</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Our senior editors work with you to craft a deep-dive narrative that highlights your journey's raw reality.</p>
+              </div>
+            </div>
+            
+            <!-- Point 2 -->
+            <div class="bg-white dark:bg-[#0D121F] border border-gray-200 dark:border-gray-700 rounded-3xl p-6 flex gap-5 items-start shadow-sm hover:shadow-md transition-all">
+              <div class="w-12 h-12 rounded-2xl bg-[#ff4f79]/10 flex items-center justify-center shrink-0">
+                <i data-lucide="star" class="w-5 h-5 text-[#ff4f79]"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-1" style="font-family: var(--font-serif);">Premium Reach</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Featured stories are prioritized on our homepage and sent to our exclusive network of 50k+ founders and VCs.</p>
+              </div>
+            </div>
+
+            <!-- Point 3 -->
+            <div class="bg-white dark:bg-[#0D121F] border border-gray-200 dark:border-gray-700 rounded-3xl p-6 flex gap-5 items-start shadow-sm hover:shadow-md transition-all">
+              <div class="w-12 h-12 rounded-2xl bg-[#ff4f79]/10 flex items-center justify-center shrink-0">
+                <i data-lucide="newspaper" class="w-5 h-5 text-[#ff4f79]"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-1" style="font-family: var(--font-serif);">Visual Excellence</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Every featured story receives custom photography and a dedicated editorial layout for maximum impact.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Dark Card -->
+          <div class="bg-[#111] dark:bg-black rounded-[2rem] p-8 mt-2 text-white shadow-xl max-w-md border border-[#333] dark:border-gray-800">
+            <h3 class="font-bold text-xl mb-4">Editorial Selection</h3>
+            <p class="text-sm text-gray-400 leading-relaxed mb-8">Unlike Guest Posts which are community contributions, Feature Stories are selected by our editorial board based on depth, impact, and authenticity.</p>
+            <div class="flex items-center justify-between border-t border-[#333] dark:border-gray-800 pt-6">
+              <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Selection Rate</span>
+              <span class="font-bold text-[#ff4f79]">~5% of Submissions</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- RIGHT COLUMN: Form -->
+        <div class="lg:col-span-6">
+          <div class="bg-[#FFF1F2] dark:bg-[#0D121F] rounded-[2rem] p-6 md:p-8 lg:p-10 shadow-[0_20px_40px_-10px_rgba(220,38,38,0.05)] dark:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] border border-rose-200 dark:border-gray-800 relative flex flex-col">
+            <form class="flex flex-col gap-6" id="featureForm" onsubmit="handleFeatureSubmit(event)" novalidate>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-2">
+                  <label for="name" class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest">Your Full Name</label>
+                  <input type="text" id="name" placeholder="John Doe" class="w-full bg-white dark:bg-gray-900/50 border border-rose-100 dark:border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff4f79]/20 transition-colors text-sm text-gray-900 dark:text-white placeholder-gray-400" required>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label for="email" class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest">Email Address</label>
+                  <input type="email" id="email" placeholder="john@company.com" class="w-full bg-white dark:bg-gray-900/50 border border-rose-100 dark:border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff4f79]/20 transition-colors text-sm text-gray-900 dark:text-white placeholder-gray-400" required>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-2">
+                  <label for="company" class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest">Company Name</label>
+                  <input type="text" id="company" placeholder="TechFlow Inc." class="w-full bg-white dark:bg-gray-900/50 border border-rose-100 dark:border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff4f79]/20 transition-colors text-sm text-gray-900 dark:text-white placeholder-gray-400" required>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label for="role" class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest">Role / Position</label>
+                  <input type="text" id="role" placeholder="Founder / CEO" class="w-full bg-white dark:bg-gray-900/50 border border-rose-100 dark:border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff4f79]/20 transition-colors text-sm text-gray-900 dark:text-white placeholder-gray-400" required>
+                </div>
+              </div>
+              
+              <div class="flex flex-col gap-2">
+                <label for="hook" class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest">Proposed Story Hook</label>
+                <input type="text" id="hook" placeholder="E.g., How we survived a 90% revenue drop overnight" class="w-full bg-white dark:bg-gray-900/50 border border-rose-100 dark:border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff4f79]/20 transition-colors text-sm text-gray-900 dark:text-white placeholder-gray-400" required>
+              </div>
+              
+              <div class="flex flex-col gap-2">
+                <label for="summary" class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest">The Unfiltered Truth (Brief Summary)</label>
+                <textarea id="summary" placeholder="Give us a glimpse into the raw, messy parts of your story..." class="w-full min-h-[120px] bg-white dark:bg-gray-900/50 border border-rose-100 dark:border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff4f79]/20 transition-colors text-sm text-gray-900 dark:text-white placeholder-gray-400 resize-none" required></textarea>
+              </div>
+
+              <div class="flex flex-col gap-2 mt-2">
+                <label class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest">Supporting Links / Pitch Deck (Optional)</label>
+                <div class="border-2 border-dashed border-rose-200 dark:border-gray-700 rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-rose-50 dark:hover:bg-gray-800 transition-colors">
+                  <i data-lucide="upload" class="w-6 h-6 text-[#ff4f79] mb-3"></i>
+                  <span class="text-sm font-bold text-gray-900 dark:text-white mb-1">Upload Pitch Deck or Supporting Documents</span>
+                  <span class="text-[10px] text-gray-500">PDF, PNG, JPG up to 10MB</span>
+                </div>
+              </div>
+              
+              <button type="submit" id="submitBtn" class="mt-4 w-full bg-gradient-to-r from-[#DC2626] to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-10px_rgba(220,38,38,0.5)] hover:shadow-[0_15px_30px_-10px_rgba(220,38,38,0.6)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 relative">
+                <span class="btn-text">Apply for Featured Story</span>
+                <i data-lucide="send" class="w-4 h-4 ml-1"></i>
+                <div class="spinner absolute right-6"></div>
+              </button>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+
+
+  </main>
+
+  <!-- Premium Confirmation Console Modal -->
+  <div id="confirmationModal" class="fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 ease-out backdrop-blur-md bg-slate-900/40" role="dialog" aria-modal="true">
+    <!-- Modal Backdrop Click Area -->
+    <div class="absolute inset-0" onclick="closeModal()"></div>
+    
+    <!-- Modal Card -->
+    <div id="modalCard" class="relative bg-white dark:bg-[#0B0F19] w-11/12 max-w-md rounded-3xl border border-[#E2E8F0] dark:border-[#1E293B] shadow-2xl p-8 md:p-10 transform scale-95 transition-transform duration-300 ease-out">
+      
+      <!-- Close Button -->
+      <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors focus:outline-none" aria-label="Close modal">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Success Indicator -->
+      <div class="mx-auto w-16 h-16 rounded-full bg-cyber-blue/10 border border-cyber-blue/20 flex items-center justify-center mb-6 text-cyber-blue relative">
+        <div class="absolute inset-0 rounded-full animate-ping bg-cyber-blue/20 opacity-75" style="animation-duration: 2s;"></div>
+        <i data-lucide="check" class="w-8 h-8 relative z-10"></i>
+      </div>
+
+      <!-- Copy Block -->
+      <div class="text-center">
+        <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-3">Transmission Successful</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-8">
+          Thank you for reaching out. Your transmission has been securely routed to our team. A tracking ticket has been assigned to your inquiry, and a representative will respond within our system nominal average of &lt; 2 hours.
+        </p>
+
+        <!-- Action Consolidation -->
+        <button onclick="closeModal()" class="w-full py-3.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold rounded-full hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white transition-all shadow-md active:scale-95 flex items-center justify-center gap-2">
+          Return to Console
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Footer injected dynamically -->
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+
+  <!-- Essential Scripts -->
+  <script type="module" src="js/main.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // FAQ Toggle Logic leveraging CSS Grid Transitions
+    window.toggleFaq = function(button) {
+      const item = button.closest('.faq-item');
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      
+      // Close all other FAQs
+      document.querySelectorAll('.faq-item').forEach(faq => {
+        if (faq !== item) {
+          faq.classList.remove('active');
+          faq.querySelector('button').setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Toggle current FAQ
+      if (isExpanded) {
+        item.classList.remove('active');
+        button.setAttribute('aria-expanded', 'false');
+      } else {
+        item.classList.add('active');
+        button.setAttribute('aria-expanded', 'true');
+      }
+    };
+
+    // Modal Interaction Logic
+    window.openModal = function() {
+      const modal = document.getElementById('confirmationModal');
+      const card = document.getElementById('modalCard');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-95');
+      card.classList.add('scale-100');
+      // Render Lucide icons inside modal if not already rendered
+      lucide.createIcons();
+    };
+
+    window.closeModal = function() {
+      const modal = document.getElementById('confirmationModal');
+      const card = document.getElementById('modalCard');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-100');
+      card.classList.add('scale-95');
+    };
+
+    // Form Submission Simulation with Validation and Micro-interactions
+    window.handleFeatureSubmit = function(e) {
+      e.preventDefault();
+      const form = e.target;
+      
+      // Trigger native HTML5 validation UI if invalid
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+
+      // Set Loading State
+      submitBtn.classList.add('is-loading');
+      submitBtn.classList.add('pointer-events-none', 'opacity-90');
+      
+      // Simulate network request (1.5s)
+      setTimeout(() => {
+        submitBtn.classList.remove('is-loading');
+        submitBtn.classList.remove('pointer-events-none', 'opacity-90');
+        
+        // Show Success Modal
+        form.reset();
+        window.openModal();
+        
+      }, 1500);
+    };
+  </script>
+</body>
+</html>

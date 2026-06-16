@@ -609,12 +609,13 @@
 /* Hero Canvas Visual */
 .hero-canvas-visual {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 24px;
   background-color: var(--color-bg-surf);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 .hero-canvas-visual::after {
   content: "";

@@ -7,65 +7,10 @@ class AppFooter extends HTMLElement {
   }
 
   render() {
-    const isNewsletterPage = window.location.pathname.includes('newsletter');
-    const isStartupNewsPage = window.location.pathname.includes('startup-news');
-    const isAiTechNewsPage = window.location.pathname.includes('ai-tech-news');
-    const isEcosystemsNewsPage = window.location.pathname.includes('ecosystems-news');
-    
-    let footerHeading = 'Get the Funding Intel First.';
-    let footerParagraph = 'Join 50,000+ venture capitalists, founders, and operators receiving our weekly terminal brief.';
-    let footerSubtext = '<p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); margin: 0;">No fluff, just verified capital flows.</p>';
-
-    if (isStartupNewsPage) {
-      footerHeading = 'Never Miss a Founder Story';
-      footerParagraph = 'Join 50,000+ builders getting the definitive terminal brief on launches, failures, and pivotal ecosystem shifts.';
-      footerSubtext = '';
-    } else if (isAiTechNewsPage) {
-      footerHeading = 'Stay Ahead of the Neural Curve';
-      footerParagraph = 'Join elite engineers getting the definitive terminal brief on papers, architectural shifts, and deep tech launches.';
-      footerSubtext = '';
-    } else if (isEcosystemsNewsPage) {
-      footerHeading = 'Track the Evolution of Global Tech Hubs';
-      footerParagraph = 'Join elite engineers and founders getting the definitive terminal brief on regional policies, infrastructure shifts, and talent migrations.';
-      footerSubtext = '';
-    }
-
-    const preFooterCta = isNewsletterPage ? '' : `
-      
-      <div class="container" style="padding-top: var(--spacing-16);">
-        <!-- 9. Newsletter Subscription Block -->
-    <section aria-labelledby="newsletter-heading" style="background-color: #111; border-radius: 24px; padding: clamp(2.5rem, 6vw, 4rem); max-width: 1280px; margin-left: auto; margin-right: auto; margin-bottom: var(--spacing-16); display: flex; flex-wrap: wrap; gap: clamp(2rem, 5vw, 4rem); justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
-      
-      <!-- Left side: Text Content -->
-      <div style="color: white; flex: 1 1 300px; max-width: 550px;">
-        <h2 id="newsletter-heading" style="font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; color: white; margin-bottom: var(--spacing-2); letter-spacing: -0.02em;">${footerHeading}</h2>
-        <p style="font-size: clamp(1.125rem, 1.5vw, 1.25rem); margin-bottom: var(--spacing-8); color: rgba(255, 255, 255, 0.95); line-height: 1.4;">${footerParagraph}</p>
-        ${footerSubtext}
-      </div>
-
-      <!-- Right side: Subscription Card -->
-      <div style="background-color: white; border-radius: 16px; padding: var(--spacing-8); box-shadow: 0 20px 40px rgba(0,0,0,0.15); flex: 1 1 320px; max-width: 550px; width: 100%;">
-        <h3 style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #111; margin-bottom: var(--spacing-6); margin-top: 0;">Subscribe to Our Newsletter</h3>
-        <form class="pre-footer-newsletter-form" novalidate style="display: flex; flex-direction: column; gap: var(--spacing-4); margin: 0;">
-          <input type="email" placeholder="Your email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" style="width: 100%; padding: var(--spacing-4); border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; background: #fff; color: #111; outline: none; transition: border-color 0.2s;">
-          <button type="submit" style="width: 100%; padding: var(--spacing-4); background: #EF4444; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: opacity 0.2s, transform 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
-            Subscribe Now &rarr;
-          </button>
-        </form>
-        <p style="font-size: 11px; color: #6b7280; text-align: center; margin-top: 16px; margin-bottom: 0;">By subscribing, you agree to our Terms of Service.</p>
-      </div>
-
-    </section>
-    
-
-      </div>
-  
-      `;
 
     this.innerHTML = `
-      ${preFooterCta}
       <footer class="app-footer">
-        <div class="container">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <div class="footer-grid">
             <div class="footer-col">
               <a href="index.html" class="logo" style="margin-bottom: var(--spacing-4);">
@@ -88,10 +33,6 @@ class AppFooter extends HTMLElement {
               <h4>Categories</h4>
               <ul>
                 <li><a href="stories.html">Startups</a></li>
-                <!--
-                <li><a href="ai-innovation.html">AI & Innovation</a></li>
-                <li><a href="funding.html">Funding</a></li>
-                -->
                 <li><a href="interviews.html">Interviews</a></li>
               </ul>
             </div>
@@ -101,8 +42,8 @@ class AppFooter extends HTMLElement {
               <p style="font-size: 0.875rem; margin-bottom: var(--spacing-2);">Join 50,000+ innovators.</p>
               <form id="newsletter-form" class="input-group" novalidate>
                 <label for="newsletter-email" class="visually-hidden">Email Address</label>
-                <input type="email" id="newsletter-email" class="input-field" placeholder="Enter your email" required>
-                <button type="submit" class="btn btn-primary">Subscribe</button>
+                <input type="email" id="newsletter-email" class="input-field" placeholder="Enter your email" required style="border-radius: 8px;">
+                <button type="submit" class="btn" style="background-color: #111; color: white; border-radius: 9999px;">Subscribe</button>
               </form>
             </div>
           </div>
@@ -110,9 +51,16 @@ class AppFooter extends HTMLElement {
           <div class="footer-bottom">
             <p>&copy; ${new Date().getFullYear()} UnfilterStory. All rights reserved.</p>
             <div class="social-links">
-              <a href="#" aria-label="Twitter">
+              <a href="#" aria-label="Facebook">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                </svg>
+              </a>
+              <a href="#" aria-label="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
               </a>
               <a href="#" aria-label="LinkedIn">
@@ -120,13 +68,6 @@ class AppFooter extends HTMLElement {
                   <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                   <rect x="2" y="9" width="4" height="12"></rect>
                   <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-              </a>
-              <a href="#" aria-label="RSS Feed">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 11a9 9 0 0 1 9 9"></path>
-                  <path d="M4 4a16 16 0 0 1 16 16"></path>
-                  <circle cx="5" cy="19" r="1"></circle>
                 </svg>
               </a>
             </div>
