@@ -9,6 +9,135 @@ class AppFooter extends HTMLElement {
   render() {
 
     this.innerHTML = `
+      <style>
+        .global-cta-wrapper {
+          padding: 4rem 1rem;
+        }
+        .global-cta-section {
+          background: #000000;
+          border-radius: 24px;
+          padding: 4rem 2rem;
+          color: white;
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .global-cta-container {
+          max-width: 960px; /* Reduced to pull elements closer together */
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          gap: 3rem;
+          align-items: center;
+        }
+        @media (min-width: 768px) {
+          .global-cta-container {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 5rem;
+          }
+        }
+        .global-cta-text {
+          flex: 0 1 auto;
+          max-width: 450px;
+        }
+        .global-cta-text h2 {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: clamp(1.75rem, 3vw, 2.25rem);
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          margin-bottom: 1rem;
+          line-height: 1.1;
+          color: white;
+        }
+        .global-cta-text h3 {
+          font-size: clamp(1.25rem, 2vw, 1.5rem);
+          font-weight: 500;
+          margin-bottom: 1rem;
+          line-height: 1.4;
+          color: rgba(255, 255, 255, 0.9);
+        }
+        .global-cta-text p {
+          font-size: 0.9rem;
+          color: rgba(255, 255, 255, 0.8);
+          margin-bottom: 0;
+        }
+        .global-cta-card {
+          background: white;
+          border-radius: 16px;
+          padding: 2.5rem;
+          width: 100%;
+          max-width: 400px;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .global-cta-card h4 {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 1.25rem;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+          color: #111;
+          margin-bottom: 1.5rem;
+        }
+        .global-cta-input {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border: 1px solid #E5E7EB;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          margin-bottom: 1rem;
+          transition: border-color 0.2s;
+        }
+        .global-cta-input:focus {
+          outline: none;
+          border-color: #D92525;
+        }
+        .global-cta-btn {
+          width: 100%;
+          background: radial-gradient(circle at center, #DF0000 0%, #5A0000 100%);
+          color: white;
+          border: none;
+          padding: 0.875rem;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 0.95rem;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 0.5rem;
+          transition: opacity 0.2s, transform 0.2s;
+        }
+        .global-cta-btn:hover {
+          opacity: 0.9;
+          transform: translateY(-1px);
+        }
+      </style>
+
+      <div class="global-cta-wrapper">
+        <section class="global-cta-section">
+          <div class="global-cta-container">
+          <div class="global-cta-text">
+            <h2>Get Real Startup Stories</h2>
+            <h3>No fluff. No hype. Just the truth.</h3>
+            <p>Join 10,000+ founders and builders in the truth-first ecosystem.</p>
+          </div>
+          <div class="global-cta-card">
+            <h4>Subscribe to Our Newsletter</h4>
+            <form id="global-newsletter-form">
+              <input type="email" class="global-cta-input" placeholder="Your email" required>
+              <button type="submit" class="global-cta-btn">
+                Subscribe Now
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+      </div>
+
       <footer class="app-footer">
         <div class="footer-inner">
           <div class="footer-grid">
