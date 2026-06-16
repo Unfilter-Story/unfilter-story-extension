@@ -1,5 +1,13 @@
 /* d:\unfilterstory\css\layout.css */
 
+/* Global Container System */
+.lyt-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 3vw, 48px); /* 16px Mobile, 24px Tablet, 32px Desktop, 48px Large Desktop */
+  box-sizing: border-box;
+}
 /* Progress Bar */
 .progress-bar-container {
   position: fixed;
@@ -123,6 +131,23 @@ app-header::before {
   }
   .menu-toggle {
     display: none;
+  }
+}
+
+/* Tablet Layout Optimization (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-desktop ul {
+    gap: var(--spacing-3);
+  }
+  .nav-desktop a {
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+  .header-inner {
+    padding: 0 var(--spacing-3);
+  }
+  .logo-text {
+    font-size: 1.25rem;
   }
 }
 
@@ -828,8 +853,8 @@ app-header::before {
 }
 
 @media (max-width: 767px) {
-  /* Hide right side header actions on mobile */
-  .header-actions {
+  /* Hide only the subscribe button on mobile, keeping the search icon visible */
+  .header-actions .btn {
     display: none;
   }
 

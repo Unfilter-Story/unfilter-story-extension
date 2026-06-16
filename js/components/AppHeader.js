@@ -99,7 +99,7 @@ class AppHeader extends HTMLElement {
             <h3 class="bottom-sheet-title">Explore</h3>
             <ul class="bottom-sheet-menu">
               <li><a href="about.html">About Us</a></li>
-              <li><a href="categories.html">Categories</a></li>
+              <!-- <li><a href="categories.html">Categories</a></li> -->
               <li><a href="funding.html">Funding</a></li>
               <li><a href="contact.html">Contact</a></li>
               <li><a href="bookmarks.html">Bookmarks</a></li>

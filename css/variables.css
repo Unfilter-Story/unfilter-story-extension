@@ -26,11 +26,20 @@
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --text-fluid-h1: clamp(3.5rem, 5vw, 4.5rem);
-  --text-fluid-h2: clamp(1.5rem, 2vw, 2rem);
-  --text-fluid-h3: clamp(1.25rem, 1.5vw, 1.5rem);
-  --text-body: 1.125rem; /* 18px */
-  --line-height-body: 1.75;
+  /* Fluid Typography Architecture */
+  --text-fluid-heading: clamp(1.5rem, 4vw, 3rem);
+  --line-height-heading: 1.25;
+  
+  --text-fluid-subheading: clamp(1rem, 2vw, 1.5rem);
+  --line-height-subheading: 1.4;
+  
+  --text-fluid-body: clamp(0.9rem, 1.5vw, 1rem);
+  --line-height-body: 1.65;
+
+  /* Fluid Spacing & Dynamic Grid Gaps */
+  --spacing-fluid-padding: clamp(12px, 2vw, 32px);
+  /* The layout gap scales from 12px (mobile) up to 32px (ultrawide) */
+  --gap-fluid-layout: clamp(12px, 1.5vw + 6px, 32px);
 
   /* Layout */
   --max-width-editorial: 45rem; /* 720px */
