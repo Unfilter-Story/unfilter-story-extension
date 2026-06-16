@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interviews | UnfilterStory</title>
+  <meta name="description" content="Exclusive conversations with founders, CEOs, and innovators building tomorrow.">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    function syncTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    }
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'cyber-blue': '#2563EB',
+            'electric-violet': '#7C3AED',
+            'neon-cyan': '#06B6D4',
+            'canvas': '#F8FAFC',
+            'form-bg': '#F1F5F9',
+            'struct': '#E2E8F0'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Add specific layout overrides if needed */
+    .masonry-grid {
+      columns: 1;
+      column-gap: 1.5rem;
+    }
+    @media (min-width: 640px) { .masonry-grid { columns: 2; } }
+    @media (min-width: 1024px) { .masonry-grid { columns: 3; } }
+    .masonry-item { break-inside: avoid; margin-bottom: 1.5rem; }
+    
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .dark .glass-panel {
+      background: rgba(13, 18, 31, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    .filter-btn.active {
+      background-color: #111827;
+      color: white;
+    }
+    .dark .filter-btn.active {
+      background-color: white;
+      color: #111827;
+    }
+    
+    /* Image Skeleton */
+    .skeleton-loading {
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+      background-size: 200% 100%;
+      animation: skeletonLoading 1.5s infinite;
+    }
+    .dark .skeleton-loading {
+      background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+      background-size: 200% 100%;
+    }
+    @keyframes skeletonLoading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
+</head>
+<body class="bg-canvas dark:bg-[#0B0F19] text-gray-900 dark:text-gray-100 transition-colors duration-300 antialiased font-sans selection:bg-cyber-blue/30">
+
+  <app-header></app-header>
+
+  <main class="pb-16">
+    
+    <!-- SECTION 1: THE BRAND MANIFEST HERO CANVAS -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 lg:pb-16">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <!-- Left: Editorial Pitch (60%) -->
+        <div class="lg:col-span-7 flex flex-col justify-center relative z-10 lg:pr-12">
+          <div class="absolute -top-20 -left-20 w-72 h-72 bg-electric-violet/20 blur-[100px] rounded-full pointer-events-none"></div>
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-[#DC2626] dark:text-red-400 font-bold text-xs uppercase tracking-widest mb-6 w-max border border-red-200 dark:border-red-800/30" style="display: none;">
+            <i data-lucide="mic" class="w-3 h-3"></i> Interviews Archive
+          </span>
+          <h1 class="text-4xl lg:text-5xl font-bold tracking-normal leading-[1.1] mb-6 text-gray-900 dark:text-white">
+            Conversations with the <br class="hidden lg:block"/>Founders, CEOs, and Innovators <br class="hidden lg:block"/><span class="text-[#DC2626]">Building Tomorrow.</span>
+          </h1>
+          <p class="text-base text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+            Go behind the scenes of the world's fastest-growing startups. Unfiltered insights, raw execution strategies, and the real stories behind the headlines.
+          </p>
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="#featured" class="bg-[#111] dark:bg-white text-white dark:text-[#111] px-8 py-4 rounded-xl font-bold hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5" style="display: none;">
+              <i data-lucide="play-circle" class="w-5 h-5"></i> Watch Interviews
+            </a>
+            <a href="#latest" class="bg-[#111] dark:bg-white text-white dark:text-[#111] px-8 py-4 rounded-xl font-bold hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+              Explore Stories
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Q&A Visual Anchor (40%) -->
+        <div class="lg:col-span-5 relative aspect-video lg:aspect-[4/3] w-full rounded-3xl overflow-hidden shadow-2xl group">
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=80" alt="Sam Altman Interview" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 skeleton-loading" onload="this.classList.remove('skeleton-loading')">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          
+          <!-- Glassmorphism Card Overlay -->
+          <div class="absolute bottom-6 left-6 right-6 glass-panel rounded-2xl p-6 shadow-2xl backdrop-blur-xl border border-white/20 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+            <div class="flex items-center justify-between mb-4">
+              <span class="bg-[#DC2626] text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Exclusive Q&A</span>
+              <span class="text-gray-700 dark:text-white text-xs font-mono flex items-center gap-1 opacity-80"><i data-lucide="clock" class="w-3 h-3"></i> 45 Min Read</span>
+            </div>
+            <h3 class="text-gray-900 dark:text-white font-bold text-xl mb-1 leading-tight">The Neural Frontier</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Sam Altman &bull; CEO, OpenAI</p>
+            <a href="#" class="inline-flex items-center gap-2 text-gray-900 dark:text-white font-semibold text-sm hover:text-[#DC2626] dark:hover:text-[#DC2626] transition-colors group/link">
+              Read Interview <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: FEATURED CONVERSATION -->
+    <section id="featured" class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <!-- Image Container -->
+        <div class="lg:col-span-5 relative rounded-3xl overflow-hidden shadow-lg group cursor-pointer aspect-video lg:aspect-[4/3]">
+          <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80" alt="Featured Conversation" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 skeleton-loading" onload="this.classList.remove('skeleton-loading')">
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+          <div class="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-3xl"></div>
+        </div>
+        
+        <!-- Content Stack -->
+        <div class="lg:col-span-7 flex flex-col">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-sm font-bold text-[#DC2626] tracking-wide uppercase">Spotlight</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Published Today</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold tracking-normal text-gray-900 dark:text-white leading-[1.2] mb-6 hover:text-[#DC2626] dark:hover:text-[#DC2626] cursor-pointer transition-colors">
+            Building the Next Generation of Autonomous Commerce
+          </h2>
+          <p class="text-base text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+            In an exclusive sit-down, Shopify's leadership discusses the inevitable shift towards AI-agent driven storefronts, and how founders need to adapt their go-to-market motions over the next 18 months.
+          </p>
+          
+          <div class="flex items-center justify-between border-t border-struct pt-6 mt-2">
+            <div class="flex items-center gap-3">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-full" alt="Author">
+              <div>
+                <p class="text-sm font-bold text-gray-900 dark:text-white">Alex Chen</p>
+                <p class="text-xs text-gray-500">Senior Editor</p>
+              </div>
+            </div>
+            <a href="#" class="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-[#DC2626] hover:text-white dark:hover:bg-[#DC2626] transition-colors group/btn">
+              <i data-lucide="arrow-right" class="w-5 h-5 transform group-hover/btn:-rotate-45 transition-transform"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: TRENDING THIS WEEK -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Trending This Week</h2>
+        <div class="flex gap-2">
+          <button class="p-2 rounded-full border border-struct hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-400" aria-label="Previous">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+          </button>
+          <button class="p-2 rounded-full border border-struct hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-400" aria-label="Next">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-6 pb-4 -mx-4 px-4 scroll-px-4 sm:mx-0 sm:px-0 sm:scroll-px-0">
+        <!-- Card 1 -->
+        <div class="w-[240px] min-w-[240px] sm:w-[320px] sm:min-w-[320px] lg:w-1/4 flex-shrink-0 snap-start group cursor-pointer">
+          <div class="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4 shadow-sm group-hover:shadow-xl transition-shadow">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80" alt="Profile" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-[#DC2626] px-2 py-1 rounded mb-2 inline-block">Fintech</span>
+              <h3 class="font-bold text-lg text-white leading-snug mb-1">Redefining Payment Rails</h3>
+              <p class="text-gray-300 text-xs">Sarah Jones, CTO</p>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="w-[240px] min-w-[240px] sm:w-[320px] sm:min-w-[320px] lg:w-1/4 flex-shrink-0 snap-start group cursor-pointer">
+          <div class="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4 shadow-sm group-hover:shadow-xl transition-shadow">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80" alt="Profile" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-[#DC2626] px-2 py-1 rounded mb-2 inline-block">SaaS</span>
+              <h3 class="font-bold text-lg text-white leading-snug mb-1">The Enterprise Playbook</h3>
+              <p class="text-gray-300 text-xs">Michael Chang, Founder</p>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="w-[240px] min-w-[240px] sm:w-[320px] sm:min-w-[320px] lg:w-1/4 flex-shrink-0 snap-start group cursor-pointer">
+          <div class="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4 shadow-sm group-hover:shadow-xl transition-shadow">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="Profile" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-[#DC2626] px-2 py-1 rounded mb-2 inline-block">Venture Capital</span>
+              <h3 class="font-bold text-lg text-white leading-snug mb-1">Funding in a Bear Market</h3>
+              <p class="text-gray-300 text-xs">Elena Rostova, Partner</p>
+            </div>
+          </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="w-[240px] min-w-[240px] sm:w-[320px] sm:min-w-[320px] lg:w-1/4 flex-shrink-0 snap-start group cursor-pointer">
+          <div class="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4 shadow-sm group-hover:shadow-xl transition-shadow">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Profile" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-[#DC2626] px-2 py-1 rounded mb-2 inline-block">AI/ML</span>
+              <h3 class="font-bold text-lg text-white leading-snug mb-1">Models of Tomorrow</h3>
+              <p class="text-gray-300 text-xs">Anita Patel, Head of AI</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: BROADCAST & WATCH CONVERSATIONS -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-50 dark:bg-[#0B0F19]/50 border-y border-struct" style="display: none;">
+      <div class="mb-10">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+          <i data-lucide="video" class="w-6 h-6 text-[#DC2626]"></i> Video Series
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Video Card 1 -->
+        <div class="group cursor-pointer">
+          <div class="relative aspect-video rounded-2xl overflow-hidden mb-4 bg-gray-200 dark:bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=600&q=80" alt="Thumbnail" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform group-hover:bg-[#DC2626]/90 border border-white/30">
+                <i data-lucide="play" class="w-5 h-5 text-white fill-white ml-1"></i>
+              </div>
+            </div>
+            <span class="absolute bottom-3 right-3 bg-black/80 text-white text-[10px] font-mono px-2 py-1 rounded backdrop-blur-sm">24:15</span>
+          </div>
+          <h3 class="font-bold text-gray-900 dark:text-white mb-1 group-hover:text-[#DC2626] transition-colors">The Logistics Dilemma</h3>
+          <p class="text-sm text-gray-500">Ryan Petersen &bull; Flexport</p>
+        </div>
+        <!-- Video Card 2 -->
+        <div class="group cursor-pointer">
+          <div class="relative aspect-video rounded-2xl overflow-hidden mb-4 bg-gray-200 dark:bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" alt="Thumbnail" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform group-hover:bg-[#DC2626]/90 border border-white/30">
+                <i data-lucide="play" class="w-5 h-5 text-white fill-white ml-1"></i>
+              </div>
+            </div>
+            <span class="absolute bottom-3 right-3 bg-black/80 text-white text-[10px] font-mono px-2 py-1 rounded backdrop-blur-sm">45:30</span>
+          </div>
+          <h3 class="font-bold text-gray-900 dark:text-white mb-1 group-hover:text-[#DC2626] transition-colors">Scaling Beyond $100M ARR</h3>
+          <p class="text-sm text-gray-500">Mathilde Collin &bull; Front</p>
+        </div>
+        <!-- Video Card 3 -->
+        <div class="group cursor-pointer">
+          <div class="relative aspect-video rounded-2xl overflow-hidden mb-4 bg-gray-200 dark:bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" alt="Thumbnail" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform group-hover:bg-[#DC2626]/90 border border-white/30">
+                <i data-lucide="play" class="w-5 h-5 text-white fill-white ml-1"></i>
+              </div>
+            </div>
+            <span class="absolute bottom-3 right-3 bg-black/80 text-white text-[10px] font-mono px-2 py-1 rounded backdrop-blur-sm">18:05</span>
+          </div>
+          <h3 class="font-bold text-gray-900 dark:text-white mb-1 group-hover:text-[#DC2626] transition-colors">Design as a Moat</h3>
+          <p class="text-sm text-gray-500">Brian Chesky &bull; Airbnb</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: FOUNDER Q&A (MASONRY GRID) -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="mb-10 text-center">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Founder Q&A</h2>
+        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Short, high-impact answers to the hardest questions in company building.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Masonry Item 1 -->
+        <div class="flex flex-col h-full bg-white dark:bg-[#0D121F] border border-struct rounded-2xl p-6 hover:shadow-lg transition-shadow">
+          <div class="flex items-center gap-4 mb-4 pb-4 border-b border-struct">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <p class="font-bold text-gray-900 dark:text-white text-sm">Jason Calacanis</p>
+              <p class="text-xs text-gray-500">Angel Investor</p>
+            </div>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">"What's the biggest red flag in a seed pitch?"</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">"When founders spend 15 minutes talking about market size and 2 minutes on why their product is actually 10x better. If the product isn't visceral, the TAM doesn't matter."</p>
+          <a href="#" class="mt-auto text-[#DC2626] text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">Read More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Masonry Item 2 -->
+        <div class="flex flex-col h-full bg-white dark:bg-[#0D121F] border border-struct rounded-2xl p-6 hover:shadow-lg transition-shadow">
+          <div class="flex items-center gap-4 mb-4 pb-4 border-b border-struct">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <p class="font-bold text-gray-900 dark:text-white text-sm">Reshma Saujani</p>
+              <p class="text-xs text-gray-500">Girls Who Code</p>
+            </div>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">"How do you bounce back from a public failure?"</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">"You have to decouple your self-worth from the outcome of the project. The failure is an event, not an identity. Once you realize that, the sting goes away and the data remains."</p>
+          <a href="#" class="mt-auto text-[#DC2626] text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">Full Response <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+
+        <!-- Masonry Item 3 -->
+        <div class="flex flex-col h-full bg-white dark:bg-[#0D121F] border border-struct rounded-2xl p-6 hover:shadow-lg transition-shadow">
+          <div class="flex items-center gap-4 mb-4 pb-4 border-b border-struct">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&q=80" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <p class="font-bold text-gray-900 dark:text-white text-sm">Emmett Shear</p>
+              <p class="text-xs text-gray-500">Twitch</p>
+            </div>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">"When did you realize it was working?"</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">"When the servers melted down and people were complaining on Twitter. That's the best worst day for a founder."</p>
+          <a href="#" class="mt-auto text-[#DC2626] text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">Read More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: INVESTOR PERSPECTIVES -->
+    <section class="py-20 bg-black text-white">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-xs font-mono tracking-widest text-gray-400 uppercase mb-12 border-b border-gray-800 pb-4">Investor Perspectives</h2>
+        
+        <!-- Block 1 -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center border-b border-gray-800 pb-12 mb-12 group">
+          <div class="md:col-span-3 flex flex-col items-start gap-4">
+            <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=200&q=80" alt="Investor" class="w-24 h-24 rounded-full grayscale group-hover:grayscale-0 transition-all duration-500">
+            <div>
+              <p class="font-bold text-lg">Marc Andreessen</p>
+              <p class="text-gray-500 text-sm">a16z</p>
+            </div>
+          </div>
+          <div class="md:col-span-6">
+            <blockquote class="text-2xl md:text-3xl font-medium leading-tight mb-4">
+              "AI will create the next trillion-dollar startup opportunity. The question isn't if, it's who."
+            </blockquote>
+          </div>
+          <div class="md:col-span-3 text-right md:text-center">
+            <a href="#" class="inline-block bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-[#DC2626] hover:text-white transition-colors duration-300">Read Conversation</a>
+          </div>
+        </div>
+        
+        <!-- Block 2 -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center group">
+          <div class="md:col-span-3 flex flex-col items-start gap-4">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80" alt="Investor" class="w-24 h-24 rounded-full grayscale group-hover:grayscale-0 transition-all duration-500">
+            <div>
+              <p class="font-bold text-lg">Mary Meeker</p>
+              <p class="text-gray-500 text-sm">BOND</p>
+            </div>
+          </div>
+          <div class="md:col-span-6">
+            <blockquote class="text-2xl md:text-3xl font-medium leading-tight mb-4">
+              "We are looking for founders who obsess over unit economics before they ever think about scale."
+            </blockquote>
+          </div>
+          <div class="md:col-span-3 text-right md:text-center">
+            <a href="#" class="inline-block bg-transparent border border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-black transition-colors duration-300">Read Conversation</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7 & 9: EDITOR's PICKS & LATEST CONVERSATIONS -->
+    <section id="latest" class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      
+      <!-- Taxonomy Filters -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 sticky top-[60px] z-40 bg-canvas/90 dark:bg-[#0B0F19]/90 backdrop-blur-md py-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white shrink-0">Editorial Archive</h2>
+        <div class="flex overflow-x-auto gap-2 pb-2 hide-scrollbar">
+          <button class="filter-btn active px-4 py-2 rounded-full border border-struct text-sm font-medium transition-colors shrink-0" onclick="updateFilter(this)">All</button>
+          <button class="filter-btn bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-2 rounded-full border border-struct text-sm font-medium transition-colors shrink-0" onclick="updateFilter(this)">Founders</button>
+          <button class="filter-btn bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-2 rounded-full border border-struct text-sm font-medium transition-colors shrink-0" onclick="updateFilter(this)">Investors</button>
+          <button class="filter-btn bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-2 rounded-full border border-struct text-sm font-medium transition-colors shrink-0" onclick="updateFilter(this)">AI Leaders</button>
+          <button class="filter-btn bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-2 rounded-full border border-struct text-sm font-medium transition-colors shrink-0" onclick="updateFilter(this)">Women in Tech</button>
+        </div>
+      </div>
+
+      <!-- The Ingestion Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="archive-grid">
+        <!-- Archive Card 1 -->
+        <article class="bg-white dark:bg-[#0D121F] rounded-2xl border border-struct overflow-hidden group hover:-translate-y-1 hover:shadow-xl transition-all duration-300 cursor-pointer" onclick="window.location.href='#'">
+          <div class="aspect-[16/10] overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4">
+              <span class="bg-white/90 dark:bg-black/90 backdrop-blur-sm text-gray-900 dark:text-white text-[10px] font-bold px-2 py-1 rounded uppercase">Founders</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#DC2626] transition-colors leading-snug">The Hardware Renaissance</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6 line-clamp-2">Why consumer electronics are making a massive comeback driven by specialized LLM hardware devices.</p>
+            <div class="flex items-center justify-between mt-auto">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-xs font-bold text-gray-600 dark:text-gray-400">J</div>
+                <span class="text-xs font-medium text-gray-500">Jesse Lyu</span>
+              </div>
+              <span class="text-xs text-gray-400 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 8m</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Archive Card 2 -->
+        <article class="bg-white dark:bg-[#0D121F] rounded-2xl border border-struct overflow-hidden group hover:-translate-y-1 hover:shadow-xl transition-all duration-300 cursor-pointer" onclick="window.location.href='#'">
+          <div class="aspect-[16/10] overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4">
+              <span class="bg-white/90 dark:bg-black/90 backdrop-blur-sm text-gray-900 dark:text-white text-[10px] font-bold px-2 py-1 rounded uppercase">AI Leaders</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#DC2626] transition-colors leading-snug">Data is the New Code</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6 line-clamp-2">How data curation pipelines are replacing traditional software engineering roles in AI startups.</p>
+            <div class="flex items-center justify-between mt-auto">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-xs font-bold text-gray-600 dark:text-gray-400">A</div>
+                <span class="text-xs font-medium text-gray-500">Alex Wang</span>
+              </div>
+              <span class="text-xs text-gray-400 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 12m</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Archive Card 3 -->
+        <article class="bg-white dark:bg-[#0D121F] rounded-2xl border border-struct overflow-hidden group hover:-translate-y-1 hover:shadow-xl transition-all duration-300 cursor-pointer" onclick="window.location.href='#'">
+          <div class="aspect-[16/10] overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4">
+              <span class="bg-white/90 dark:bg-black/90 backdrop-blur-sm text-gray-900 dark:text-white text-[10px] font-bold px-2 py-1 rounded uppercase">Investors</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#DC2626] transition-colors leading-snug">The Bootstrapper's Advantage</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6 line-clamp-2">Why certain VC firms are specifically targeting profitable, un-funded SaaS companies for growth equity.</p>
+            <div class="flex items-center justify-between mt-auto">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-xs font-bold text-gray-600 dark:text-gray-400">P</div>
+                <span class="text-xs font-medium text-gray-500">Paul Graham</span>
+              </div>
+              <span class="text-xs text-gray-400 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 6m</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 8: QUANTITATIVE ANALYTICS -->
+    <section class="bg-gray-900 dark:bg-[#050810] py-16 border-y border-gray-800" id="stats-section">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 divide-x divide-gray-800">
+          <div class="text-center px-4">
+            <p class="text-4xl md:text-5xl font-black text-white mb-2 counter" data-target="500">0</p>
+            <p class="text-sm font-medium tracking-wide text-gray-400 uppercase">Founder Stories</p>
+          </div>
+          <div class="text-center px-4">
+            <p class="text-4xl md:text-5xl font-black text-[#DC2626] mb-2 counter" data-target="150">0</p>
+            <p class="text-sm font-medium tracking-wide text-gray-400 uppercase">VC Dialogues</p>
+          </div>
+          <div class="text-center px-4">
+            <p class="text-4xl md:text-5xl font-black text-white mb-2 counter" data-target="100">0</p>
+            <p class="text-sm font-medium tracking-wide text-gray-400 uppercase">Startup Deep Dives</p>
+          </div>
+          <div class="text-center px-4">
+            <p class="text-4xl md:text-5xl font-black text-[#DC2626] mb-2"><span class="counter" data-target="1">0</span>M+</p>
+            <p class="text-sm font-medium tracking-wide text-gray-400 uppercase">Monthly Readers</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+  </main>
+
+  <app-footer></app-footer>
+
+  <!-- Essential Scripts -->
+  <script type="module" src="js/main.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Taxonomy Filter Logic
+    window.updateFilter = function(btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.remove('active', 'bg-[#111827]', 'text-white');
+        b.classList.add('bg-white', 'dark:bg-[#1E293B]', 'text-gray-600', 'dark:text-gray-300');
+      });
+      btn.classList.add('active');
+      btn.classList.remove('bg-white', 'dark:bg-[#1E293B]', 'text-gray-600', 'dark:text-gray-300');
+      
+      // Simple visual animation to simulate filtering
+      const grid = document.getElementById('archive-grid');
+      grid.style.opacity = '0';
+      grid.style.transform = 'translateY(10px)';
+      grid.style.transition = 'all 0.3s ease';
+      
+      setTimeout(() => {
+        // In a real app, DOM nodes would be swapped here
+        grid.style.opacity = '1';
+        grid.style.transform = 'translateY(0)';
+      }, 300);
+    }
+
+    // Number Counter Animation
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200; // Lower is faster
+
+    const startCounters = (entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.querySelectorAll('.counter').forEach(counter => {
+            const updateCount = () => {
+              const target = +counter.getAttribute('data-target');
+              const count = +counter.innerText;
+              const inc = target / speed;
+
+              if(count < target) {
+                counter.innerText = Math.ceil(count + inc);
+                setTimeout(updateCount, 10);
+              } else {
+                counter.innerText = target + (target > 100 ? '+' : '');
+              }
+            };
+            updateCount();
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+
+    const statsObserver = new IntersectionObserver(startCounters, {
+      root: null,
+      threshold: 0.5
+    });
+
+    const statsSection = document.getElementById('stats-section');
+    if (statsSection) {
+      statsObserver.observe(statsSection);
+    }
+  </script>
+</body>
+</html>

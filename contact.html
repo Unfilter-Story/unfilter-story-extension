@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | UnfilterStory</title>
+  <meta name="description" content="Get in touch with the UnfilterStory team. Secure communication, partnerships, and press inquiries.">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    function syncTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    }
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  </script>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'cyber-blue': '#0099FF',
+            'electric-violet': '#8B5CF6',
+            'slate-dark': '#0B0F19',
+            'slate-card': '#0D121F',
+            'slate-border': '#1E293B',
+            'form-bg': '#F9FAFB',
+            'form-bg-dark': '#0D121F'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Custom CSS for Contact elements */
+    .bg-canvas { background-color: #FFFFFF; }
+    .dark .bg-canvas { background-color: #0B0F19; }
+    .border-struct { border-color: #E5E7EB; }
+    .dark .border-struct { border-color: #1E293B; }
+    
+    /* Floating labels styling */
+    .floating-input:focus ~ .floating-label,
+    .floating-input:not(:placeholder-shown) ~ .floating-label {
+      transform: translateY(-1.5rem) scale(0.85);
+      color: #0099FF;
+    }
+    
+    .floating-input:not(:placeholder-shown):not(:focus):invalid ~ .floating-label {
+      color: #EF4444; /* Error red */
+    }
+
+    .floating-input:not(:placeholder-shown):not(:focus):valid ~ .floating-label {
+      color: #10B981; /* Success green */
+    }
+
+    .floating-input:not(:focus):invalid:not(:placeholder-shown) {
+      border-color: #EF4444;
+      box-shadow: 0 0 0 1px #EF4444;
+    }
+
+    .floating-input:not(:focus):valid:not(:placeholder-shown) {
+      border-color: #10B981;
+    }
+
+    /* FAQ Accordion Transitions */
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s ease;
+    }
+    .faq-answer > div {
+      overflow: hidden;
+    }
+    .faq-item.active .faq-answer {
+      grid-template-rows: 1fr;
+    }
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+    }
+    .faq-item.active {
+      border-color: #DC2626;
+    }
+    
+    /* Loading Spinner */
+    .spinner {
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 2px solid #fff;
+      width: 16px;
+      height: 16px;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .is-loading .spinner {
+      display: block;
+    }
+    .is-loading .btn-text {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-canvas text-gray-900 dark:text-gray-100 transition-colors duration-300 antialiased font-sans">
+
+  <app-header></app-header>
+
+  <main class="pb-24">
+    
+    <!-- CONTACT LAYOUT (Sections 1-3 replaced) -->
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        
+        <!-- LEFT COLUMN: Information -->
+        <div class="lg:col-span-6 flex flex-col gap-8">
+          <div>
+            <h1 class="text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] text-gray-900 dark:text-white mb-4">Contact Information</h1>
+            <p class="text-gray-600 dark:text-gray-400 text-base lg:text-lg leading-relaxed">Reach out to the right team for the fastest response.</p>
+          </div>
+          
+          <div class="flex flex-col gap-4 max-w-md">
+            <!-- Card 1 -->
+            <div class="bg-white dark:bg-[#0D121F] border border-gray-200 dark:border-gray-700 rounded-3xl p-6 flex gap-5 items-start shadow-md hover:shadow-lg transition-all">
+              <div class="w-12 h-12 rounded-2xl bg-[#ff4f79]/10 flex items-center justify-center shrink-0">
+                <i data-lucide="message-square" class="w-5 h-5 text-[#ff4f79]"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-1">Editorial Tips</h3>
+                <a href="mailto:tips@unfilterstory.com" class="text-[#ff4f79] font-bold text-sm block mb-1">tips@unfilterstory.com</a>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Send us anonymous tips or story ideas.</p>
+              </div>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="bg-white dark:bg-[#0D121F] border border-gray-200 dark:border-gray-700 rounded-3xl p-6 flex gap-5 items-start shadow-md hover:shadow-lg transition-all">
+              <div class="w-12 h-12 rounded-2xl bg-[#ff4f79]/10 flex items-center justify-center shrink-0">
+                <i data-lucide="mail" class="w-5 h-5 text-[#ff4f79]"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-1">General Support</h3>
+                <a href="mailto:hello@unfilterstory.com" class="text-[#ff4f79] font-bold text-sm block mb-1">hello@unfilterstory.com</a>
+                <p class="text-sm text-gray-500 dark:text-gray-400">For general inquiries and feedback.</p>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white dark:bg-[#0D121F] border border-gray-200 dark:border-gray-700 rounded-3xl p-6 flex gap-5 items-start shadow-md hover:shadow-lg transition-all">
+              <div class="w-12 h-12 rounded-2xl bg-[#ff4f79]/10 flex items-center justify-center shrink-0">
+                <i data-lucide="map-pin" class="w-5 h-5 text-[#ff4f79]"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-900 dark:text-white mb-1">Our Office</h3>
+                <span class="text-[#ff4f79] font-bold text-sm block mb-1">HSR Layout, Bangalore, KA</span>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Visit us for a coffee and a chat.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Dark Card -->
+          <div class="bg-[#111] dark:bg-black rounded-[2rem] p-8 lg:p-10 mt-2 text-white shadow-xl max-w-md">
+            <div class="flex items-center gap-3 mb-6">
+              <i data-lucide="clock" class="w-6 h-6 text-[#f97316]"></i>
+              <h3 class="font-bold text-xl">Response Time</h3>
+            </div>
+            <p class="text-sm text-gray-400 leading-relaxed mb-8">Our team typically responds to all inquiries within 24 hours during business days.</p>
+            <div class="flex items-center gap-2">
+              <div class="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse"></div>
+              <span class="text-[10px] font-bold text-gray-400 tracking-widest uppercase">Currently Online</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- RIGHT COLUMN: Form -->
+        <div class="lg:col-span-6">
+          <div class="bg-[#FFF1F2] dark:bg-[#0D121F] rounded-[2rem] p-6 md:p-8 lg:p-10 shadow-[0_20px_40px_-10px_rgba(220,38,38,0.05)] dark:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] border border-rose-200 dark:border-gray-800 relative flex flex-col">
+            <form class="flex flex-col gap-6" id="contactForm" onsubmit="handleContactSubmit(event)" novalidate>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="flex flex-col gap-3">
+                  <label for="name" class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest">Your Name</label>
+                  <input type="text" id="name" placeholder="John Doe" class="w-full bg-white dark:bg-gray-900/50 border border-rose-100 dark:border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff4f79]/20 transition-colors text-sm text-gray-900 dark:text-white placeholder-gray-400 shadow-sm" required>
+                </div>
+                <div class="flex flex-col gap-3">
+                  <label for="email" class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest">Email Address</label>
+                  <input type="email" id="email" placeholder="john@company.com" class="w-full bg-white dark:bg-gray-900/50 border border-rose-100 dark:border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff4f79]/20 transition-colors text-sm text-gray-900 dark:text-white placeholder-gray-400 shadow-sm" required>
+                </div>
+              </div>
+              
+              <div class="flex flex-col gap-3">
+                <label for="subject" class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest">Subject</label>
+                <input type="text" id="subject" placeholder="How can we help?" class="w-full bg-white dark:bg-gray-900/50 border border-rose-100 dark:border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff4f79]/20 transition-colors text-sm text-gray-900 dark:text-white placeholder-gray-400 shadow-sm" required>
+              </div>
+              
+              <div class="flex flex-col gap-3">
+                <label for="message" class="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest">Your Message</label>
+                <textarea id="message" placeholder="Write your message here..." class="w-full min-h-[140px] lg:min-h-[180px] bg-white dark:bg-gray-900/50 border border-rose-100 dark:border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff4f79]/20 transition-colors text-sm text-gray-900 dark:text-white placeholder-gray-400 resize-none shadow-sm" required></textarea>
+              </div>
+              
+              <button type="submit" id="submitBtn" class="mt-2 w-full bg-gradient-to-r from-[#DC2626] to-red-800 hover:from-red-700 hover:to-red-900 text-white font-bold py-3.5 rounded-xl shadow-[0_10px_20px_-10px_rgba(220,38,38,0.5)] hover:shadow-[0_15px_30px_-10px_rgba(220,38,38,0.6)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 relative">
+                <span class="btn-text">Send Message</span>
+                <i data-lucide="send" class="w-4 h-4 ml-1"></i>
+                <div class="spinner absolute right-6"></div>
+              </button>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: PRE-SUBMISSION PROTOCOLS (FAQ) & SOCIAL DIRECTORY -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="mb-10">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Pre-Submission Protocols</h2>
+        <p class="text-gray-500 dark:text-gray-400 text-sm">Frequently requested parameters.</p>
+      </div>
+
+      <!-- FAQ 2x2 Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12 items-start">
+        
+        <!-- FAQ 1 -->
+        <div class="faq-item border border-struct rounded-2xl bg-white dark:bg-[#0D121F] shadow-sm relative overflow-hidden transition-all duration-300 text-left">
+          <button class="w-full flex items-center justify-between text-left py-4 px-6 focus:outline-none group relative z-10" aria-expanded="false" onclick="toggleFaq(this)">
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-[#DC2626] transition-colors pr-4">How do I submit an anonymous news tip?</h3>
+            <i data-lucide="plus" class="w-4 h-4 text-gray-400 group-hover:text-[#DC2626] shrink-0 faq-icon transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer px-6">
+            <div>
+              <div class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed pb-5 pt-1">
+                Do not use your corporate network or hardware. Use a public WiFi connection, route your traffic through Tor, and encrypt your payload using our PGP Public Key.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item border border-struct rounded-2xl bg-white dark:bg-[#0D121F] shadow-sm relative overflow-hidden transition-all duration-300 text-left">
+          <button class="w-full flex items-center justify-between text-left py-4 px-6 focus:outline-none group relative z-10" aria-expanded="false" onclick="toggleFaq(this)">
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-[#DC2626] transition-colors pr-4">What are your editorial syndication guidelines?</h3>
+            <i data-lucide="plus" class="w-4 h-4 text-gray-400 group-hover:text-[#DC2626] shrink-0 faq-icon transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer px-6">
+            <div>
+              <div class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed pb-5 pt-1">
+                We selectively partner with enterprise networks. Please reach out to the partnerships email above for terms and API integration specifications.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item border border-struct rounded-2xl bg-white dark:bg-[#0D121F] shadow-sm relative overflow-hidden transition-all duration-300 text-left">
+          <button class="w-full flex items-center justify-between text-left py-4 px-6 focus:outline-none group relative z-10" aria-expanded="false" onclick="toggleFaq(this)">
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-[#DC2626] transition-colors pr-4">Do you accept guest op-eds?</h3>
+            <i data-lucide="plus" class="w-4 h-4 text-gray-400 group-hover:text-[#DC2626] shrink-0 faq-icon transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer px-6">
+            <div>
+              <div class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed pb-5 pt-1">
+                We highly curate external contributions. If you are a technical founder with a contrarian thesis, submit an outline via the "Editorial Tip" vector.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item border border-struct rounded-2xl bg-white dark:bg-[#0D121F] shadow-sm relative overflow-hidden transition-all duration-300 text-left">
+          <button class="w-full flex items-center justify-between text-left py-4 px-6 focus:outline-none group relative z-10" aria-expanded="false" onclick="toggleFaq(this)">
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-[#DC2626] transition-colors pr-4">Response Time SLA</h3>
+            <i data-lucide="plus" class="w-4 h-4 text-gray-400 group-hover:text-[#DC2626] shrink-0 faq-icon transition-transform duration-300"></i>
+          </button>
+          <div class="faq-answer px-6">
+            <div>
+              <div class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed pb-5 pt-1">
+                Standard response latency is &lt; 2 hours during EST business hours. For immediate broadcast corrections, bypass the form and use the direct press email.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Social Directory Pill -->
+      <div class="inline-flex flex-wrap items-center justify-center gap-6 py-5 px-10 bg-white dark:bg-[#0D121F] rounded-full border border-struct shadow-sm">
+        
+        <!-- LinkedIn -->
+        <a href="#" aria-label="LinkedIn" class="flex items-center gap-3 text-slate-500 dark:text-slate-400 transition-colors duration-250 hover:text-[#0077B5] cursor-pointer">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <span class="font-bold text-sm">LinkedIn</span>
+        </a>
+
+        <!-- Instagram -->
+        <a href="#" aria-label="Instagram" class="flex items-center gap-3 text-slate-500 dark:text-slate-400 transition-colors duration-250 hover:text-[#E1306C] cursor-pointer">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          <span class="font-bold text-sm">Instagram</span>
+        </a>
+
+        <!-- Facebook -->
+        <a href="#" aria-label="Facebook" class="flex items-center gap-3 text-slate-500 dark:text-slate-400 transition-colors duration-250 hover:text-[#1877F2] cursor-pointer">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          <span class="font-bold text-sm">Facebook</span>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Premium Confirmation Console Modal -->
+  <div id="confirmationModal" class="fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 ease-out backdrop-blur-md bg-slate-900/40" role="dialog" aria-modal="true">
+    <!-- Modal Backdrop Click Area -->
+    <div class="absolute inset-0" onclick="closeModal()"></div>
+    
+    <!-- Modal Card -->
+    <div id="modalCard" class="relative bg-white dark:bg-[#0B0F19] w-11/12 max-w-md rounded-3xl border border-[#E2E8F0] dark:border-[#1E293B] shadow-2xl p-8 md:p-10 transform scale-95 transition-transform duration-300 ease-out">
+      
+      <!-- Close Button -->
+      <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors focus:outline-none" aria-label="Close modal">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Success Indicator -->
+      <div class="mx-auto w-16 h-16 rounded-full bg-cyber-blue/10 border border-cyber-blue/20 flex items-center justify-center mb-6 text-cyber-blue relative">
+        <div class="absolute inset-0 rounded-full animate-ping bg-cyber-blue/20 opacity-75" style="animation-duration: 2s;"></div>
+        <i data-lucide="check" class="w-8 h-8 relative z-10"></i>
+      </div>
+
+      <!-- Copy Block -->
+      <div class="text-center">
+        <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-3">Transmission Successful</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-8">
+          Thank you for reaching out. Your transmission has been securely routed to our team. A tracking ticket has been assigned to your inquiry, and a representative will respond within our system nominal average of &lt; 2 hours.
+        </p>
+
+        <!-- Action Consolidation -->
+        <button onclick="closeModal()" class="w-full py-3.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold rounded-full hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white transition-all shadow-md active:scale-95 flex items-center justify-center gap-2">
+          Return to Console
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Footer injected dynamically -->
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+
+  <!-- Essential Scripts -->
+  <script type="module" src="js/main.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // FAQ Toggle Logic leveraging CSS Grid Transitions
+    window.toggleFaq = function(button) {
+      const item = button.closest('.faq-item');
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      
+      // Close all other FAQs
+      document.querySelectorAll('.faq-item').forEach(faq => {
+        if (faq !== item) {
+          faq.classList.remove('active');
+          faq.querySelector('button').setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Toggle current FAQ
+      if (isExpanded) {
+        item.classList.remove('active');
+        button.setAttribute('aria-expanded', 'false');
+      } else {
+        item.classList.add('active');
+        button.setAttribute('aria-expanded', 'true');
+      }
+    };
+
+    // Modal Interaction Logic
+    window.openModal = function() {
+      const modal = document.getElementById('confirmationModal');
+      const card = document.getElementById('modalCard');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-95');
+      card.classList.add('scale-100');
+      // Render Lucide icons inside modal if not already rendered
+      lucide.createIcons();
+    };
+
+    window.closeModal = function() {
+      const modal = document.getElementById('confirmationModal');
+      const card = document.getElementById('modalCard');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-100');
+      card.classList.add('scale-95');
+    };
+
+    // Form Submission Simulation with Validation and Micro-interactions
+    window.handleContactSubmit = function(e) {
+      e.preventDefault();
+      const form = e.target;
+      
+      // Trigger native HTML5 validation UI if invalid
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+
+      // Set Loading State
+      submitBtn.classList.add('is-loading');
+      submitBtn.classList.add('pointer-events-none', 'opacity-90');
+      
+      // Simulate network request (1.5s)
+      setTimeout(() => {
+        submitBtn.classList.remove('is-loading');
+        submitBtn.classList.remove('pointer-events-none', 'opacity-90');
+        
+        // Show Success Modal
+        form.reset();
+        window.openModal();
+        
+      }, 1500);
+    };
+  </script>
+</body>
+</html>

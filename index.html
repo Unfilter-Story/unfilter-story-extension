@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnfilterStory | Premium Startup & Business Media</title>
+  <meta name="description" content="Discover the latest in startups, AI, funding, and interviews with leading innovators on UnfilterStory.">
+  
+  <!-- Zero-flash theme script -->
+  <script>
+    const theme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/slider.css">
+  
+  <!-- JS -->
+  <script type="module" src="js/main.js"></script>
+  <script src="js/EditorialSlider.js" defer></script>
+</head>
+<body>
+  <!-- 1. Header Component -->
+  <app-header></app-header>
+
+
+  <main class="container">
+    <!-- 2. Hero Section (Editorial Slider) -->
+    <section class="hero-carousel" aria-roledescription="carousel" aria-label="Featured Articles">
+      <div class="hero-carousel-viewport">
+        <!-- Slide 1 -->
+        <article class="hero-carousel-slide hero-grid-60-40 is-active" role="group" aria-roledescription="slide">
+          <div class="hero-primary">
+            <span class="card-tag" style="margin-bottom: var(--spacing-4);">Exclusive Feature</span>
+            <h1 style="font-size: clamp(1.75rem, 3vw, 2.75rem); margin-bottom: var(--spacing-6); letter-spacing: -0.02em; line-height: 1.1;">The Great <span style="background: linear-gradient(to right, #CC0033, #FF0000); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">Re-Platforming:</span> How Enterprise Tech is Evolving in 2026</h1>
+            <p style="max-width: 65ch; font-size: 1.125rem; color: var(--color-text-mute); line-height: 1.6; margin-bottom: var(--spacing-8);">A comprehensive analysis of why Fortune 500 companies are dismantling their legacy monoliths in favor of composable, AI-native architectures, and the startups leading the charge.</p>
+            <div>
+              <a href="the-great-re-platforming-enterprise-tech-evolving-2026.html" class="btn btn-primary" style="padding: var(--spacing-3) var(--spacing-8); font-size: 1rem;">Read Full Article</a>
+            </div>
+          </div>
+          <div class="hero-secondary">
+            <div class="hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;" aria-label="Modern enterprise server racks"></div>
+          </div>
+        </article>
+
+        <!-- Slide 2 -->
+        <article class="hero-carousel-slide hero-grid-60-40" role="group" aria-roledescription="slide">
+          <div class="hero-primary">
+            <span class="card-tag" style="margin-bottom: var(--spacing-4);">Venture Capital</span>
+            <h1 style="font-size: clamp(1.75rem, 3vw, 2.75rem); margin-bottom: var(--spacing-6); letter-spacing: -0.02em; line-height: 1.1;">The <span style="background: linear-gradient(to right, #FF0000, #FF1A1A); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">$100M Seed Round:</span> A New Era of Funding</h1>
+            <p style="max-width: 65ch; font-size: 1.125rem; color: var(--color-text-mute); line-height: 1.6; margin-bottom: var(--spacing-8);">How sovereign wealth and mega-funds are bypassing traditional Series A/B rounds to dominate the cap tables of generational startups.</p>
+            <div>
+              <a href="100m-seed-round.html" class="btn btn-primary" style="padding: var(--spacing-3) var(--spacing-8); font-size: 1rem;">Read Full Article</a>
+            </div>
+          </div>
+          <div class="hero-secondary" style="height: 100%;">
+            <div class="hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;" aria-label="Venture capital charts"></div>
+          </div>
+        </article>
+
+        <!-- Slide 3 -->
+        <article class="hero-carousel-slide hero-grid-60-40" role="group" aria-roledescription="slide">
+          <div class="hero-primary">
+            <span class="card-tag" style="margin-bottom: var(--spacing-4);">Design</span>
+            <h1 style="font-size: clamp(1.75rem, 3vw, 2.75rem); margin-bottom: var(--spacing-6); letter-spacing: -0.02em; line-height: 1.1;">Beyond Dark Mode: The <span style="background: linear-gradient(to right, #FF007F, #FF0000); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">Neo-Brutalism</span> Resurgence</h1>
+            <p style="max-width: 65ch; font-size: 1.125rem; color: var(--color-text-mute); line-height: 1.6; margin-bottom: var(--spacing-8);">A deep dive into why enterprise SaaS platforms are dropping soft shadows for high-contrast, structural boundaries that enforce clarity over comfort.</p>
+            <div>
+              <a href="neo-brutalism-resurgence.html" class="btn btn-primary" style="padding: var(--spacing-3) var(--spacing-8); font-size: 1rem;">Read Full Article</a>
+            </div>
+          </div>
+          <div class="hero-secondary" style="height: 100%;">
+            <div class="hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;" aria-label="Neo-brutalism design UI"></div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Navigation Dots -->
+      <div class="hero-carousel-nav" aria-label="Carousel Navigation">
+        <div class="hero-nav-dot is-active" aria-label="Slide 1" role="button" tabindex="0"></div>
+        <div class="hero-nav-dot" aria-label="Slide 2" role="button" tabindex="0"></div>
+        <div class="hero-nav-dot" aria-label="Slide 3" role="button" tabindex="0"></div>
+      </div>
+    </section>
+
+
+    <!-- Combined Spotlight and Latest Stories Section -->
+    <section class="container" style="margin-bottom: var(--spacing-16);">
+      <div class="grid-latest-spotlight">
+        
+        <!-- Latest Stories (Left) -->
+        <div>
+          <aside class="hub-secondary" aria-labelledby="latest-stories-heading" style="height: 100%;">
+            <div class="trending-dark-box" style="border-radius: 1rem; height: 100%; display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6); border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-4);">
+                <h2 id="latest-stories-heading" style="font-size: 1.5rem; margin-bottom: 0;">Latest Stories</h2>
+                <a href="stories.html" style="font-size: 0.875rem; font-weight: 600; color: var(--color-accent);">View All &rarr;</a>
+              </div>
+              
+              <article class="card-trending">
+                <div class="trending-number">01</div>
+                <div>
+                  <h3 class="card-title" style="font-size: 1.125rem; line-height: 1.3;"><a href="article.html?id=the-pivot-to-hardware">The Return of the Seed Round: Why Early Stage is Hot Again</a></h3>
+                  <span style="font-size: 0.875rem; color: var(--color-text-mute);">5 min read</span>
+                </div>
+              </article>
+              
+              <article class="card-trending">
+                <div class="trending-number">02</div>
+                <div>
+                  <h3 class="card-title" style="font-size: 1.125rem; line-height: 1.3;"><a href="article.html?id=autonomous-architectures">Why B2B Software Finally Looks Good</a></h3>
+                  <span style="font-size: 0.875rem; color: var(--color-text-mute);">7 min read</span>
+                </div>
+              </article>
+
+              <article class="card-trending">
+                <div class="trending-number">03</div>
+                <div>
+                  <h3 class="card-title" style="font-size: 1.125rem; line-height: 1.3;"><a href="article.html?id=vector-databases">Asynchronous Communication as a Competitive Advantage</a></h3>
+                  <span style="font-size: 0.875rem; color: var(--color-text-mute);">4 min read</span>
+                </div>
+              </article>
+              
+              <article class="card-trending" style="border-bottom: none; padding-bottom: 0;">
+                <div class="trending-number">04</div>
+                <div>
+                  <h3 class="card-title" style="font-size: 1.125rem; line-height: 1.3;"><a href="article.html?id=ai-custom-chips">Why AI Startups Are Building Custom Chips</a></h3>
+                  <span style="font-size: 0.875rem; color: var(--color-text-mute);">6 min read</span>
+                </div>
+              </article>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Spotlight (Right) -->
+        <div>
+          <div class="spotlight-card" style="border: 1px solid var(--color-border); display: grid; grid-template-columns: 1fr; gap: var(--spacing-8);">
+            <!-- Mobile: Stacks text then image. Desktop: Grid 1fr 1fr -->
+            <style>
+              @media (min-width: 1024px) {
+                .spotlight-card-split {
+                  display: grid !important;
+                  grid-template-columns: 1fr 1fr !important;
+                  align-items: center;
+                  gap: var(--spacing-12) !important;
+                }
+              }
+            </style>
+            <div class="spotlight-card-split" style="display: flex; flex-direction: column; gap: var(--spacing-8); height: 100%;">
+              <div style="display: flex; flex-direction: column; justify-content: center;">
+                <h2 id="spotlight-heading" style="font-size: 1rem; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-4);">Startup Spotlight</h2>
+                <h3 style="font-size: 1.75rem; margin-bottom: var(--spacing-4); line-height: 1.25; font-weight: 800;"><a href="linear-case-study.html"><span style="color: var(--color-accent);">Linear:</span> Reimagining the Issue Tracker for High-Performance Teams</a></h3>
+                <p style="font-size: 1rem; color: var(--color-text-mute); margin-bottom: var(--spacing-6);">How a small team built a cult-favorite tool by focusing on speed, keyboard-first navigation, and an uncompromising aesthetic standard.</p>
+                <div>
+                  <a href="linear-case-study.html" class="btn btn-primary">Read Case Study</a>
+                </div>
+              </div>
+              <div class="hero-media-wrapper" style="aspect-ratio: 1 / 1; max-height: 500px; background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; border-radius: 12px;" aria-label="Dark mode coding workspace setup"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Our Partners Section -->
+    <section aria-labelledby="partners-heading" class="partners-section max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8" style="display: none; padding: var(--spacing-8) 0 var(--spacing-16) 0; text-align: center; margin-bottom: var(--spacing-16); overflow: hidden;">
+      <h2 id="partners-heading" style="margin-bottom: var(--spacing-12); font-family: var(--font-sans);">Trusted By Leaders From Brands Like</h2>
+      
+      <div class="funding-marquee-wrapper" style="margin-bottom: 0;">
+        <div class="funding-marquee-track" style="gap: 5rem; padding-right: 5rem; align-items: center;">
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+        </div>
+        
+        <div class="funding-marquee-track" style="gap: 5rem; padding-right: 5rem; align-items: center;" aria-hidden="true">
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+          
+          <!-- Microsoft -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: 'Segoe UI', sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/></svg>
+            <span>Microsoft</span>
+          </div>
+
+          <!-- boAt -->
+          <div style="display: flex; align-items: center; color: var(--color-text-mute); font-family: sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -0.05em; opacity: 0.7;">
+            bo<span style="text-transform: uppercase; font-size: 2.2rem; margin-left: 2px;">A</span>t
+          </div>
+
+          <!-- Lenskart -->
+          <div style="display: flex; align-items: center; gap: 6px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; opacity: 0.7;">
+            <svg width="36" height="20" viewBox="0 0 36 20" fill="none" stroke="currentColor" stroke-width="3"><circle cx="9" cy="10" r="7"/><circle cx="27" cy="10" r="7"/><path d="M16 10h4"/></svg>
+            <span>lenskart</span>
+          </div>
+
+          <!-- SUGAR -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="12"/><path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14.5c-3.6 0-6.5-2.9-6.5-6.5S8.4 5.5 12 5.5s6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="var(--color-bg)"/></svg>
+            <span>SUGAR</span>
+          </div>
+
+          <!-- Times Internet -->
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 0.85; color: var(--color-text-mute); font-family: sans-serif; font-weight: 900; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.02em; opacity: 0.7;">
+            <span>Times</span>
+            <span>Internet</span>
+          </div>
+          
+          <!-- Cloud -->
+          <div style="display: flex; align-items: center; gap: 8px; color: var(--color-text-mute); font-family: sans-serif; font-weight: 600; font-size: 1.5rem; opacity: 0.7;">
+            <svg width="32" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19c2.5 0 4.5-2 4.5-4.5S20 10 17.5 10c-.1 0-.3 0-.4.1C16.3 7.2 13.5 5 10 5 6.1 5 3 8.1 3 12c0 .3 0 .7.1 1C1.3 13.5 0 15.1 0 17c0 2.2 1.8 4 4 4h13.5z"/></svg>
+            <span>Google Cloud</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. AI & Innovation Vertical -->
+    <section aria-labelledby="ai-heading" style="margin-bottom: var(--spacing-16);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6);">
+        <h2 id="ai-heading" style="margin-bottom: 0;">AI & Innovation</h2>
+        <a href="ai-innovation.html" style="font-weight: 600; color: var(--color-accent);">View All &rarr;</a>
+      </div>
+      <div class="split-layout-2col">
+        <!-- Feature Card -->
+        <article class="card-article" style="height: 100%;">
+          <div class="card-article-img hero-media-wrapper" style="height: 250px; background-image: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Abstract neural network"></div>
+          <div class="card-article-content">
+            <span class="card-tag">Generative AI</span>
+            <h3 class="card-title" style="font-size: 1.5rem;"><a href="#">Beyond Chatbots: Autonomous Agents in the Enterprise</a></h3>
+            <p class="card-excerpt">The next phase of AI deployment involves autonomous systems that can execute multi-step workflows without human intervention.</p>
+            <div class="card-meta">
+              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>Dr. Alan Vance</span></div>
+              <span>10 min read</span>
+            </div>
+          </div>
+        </article>
+        <!-- Stacked Feed -->
+        <div class="feed-stacked">
+          <article class="feed-stacked-item">
+            <span class="card-tag">Hardware</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-2);"><a href="#">Nvidia's Next-Gen Architecture Explained</a></h4>
+            <p style="font-size: 0.95rem; color: var(--color-text-mute); margin-bottom: var(--spacing-2); line-height: 1.5;">Engineering breakthroughs behind the latest AI silicon.</p>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">4 min read</span>
+          </article>
+          <article class="feed-stacked-item">
+            <span class="card-tag">Regulation</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-2);"><a href="#">Navigating the AI Act: What Startups Need to Know</a></h4>
+            <p style="font-size: 0.95rem; color: var(--color-text-mute); margin-bottom: var(--spacing-2); line-height: 1.5;">How early-stage companies can prepare for the new EU regulations.</p>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">7 min read</span>
+          </article>
+          <article class="feed-stacked-item">
+            <span class="card-tag">Open Source</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-2);"><a href="#">The Rise of Small, Specialized Language Models</a></h4>
+            <p style="font-size: 0.95rem; color: var(--color-text-mute); margin-bottom: var(--spacing-2); line-height: 1.5;">The enterprise shift towards domain-specific AI at the edge.</p>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">5 min read</span>
+          </article>
+          <article class="feed-stacked-item">
+            <span class="card-tag">Healthcare</span>
+            <h4 style="font-size: 1.125rem; margin-bottom: var(--spacing-2);"><a href="#">AI in Drug Discovery: A Progress Report</a></h4>
+            <p style="font-size: 0.95rem; color: var(--color-text-mute); margin-bottom: var(--spacing-2); line-height: 1.5;">How machine learning is accelerating the clinical trial pipeline.</p>
+            <span style="font-size: 0.875rem; color: var(--color-text-mute);">8 min read</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Funding Tracker Dashboard -->
+    <section aria-labelledby="funding-heading" style="display: none; margin-bottom: var(--spacing-16);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6);">
+        <h2 id="funding-heading" style="margin-bottom: 0;">Funding Tracker</h2>
+        <a href="funding.html" style="font-weight: 600; color: var(--color-accent);">Full Report &rarr;</a>
+      </div>
+      <div class="funding-marquee-wrapper">
+        <!-- Original Track -->
+        <div class="funding-marquee-track" aria-hidden="false">
+          <div class="widget-funding is-active">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(59, 130, 246, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+  </div>
+                <span class="widget-funding-company">DataOrb</span>
+              </div>
+              <span class="widget-funding-round">Series B</span>
+            </div>
+            <div class="widget-funding-amount">$45M</div>
+            <div class="widget-funding-investors">Led by Sequoia Capital, Andreessen Horowitz</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(16, 185, 129, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+  </div>
+                <span class="widget-funding-company">CarbonClear</span>
+              </div>
+              <span class="widget-funding-round">Series A</span>
+            </div>
+            <div class="widget-funding-amount">$15M</div>
+            <div class="widget-funding-investors">Led by Benchmark, Lowercarbon Capital</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(139, 92, 246, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+  </div>
+                <span class="widget-funding-company">SyncFlow</span>
+              </div>
+              <span class="widget-funding-round">Seed</span>
+            </div>
+            <div class="widget-funding-amount">$4.2M</div>
+            <div class="widget-funding-investors">Led by Y Combinator, AngelList</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(239, 68, 68, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+  </div>
+                <span class="widget-funding-company">OmniHealth</span>
+              </div>
+              <span class="widget-funding-round">Series C</span>
+            </div>
+            <div class="widget-funding-amount">$120M</div>
+            <div class="widget-funding-investors">Led by Founders Fund, Khosla Ventures</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <!-- Duplicated set to prevent gap -->
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(59, 130, 246, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+  </div>
+                <span class="widget-funding-company">DataOrb</span>
+              </div>
+              <span class="widget-funding-round">Series B</span>
+            </div>
+            <div class="widget-funding-amount">$45M</div>
+            <div class="widget-funding-investors">Led by Sequoia Capital, Andreessen Horowitz</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(16, 185, 129, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+  </div>
+                <span class="widget-funding-company">CarbonClear</span>
+              </div>
+              <span class="widget-funding-round">Series A</span>
+            </div>
+            <div class="widget-funding-amount">$15M</div>
+            <div class="widget-funding-investors">Led by Benchmark, Lowercarbon Capital</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(139, 92, 246, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+  </div>
+                <span class="widget-funding-company">SyncFlow</span>
+              </div>
+              <span class="widget-funding-round">Seed</span>
+            </div>
+            <div class="widget-funding-amount">$4.2M</div>
+            <div class="widget-funding-investors">Led by Y Combinator, AngelList</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(239, 68, 68, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+  </div>
+                <span class="widget-funding-company">OmniHealth</span>
+              </div>
+              <span class="widget-funding-round">Series C</span>
+            </div>
+            <div class="widget-funding-amount">$120M</div>
+            <div class="widget-funding-investors">Led by Founders Fund, Khosla Ventures</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+        </div>
+        <!-- Duplicated Track for Seamless Loop -->
+        <div class="funding-marquee-track" aria-hidden="true">
+          <div class="widget-funding is-active">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(59, 130, 246, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+  </div>
+                <span class="widget-funding-company">DataOrb</span>
+              </div>
+              <span class="widget-funding-round">Series B</span>
+            </div>
+            <div class="widget-funding-amount">$45M</div>
+            <div class="widget-funding-investors">Led by Sequoia Capital, Andreessen Horowitz</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(16, 185, 129, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+  </div>
+                <span class="widget-funding-company">CarbonClear</span>
+              </div>
+              <span class="widget-funding-round">Series A</span>
+            </div>
+            <div class="widget-funding-amount">$15M</div>
+            <div class="widget-funding-investors">Led by Benchmark, Lowercarbon Capital</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(139, 92, 246, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+  </div>
+                <span class="widget-funding-company">SyncFlow</span>
+              </div>
+              <span class="widget-funding-round">Seed</span>
+            </div>
+            <div class="widget-funding-amount">$4.2M</div>
+            <div class="widget-funding-investors">Led by Y Combinator, AngelList</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(239, 68, 68, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+  </div>
+                <span class="widget-funding-company">OmniHealth</span>
+              </div>
+              <span class="widget-funding-round">Series C</span>
+            </div>
+            <div class="widget-funding-amount">$120M</div>
+            <div class="widget-funding-investors">Led by Founders Fund, Khosla Ventures</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <!-- Duplicated set to prevent gap -->
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(59, 130, 246, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+  </div>
+                <span class="widget-funding-company">DataOrb</span>
+              </div>
+              <span class="widget-funding-round">Series B</span>
+            </div>
+            <div class="widget-funding-amount">$45M</div>
+            <div class="widget-funding-investors">Led by Sequoia Capital, Andreessen Horowitz</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(16, 185, 129, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+  </div>
+                <span class="widget-funding-company">CarbonClear</span>
+              </div>
+              <span class="widget-funding-round">Series A</span>
+            </div>
+            <div class="widget-funding-amount">$15M</div>
+            <div class="widget-funding-investors">Led by Benchmark, Lowercarbon Capital</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(139, 92, 246, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+  </div>
+                <span class="widget-funding-company">SyncFlow</span>
+              </div>
+              <span class="widget-funding-round">Seed</span>
+            </div>
+            <div class="widget-funding-amount">$4.2M</div>
+            <div class="widget-funding-investors">Led by Y Combinator, AngelList</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+          <div class="widget-funding">
+            <div class="widget-funding-header">
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; background-color: rgba(239, 68, 68, 0.12); display: flex; align-items: center; justify-content: center;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+  </div>
+                <span class="widget-funding-company">OmniHealth</span>
+              </div>
+              <span class="widget-funding-round">Series C</span>
+            </div>
+            <div class="widget-funding-amount">$120M</div>
+            <div class="widget-funding-investors">Led by Founders Fund, Khosla Ventures</div>
+            <a href="#" class="widget-funding-cta">Understand More &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    </section>
+
+    <!-- 7.5 Community Guest Posts -->
+    <style>
+      .guest-post-title a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+      .guest-post-title a:hover { color: #F43F5E !important; }
+    </style>
+    <section aria-labelledby="guest-posts-heading" style="display: none; margin-bottom: var(--spacing-16);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-8); flex-wrap: wrap; gap: 16px;">
+        <div>
+          <h2 id="guest-posts-heading" style="margin-bottom: 8px;">Community Guest Posts</h2>
+          <p style="color: var(--color-text-mute); font-size: 1.125rem;">Real voices and raw experiences shared by the startup community.</p>
+        </div>
+        <a href="guest-posts.html" style="font-weight: 700; color: #F43F5E; white-space: nowrap;">Browse All Guest Posts &rarr;</a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-6);">
+        <!-- Card 1 -->
+        <article style="display: flex; flex-direction: column; gap: var(--spacing-4);">
+          <div style="position: relative; aspect-ratio: 16/10; border-radius: 16px; overflow: hidden; background-color: var(--color-bg-surf);">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Global Brand" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;" class="hover-scale">
+            <span style="position: absolute; top: 16px; left: 16px; background: white; color: black; font-size: 0.75rem; font-weight: 800; padding: 6px 12px; border-radius: 20px; letter-spacing: 0.05em; box-shadow: var(--shadow-sm);">GUEST STORY</span>
+          </div>
+          <div style="display: flex; flex-direction: column; flex-grow: 1;">
+            <h3 class="guest-post-title" style="font-size: 1.25rem; font-weight: 800; line-height: 1.3; margin-bottom: 12px;"><a href="article.html">Building a Global Brand from a Small Town</a></h3>
+            <div style="margin-top: auto; font-size: 0.875rem; color: var(--color-text-mute);"><strong style="color: var(--color-text-main);">Anshul J.</strong> &bull; Community Member</div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article style="display: flex; flex-direction: column; gap: var(--spacing-4);">
+          <div style="position: relative; aspect-ratio: 16/10; border-radius: 16px; overflow: hidden; background-color: var(--color-bg-surf);">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" alt="Unit Economics" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;" class="hover-scale">
+            <span style="position: absolute; top: 16px; left: 16px; background: white; color: black; font-size: 0.75rem; font-weight: 800; padding: 6px 12px; border-radius: 20px; letter-spacing: 0.05em; box-shadow: var(--shadow-sm);">GUEST STORY</span>
+          </div>
+          <div style="display: flex; flex-direction: column; flex-grow: 1;">
+            <h3 class="guest-post-title" style="font-size: 1.25rem; font-weight: 800; line-height: 1.3; margin-bottom: 12px;"><a href="article.html">Why Unit Economics Matter More Than Hype</a></h3>
+            <div style="margin-top: auto; font-size: 0.875rem; color: var(--color-text-mute);"><strong style="color: var(--color-text-main);">Anjali M.</strong> &bull; Community Member</div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article style="display: flex; flex-direction: column; gap: var(--spacing-4);">
+          <div style="position: relative; aspect-ratio: 16/10; border-radius: 16px; overflow: hidden; background-color: var(--color-bg-surf);">
+            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=600&q=80" alt="Solo Founder" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;" class="hover-scale">
+            <span style="position: absolute; top: 16px; left: 16px; background: white; color: black; font-size: 0.75rem; font-weight: 800; padding: 6px 12px; border-radius: 20px; letter-spacing: 0.05em; box-shadow: var(--shadow-sm);">GUEST STORY</span>
+          </div>
+          <div style="display: flex; flex-direction: column; flex-grow: 1;">
+            <h3 class="guest-post-title" style="font-size: 1.25rem; font-weight: 800; line-height: 1.3; margin-bottom: 12px;"><a href="article.html">My Journey as a Solo Founder</a></h3>
+            <div style="margin-top: auto; font-size: 0.875rem; color: var(--color-text-mute);"><strong style="color: var(--color-text-main);">Elena R.</strong> &bull; Community Member</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 8. Founder Interviews -->
+    <section aria-labelledby="interviews-heading" style="display: none; margin-bottom: var(--spacing-16);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6);">
+        <h2 id="interviews-heading" style="margin-bottom: 0;">Founder Interviews</h2>
+        <a href="interviews.html" style="font-weight: 600; color: var(--color-accent);">View All &rarr;</a>
+      </div>
+      <div class="media-grid">
+        <a href="#" class="card-media" aria-label="Watch interview with Sam Altman">
+          <div class="card-media-bg" style="background: linear-gradient(to bottom, transparent 0%, rgba(17,17,17,0.95) 100%), url('https://images.unsplash.com/photo-1516245834210-c4c142787335?auto=format&fit=crop&w=800&q=80') center / cover;"></div>
+          <div class="play-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="card-media-content">
+            <div class="card-media-title">Sam Altman on AGI and Global Infrastructure</div>
+            <div class="card-media-meta">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>45:20</span>
+              <span style="margin: 0 var(--spacing-2);">&middot;</span>
+              <span>Video Interview</span>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="card-media" aria-label="Listen to podcast with Brian Chesky">
+          <div class="card-media-bg" style="background: linear-gradient(to bottom, transparent 0%, rgba(17,17,17,0.95) 100%), url('https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=800&q=80') center / cover;"></div>
+          <div class="play-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+            </svg>
+          </div>
+          <div class="card-media-content">
+            <div class="card-media-title">Brian Chesky: Designing for Trust at Scale</div>
+            <div class="card-media-meta">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>1:12:45</span>
+              <span style="margin: 0 var(--spacing-2);">&middot;</span>
+              <span>Podcast Episode</span>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="card-media" aria-label="Watch interview with Satya Nadella">
+          <div class="card-media-bg" style="background: linear-gradient(to bottom, transparent 0%, rgba(17,17,17,0.95) 100%), url('https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=800&q=80') center / cover;"></div>
+          <div class="play-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="card-media-content">
+            <div class="card-media-title">Satya Nadella: Leading Through Paradigm Shifts</div>
+            <div class="card-media-meta">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>55:10</span>
+              <span style="margin: 0 var(--spacing-2);">&middot;</span>
+              <span>Video Interview</span>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="card-media" aria-label="Listen to podcast with Mira Murati">
+          <div class="card-media-bg" style="background: linear-gradient(to bottom, transparent 0%, rgba(17,17,17,0.95) 100%), url('https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80') center / cover;"></div>
+          <div class="play-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+            </svg>
+          </div>
+          <div class="card-media-content">
+            <div class="card-media-title">Mira Murati: The Future of Open Source AI Models</div>
+            <div class="card-media-meta">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>1:05:30</span>
+              <span style="margin: 0 var(--spacing-2);">&middot;</span>
+              <span>Podcast Episode</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+        <!-- 10. Featured Categories Taxonomy Grid -->
+    <section aria-labelledby="taxonomy-heading" style="display: none; margin-bottom: var(--spacing-16);">
+      <h2 id="taxonomy-heading" class="visually-hidden">Featured Categories</h2>
+      <div class="tag-container">
+        <a href="startup-news.html" class="pill">Startups</a>
+        <a href="ai-innovation.html" class="pill">Artificial Intelligence</a>
+        <a href="funding.html" class="pill">Venture Capital</a>
+        <a href="#" class="pill">Product Management</a>
+        <a href="#" class="pill">Engineering</a>
+        <a href="#" class="pill">Design</a>
+        <a href="#" class="pill">Growth Marketing</a>
+        <a href="#" class="pill">Policy & Regulation</a>
+        <a href="#" class="pill">Web3 & Crypto</a>
+        <a href="#" class="pill">ClimateTech</a>
+      </div>
+    </section>
+
+    <!-- 11. Dynamic Post Engine (Latest Articles Feed) -->
+    <section aria-labelledby="feed-heading">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-6);">
+        <h2 id="feed-heading" style="margin-bottom: 0;">Latest Articles</h2>
+        <a href="articles.html" style="font-weight: 600; color: var(--color-accent);">View All &rarr;</a>
+      </div>
+      <div id="articles-feed-container" class="dynamic-feed">
+        <!-- Initial static cards -->
+        <article class="card-article-horizontal">
+          <div class="card-article-img hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Empty modern office"></div>
+          <div class="card-article-content">
+            <span class="card-tag">Culture</span>
+            <h3 class="card-title"><a href="article.html">The Return to Office Mandate vs. Remote Reality</a></h3>
+            <p class="card-excerpt">Data shows a growing disconnect between executive mandates and employee retention in top-tier tech firms.</p>
+            <div class="card-meta">
+              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>Elena Rodriguez</span></div>
+              <div style="display: flex; gap: var(--spacing-4); align-items: center;">
+                <span>6 min read</span>
+                <a href="article.html" style="font-weight: 600; color: var(--color-accent); font-size: 0.875rem;">View Details &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="card-article-horizontal">
+          <div class="card-article-img hero-media-wrapper" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;" aria-label="Payment terminal"></div>
+          <div class="card-article-content">
+            <span class="card-tag">Fintech</span>
+            <h3 class="card-title"><a href="#">Embedded Finance is Eating the World</a></h3>
+            <p class="card-excerpt">Why every SaaS company is eventually becoming a financial services provider.</p>
+            <div class="card-meta">
+              <div class="author-meta"><div class="author-avatar" style="background-image: url('https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'); background-size: cover; background-position: center;"></div><span>Marcus Reid</span></div>
+              <div style="display: flex; gap: var(--spacing-4); align-items: center;">
+                <span>8 min read</span>
+                <a href="#" style="font-weight: 600; color: var(--color-accent); font-size: 0.875rem;">View Details &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="dynamic-feed-actions">
+        <button id="load-more-articles" class="btn btn-primary" style="padding: var(--spacing-3) var(--spacing-12);">Load More Articles</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 12. Footer Component -->
+  <app-footer></app-footer>
+  <search-modal></search-modal>
+</body>
+</html>
