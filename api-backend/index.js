@@ -208,7 +208,12 @@ fastify.get('/v1/articles', async (request, reply) => {
     const articles = await prisma.article.findMany({
       where: { status: 'published' },
       orderBy: { publishedAt: 'desc' },
-      take: 20
+      take: 20,
+      include: {
+        category: true,
+        primaryAuthor: true,
+        articleTags: { include: { tag: true } }
+      }
     })
     return articles
   } catch (error) {
@@ -221,7 +226,12 @@ fastify.get('/v1/articles/:slug', async (request, reply) => {
   try {
     const { slug } = request.params
     const article = await prisma.article.findFirst({
-      where: { slug: slug } // allow either draft or published to be fetched by slug if it exists
+      where: { slug: slug }, // allow either draft or published to be fetched by slug if it exists
+      include: {
+        category: true,
+        primaryAuthor: true,
+        articleTags: { include: { tag: true } }
+      }
     })
     if (!article) return reply.code(404).send({ error: 'Article not found' })
     

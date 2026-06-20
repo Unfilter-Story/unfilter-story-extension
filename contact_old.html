@@ -13,8 +13,7 @@
 
   <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
   <script>
-    const theme = localStorage.getItem('theme') || 
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const theme = 'light'; // dark mode disabled â€” force light
     document.documentElement.setAttribute('data-theme', theme);
     function syncTheme() {
       const html = document.documentElement;
@@ -149,7 +148,7 @@
           Initiate <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-electric-violet">Connection.</span>
         </h1>
         <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
-          Whether you're leaking the next major computing breakthrough, seeking enterprise syndication, or just saying helloGÇöour communication nodes are open.
+          Whether you're leaking the next major computing breakthrough, seeking enterprise syndication, or just saying helloGï¿½ï¿½our communication nodes are open.
         </p>
       </div>
     </section>

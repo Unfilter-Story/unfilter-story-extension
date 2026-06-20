@@ -18,8 +18,7 @@
 
   <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
   <script>
-    const theme = localStorage.getItem('theme') || 
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const theme = 'light'; // dark mode disabled — force light
     document.documentElement.setAttribute('data-theme', theme);
     function syncTheme() {
       const html = document.documentElement;
@@ -531,6 +530,6 @@
       };
     });
   </script>
-  <script src="js/articles-router.js"></script>
+  <script type="module" src="js/articles-router.js"></script>
 </body>
 </html>
