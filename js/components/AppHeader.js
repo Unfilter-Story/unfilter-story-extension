@@ -23,6 +23,7 @@ class AppHeader extends HTMLElement {
 
           <nav class="nav-desktop">
             <ul>
+              <li><a href="index.html" ${isPage('index.html') || currentPath === '/' || currentPath.endsWith('/') ? 'aria-current="page"' : ''}>Home</a></li>
               <li><a href="news.html" ${isPage('news.html')}>News</a></li>
               <li><a href="articles.html" ${isPage('articles.html')}>Articles</a></li>
               <li><a href="interviews.html" ${isPage('interviews.html')}>Interviews</a></li>

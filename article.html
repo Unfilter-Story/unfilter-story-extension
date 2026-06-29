@@ -164,9 +164,7 @@
       </div>
       
       <!-- Typography: Fluid scaling 32px -> 40px -> 56px -->
-      <h1 id="article-title" class="text-[32px] md:text-[40px] lg:text-[56px] font-black tracking-tight leading-[1.25] mb-6 text-gray-900 dark:text-white text-center md:text-left" style="text-wrap: balance;">
-        The Next Generation of <span class="text-brand-red">Autonomous Architectures</span> in Fintech
-      </h1>
+      <h1 id="article-title" class="text-[32px] md:text-[40px] lg:text-[56px] font-black tracking-tight leading-[1.25] mb-6 text-gray-900 dark:text-white text-center md:text-left" style="text-wrap: balance;"></h1>
       
       <!-- Subtitle -->
       <p id="article-subtitle" class="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-medium leading-relaxed mb-8 max-w-3xl text-center md:text-left">
@@ -249,111 +247,7 @@
 
           <!-- Section 2: High-Readability Prose Content Pillar -->
           <div class="prose max-w-none article-body">
-            
-            <h2 id="intro">Introduction: The Shift</h2>
-            <p>
-              In the wake of rapid technological expansion, the fundamental pillars defining financial infrastructure are undergoing a seismic mutation. We are moving from hardcoded, rule-based settlement engines into the realm of <span class="highlight">autonomous agents</span> capable of negotiating, auditing, and executing complex cross-border tranches in real-time.
-            </p>
-            <p>
-              This isn't merely a theoretical whitepaper. As of Q3 2026, over $4B in daily transaction volume has quietly migrated to LLM-orchestrated sub-networks. The implications for traditional regulatory bodies are staggering.
-            </p>
-
-            <h2 id="problem">The Legacy Problem Definition</h2>
-            <p>
-              Before diving into the agentic solution, we must mathematically deconstruct the failure points of the existing SWIFT and legacy clearinghouse models. 
-            </p>
-            <blockquote>
-              "Legacy financial systems were built on the premise of human verification. When you inject algorithmic latency into a system designed for fax machines, the friction costs scale exponentially, not linearly."
-            </blockquote>
-            <p>
-              Here are the core infrastructural friction points currently plaguing the enterprise landscape:
-            </p>
-            <ul>
-              <li><strong>T+2 Settlement Delays:</strong> Capital remains locked in transit, burning theoretical yield.</li>
-              <li><strong>Compliance Overhead:</strong> Over 14% of gross revenue in Tier-1 banks is allocated strictly to AML/KYC manual review layers.</li>
-              <li><strong>Siloed Liquidity Pools:</strong> Assets cannot move between fragmented national ecosystems without suffering conversion decay.</li>
-            </ul>
-
-            <h2 id="launch">The Founder Launch Sequence</h2>
-            <p>
-              Enter <em>Aether Protocol</em>. Founded by ex-Stripe engineers, they didn't attempt to build a better blockchain. Instead, they built a fleet of deterministic AI agents wrapped around standard fiat rails.
-            </p>
-            <figure>
-              <img data-src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="Engineers reviewing code metrics" class="lazy">
-              <figcaption>Early telemetry dashboards showing the initial Aether AI agents processing live transaction queues.</figcaption>
-            </figure>
-            <p>
-              Their approach utilized a simple but elegant API implementation that looks remarkably standard on the surface:
-            </p>
-            <pre><code>// Initialize the Aether Settlement Agent
-const agent = new AetherAgent({
-  network: 'fiat-usd',
-  mode: 'autonomous-clearance',
-  riskTolerance: 0.001
-});
-
-// The agent autonomously negotiates routing paths
-const routingResult = await agent.routeTransaction({
-  amount: 5000000,
-  destination: 'EUR-IBAN',
-  maxLatencyMs: 400
-});</code></pre>
-
-            <h2 id="growth">Growth Challenges & System Friction</h2>
-            <p>
-              Scaling a fleet of financial AI agents presented novel distributed computing challenges. The team documented a phenomenon they called "Algorithmic Gridlock," where two opposing AI agents from different banks would get stuck in infinite negotiation loops over fractional cent spreads.
-            </p>
-            <h3>Resolution Protocol</h3>
-            <p>
-              To solve this, a decentralized arbitrator network was established. Whenever an agent detects a stall, it delegates the negotiation to a highly-quantized referee model, reducing settlement failures by 99.4%.
-            </p>
-
-            <h2 id="funding">The Funding Matrix</h2>
-            <p>
-              Traditional venture capitalists were initially hesitant to back a system that actively sought to replace compliance officers with LLMs. However, sovereign wealth funds recognized the geopolitical advantage of controlling the fastest routing layer.
-            </p>
-            <table>
-              <thead>
-                <tr>
-                  <th>Funding Stage</th>
-                  <th>Capital Raised</th>
-                  <th>Lead Investor</th>
-                  <th>Pre-Money Val</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Seed</td>
-                  <td>$14M</td>
-                  <td>Founders Fund</td>
-                  <td>$60M</td>
-                </tr>
-                <tr>
-                  <td>Series A</td>
-                  <td>$105M</td>
-                  <td>Mubadala</td>
-                  <td>$420M</td>
-                </tr>
-                <tr>
-                  <td>Series B</td>
-                  <td>$400M</td>
-                  <td>Sequoia / Sovereign</td>
-                  <td>$2.4B</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <h2 id="lessons">Lessons Extracted</h2>
-            <ol>
-              <li>Regulators respond better to predictable math than theoretical promises.</li>
-              <li>Agentic systems must have physical "kill switches" to pass enterprise compliance.</li>
-              <li>The UI of the future is no UI at all; it is a perfectly formatted log file.</li>
-            </ol>
-
-            <h2 id="future">Future Expansion Roadmap</h2>
-            <p>
-              Looking forward to 2027, the protocol is expanding its agents to handle automated M&A escrow, dynamic real-estate token settlement, and autonomous treasury management for Fortune 500 companies. The era of the human accountant is drawing to a close, replaced by a much quieter, exponentially faster digital mind.
-            </p>
+            <p class="text-gray-400">Loading article...</p>
           </div>
 
           <!-- Section 7: Interactive Article Tags -->
@@ -557,10 +451,47 @@ const routingResult = await agent.routeTransaction({
   
   
   <!-- Article Engine -->
-  <script type="module">
-    import { loadArticle } from './js/article-engine.js';
-    document.addEventListener('DOMContentLoaded', () => {
-      loadArticle();
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const slug = new URLSearchParams(window.location.search).get('id');
+      if (!slug) return;
+      try {
+        var a = window.__ARTICLE_DATA__ || null;
+        if (!a) {
+          const res = await fetch('/v1/articles/' + encodeURIComponent(slug), { headers: { Accept: 'application/json' } });
+          if (!res.ok) {
+            document.querySelector('.article-body').innerHTML = '<h2>Article not found</h2>';
+            return;
+          }
+          a = await res.json();
+        }
+        document.title = (a.headline || '') + ' | UnfilterStory';
+        const el = function(id) { return document.getElementById(id); };
+        const author = a.primaryAuthor || {};
+        const authorName = [author.firstName, author.lastName].filter(Boolean).join(' ') || 'Unfilter Story';
+        const date = a.publishedAt ? new Date(a.publishedAt).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}) : '';
+        if (el('breadcrumb-current')) el('breadcrumb-current').textContent = a.headline || '';
+        if (el('article-badge-1')) el('article-badge-1').textContent = a.isBreakingNews ? 'Breaking' : (a.articleType || 'Article');
+        if (el('article-badge-2')) el('article-badge-2').textContent = (a.category && a.category.name) || 'Insights';
+        if (el('article-title')) el('article-title').textContent = a.headline || '';
+        if (el('article-subtitle')) el('article-subtitle').textContent = a.subHeadline || '';
+        if (el('author-name')) el('author-name').textContent = authorName;
+        if (el('author-meta')) el('author-meta').innerHTML = (author.designation || 'Contributor') + ' &bull; ' + date;
+        if (el('author-avatar')) el('author-avatar').src = author.avatarUrl || '';
+        if (el('article-read-time')) el('article-read-time').textContent = a.readingTimeMins ? a.readingTimeMins + ' Min Read' : '';
+        var heroImg = el('hero-image');
+        if (heroImg && a.featuredImageUrl) { heroImg.src = a.featuredImageUrl; heroImg.dataset.src = a.featuredImageUrl; heroImg.classList.add('loaded'); }
+        if (el('hero-caption')) el('hero-caption').textContent = a.imageCaption || '';
+        document.querySelector('.article-body').innerHTML = a.body || '<p>No content available.</p>';
+        if (el('bio-avatar') && author.avatarUrl) el('bio-avatar').src = author.avatarUrl;
+        if (el('bio-name')) el('bio-name').textContent = 'Written by ' + authorName;
+        if (el('bio-text')) el('bio-text').textContent = author.bio || '';
+        var tags = (a.articleTags || []).map(function(t){ return '#' + ((t.tag && (t.tag.name || t.tag.slug)) || ''); }).filter(function(t){ return t !== '#'; });
+        var tagsEl = el('article-tags');
+        if (tagsEl) { tagsEl.innerHTML = ''; tags.forEach(function(tag){ var a2 = document.createElement('a'); a2.href='#'; a2.className='px-3 py-1 bg-gray-100 text-gray-600 text-sm font-bold rounded hover:bg-brand-red hover:text-white transition-colors'; a2.textContent=tag; tagsEl.appendChild(a2); }); }
+      } catch(err) {
+        console.error('Article load failed:', err);
+      }
     });
   </script>
 <!-- Interactive Article Logic -->

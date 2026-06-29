@@ -1,12 +1,18 @@
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
+import fastifyStatic from '@fastify/static'
 import { PrismaClient } from '@prisma/client'
 import 'dotenv/config'
+import { fileURLToPath } from 'url'
+import path from 'path'
+import { readFileSync } from 'fs'
 import Parser from 'rss-parser'
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import Bytez from 'bytez.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const parser = new Parser({
   headers: {
@@ -21,6 +27,15 @@ const fastify = Fastify({
 })
 
 const prisma = new PrismaClient()
+
+// In-memory article cache – 5-min TTL, prevents redundant Neon round-trips
+const _articleCache = new Map()
+const ARTICLE_CACHE_TTL_MS = 5 * 60 * 1000
+const getCachedArticle = (slug) => {
+  const e = _articleCache.get(slug)
+  return (e && Date.now() - e.ts < ARTICLE_CACHE_TTL_MS) ? e.data : null
+}
+const setCachedArticle = (slug, data) => _articleCache.set(slug, { data, ts: Date.now() })
 
 // AI Initialization
 const genAI = process.env.GEMINI_API_KEY ? new GoogleGenerativeAI(process.env.GEMINI_API_KEY) : null
@@ -40,6 +55,59 @@ fastify.register(cors, {
   // Dev (no env var): reflect any origin. Prod: strict allowlist.
   origin: allowedOrigins ?? true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+})
+
+// Serve the static public site (index.html, css/, js/, images/) from the
+// parent directory. API routes registered later take priority over static files.
+fastify.register(fastifyStatic, {
+  root: path.resolve(__dirname, '..'),
+  prefix: '/',
+  index: ['index.html'],
+  etag: false,
+  lastModified: false,
+  setHeaders: (res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+  },
+})
+
+// SSR-lite: serve article.html with article data pre-injected so the browser
+// never needs a second round-trip to the API. Falls back to bare HTML on error.
+fastify.get('/article.html', async (request, reply) => {
+  const slug = request.query.id
+  const htmlPath = path.resolve(__dirname, '..', 'article.html')
+  let html = readFileSync(htmlPath, 'utf8')
+
+  if (slug) {
+    try {
+      let article = getCachedArticle(slug)
+      if (!article) {
+        article = await prisma.article.findFirst({
+          where: { slug },
+          include: {
+            category: true,
+            primaryAuthor: {
+              select: { firstName: true, lastName: true, avatarUrl: true, designation: true, bio: true }
+            },
+            articleTags: { include: { tag: true } }
+          }
+        })
+        if (article) {
+          setCachedArticle(slug, article)
+          prisma.article.update({ where: { id: article.id }, data: { viewCount: { increment: 1 } } }).catch(() => {})
+        }
+      }
+      if (article) {
+        const safeJson = JSON.stringify(article).replace(/<\/script>/gi, '<\\/script>')
+        html = html.replace('</head>', `  <script>window.__ARTICLE_DATA__=${safeJson};</script>\n</head>`)
+      }
+    } catch (err) {
+      fastify.log.error(err)
+    }
+  }
+
+  reply.header('Content-Type', 'text/html; charset=utf-8')
+  reply.header('Cache-Control', 'no-store')
+  return reply.send(html)
 })
 
 // === AUTH ===
@@ -222,6 +290,28 @@ fastify.get('/v1/articles', async (request, reply) => {
   }
 })
 
+fastify.get('/v1/articles/most-viewed', async (request, reply) => {
+  try {
+    const limit = Math.min(parseInt(request.query.limit || '8'), 20)
+    const articles = await prisma.article.findMany({
+      where: { status: 'published' },
+      orderBy: { viewCount: 'desc' },
+      take: limit,
+      select: {
+        id: true, headline: true, subHeadline: true, slug: true,
+        featuredImageUrl: true, readingTimeMins: true, viewCount: true,
+        publishedAt: true, articleType: true,
+        category: { select: { name: true } },
+        primaryAuthor: { select: { firstName: true, lastName: true, avatarUrl: true } }
+      }
+    })
+    return articles
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to fetch most viewed articles' })
+  }
+})
+
 fastify.get('/v1/articles/:slug', async (request, reply) => {
   try {
     const { slug } = request.params
@@ -245,6 +335,59 @@ fastify.get('/v1/articles/:slug', async (request, reply) => {
   } catch (error) {
     fastify.log.error(error)
     reply.code(500).send({ error: 'Failed to fetch article' })
+  }
+})
+
+// === ADDITIONAL PUBLIC API ROUTES ===
+
+fastify.get('/v1/hot-topics', async (request, reply) => {
+  try {
+    const rows = await prisma.$queryRawUnsafe(`
+      SELECT id, topic AS title, category, article_slug, image_url, created_at
+      FROM hot_topics
+      ORDER BY created_at DESC
+      LIMIT 20
+    `)
+    return rows
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to fetch hot topics' })
+  }
+})
+
+fastify.get('/v1/categories-articles', async (request, reply) => {
+  try {
+    const articles = await prisma.$queryRawUnsafe(`
+      SELECT DISTINCT ON (c.id)
+             a.id, a.headline, a.sub_headline, a.slug, a.featured_image_url,
+             a.reading_time_mins, a.published_at,
+             c.name AS category_name, c.slug AS category_slug,
+             u.first_name, u.last_name
+      FROM articles a
+      JOIN categories c ON a.category_id = c.id
+      LEFT JOIN cms_users u ON a.primary_author_id = u.id
+      WHERE a.status = 'published'
+      ORDER BY c.id, a.published_at DESC
+    `)
+    return articles
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to fetch category articles' })
+  }
+})
+
+fastify.get('/v1/news-items', async (request, reply) => {
+  try {
+    const items = await prisma.discoveryCache.findMany({
+      where: { NOT: { categories: JSON.stringify(['Other / Unclassified']) } },
+      orderBy: { pubDate: 'desc' },
+      take: 20,
+      select: { id: true, title: true, link: true, pubDate: true, source: true, logoUrl: true, categories: true }
+    })
+    return items
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to fetch news items' })
   }
 })
 
@@ -480,11 +623,59 @@ fastify.put('/cms/v1/articles/:id', async (request, reply) => {
 fastify.delete('/cms/v1/articles/:id', async (request, reply) => {
   try {
     const { id } = request.params
+
+    // Fetch full article before deleting
+    const article = await prisma.article.findUnique({
+      where: { id },
+      include: {
+        category: true,
+        primaryAuthor: true,
+        articleTags: { include: { tag: true } }
+      }
+    })
+    if (!article) return reply.code(404).send({ error: 'Article not found' })
+
+    const tags = article.articleTags.map(at => at.tag?.name).filter(Boolean).join(',')
+    const authorEmail = article.primaryAuthor?.email || null
+
+    // Archive to deleted_articles table
+    await prisma.$executeRawUnsafe(
+      `INSERT INTO deleted_articles
+        (id, original_id, headline, slug, body, sub_headline, featured_image_url, image_caption, category, tags, status, author_email, published_at, deleted_at)
+       VALUES
+        (gen_random_uuid()::text, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW())`,
+      article.id,
+      article.headline,
+      article.slug,
+      article.body || '',
+      article.subHeadline || null,
+      article.featuredImageUrl || null,
+      article.imageCaption || null,
+      article.category?.name || null,
+      tags || null,
+      article.status,
+      authorEmail,
+      article.publishedAt || null
+    )
+
+    // Hard delete from articles
     await prisma.article.delete({ where: { id } })
     return { success: true }
   } catch (error) {
     fastify.log.error(error)
     reply.code(500).send({ error: 'Failed to delete article' })
+  }
+})
+
+fastify.get('/cms/v1/deleted-articles', async (request, reply) => {
+  try {
+    const rows = await prisma.$queryRawUnsafe(
+      `SELECT * FROM deleted_articles ORDER BY deleted_at DESC`
+    )
+    return rows
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to fetch deleted articles' })
   }
 })
 
@@ -1725,8 +1916,53 @@ async function runDataRetentionCleanup() {
 const start = async () => {
   try {
     const port = process.env.PORT ? parseInt(process.env.PORT) : 3000
-    await fastify.listen({ port, host: '0.0.0.0' })
+    await fastify.listen({ port, host: '::' })
     fastify.log.info(`Server listening on port ${port}`)
+
+    // Keep Neon compute warm – free tier auto-suspends after ~5 min of inactivity
+    setInterval(async () => {
+      try { await prisma.$queryRaw`SELECT 1` } catch (_) {}
+    }, 4 * 60 * 1000)
+
+    // Ensure hot_topics table exists with required columns and seed initial data
+    try {
+      await prisma.$executeRawUnsafe(`
+        CREATE TABLE IF NOT EXISTS hot_topics (
+          id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+          title TEXT NOT NULL,
+          category TEXT,
+          article_slug TEXT,
+          image_url TEXT,
+          created_at TIMESTAMPTZ DEFAULT NOW()
+        )
+      `)
+      // Add columns if the table existed before with a different schema
+      await prisma.$executeRawUnsafe(`ALTER TABLE hot_topics ADD COLUMN IF NOT EXISTS category TEXT`)
+      await prisma.$executeRawUnsafe(`ALTER TABLE hot_topics ADD COLUMN IF NOT EXISTS article_slug TEXT`)
+      await prisma.$executeRawUnsafe(`ALTER TABLE hot_topics ADD COLUMN IF NOT EXISTS image_url TEXT`)
+      await prisma.$executeRawUnsafe(`ALTER TABLE hot_topics ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT NOW()`)
+      const countRes = await prisma.$queryRawUnsafe(`SELECT COUNT(*)::int AS count FROM hot_topics`)
+      if (Number(countRes[0].count) === 0) {
+        await prisma.$executeRawUnsafe(`
+          INSERT INTO hot_topics (id, topic, category, image_url) VALUES
+          (gen_random_uuid()::text, 'The Rise of AI Agents in Enterprise Software', 'AI & Innovation', 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80'),
+          (gen_random_uuid()::text, 'Indian Startup Ecosystem Sees Record Q1 2026 Funding', 'Startup Stories', 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&q=80'),
+          (gen_random_uuid()::text, 'Quantum Computing Enters the Commercial Era', 'Deep Tech', 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80'),
+          (gen_random_uuid()::text, 'UPI 3.0: India''s Payments Revolution Continues', 'Fintech', 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80'),
+          (gen_random_uuid()::text, 'Why B2B SaaS Multiples Are Recovering in 2026', 'SaaS', 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80'),
+          (gen_random_uuid()::text, 'India''s Green Hydrogen Push: Startups Leading the Way', 'Climate Tech', 'https://images.unsplash.com/photo-1497435334941-8c899a9bdcf5?auto=format&fit=crop&w=800&q=80'),
+          (gen_random_uuid()::text, 'D2C Brands That Survived and Thrived Post-Amazon Era', 'D2C & Consumer', 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'),
+          (gen_random_uuid()::text, 'The Second Wave of Edtech: What''s Different This Time', 'Edtech', 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80'),
+          (gen_random_uuid()::text, 'AI-Powered Diagnostics: India''s $2B Healthtech Moment', 'Healthtech', 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80'),
+          (gen_random_uuid()::text, 'ISRO Commercial Spinoffs Are Creating a New Startup Category', 'Deep Tech', 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80')
+        `)
+        console.log('[Boot]: Seeded 10 hot topics into hot_topics table')
+      } else {
+        console.log(`[Boot]: hot_topics table already has ${countRes[0].count} entries — skipping seed`)
+      }
+    } catch (err) {
+      console.error('[Boot]: hot_topics setup failed:', err.message)
+    }
 
     // Smart Boot Strategy:
     // • DB is empty → Full deep scan (first-time setup)

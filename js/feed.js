@@ -1,13 +1,11 @@
 /* js/feed.js — homepage "Latest Articles" feed.
-   Fetches published articles from the backend and renders them into
-   #articles-feed-container using the new card-article-horizontal markup.
-   Falls back to the static cards already in the DOM if the API is unreachable. */
+   Shows hot-topic-linked articles first, then remaining published articles.
+   Falls back to static cards if the API is unreachable. */
 
-import { fetchArticleCards } from './api.js';
+import { fetchArticleCards, API_BASE } from './api.js';
 
 const PAGE_SIZE = 4;
 
-/** Escape text before injecting into markup (prevents XSS from CMS content). */
 function esc(value) {
   return String(value ?? '')
     .replace(/&/g, '&amp;')
@@ -17,7 +15,6 @@ function esc(value) {
     .replace(/'/g, '&#39;');
 }
 
-/** Build one horizontal article card matching the homepage markup. */
 function renderCard(card) {
   const href = esc(card.href || '#');
   const el = document.createElement('article');
@@ -45,7 +42,6 @@ function renderCard(card) {
   return el;
 }
 
-/** Append cards to the container with a staggered fade-in. */
 function appendCards(container, cards) {
   const fragment = document.createDocumentFragment();
   const elements = cards.map((card) => {
@@ -63,30 +59,50 @@ function appendCards(container, cards) {
   });
 }
 
+async function fetchHotTopicSlugs() {
+  try {
+    const res = await fetch(`${API_BASE}/v1/hot-topics`, { headers: { Accept: 'application/json' } });
+    if (!res.ok) return new Set();
+    const rows = await res.json();
+    return new Set(
+      rows
+        .filter((r) => r.article_slug)
+        .map((r) => r.article_slug)
+    );
+  } catch {
+    return new Set();
+  }
+}
+
 export async function initDynamicFeed() {
   const loadMoreBtn = document.getElementById('load-more-articles');
   const feedContainer = document.getElementById('articles-feed-container');
 
   if (!feedContainer) return;
 
-  let cards = [];
+  let allCards = [];
   try {
-    cards = await fetchArticleCards();
+    const [cards, hotSlugs] = await Promise.all([
+      fetchArticleCards(),
+      fetchHotTopicSlugs(),
+    ]);
+
+    // Hot-topic articles first, then the rest
+    const hot = cards.filter((c) => hotSlugs.has(c.slug));
+    const rest = cards.filter((c) => !hotSlugs.has(c.slug));
+    allCards = [...hot, ...rest];
   } catch (error) {
-    // API unreachable — keep the static cards already in the DOM as a fallback.
     console.error('Failed to load articles from API; showing static fallback.', error);
     return;
   }
 
-  // No published articles — leave the static cards in place.
-  if (!cards.length) return;
+  if (!allCards.length) return;
 
-  // Replace the static placeholder cards with real published articles.
   feedContainer.innerHTML = '';
 
   let shown = 0;
   const showNext = () => {
-    appendCards(feedContainer, cards.slice(shown, shown + PAGE_SIZE));
+    appendCards(feedContainer, allCards.slice(shown, shown + PAGE_SIZE));
     shown += PAGE_SIZE;
   };
   showNext();
@@ -94,14 +110,14 @@ export async function initDynamicFeed() {
   if (!loadMoreBtn) return;
 
   const syncButton = () => {
-    if (shown >= cards.length) {
+    if (shown >= allCards.length) {
       loadMoreBtn.innerText = 'View All Articles →';
     }
   };
   syncButton();
 
   loadMoreBtn.addEventListener('click', () => {
-    if (shown >= cards.length) {
+    if (shown >= allCards.length) {
       window.location.href = 'articles.html';
       return;
     }
