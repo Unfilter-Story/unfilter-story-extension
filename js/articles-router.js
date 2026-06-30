@@ -1,7 +1,32 @@
 // articles-router.js
-// Client-side state machine and deep-linking pushState router for articles.html
+// Client-side state machine and deep-linking pushState router for articles.html.
+// Wired to the live API: renders published articles from GET /v1/articles. The
+// hardcoded list below is kept only as an offline fallback if the API is down.
 
-const articlesData = [
+import { fetchArticleCards } from './api.js';
+
+function escHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// Map an API card (from js/api.js) to the shape this grid renderer expects.
+function cardToArticle(card) {
+  return {
+    id: card.slug,
+    category: card.tag || 'All',
+    badge: card.tag || 'Article',
+    title: card.title,
+    excerpt: card.excerpt,
+    image: card.image,
+    author: card.author,
+    authorImg: card.avatar,
+    link: card.href || 'article.html',
+  };
+}
+
+let articlesData = [
   {
     id: 'art-1',
     category: 'AI',
@@ -70,7 +95,7 @@ const articlesData = [
   }
 ];
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const gridContainer = document.getElementById('articles-grid');
   const taxonomyPills = document.querySelectorAll('.taxonomy-pill');
   
@@ -176,25 +201,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filteredData.length === 0) {
       gridContainer.innerHTML = `
         <div class="col-span-full py-12 text-center text-gray-500">
-          <p>No articles found for #${category}. Check back soon!</p>
+          <p>No articles found for #${escHtml(category)}. Check back soon!</p>
         </div>
       `;
       return;
     }
 
     const html = filteredData.map(article => `
-      <a href="${article.link}" class="group flex flex-col bg-white dark:bg-[#0D121F] rounded-[18px] border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300">
+      <a href="${escHtml(article.link)}" class="group flex flex-col bg-white dark:bg-[#0D121F] rounded-[18px] border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300">
         <div class="w-full aspect-[4/3] overflow-hidden relative bg-gray-100 dark:bg-gray-900">
-          <img src="${article.image}" alt="${article.badge}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur-md text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded">${article.badge}</div>
+          <img src="${escHtml(article.image)}" alt="${escHtml(article.badge)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur-md text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded">${escHtml(article.badge)}</div>
         </div>
         <div class="p-6 flex flex-col flex-1 space-y-3">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-brand-red transition-colors line-clamp-2" style="font-size: 1.25rem; line-height: 1.4;">${article.title}</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 flex-1">${article.excerpt}</p>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-brand-red transition-colors line-clamp-2" style="font-size: 1.25rem; line-height: 1.4;">${escHtml(article.title)}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 flex-1">${escHtml(article.excerpt)}</p>
           <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <img src="${article.authorImg}" alt="Author" class="w-6 h-6 rounded-full">
-              <span class="text-xs font-bold text-gray-500">${article.author}</span>
+              <img src="${escHtml(article.authorImg)}" alt="Author" class="w-6 h-6 rounded-full">
+              <span class="text-xs font-bold text-gray-500">${escHtml(article.author)}</span>
             </div>
             <span class="text-xs font-bold text-brand-red flex items-center gap-1 group-hover:translate-x-1 transition-transform">Read <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
           </div>
@@ -216,7 +241,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   gridContainer.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-  
+
+  // Load published articles from the API; fall back to the static list on failure.
+  try {
+    const cards = await fetchArticleCards();
+    if (Array.isArray(cards) && cards.length) {
+      articlesData = cards.map(cardToArticle);
+    }
+  } catch (err) {
+    console.error('Failed to load articles from API; using static fallback.', err);
+  }
+
   // Call initialization logic
   initRouter();
 });

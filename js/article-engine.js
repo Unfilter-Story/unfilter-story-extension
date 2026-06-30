@@ -1,3 +1,5 @@
+import { fetchArticleDetail } from './api.js';
+
 export const ARTICLE_DATA = {
   "autonomous-architectures": {
     title: "The Next Generation of Autonomous Architectures in Fintech",
@@ -234,10 +236,19 @@ const routingResult = await agent.routeTransaction({
   }
 };
 
-export function loadArticle() {
+export async function loadArticle() {
   const urlParams = new URLSearchParams(window.location.search);
   const articleId = urlParams.get('id') || 'autonomous-architectures';
-  const article = ARTICLE_DATA[articleId];
+
+  let article = null;
+  try {
+    article = await fetchArticleDetail(articleId);
+  } catch (err) {
+    console.warn('API fetch failed, trying static fallback:', err);
+  }
+  if (!article) {
+    article = ARTICLE_DATA[articleId] || null;
+  }
 
   if (!article) {
     document.querySelector('.article-body').innerHTML = '<h2>Article not found</h2>';

@@ -1,6 +1,6 @@
 import { apiFetch } from '../lib/api.js';
 import React, { useState, useEffect } from 'react'
-import { Plus, Search, Filter, MoreHorizontal, CheckCircle2, Clock, Calendar, ArrowRight, History, X, Tag as TagIcon, LayoutGrid, AlertTriangle, Send, Edit3, XCircle, ExternalLink } from 'lucide-react'
+import { Plus, Search, Filter, MoreHorizontal, CheckCircle2, Clock, Calendar, ArrowRight, History, X, Tag as TagIcon, LayoutGrid, AlertTriangle, Send, Edit3, XCircle, ExternalLink, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const getStatusBadge = (status) => {
@@ -151,6 +151,26 @@ export default function Articles() {
       console.error('Failed to update article', err)
     }
   }
+  const handleDelete = async (id) => {
+    setConfirmModal({
+      open: true,
+      title: 'Delete Article',
+      message: 'This will permanently delete the article. This action cannot be undone.',
+      type: 'warning',
+      confirmText: 'Yes, Delete',
+      onConfirm: async () => {
+        try {
+          await apiFetch(`/cms/v1/articles/${id}`, { method: 'DELETE' })
+          setOpenDropdownId(null)
+          fetchArticles()
+        } catch(err) {
+          console.error('Failed to delete article', err)
+        }
+        setConfirmModal(prev => ({ ...prev, open: false }))
+      }
+    })
+  }
+
   const handleCancelSchedule = async (id) => {
     setConfirmModal({
       open: true,
@@ -468,12 +488,19 @@ export default function Articles() {
                            {/* Status Specific: Unpublished / Draft */}
                            {(article.status === 'unpublished' || article.status === 'draft') && (
                              <div className="border-t border-gray-100 mt-1 pt-1">
-                               <button 
+                               <button
                                   onClick={() => handlePublishNow(article.id, 'Republish')}
                                   className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-[var(--cms-accent)] hover:bg-[var(--cms-accent-light)] cursor-pointer font-semibold transition-colors"
                                >
                                   <Send className="w-4 h-4" />
                                   {article.status === 'draft' ? 'Publish Now' : 'Republish Now'}
+                               </button>
+                               <button
+                                  onClick={() => handleDelete(article.id)}
+                                  className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 cursor-pointer font-medium transition-colors"
+                               >
+                                  <Trash2 className="w-4 h-4" />
+                                  Delete Article
                                </button>
                              </div>
                            )}

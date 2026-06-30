@@ -451,8 +451,17 @@ export default function ArticleEditor() {
   const [isAutoSaving, setIsAutoSaving] = useState(false)
   const [editorMode, setEditorMode] = useState('normal') // 'normal' or 'block'
   const [category, setCategory] = useState('')
+  const [categorySearch, setCategorySearch] = useState('')
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false)
+  const [categoryDropdownStyle, setCategoryDropdownStyle] = useState({})
+  const categoryRef = useRef(null)
+  const categoryInputRef = useRef(null)
   const [tags, setTags] = useState([])
   const [tagInput, setTagInput] = useState('')
+  const [showTagDropdown, setShowTagDropdown] = useState(false)
+  const [tagDropdownStyle, setTagDropdownStyle] = useState({})
+  const tagRef = useRef(null)
+  const tagInputRef = useRef(null)
   const [availableCategories, setAvailableCategories] = useState([])
   const [availableTags, setAvailableTags] = useState([])
   const [publishedAt, setPublishedAt] = useState(new Date().toISOString().split('T')[0])
@@ -578,6 +587,7 @@ export default function ArticleEditor() {
             setHeadline(data.headline || '')
             setStatus(data.status || 'draft')
             setCategory(data.category || '')
+            setCategorySearch(data.category || '')
             setTags(data.tags || [])
             setFeaturedImageUrl(data.featuredImageUrl || '')
             setImageCaption(data.imageCaption || '')
@@ -739,6 +749,42 @@ export default function ArticleEditor() {
     isMounted.current = true
   }, [])
 
+  // Close dropdowns on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      if (categoryRef.current && !categoryRef.current.contains(e.target)) setShowCategoryDropdown(false)
+      if (tagRef.current && !tagRef.current.contains(e.target)) setShowTagDropdown(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const calcDropdownRect = (inputRef) => {
+    if (!inputRef.current) return {}
+    const r = inputRef.current.getBoundingClientRect()
+    return { position: 'fixed', top: r.bottom + 4, left: r.left, width: r.width, zIndex: 9999 }
+  }
+
+  const createCategory = async (name) => {
+    try {
+      const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
+      const res = await apiFetch('/cms/v1/categories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, slug })
+      })
+      if (res.ok) {
+        const newCat = await res.json()
+        setAvailableCategories(prev => [...prev, newCat])
+        setCategory(newCat.name)
+        setCategorySearch(newCat.name)
+        setShowCategoryDropdown(false)
+      }
+    } catch (err) {
+      console.error('Failed to create category', err)
+    }
+  }
+
   // Track changes in editor
   useEffect(() => {
     if (!editor) return
@@ -877,8 +923,8 @@ export default function ArticleEditor() {
   if (!editor) return null
 
   const ToolbarButton = ({ onClick, isActive, children, tooltip }) => (
-    <button 
-      onClick={(e) => { e.preventDefault(); onClick(); }}
+    <button
+      onMouseDown={(e) => { e.preventDefault(); onClick(); }}
       className={`p-2 rounded-md transition-all ${
         isActive ? 'bg-[var(--cms-accent)] text-white shadow-sm' : 'hover:bg-gray-100 text-gray-600'
       }`}
@@ -1083,20 +1129,59 @@ export default function ArticleEditor() {
                 Article Category
               </label>
               
-              <div className="relative group">
-                <select 
-                  value={category}
-                  onChange={e => setCategory(e.target.value)}
-                  className="w-full bg-gray-50/80 border border-gray-200 rounded-2xl px-5 py-4 text-sm font-bold text-gray-700 outline-none focus:border-[var(--cms-accent)] focus:ring-4 focus:ring-[var(--cms-accent)]/5 focus:bg-white transition-all appearance-none cursor-pointer hover:bg-gray-100/50"
-                >
-                  <option value="">Choose a category...</option>
-                  {availableCategories.map(cat => (
-                    <option key={cat.id} value={cat.name}>{cat.name}</option>
-                  ))}
-                </select>
-                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within:text-[var(--cms-accent)] group-focus-within:rotate-180 transition-all">
-                  <ArrowLeft size={16} className="-rotate-90" />
-                </div>
+              <div className="relative" ref={categoryRef}>
+                <input
+                  ref={categoryInputRef}
+                  type="text"
+                  placeholder="Search or create category..."
+                  value={categorySearch}
+                  onChange={e => {
+                    setCategorySearch(e.target.value)
+                    setCategory('')
+                    setShowCategoryDropdown(true)
+                  }}
+                  onFocus={() => {
+                    setCategoryDropdownStyle(calcDropdownRect(categoryInputRef))
+                    setShowCategoryDropdown(true)
+                  }}
+                  className="w-full bg-gray-50/80 border border-gray-200 rounded-2xl px-5 py-4 text-sm font-bold text-gray-700 outline-none focus:border-[var(--cms-accent)] focus:ring-4 focus:ring-[var(--cms-accent)]/5 focus:bg-white transition-all"
+                />
+                {category && (
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[var(--cms-accent)]" />
+                )}
+                {showCategoryDropdown && (
+                  <div style={categoryDropdownStyle} className="bg-white border border-gray-100 rounded-2xl shadow-2xl max-h-52 overflow-y-auto">
+                    {availableCategories
+                      .filter(c => !categorySearch || c.name.toLowerCase().includes(categorySearch.toLowerCase()))
+                      .map(cat => (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          onMouseDown={() => {
+                            setCategory(cat.name)
+                            setCategorySearch(cat.name)
+                            setShowCategoryDropdown(false)
+                          }}
+                          className={`w-full text-left px-5 py-3 text-sm font-bold hover:bg-[var(--cms-accent-light)] hover:text-[var(--cms-accent)] transition-colors ${category === cat.name ? 'text-[var(--cms-accent)] bg-[var(--cms-accent-light)]' : 'text-gray-700'}`}
+                        >
+                          {cat.name}
+                        </button>
+                      ))
+                    }
+                    {categorySearch && !availableCategories.some(c => c.name.toLowerCase() === categorySearch.toLowerCase()) && (
+                      <button
+                        type="button"
+                        onMouseDown={() => createCategory(categorySearch)}
+                        className="w-full text-left px-5 py-3 text-sm font-bold text-[var(--cms-accent)] hover:bg-[var(--cms-accent-light)] transition-colors border-t border-gray-100 flex items-center gap-2"
+                      >
+                        <Plus size={14} /> Create "{categorySearch}"
+                      </button>
+                    )}
+                    {availableCategories.filter(c => !categorySearch || c.name.toLowerCase().includes(categorySearch.toLowerCase())).length === 0 && !categorySearch && (
+                      <p className="px-5 py-3 text-xs text-gray-400">No categories yet. Type to create one.</p>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -1109,53 +1194,83 @@ export default function ArticleEditor() {
                 Searchable Tags
               </label>
 
-              <div className="space-y-3">
-                <div className="flex flex-wrap gap-2.5 p-2 min-h-[58px] bg-gray-50/80 border border-gray-200 rounded-2xl focus-within:border-[var(--cms-accent)] focus-within:ring-4 focus-within:ring-[var(--cms-accent)]/5 focus-within:bg-white transition-all shadow-sm">
-                  {tags.map(tag => (
-                    <span key={tag} className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-100 rounded-xl text-xs font-bold text-gray-700 shadow-sm hover:border-[var(--cms-accent)]/30 transition-all group/tag">
-                      <span className="text-[var(--cms-accent)] opacity-50">#</span>
-                      {tag}
-                      <button 
-                        onClick={() => setTags(tags.filter(t => t !== tag))} 
-                        className="w-5 h-5 flex items-center justify-center rounded-lg hover:bg-red-50 hover:text-red-500 transition-colors opacity-0 group-hover/tag:opacity-100"
-                      >
-                        <X size={12} strokeWidth={3} />
-                      </button>
-                    </span>
-                  ))}
-                  <input 
-                    type="text"
-                    placeholder={tags.length === 0 ? "Add tags..." : ""}
-                    className="flex-1 bg-transparent border-none outline-none text-sm px-3 font-bold text-gray-800 placeholder-gray-300 min-w-[120px]"
-                    value={tagInput}
-                    onChange={e => setTagInput(e.target.value)}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter' && tagInput.trim()) {
-                        e.preventDefault()
-                        if (!tags.includes(tagInput.trim())) {
-                          setTags([...tags, tagInput.trim()])
-                        }
-                        setTagInput('')
-                      }
-                    }}
-                  />
-                </div>
-                
-                {availableTags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 px-1">
-                    {availableTags
-                      .filter(t => !tags.includes(t.name))
-                      .slice(0, 6)
-                      .map(tag => (
-                        <button 
-                          key={tag.id}
-                          onClick={() => setTags([...tags, tag.name])}
-                          className="text-[10px] font-black text-gray-400 bg-white border border-gray-100 hover:border-[var(--cms-accent)]/30 hover:text-[var(--cms-accent)] px-3 py-1.5 rounded-xl transition-all shadow-sm active:scale-95"
+              <div ref={tagRef} className="relative">
+                {/* Selected tags */}
+                {tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {tags.map(tag => (
+                      <span key={tag} className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-100 rounded-xl text-xs font-bold text-gray-700 shadow-sm hover:border-[var(--cms-accent)]/30 transition-all group/tag">
+                        <span className="text-[var(--cms-accent)] opacity-50">#</span>
+                        {tag}
+                        <button
+                          onMouseDown={() => setTags(tags.filter(t => t !== tag))}
+                          className="w-4 h-4 flex items-center justify-center rounded-lg hover:bg-red-50 hover:text-red-500 transition-colors"
                         >
-                          + {tag.name}
+                          <X size={11} strokeWidth={3} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <input
+                  ref={tagInputRef}
+                  type="text"
+                  placeholder="Search or add tag..."
+                  value={tagInput}
+                  onChange={e => {
+                    setTagInput(e.target.value)
+                    setShowTagDropdown(true)
+                  }}
+                  onFocus={() => {
+                    setTagDropdownStyle(calcDropdownRect(tagInputRef))
+                    setShowTagDropdown(true)
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' && tagInput.trim()) {
+                      e.preventDefault()
+                      if (!tags.includes(tagInput.trim())) setTags([...tags, tagInput.trim()])
+                      setTagInput('')
+                      setShowTagDropdown(false)
+                    }
+                    if (e.key === 'Escape') setShowTagDropdown(false)
+                  }}
+                  className="w-full bg-gray-50/80 border border-gray-200 rounded-2xl px-5 py-4 text-sm font-bold text-gray-700 outline-none focus:border-[var(--cms-accent)] focus:ring-4 focus:ring-[var(--cms-accent)]/5 focus:bg-white transition-all"
+                />
+                {showTagDropdown && (
+                  <div style={tagDropdownStyle} className="bg-white border border-gray-100 rounded-2xl shadow-2xl max-h-52 overflow-y-auto">
+                    {availableTags
+                      .filter(t => !tags.includes(t.name) && (!tagInput || t.name.toLowerCase().includes(tagInput.toLowerCase())))
+                      .map(tag => (
+                        <button
+                          key={tag.id}
+                          type="button"
+                          onMouseDown={() => {
+                            if (!tags.includes(tag.name)) setTags(prev => [...prev, tag.name])
+                            setTagInput('')
+                            setShowTagDropdown(false)
+                          }}
+                          className="w-full text-left px-5 py-3 text-sm font-bold text-gray-700 hover:bg-[var(--cms-accent-light)] hover:text-[var(--cms-accent)] transition-colors flex items-center gap-2"
+                        >
+                          <span className="text-[var(--cms-accent)] opacity-40">#</span>{tag.name}
                         </button>
                       ))
                     }
+                    {tagInput.trim() && !availableTags.some(t => t.name.toLowerCase() === tagInput.trim().toLowerCase()) && (
+                      <button
+                        type="button"
+                        onMouseDown={() => {
+                          if (!tags.includes(tagInput.trim())) setTags(prev => [...prev, tagInput.trim()])
+                          setTagInput('')
+                          setShowTagDropdown(false)
+                        }}
+                        className="w-full text-left px-5 py-3 text-sm font-bold text-[var(--cms-accent)] hover:bg-[var(--cms-accent-light)] transition-colors border-t border-gray-100 flex items-center gap-2"
+                      >
+                        <Plus size={14} /> Add "{tagInput.trim()}"
+                      </button>
+                    )}
+                    {availableTags.filter(t => !tags.includes(t.name) && (!tagInput || t.name.toLowerCase().includes(tagInput.toLowerCase()))).length === 0 && !tagInput && (
+                      <p className="px-5 py-3 text-xs text-gray-400">No tags yet. Type to add one.</p>
+                    )}
                   </div>
                 )}
               </div>

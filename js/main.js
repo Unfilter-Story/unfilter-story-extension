@@ -5,11 +5,12 @@ import './components/AppHeader.js';
 import './components/AppFooter.js';
 import './components/SearchModal.js';
 import { initDynamicFeed } from './feed.js';
+import { initCategoriesFeed } from './categories-feed.js';
+import { initLatestStories } from './latest-stories.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Reading Progress Indicator
   initProgressIndicator();
-  
-  // Initialize Dynamic Feed Engine
+  initCategoriesFeed();
+  initLatestStories();
   initDynamicFeed();
 });

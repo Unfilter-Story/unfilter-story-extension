@@ -14,7 +14,8 @@ import {
   Sparkles,
   ChevronLeft,
   ChevronRight,
-  MessageSquare
+  MessageSquare,
+  Trash2
 } from 'lucide-react'
 
 const navItems = [
@@ -28,6 +29,7 @@ const navItems = [
   { label: 'Site Architecture', icon: Map, path: '/architecture' },
   { label: 'Users', icon: Users, path: '/users' },
   { label: 'Inbox', icon: MessageSquare, path: '/contact' },
+  { label: 'Deleted Articles', icon: Trash2, path: '/deleted-articles' },
   { label: 'Settings', icon: Settings, path: '/settings' },
 ]
 

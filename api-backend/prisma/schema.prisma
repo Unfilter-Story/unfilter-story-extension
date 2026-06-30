@@ -244,3 +244,22 @@ model ContactMessage {
 
   @@map("contact_messages")
 }
+
+model DeletedArticle {
+  id               String    @id @default(uuid())
+  originalId       String    @map("original_id")
+  headline         String
+  slug             String
+  body             String
+  subHeadline      String?   @map("sub_headline")
+  featuredImageUrl String?   @map("featured_image_url")
+  imageCaption     String?   @map("image_caption")
+  category         String?
+  tags             String?
+  status           String
+  authorEmail      String?   @map("author_email")
+  publishedAt      DateTime? @map("published_at")
+  deletedAt        DateTime  @default(now()) @map("deleted_at")
+
+  @@map("deleted_articles")
+}

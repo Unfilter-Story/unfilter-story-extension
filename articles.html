@@ -18,8 +18,7 @@
 
   <!-- Sync UnfilterStory data-theme with Tailwind .dark -->
   <script>
-    const theme = localStorage.getItem('theme') || 
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const theme = 'light'; // dark mode disabled — force light
     document.documentElement.setAttribute('data-theme', theme);
     function syncTheme() {
       const html = document.documentElement;
@@ -95,141 +94,18 @@
           <!-- Left Column: Carousel -->
           <div class="lg:col-span-8 overflow-hidden rounded-[18px] relative group outline-none" id="carousel-container" tabindex="0">
             <div class="flex transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] h-full" id="carousel-track">
-              
-              <!-- Slide 1 -->
-              <article class="w-full shrink-0 relative aspect-[4/3] lg:aspect-auto lg:h-[550px] cursor-pointer" onclick="window.location.href='article.html'">
-                <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80" loading="lazy" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105" alt="Slide 1">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-dark via-slate-dark/60 to-transparent pointer-events-none"></div>
-                
-                <div class="absolute bottom-0 left-0 w-full p-6 lg:p-10 flex flex-col justify-end pointer-events-none">
-                  <span class="bg-brand-red text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-wider w-max mb-4 pointer-events-auto">AI Infrastructure</span>
-                  <h3 class="text-3xl lg:text-4xl font-black text-white mb-3 leading-tight drop-shadow-md">The Next Generation of Autonomous Architectures</h3>
-                  <p class="text-gray-300 text-sm lg:text-base mb-6 max-w-2xl line-clamp-2">How agentic AI systems are completely rewriting the infrastructure of global payments and bypassing traditional regulatory hurdles in 2026.</p>
-                  
-                  <div class="flex items-center justify-between pointer-events-auto">
-                    <div class="flex items-center gap-4">
-                      <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-full border-2 border-white/20" alt="Sarah Lin">
-                      <div>
-                        <p class="text-white font-bold text-sm">Sarah Lin</p>
-                        <p class="text-gray-400 text-xs flex items-center gap-2">Oct 24 &bull; 8 min read</p>
-                      </div>
-                    </div>
-                    <div class="hidden sm:flex flex-col items-end">
-                      <span class="text-brand-red font-mono font-bold text-lg">1.2M</span>
-                      <span class="text-gray-400 text-[10px] uppercase tracking-widest">Views</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Floating Read Button -->
-                <button class="absolute top-6 right-6 lg:top-10 lg:right-10 bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-white hover:text-black transition-all duration-300 group/btn shadow-xl pointer-events-auto">
-                  Read Story <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
-                </button>
-              </article>
+            <!-- dynamically populated -->
+          </div>
 
-              <!-- Slide 2 -->
-              <article class="w-full shrink-0 relative aspect-[4/3] lg:aspect-auto lg:h-[550px] cursor-pointer" onclick="window.location.href='article.html'">
-                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80" loading="lazy" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105" alt="Slide 2">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-dark via-slate-dark/60 to-transparent pointer-events-none"></div>
-                
-                <div class="absolute bottom-0 left-0 w-full p-6 lg:p-10 flex flex-col justify-end pointer-events-none">
-                  <span class="bg-brand-red text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-wider w-max mb-4 pointer-events-auto">Venture Capital</span>
-                  <h3 class="text-3xl lg:text-4xl font-black text-white mb-3 leading-tight drop-shadow-md">The $100M Seed Round: A New Era</h3>
-                  <p class="text-gray-300 text-sm lg:text-base mb-6 max-w-2xl line-clamp-2">How sovereign wealth and mega-funds are bypassing traditional Series A/B rounds to dominate the cap tables of generational startups.</p>
-                  
-                  <div class="flex items-center justify-between pointer-events-auto">
-                    <div class="flex items-center gap-4">
-                      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-full border-2 border-white/20" alt="Marcus Vance">
-                      <div>
-                        <p class="text-white font-bold text-sm">Marcus Vance</p>
-                        <p class="text-gray-400 text-xs flex items-center gap-2">Oct 23 &bull; 12 min read</p>
-                      </div>
-                    </div>
-                    <div class="hidden sm:flex flex-col items-end">
-                      <span class="text-brand-red font-mono font-bold text-lg">845K</span>
-                      <span class="text-gray-400 text-[10px] uppercase tracking-widest">Views</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Floating Read Button -->
-                <button class="absolute top-6 right-6 lg:top-10 lg:right-10 bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-white hover:text-black transition-all duration-300 group/btn shadow-xl pointer-events-auto">
-                  Read Story <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
-                </button>
-              </article>
-              
-              <!-- Slide 3 -->
-              <article class="w-full shrink-0 relative aspect-[4/3] lg:aspect-auto lg:h-[550px] cursor-pointer" onclick="window.location.href='article.html'">
-                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" loading="lazy" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105" alt="Slide 3">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-dark via-slate-dark/60 to-transparent pointer-events-none"></div>
-                
-                <div class="absolute bottom-0 left-0 w-full p-6 lg:p-10 flex flex-col justify-end pointer-events-none">
-                  <span class="bg-brand-red text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-wider w-max mb-4 pointer-events-auto">Hardware</span>
-                  <h3 class="text-3xl lg:text-4xl font-black text-white mb-3 leading-tight drop-shadow-md">The Great Re-Platforming</h3>
-                  <p class="text-gray-300 text-sm lg:text-base mb-6 max-w-2xl line-clamp-2">Hardware is making a massive comeback as compute demands outstrip SaaS capacity in the enterprise tech ecosystem.</p>
-                  
-                  <div class="flex items-center justify-between pointer-events-auto">
-                    <div class="flex items-center gap-4">
-                      <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 rounded-full border-2 border-white/20" alt="David M.">
-                      <div>
-                        <p class="text-white font-bold text-sm">David M.</p>
-                        <p class="text-gray-400 text-xs flex items-center gap-2">Oct 21 &bull; 6 min read</p>
-                      </div>
-                    </div>
-                    <div class="hidden sm:flex flex-col items-end">
-                      <span class="text-brand-red font-mono font-bold text-lg">620K</span>
-                      <span class="text-gray-400 text-[10px] uppercase tracking-widest">Views</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Floating Read Button -->
-                <button class="absolute top-6 right-6 lg:top-10 lg:right-10 bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-white hover:text-black transition-all duration-300 group/btn shadow-xl pointer-events-auto">
-                  Read Story <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
-                </button>
-              </article>
-              
-            </div>
-            
             <!-- Pagination Dots -->
             <div class="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 flex gap-2 z-20" id="carousel-dots">
-              <button class="w-2 h-2 rounded-full bg-brand-red transition-all w-6"></button>
-              <button class="w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all"></button>
-              <button class="w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all"></button>
+              <!-- dynamically populated -->
             </div>
           </div>
 
           <!-- Right Column: Secondary Stack (Hidden on mobile) -->
-          <div class="hidden lg:flex lg:col-span-4 flex-col gap-6">
-            <!-- Secondary Card 1 -->
-            <article class="flex-1 bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-4 flex flex-col gap-4 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300 cursor-pointer group" onclick="window.location.href='article.html'">
-              <div class="w-full h-36 shrink-0 rounded-xl overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Design">
-              </div>
-              <div class="flex flex-col justify-center flex-1">
-                <span class="text-[10px] font-bold text-brand-red uppercase tracking-widest mb-2">Design</span>
-                <h4 class="font-bold text-gray-900 dark:text-white leading-snug mb-3 group-hover:text-brand-red transition-colors text-lg">Beyond Dark Mode: Neo-Brutalism</h4>
-                <div class="mt-auto flex items-center justify-between text-xs text-gray-500 font-medium border-t border-gray-100 dark:border-gray-800 pt-3">
-                  <span class="flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> 412K Views</span>
-                  <span>5m read</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Secondary Card 2 -->
-            <article class="flex-1 bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-4 flex flex-col gap-4 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300 cursor-pointer group" onclick="window.location.href='article.html'">
-              <div class="w-full h-36 shrink-0 rounded-xl overflow-hidden relative">
-                <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Markets">
-              </div>
-              <div class="flex flex-col justify-center flex-1">
-                <span class="text-[10px] font-bold text-brand-red uppercase tracking-widest mb-2">Markets</span>
-                <h4 class="font-bold text-gray-900 dark:text-white leading-snug mb-3 group-hover:text-brand-red transition-colors text-lg">The Liquidity Crisis of 2027</h4>
-                <div class="mt-auto flex items-center justify-between text-xs text-gray-500 font-medium border-t border-gray-100 dark:border-gray-800 pt-3">
-                  <span class="flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> 389K Views</span>
-                  <span>10m read</span>
-                </div>
-              </div>
-            </article>
+          <div id="most-viewed-right-col" class="hidden lg:flex lg:col-span-4 flex-col gap-6">
+            <!-- dynamically populated -->
           </div>
         </div>
 
@@ -439,98 +315,160 @@
   <script>
     lucide.createIcons();
 
-    // Most Viewed Stories Carousel Logic
-    document.addEventListener('DOMContentLoaded', () => {
-      const track = document.getElementById('carousel-track');
-      if(!track) return;
-      const container = document.getElementById('carousel-container');
-      const slides = Array.from(track.children);
-      const dots = Array.from(document.getElementById('carousel-dots').children);
-      const prevBtn = document.getElementById('slider-prev');
-      const nextBtn = document.getElementById('slider-next');
-      
-      let currentIndex = 0;
-      const totalSlides = slides.length;
-      let intervalId;
+    (function () {
+      function esc(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+      function fmtViews(n) {
+        if (!n) return '0';
+        if (n >= 1e6) return (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
+        if (n >= 1e3) return Math.round(n / 1e3) + 'K';
+        return String(n);
+      }
+      function fmtDate(iso) {
+        if (!iso) return '';
+        return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      }
 
-      const updateSlider = (index) => {
-        track.style.transform = `translateX(-${index * 100}%)`;
-        dots.forEach((dot, i) => {
-          if (i === index) {
-            dot.className = 'w-2 h-2 rounded-full bg-brand-red transition-all w-6';
-          } else {
-            dot.className = 'w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all';
-          }
+      function initCarouselControls(total) {
+        const track = document.getElementById('carousel-track');
+        const container = document.getElementById('carousel-container');
+        const dotsContainer = document.getElementById('carousel-dots');
+        if (!track || !container || total === 0) return;
+        const dots = Array.from(dotsContainer.children);
+        const prevBtn = document.getElementById('slider-prev');
+        const nextBtn = document.getElementById('slider-next');
+        let cur = 0, timer;
+
+        const go = (idx) => {
+          cur = (idx + total) % total;
+          track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+          dots.forEach((d, i) => {
+            d.className = i === cur
+              ? 'w-2 h-2 rounded-full bg-brand-red transition-all w-6'
+              : 'w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all';
+          });
+        };
+
+        const startAuto = () => { timer = setInterval(() => go(cur + 1), 5000); };
+        const stopAuto  = () => clearInterval(timer);
+
+        startAuto();
+        container.addEventListener('mouseenter', stopAuto);
+        container.addEventListener('mouseleave', startAuto);
+        if (prevBtn) prevBtn.addEventListener('click', () => { stopAuto(); go(cur - 1); startAuto(); });
+        if (nextBtn) nextBtn.addEventListener('click', () => { stopAuto(); go(cur + 1); startAuto(); });
+        dots.forEach((d, i) => d.addEventListener('click', () => { stopAuto(); go(i); startAuto(); }));
+        container.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') go(cur - 1);
+          else if (e.key === 'ArrowRight') go(cur + 1);
         });
-        currentIndex = index;
-      };
+        let tx = 0;
+        container.addEventListener('touchstart', (e) => { tx = e.changedTouches[0].screenX; stopAuto(); }, { passive: true });
+        container.addEventListener('touchend', (e) => {
+          const diff = tx - e.changedTouches[0].screenX;
+          if (Math.abs(diff) > 50) go(diff > 0 ? cur + 1 : cur - 1);
+          startAuto();
+        }, { passive: true });
+      }
 
-      const nextSlide = () => {
-        updateSlider((currentIndex + 1) % totalSlides);
-      };
+      async function initMostViewed() {
+        const track = document.getElementById('carousel-track');
+        const dotsContainer = document.getElementById('carousel-dots');
+        const rightCol = document.getElementById('most-viewed-right-col');
+        if (!track) return;
 
-      const prevSlide = () => {
-        updateSlider((currentIndex - 1 + totalSlides) % totalSlides);
-      };
+        let articles;
+        try {
+          const res = await fetch('/v1/articles/most-viewed?limit=8');
+          if (!res.ok) return;
+          articles = await res.json();
+        } catch (e) { return; }
+        if (!articles || !articles.length) return;
 
-      // Autoplay Logic
-      const startAutoplay = () => {
-        intervalId = setInterval(nextSlide, 5000);
-      };
-      const stopAutoplay = () => {
-        clearInterval(intervalId);
-      };
-      startAutoplay();
+        const PH = 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80';
 
-      // Interaction Guards
-      container.addEventListener('mouseenter', stopAutoplay);
-      container.addEventListener('mouseleave', startAutoplay);
+        // Build carousel slides — img src set via DOM after insertion to handle large base64 safely
+        track.innerHTML = articles.map((a, i) => {
+          const author = a.primaryAuthor || {};
+          const authorName = [author.firstName, author.lastName].filter(Boolean).join(' ') || 'Unfilter Story';
+          const cat = (a.category && a.category.name) || 'Article';
+          const href = 'article.html?id=' + encodeURIComponent(a.slug);
+          return '<article class="w-full shrink-0 relative aspect-[4/3] lg:aspect-auto lg:h-[550px] cursor-pointer" onclick="window.location.href=\'' + href + '\'">'
+            + '<img id="slide-img-' + i + '" loading="lazy" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105" alt="' + esc(a.headline) + '">'
+            + '<div class="absolute inset-0 bg-gradient-to-t from-slate-dark via-slate-dark/60 to-transparent pointer-events-none"></div>'
+            + '<div class="absolute bottom-0 left-0 w-full p-6 lg:p-10 flex flex-col justify-end pointer-events-none">'
+              + '<span class="bg-brand-red text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-wider w-max mb-4 pointer-events-auto">' + esc(cat) + '</span>'
+              + '<h3 class="text-3xl lg:text-4xl font-black text-white mb-3 leading-tight drop-shadow-md">' + esc(a.headline) + '</h3>'
+              + (a.subHeadline ? '<p class="text-gray-300 text-sm lg:text-base mb-6 max-w-2xl line-clamp-2">' + esc(a.subHeadline) + '</p>' : '')
+              + '<div class="flex items-center justify-between pointer-events-auto">'
+                + '<div class="flex items-center gap-4">'
+                  + (author.avatarUrl
+                    ? '<img src="' + esc(author.avatarUrl) + '" class="w-10 h-10 rounded-full border-2 border-white/20" alt="' + esc(authorName) + '">'
+                    : '<div class="w-10 h-10 rounded-full border-2 border-white/20 bg-gray-600 flex items-center justify-center text-white text-sm font-bold">' + esc(authorName.charAt(0)) + '</div>')
+                  + '<div>'
+                    + '<p class="text-white font-bold text-sm">' + esc(authorName) + '</p>'
+                    + '<p class="text-gray-400 text-xs">' + fmtDate(a.publishedAt) + (a.readingTimeMins ? ' &bull; ' + a.readingTimeMins + ' min read' : '') + '</p>'
+                  + '</div>'
+                + '</div>'
+                + '<div class="hidden sm:flex flex-col items-end">'
+                  + '<span class="text-brand-red font-mono font-bold text-lg">' + fmtViews(a.viewCount) + '</span>'
+                  + '<span class="text-gray-400 text-[10px] uppercase tracking-widest">Views</span>'
+                + '</div>'
+              + '</div>'
+            + '</div>'
+            + '<a href="' + href + '" class="absolute top-6 right-6 lg:top-10 lg:right-10 bg-white/10 backdrop-blur-md border border-white/20 text-white px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-white hover:text-black transition-all duration-300 group/btn shadow-xl pointer-events-auto">'
+              + 'Read Story <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>'
+            + '</a>'
+          + '</article>';
+        }).join('');
 
-      // Manual Override
-      if(prevBtn) prevBtn.addEventListener('click', () => { stopAutoplay(); prevSlide(); startAutoplay(); });
-      if(nextBtn) nextBtn.addEventListener('click', () => { stopAutoplay(); nextSlide(); startAutoplay(); });
-      
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-          stopAutoplay();
-          updateSlider(index);
-          startAutoplay();
+        // Set images via DOM property (avoids embedding large base64 strings in HTML)
+        articles.forEach((a, i) => {
+          var img = document.getElementById('slide-img-' + i);
+          if (img) img.src = a.featuredImageUrl || PH;
         });
-      });
 
-      // Keyboard Controls
-      container.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-          prevSlide();
-        } else if (e.key === 'ArrowRight') {
-          nextSlide();
+        // Build dots
+        dotsContainer.innerHTML = articles.map((_, i) =>
+          '<button class="w-2 h-2 rounded-full ' + (i === 0 ? 'bg-brand-red w-6' : 'bg-white/50 hover:bg-white') + ' transition-all"></button>'
+        ).join('');
+
+        // Build right column cards (top 2 most-viewed as side cards)
+        if (rightCol) {
+          rightCol.innerHTML = articles.slice(0, 2).map((a, i) => {
+            const cat = (a.category && a.category.name) || 'Article';
+            const href = 'article.html?id=' + encodeURIComponent(a.slug);
+            return '<article class="flex-1 bg-white dark:bg-slate-card border border-gray-200 dark:border-slate-border rounded-[18px] p-4 flex flex-col gap-4 hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300 cursor-pointer group" onclick="window.location.href=\'' + href + '\'">'
+              + '<div class="w-full h-36 shrink-0 rounded-xl overflow-hidden relative">'
+                + '<img id="side-img-' + i + '" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="' + esc(a.headline) + '">'
+              + '</div>'
+              + '<div class="flex flex-col justify-center flex-1">'
+                + '<span class="text-[10px] font-bold text-brand-red uppercase tracking-widest mb-2">' + esc(cat) + '</span>'
+                + '<h4 class="font-bold text-gray-900 dark:text-white leading-snug mb-3 group-hover:text-brand-red transition-colors text-lg">' + esc(a.headline) + '</h4>'
+                + '<div class="mt-auto flex items-center justify-between text-xs text-gray-500 font-medium border-t border-gray-100 dark:border-gray-800 pt-3">'
+                  + '<span class="flex items-center gap-1.5"><i data-lucide="eye" class="w-3.5 h-3.5"></i> ' + fmtViews(a.viewCount) + ' Views</span>'
+                  + (a.readingTimeMins ? '<span>' + a.readingTimeMins + 'm read</span>' : '')
+                + '</div>'
+              + '</div>'
+            + '</article>';
+          }).join('');
+
+          articles.slice(0, 2).forEach((a, i) => {
+            var img = document.getElementById('side-img-' + i);
+            if (img) img.src = a.featuredImageUrl || PH;
+          });
         }
-      });
 
-      // Mobile Touch Physics
-      let touchStartX = 0;
-      let touchEndX = 0;
+        if (window.lucide) window.lucide.createIcons();
+        initCarouselControls(articles.length);
+      }
 
-      container.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-        stopAutoplay();
-      }, {passive: true});
-
-      container.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-        startAutoplay();
-      }, {passive: true});
-
-      const handleSwipe = () => {
-        const diff = touchStartX - touchEndX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) nextSlide();
-          else prevSlide();
-        }
-      };
-    });
+      document.addEventListener('DOMContentLoaded', initMostViewed);
+    })();
   </script>
-  <script src="js/articles-router.js"></script>
+  <script type="module" src="js/articles-router.js"></script>
 </body>
 </html>
