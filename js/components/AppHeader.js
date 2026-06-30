@@ -24,10 +24,10 @@ class AppHeader extends HTMLElement {
           <nav class="nav-desktop">
             <ul>
               <li><a href="index.html" ${isPage('index.html') || currentPath === '/' || currentPath.endsWith('/') ? 'aria-current="page"' : ''}>Home</a></li>
-              <li><a href="news.html" ${isPage('news.html')}>News</a></li>
+              <li><a href="news.html" ${isPage('news.html')} style="color:#6B7280; pointer-events:none; cursor:not-allowed;">News</a></li>
               <li><a href="articles.html" ${isPage('articles.html')}>Articles</a></li>
-              <li><a href="interviews.html" ${isPage('interviews.html')}>Interviews</a></li>
-              <li><a href="stories.html" ${isPage('stories.html')}>Startup Stories</a></li>
+              <li><a href="interviews.html" ${isPage('interviews.html')} style="color:#6B7280; pointer-events:none; cursor:not-allowed;">Interviews</a></li>
+              <li><a href="stories.html" ${isPage('stories.html')} style="color:#6B7280; pointer-events:none; cursor:not-allowed;">Startup Stories</a></li>
               <!-- 
               <li><a href="ai-innovation.html" ${isPage('ai-innovation.html')}>AI & Innovation</a></li>
               <li><a href="funding.html" ${isPage('funding.html')}>Funding</a></li> 
@@ -63,7 +63,7 @@ class AppHeader extends HTMLElement {
 
       <!-- Bottom Navigation Bar (Mobile Only) -->
       <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
-        <a href="news.html" class="bottom-nav-item ${currentPath.endsWith('news.html') ? 'active' : ''}">
+        <a href="news.html" class="bottom-nav-item" style="opacity:0.4; pointer-events:none; cursor:not-allowed;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
           <span>News</span>
           <div class="active-indicator"></div>
@@ -73,12 +73,12 @@ class AppHeader extends HTMLElement {
           <span>Articles</span>
           <div class="active-indicator"></div>
         </a>
-        <a href="interviews.html" class="bottom-nav-item ${currentPath.endsWith('interviews.html') ? 'active' : ''}">
+        <a href="interviews.html" class="bottom-nav-item" style="opacity:0.4; pointer-events:none; cursor:not-allowed;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
           <span>Interviews</span>
           <div class="active-indicator"></div>
         </a>
-        <a href="stories.html" class="bottom-nav-item ${currentPath.endsWith('stories.html') ? 'active' : ''}">
+        <a href="stories.html" class="bottom-nav-item" style="opacity:0.4; pointer-events:none; cursor:not-allowed;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 22L10.5 22L12 18L13.5 22Z"></path><path d="M12 18L10 14L8 10L10 6L12 2L14 6L16 10L14 14L12 18Z"></path></svg>
           <span>Startups</span>
           <div class="active-indicator"></div>
