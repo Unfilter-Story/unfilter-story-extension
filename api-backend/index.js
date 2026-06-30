@@ -290,6 +290,48 @@ fastify.get('/v1/articles', async (request, reply) => {
   }
 })
 
+fastify.get('/v1/articles/search', async (request, reply) => {
+  try {
+    const { q = '', category = '', tag = '' } = request.query
+    const where = { status: 'published' }
+
+    if (category) {
+      where.category = { name: { equals: category, mode: 'insensitive' } }
+    }
+
+    if (tag) {
+      where.articleTags = { some: { tag: { name: { equals: tag, mode: 'insensitive' } } } }
+    }
+
+    if (q) {
+      where.OR = [
+        { headline: { contains: q, mode: 'insensitive' } },
+        { subHeadline: { contains: q, mode: 'insensitive' } }
+      ]
+    }
+
+    const articles = await prisma.article.findMany({
+      where,
+      orderBy: { publishedAt: 'desc' },
+      take: 20,
+      select: {
+        slug: true,
+        headline: true,
+        subHeadline: true,
+        featuredImageUrl: true,
+        readingTimeMins: true,
+        publishedAt: true,
+        category: { select: { name: true } },
+        articleTags: { select: { tag: { select: { name: true } } } }
+      }
+    })
+    return articles
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to search articles' })
+  }
+})
+
 fastify.get('/v1/articles/most-viewed', async (request, reply) => {
   try {
     const limit = Math.min(parseInt(request.query.limit || '8'), 20)
