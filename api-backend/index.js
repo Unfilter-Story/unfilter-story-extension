@@ -318,10 +318,12 @@ fastify.get('/v1/articles/search', async (request, reply) => {
         slug: true,
         headline: true,
         subHeadline: true,
+        body: true,
         featuredImageUrl: true,
         readingTimeMins: true,
         publishedAt: true,
         category: { select: { name: true } },
+        primaryAuthor: { select: { firstName: true, lastName: true, avatarUrl: true } },
         articleTags: { select: { tag: { select: { name: true } } } }
       }
     })
