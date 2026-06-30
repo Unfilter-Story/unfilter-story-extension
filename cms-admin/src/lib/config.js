@@ -8,4 +8,4 @@
 // The localhost fallbacks keep `npm run dev` working with no .env present.
 export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 export const PUBLIC_SITE_URL =
-  import.meta.env.VITE_PUBLIC_SITE_URL || 'http://localhost:8080';
+  import.meta.env.VITE_PUBLIC_SITE_URL || 'http://localhost:3000';
