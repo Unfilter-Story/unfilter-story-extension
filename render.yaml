@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: unfilter-story-api
+    runtime: node
+    rootDir: api-backend
+    buildCommand: npm install && npx prisma db push
+    startCommand: node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
