@@ -15,6 +15,7 @@ import Discovery from './pages/Discovery'
 import AIStudio from './pages/AIStudio'
 import ContactMessages from './pages/ContactMessages'
 import DeletedArticles from './pages/DeletedArticles'
+import FeatureStories from './pages/FeatureStories'
 
 function Error404() {
   return (
@@ -66,6 +67,7 @@ function App() {
           <Route path="ai-studio" element={<AIStudio />} />
           <Route path="contact" element={<ContactMessages />} />
           <Route path="deleted-articles" element={<DeletedArticles />} />
+          <Route path="feature-stories" element={<FeatureStories />} />
           <Route path="*" element={<Error404 />} />
           </Route>
         </Routes>

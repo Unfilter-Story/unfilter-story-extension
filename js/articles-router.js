@@ -1,9 +1,9 @@
 // articles-router.js
 // Client-side state machine and deep-linking pushState router for articles.html.
-// Wired to the live API: renders published articles from GET /v1/articles. The
-// hardcoded list below is kept only as an offline fallback if the API is down.
+// Category pills are loaded from /cms/v1/categories; selecting one filters via
+// /v1/articles/search?category=. Falls back to static list if API is unavailable.
 
-import { fetchArticleCards } from './api.js';
+import { fetchArticleCards, toCard, API_BASE } from './api.js';
 
 function escHtml(value) {
   return String(value ?? '')
@@ -97,128 +97,123 @@ let articlesData = [
 
 document.addEventListener('DOMContentLoaded', async () => {
   const gridContainer = document.getElementById('articles-grid');
-  const taxonomyPills = document.querySelectorAll('.taxonomy-pill');
-  
-  if (!gridContainer || !taxonomyPills.length) return;
+  const pillsRow = document.getElementById('category-pills-row');
 
-  // Generate Skeleton HTML
-  const generateSkeleton = () => {
-    return Array(3).fill(0).map(() => `
-      <div class="flex flex-col bg-white dark:bg-[#0D121F] rounded-[18px] border border-gray-200 dark:border-gray-800 overflow-hidden animate-pulse">
-        <div class="w-full aspect-[4/3] bg-gray-200 dark:bg-gray-800"></div>
-        <div class="p-6 flex flex-col flex-1 space-y-4">
-          <div class="h-6 bg-gray-200 dark:bg-gray-800 rounded w-3/4"></div>
-          <div class="h-6 bg-gray-200 dark:bg-gray-800 rounded w-1/2 mb-2"></div>
-          <div class="space-y-2 flex-1">
-            <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-full"></div>
-            <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-full"></div>
-            <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-5/6"></div>
+  if (!gridContainer || !pillsRow) return;
+
+  gridContainer.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+
+  // --- Skeletons ---
+  const generateSkeleton = () => Array(6).fill(0).map(() => `
+    <div class="flex flex-col bg-white dark:bg-[#0D121F] rounded-[18px] border border-gray-200 dark:border-gray-800 overflow-hidden animate-pulse">
+      <div class="w-full aspect-[4/3] bg-gray-200 dark:bg-gray-800"></div>
+      <div class="p-6 flex flex-col flex-1 space-y-4">
+        <div class="h-6 bg-gray-200 dark:bg-gray-800 rounded w-3/4"></div>
+        <div class="h-6 bg-gray-200 dark:bg-gray-800 rounded w-1/2"></div>
+        <div class="space-y-2 flex-1">
+          <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-full"></div>
+          <div class="h-4 bg-gray-200 dark:bg-gray-800 rounded w-5/6"></div>
+        </div>
+        <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800"></div>
+            <div class="h-4 w-16 bg-gray-200 dark:bg-gray-800 rounded"></div>
           </div>
-          <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <div class="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800"></div>
-              <div class="h-4 w-16 bg-gray-200 dark:bg-gray-800 rounded"></div>
-            </div>
-            <div class="h-4 w-12 bg-gray-200 dark:bg-gray-800 rounded"></div>
-          </div>
+          <div class="h-4 w-12 bg-gray-200 dark:bg-gray-800 rounded"></div>
         </div>
       </div>
-    `).join('');
-  };
+    </div>
+  `).join('');
 
-  // Initialize router
-  const initRouter = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get('category') || 'All';
-    updateActiveState(category);
-    renderGridWithAnimation(category, true);
-  };
+  // --- Fetch categories from CMS and inject pills ---
+  async function loadCategoryPills() {
+    try {
+      const res = await fetch(`${API_BASE}/v1/categories`);
+      if (!res.ok) return;
+      const categories = await res.json();
+      if (!Array.isArray(categories) || !categories.length) return;
 
-  // Handle Pill Clicks
-  taxonomyPills.forEach(pill => {
-    pill.addEventListener('click', (e) => {
-      e.preventDefault();
-      let category = pill.getAttribute('data-category');
-      
-      // If clicking already active pill, reset to 'All'
-      if (pill.classList.contains('active-pill')) {
-        category = 'All';
-      }
+      const pillHtml = categories.map(cat => `
+        <a href="#" class="taxonomy-pill px-4 py-1.5 rounded-full border border-gray-200 dark:border-slate-border text-gray-600 dark:text-gray-300 hover:border-brand-red hover:text-brand-red transition-colors font-medium text-sm whitespace-nowrap" data-category="${escHtml(cat.name)}">${escHtml(cat.name)}</a>
+      `).join('');
 
-      // Update URL without refresh
-      const newUrl = category === 'All' 
-        ? window.location.pathname 
-        : `${window.location.pathname}?category=${category}`;
-      
-      window.history.pushState({ category }, "", newUrl);
-      
-      updateActiveState(category);
-      renderGridWithAnimation(category);
+      pillsRow.insertAdjacentHTML('beforeend', pillHtml);
+    } catch (err) {
+      console.error('Failed to load categories:', err);
+    }
+
+    bindPillClicks();
+  }
+
+  // --- Pill click binding (called after dynamic pills are injected) ---
+  function bindPillClicks() {
+    pillsRow.querySelectorAll('.taxonomy-pill').forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        e.preventDefault();
+        let category = pill.getAttribute('data-category');
+        if (pill.classList.contains('active-pill')) category = 'All';
+
+        const newUrl = category === 'All'
+          ? window.location.pathname
+          : `${window.location.pathname}?category=${encodeURIComponent(category)}`;
+        window.history.pushState({ category }, '', newUrl);
+
+        updateActiveState(category);
+        fetchAndRender(category);
+      });
     });
-  });
+  }
 
-  // Handle browser back/forward buttons
-  window.addEventListener('popstate', (e) => {
-    const category = e.state?.category || 'All';
-    updateActiveState(category);
-    renderGridWithAnimation(category);
-  });
-
+  // --- Active pill styling ---
   function updateActiveState(activeCategory) {
-    taxonomyPills.forEach(pill => {
-      const pillCat = pill.getAttribute('data-category');
-      if (pillCat === activeCategory) {
-        pill.className = 'taxonomy-pill active-pill px-4 py-1.5 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black font-medium text-sm hover:scale-105 transition-transform shadow-md';
-      } else {
-        pill.className = 'taxonomy-pill inactive-pill px-4 py-1.5 rounded-full border border-gray-200 dark:border-slate-border text-gray-600 dark:text-gray-300 hover:border-brand-red hover:text-brand-red transition-colors font-medium text-sm';
-      }
+    pillsRow.querySelectorAll('.taxonomy-pill').forEach(pill => {
+      const isActive = pill.getAttribute('data-category') === activeCategory;
+      pill.className = isActive
+        ? 'taxonomy-pill active-pill px-4 py-1.5 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black font-medium text-sm hover:scale-105 transition-transform shadow-md whitespace-nowrap'
+        : 'taxonomy-pill inactive-pill px-4 py-1.5 rounded-full border border-gray-200 dark:border-slate-border text-gray-600 dark:text-gray-300 hover:border-brand-red hover:text-brand-red transition-colors font-medium text-sm whitespace-nowrap';
     });
   }
 
-  function renderGridWithAnimation(category, isInitialLoad = false) {
-    gridContainer.style.opacity = '0';
-    gridContainer.style.transform = 'translateY(10px)';
-    
-    setTimeout(() => {
-      // Inject Skeleton UI First to prevent CLS
-      gridContainer.innerHTML = generateSkeleton();
-      gridContainer.style.opacity = '1';
-      gridContainer.style.transform = 'translateY(0)';
-      
-      // Artificial slight delay to show the skeleton processing (UX feeling)
-      setTimeout(() => {
-        renderGrid(category);
-      }, isInitialLoad ? 0 : 300);
-      
-    }, 200);
+  // --- Fetch articles (all or by category via search API) ---
+  async function fetchArticles(category) {
+    if (category === 'All') {
+      const cards = await fetchArticleCards();
+      return cards.map(c => ({ ...c, link: c.href, badge: c.tag }));
+    }
+    const params = new URLSearchParams({ category });
+    const res = await fetch(`${API_BASE}/v1/articles/search?${params}`);
+    if (!res.ok) throw new Error(`Search failed: ${res.status}`);
+    const results = await res.json();
+    return results.map(a => {
+      const card = toCard(a);
+      return { ...card, link: card.href, badge: card.tag };
+    });
   }
 
-  function renderGrid(category) {
-    const filteredData = category === 'All' 
-      ? articlesData 
-      : articlesData.filter(item => item.category === category);
-
-    if (filteredData.length === 0) {
+  // --- Render grid from article data ---
+  function renderGrid(articles) {
+    if (!articles.length) {
       gridContainer.innerHTML = `
         <div class="col-span-full py-12 text-center text-gray-500">
-          <p>No articles found for #${escHtml(category)}. Check back soon!</p>
+          <p>No articles found in this category. Check back soon!</p>
         </div>
       `;
+      gridContainer.style.opacity = '1';
       return;
     }
 
-    const html = filteredData.map(article => `
+    const html = articles.map(article => `
       <a href="${escHtml(article.link)}" class="group flex flex-col bg-white dark:bg-[#0D121F] rounded-[18px] border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-xl dark:hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:border-brand-red/30 transition-all duration-300">
         <div class="w-full aspect-[4/3] overflow-hidden relative bg-gray-100 dark:bg-gray-900">
           <img src="${escHtml(article.image)}" alt="${escHtml(article.badge)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur-md text-white text-[10px] font-bold font-mono uppercase tracking-widest rounded">${escHtml(article.badge)}</div>
         </div>
         <div class="p-6 flex flex-col flex-1 space-y-3">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-brand-red transition-colors line-clamp-2" style="font-size: 1.25rem; line-height: 1.4;">${escHtml(article.title)}</h3>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-brand-red transition-colors line-clamp-2">${escHtml(article.title)}</h3>
           <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 flex-1">${escHtml(article.excerpt)}</p>
           <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <img src="${escHtml(article.authorImg)}" alt="Author" class="w-6 h-6 rounded-full">
+              <img src="${escHtml(article.avatar)}" alt="Author" class="w-6 h-6 rounded-full">
               <span class="text-xs font-bold text-gray-500">${escHtml(article.author)}</span>
             </div>
             <span class="text-xs font-bold text-brand-red flex items-center gap-1 group-hover:translate-x-1 transition-transform">Read <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
@@ -227,31 +222,47 @@ document.addEventListener('DOMContentLoaded', async () => {
       </a>
     `).join('');
 
-    // Force fade out before swapping actual content
     gridContainer.style.opacity = '0';
     setTimeout(() => {
       gridContainer.innerHTML = html;
       gridContainer.style.opacity = '1';
-      
-      // Re-initialize lucide icons
-      if (window.lucide) {
-        window.lucide.createIcons();
-      }
+      if (window.lucide) window.lucide.createIcons();
     }, 150);
   }
 
-  gridContainer.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+  // --- Fetch + skeleton + render ---
+  async function fetchAndRender(category) {
+    gridContainer.style.opacity = '0';
+    setTimeout(() => {
+      gridContainer.innerHTML = generateSkeleton();
+      gridContainer.style.opacity = '1';
+    }, 200);
 
-  // Load published articles from the API; fall back to the static list on failure.
-  try {
-    const cards = await fetchArticleCards();
-    if (Array.isArray(cards) && cards.length) {
-      articlesData = cards.map(cardToArticle);
+    try {
+      const articles = await fetchArticles(category);
+      renderGrid(articles);
+    } catch (err) {
+      console.error('Failed to load articles:', err);
+      // Fall back to static data filtered by category
+      const filtered = category === 'All'
+        ? articlesData
+        : articlesData.filter(a => a.category === category);
+      renderGrid(filtered.map(a => ({ ...a, link: a.link, avatar: a.authorImg })));
     }
-  } catch (err) {
-    console.error('Failed to load articles from API; using static fallback.', err);
   }
 
-  // Call initialization logic
-  initRouter();
+  // --- Browser back/forward ---
+  window.addEventListener('popstate', (e) => {
+    const category = e.state?.category || 'All';
+    updateActiveState(category);
+    fetchAndRender(category);
+  });
+
+  // --- Bootstrap ---
+  await loadCategoryPills();
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialCategory = urlParams.get('category') || 'All';
+  updateActiveState(initialCategory);
+  fetchAndRender(initialCategory);
 });
