@@ -290,6 +290,36 @@ fastify.get('/v1/articles', async (request, reply) => {
   }
 })
 
+// Public: categories that have at least one published article
+fastify.get('/v1/categories', async (request, reply) => {
+  try {
+    const categories = await prisma.category.findMany({
+      where: { articles: { some: { status: 'published' } } },
+      orderBy: { name: 'asc' },
+      select: { id: true, name: true, slug: true }
+    })
+    return categories
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to fetch categories' })
+  }
+})
+
+// Public: tags that have at least one published article
+fastify.get('/v1/tags', async (request, reply) => {
+  try {
+    const tags = await prisma.tag.findMany({
+      where: { articleTags: { some: { article: { status: 'published' } } } },
+      orderBy: { name: 'asc' },
+      select: { id: true, name: true, slug: true }
+    })
+    return tags
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to fetch tags' })
+  }
+})
+
 fastify.get('/v1/articles/search', async (request, reply) => {
   try {
     const { q = '', category = '', tag = '' } = request.query

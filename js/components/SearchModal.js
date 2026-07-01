@@ -99,8 +99,8 @@ class SearchModal extends HTMLElement {
   async _loadFilters() {
     try {
       const [catRes, tagRes] = await Promise.all([
-        fetch(`${API_BASE}/cms/v1/categories`),
-        fetch(`${API_BASE}/cms/v1/tags`)
+        fetch(`${API_BASE}/v1/categories`),
+        fetch(`${API_BASE}/v1/tags`)
       ]);
       const categories = catRes.ok ? await catRes.json() : [];
       const tags = tagRes.ok ? await tagRes.json() : [];

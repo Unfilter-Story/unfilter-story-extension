@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // --- Fetch categories from CMS and inject pills ---
   async function loadCategoryPills() {
     try {
-      const res = await fetch(`${API_BASE}/cms/v1/categories`);
+      const res = await fetch(`${API_BASE}/v1/categories`);
       if (!res.ok) return;
       const categories = await res.json();
       if (!Array.isArray(categories) || !categories.length) return;
