@@ -855,6 +855,85 @@ fastify.delete('/cms/v1/tags/:id', async (request, reply) => {
   }
 })
 
+// === FEATURE STORY ROUTES ===
+
+// Public: submit a feature story application
+fastify.post('/v1/feature-story', async (request, reply) => {
+  try {
+    const {
+      fullName, email, companyName, role,
+      storyHook, unfilteredTruth, workLink,
+      supportingDocName, supportingDocData
+    } = request.body
+
+    if (!fullName || !email || !companyName || !role || !storyHook || !unfilteredTruth) {
+      return reply.code(400).send({ error: 'Missing required fields' })
+    }
+
+    const entry = await prisma.featureStory.create({
+      data: {
+        fullName,
+        email,
+        companyName,
+        role,
+        storyHook,
+        unfilteredTruth,
+        workLink: workLink || null,
+        supportingDocName: supportingDocName || null,
+        supportingDocData: supportingDocData || null,
+      }
+    })
+    return reply.code(201).send({ success: true, id: entry.id })
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to submit feature story' })
+  }
+})
+
+// CMS: list all feature story submissions
+fastify.get('/cms/v1/feature-stories', async (request, reply) => {
+  try {
+    const stories = await prisma.featureStory.findMany({
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true, fullName: true, email: true, companyName: true,
+        role: true, storyHook: true, status: true, createdAt: true,
+        workLink: true, supportingDocName: true
+      }
+    })
+    return stories
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to fetch feature stories' })
+  }
+})
+
+// CMS: get single feature story with full detail including doc data
+fastify.get('/cms/v1/feature-stories/:id', async (request, reply) => {
+  try {
+    const { id } = request.params
+    const story = await prisma.featureStory.findUnique({ where: { id } })
+    if (!story) return reply.code(404).send({ error: 'Not found' })
+    return story
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to fetch feature story' })
+  }
+})
+
+// CMS: update status of a feature story
+fastify.patch('/cms/v1/feature-stories/:id/status', async (request, reply) => {
+  try {
+    const { id } = request.params
+    const { status } = request.body
+    const story = await prisma.featureStory.update({ where: { id }, data: { status } })
+    return story
+  } catch (error) {
+    fastify.log.error(error)
+    reply.code(500).send({ error: 'Failed to update status' })
+  }
+})
+
 // === MEDIA API ROUTES ===
 fastify.get('/cms/v1/media', async (request, reply) => {
   try {

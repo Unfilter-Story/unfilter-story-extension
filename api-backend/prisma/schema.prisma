@@ -245,6 +245,23 @@ model ContactMessage {
   @@map("contact_messages")
 }
 
+model FeatureStory {
+  id                 String   @id @default(uuid())
+  fullName           String   @map("full_name")
+  email              String
+  companyName        String   @map("company_name")
+  role               String
+  storyHook          String   @map("story_hook")
+  unfilteredTruth    String   @map("unfiltered_truth")
+  workLink           String?  @map("work_link")
+  supportingDocName  String?  @map("supporting_doc_name")
+  supportingDocData  String?  @map("supporting_doc_data")
+  status             String   @default("new")
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  @@map("feature_stories")
+}
+
 model DeletedArticle {
   id               String    @id @default(uuid())
   originalId       String    @map("original_id")
