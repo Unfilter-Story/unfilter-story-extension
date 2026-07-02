@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { API_URL } from '../lib/config.js';
 
 // Fetch articles from our Fastify backend running on port 3000
 let articles = [];
@@ -12,6 +13,17 @@ try {
   }
 } catch (e) {
   console.error("Failed to fetch articles:", e.message);
+}
+
+// Fetch categories (used for the "Latest News" filter pills below)
+let categories = [];
+try {
+  const catResponse = await fetch(`${API_URL}/v1/categories`);
+  if (catResponse.ok) {
+    categories = await catResponse.json();
+  }
+} catch (e) {
+  console.error("Failed to fetch categories:", e.message);
 }
 
 // Separate the first article as featured, and the rest for a grid
@@ -105,37 +117,139 @@ const trendingNews = [
 		</div>
 
 		 <!-- Latest Grid -->
-         {gridStories.length > 0 && (
-            <div class="mb-16">
-                <h2 class="text-3xl font-playfair font-black text-[#1A1A2E] mb-8 border-b-2 border-gray-100 pb-2">Latest News</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {gridStories.map(story => (
-                        <a href={`/article/${story.slug}`} class="block group cursor-pointer">
-                            <article>
-                                <div class="w-full aspect-[4/3] bg-gray-100 rounded-lg mb-4 overflow-hidden relative border border-gray-100">
-                                    {story.featuredImageUrl ? (
-                                        <img src={story.featuredImageUrl} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={story.headline} />
-                                    ) : (
-                                        <div class="flex items-center justify-center w-full h-full">
-                                            <span class="text-gray-400 text-[10px] font-black uppercase tracking-widest px-4">No Image</span>
-                                        </div>
-                                    )}
-                                </div>
-                                <h3 class="text-xl font-bold font-playfair text-gray-900 group-hover:text-[#E94560] transition-colors mb-2 line-clamp-2">
-                                    {story.headline}
-                                </h3>
-                                <div 
-                                    class="text-gray-600 text-sm font-inter line-clamp-3 mb-3 prose prose-sm prose-gray max-w-none"
-                                    set:html={story.body}
-                                />
-                                <span class="text-xs text-gray-500 font-inter">{new Date(story.publishedAt).toLocaleDateString()}</span>
-                            </article>
-                        </a>
+         <div class="mb-16">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-8 border-b-2 border-gray-100 pb-2">
+                <h2 class="text-3xl font-playfair font-black text-[#1A1A2E]">Latest News</h2>
+                <div id="category-pills-row" class="flex flex-wrap gap-2">
+                    <button
+                        type="button"
+                        class="category-pill active-pill px-4 py-1.5 rounded-full bg-[#1A1A2E] text-white font-inter font-medium text-sm transition-colors"
+                        data-category="All"
+                    >All</button>
+                    {categories.map(cat => (
+                        <button
+                            type="button"
+                            class="category-pill px-4 py-1.5 rounded-full border border-gray-200 text-gray-600 hover:border-[#E94560] hover:text-[#E94560] font-inter font-medium text-sm transition-colors"
+                            data-category={cat.name}
+                        >{cat.name}</button>
                     ))}
                 </div>
             </div>
-         )}
+
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8 transition-opacity duration-200">
+                {gridStories.length > 0 ? gridStories.map(story => (
+                    <a href={`/article/${story.slug}`} class="block group cursor-pointer">
+                        <article>
+                            <div class="w-full aspect-[4/3] bg-gray-100 rounded-lg mb-4 overflow-hidden relative border border-gray-100">
+                                {story.featuredImageUrl ? (
+                                    <img src={story.featuredImageUrl} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={story.headline} />
+                                ) : (
+                                    <div class="flex items-center justify-center w-full h-full">
+                                        <span class="text-gray-400 text-[10px] font-black uppercase tracking-widest px-4">No Image</span>
+                                    </div>
+                                )}
+                            </div>
+                            <h3 class="text-xl font-bold font-playfair text-gray-900 group-hover:text-[#E94560] transition-colors mb-2 line-clamp-2">
+                                {story.headline}
+                            </h3>
+                            <div
+                                class="text-gray-600 text-sm font-inter line-clamp-3 mb-3 prose prose-sm prose-gray max-w-none"
+                                set:html={story.body}
+                            />
+                            <span class="text-xs text-gray-500 font-inter">{new Date(story.publishedAt).toLocaleDateString()}</span>
+                        </article>
+                    </a>
+                )) : (
+                    <div class="col-span-full py-12 text-center text-gray-500 font-inter">
+                        <p>No articles found. Check back soon!</p>
+                    </div>
+                )}
+            </div>
+        </div>
 	</main>
 
 	<Footer />
+
+	<script>
+        import { API_URL } from '../lib/config.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('articles-grid');
+            const pillsRow = document.getElementById('category-pills-row');
+            if (!grid || !pillsRow) return;
+
+            function escHtml(value) {
+                return String(value ?? '')
+                    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            }
+
+            function cardHtml(story) {
+                const img = story.featuredImageUrl
+                    ? `<img src="${escHtml(story.featuredImageUrl)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="${escHtml(story.headline)}" />`
+                    : `<div class="flex items-center justify-center w-full h-full"><span class="text-gray-400 text-[10px] font-black uppercase tracking-widest px-4">No Image</span></div>`;
+                const date = story.publishedAt ? new Date(story.publishedAt).toLocaleDateString() : '';
+                return `
+                    <a href="/article/${escHtml(story.slug)}" class="block group cursor-pointer">
+                        <article>
+                            <div class="w-full aspect-[4/3] bg-gray-100 rounded-lg mb-4 overflow-hidden relative border border-gray-100">${img}</div>
+                            <h3 class="text-xl font-bold font-playfair text-gray-900 group-hover:text-[#E94560] transition-colors mb-2 line-clamp-2">${escHtml(story.headline)}</h3>
+                            <div class="text-gray-600 text-sm font-inter line-clamp-3 mb-3 prose prose-sm prose-gray max-w-none">${story.body ?? ''}</div>
+                            <span class="text-xs text-gray-500 font-inter">${escHtml(date)}</span>
+                        </article>
+                    </a>
+                `;
+            }
+
+            function renderGrid(stories) {
+                if (!stories.length) {
+                    grid.innerHTML = `<div class="col-span-full py-12 text-center text-gray-500 font-inter"><p>No articles found in this category. Check back soon!</p></div>`;
+                    grid.style.opacity = '1';
+                    return;
+                }
+                grid.innerHTML = stories.map(cardHtml).join('');
+                grid.style.opacity = '1';
+            }
+
+            function updateActivePill(activeCategory) {
+                pillsRow.querySelectorAll('.category-pill').forEach(pill => {
+                    const isActive = pill.getAttribute('data-category') === activeCategory;
+                    pill.classList.toggle('active-pill', isActive);
+                    pill.classList.toggle('bg-[#1A1A2E]', isActive);
+                    pill.classList.toggle('text-white', isActive);
+                    pill.classList.toggle('border', !isActive);
+                    pill.classList.toggle('border-gray-200', !isActive);
+                    pill.classList.toggle('text-gray-600', !isActive);
+                });
+            }
+
+            // NOTE: no request-cancellation — a rapid pill switch could show a
+            // stale response if an earlier request resolves after a later one.
+            async function fetchAndRender(category) {
+                grid.style.opacity = '0.4';
+                try {
+                    const url = category === 'All'
+                        ? `${API_URL}/v1/articles`
+                        : `${API_URL}/v1/articles/search?category=${encodeURIComponent(category)}`;
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+                    const results = await res.json();
+                    const stories = category === 'All' ? results.slice(1, 4) : results.slice(0, 3);
+                    renderGrid(stories);
+                } catch (err) {
+                    console.error('Failed to load articles:', err);
+                    grid.innerHTML = `<div class="col-span-full py-12 text-center text-gray-500 font-inter"><p>Unable to load articles right now. Please try again later.</p></div>`;
+                    grid.style.opacity = '1';
+                }
+            }
+
+            pillsRow.addEventListener('click', (e) => {
+                const pill = e.target.closest('.category-pill');
+                if (!pill) return;
+                const category = pill.getAttribute('data-category');
+                updateActivePill(category);
+                fetchAndRender(category);
+            });
+        });
+    </script>
 </Layout>
