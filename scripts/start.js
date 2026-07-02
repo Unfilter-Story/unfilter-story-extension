@@ -34,7 +34,9 @@ console.log('')
 // Start all three services with color-coded output
 function startService({ label, dir, color }) {
   const cwd = path.join(ROOT, dir)
+
   const proc = spawn(npm, ['run', 'dev'], { cwd, stdio: 'pipe', shell: process.platform === 'win32' })
+
 
   const write = line => {
     if (line.trim()) process.stdout.write(`${color}[${label}]${R} ${line}\n`)
