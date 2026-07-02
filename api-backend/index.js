@@ -52,8 +52,28 @@ if (!allowedOrigins && process.env.NODE_ENV === 'production') {
   throw new Error('ALLOWED_ORIGINS must be set in production')
 }
 fastify.register(cors, {
-  // Dev (no env var): reflect any origin. Prod: strict allowlist.
-  origin: allowedOrigins ?? true,
+  origin: (origin, cb) => {
+    // If no origin (e.g. curl or same-origin non-browser request), allow it
+    if (!origin) {
+      cb(null, true)
+      return
+    }
+
+    const list = allowedOrigins || []
+    const normalizedOrigin = String(origin).trim().replace(/\/+$/, '').toLowerCase()
+
+    // Check if the normalized request origin matches any entry in the allowed list
+    const isAllowed = list.some((allowed) => {
+      return String(allowed).trim().replace(/\/+$/, '').toLowerCase() === normalizedOrigin
+    })
+
+    if (isAllowed || !allowedOrigins) {
+      cb(null, true)
+    } else {
+      fastify.log.warn(`CORS rejected origin: "${origin}". Allowed origins: ${JSON.stringify(list)}`)
+      cb(null, false)
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 })
 

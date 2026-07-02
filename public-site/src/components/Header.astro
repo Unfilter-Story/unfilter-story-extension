@@ -1,97 +1,174 @@
 ---
+// Ported from the legacy static site's js/components/AppHeader.js so the
+// header matches what's actually live in production. Nav links/labels and
+// the enabled/disabled state of each item mirror that component exactly.
+// Legacy targets that only exist as static pages (feature.html,
+// newsletter.html, etc. — served by api-backend's static file server, not
+// by this Astro app) are cross-linked via API_URL so they keep working,
+// rather than being replaced with dead "#" placeholders.
 import { API_URL } from '../lib/config.js';
 
-let settings = {};
-try {
-  const res = await fetch(`${API_URL}/cms/v1/settings`);
-  if (res.ok) {
-    settings = await res.json();
-  }
-} catch (e) {
-  console.error("Failed to fetch settings:", e);
-}
-
-let navLinks = [
-  { href: '/', label: 'Home Page' },
-  { href: '/startup-news', label: 'Startup News' },
-  { href: '/feature-founders', label: 'Feature founders' },
-  { 
-    label: 'More',
-    href: '#',
-    children: [
-      { href: '/guest-post', label: 'Guest post' },
-      { href: '/feature-your-story', label: 'Feature your story' }
-    ]
-  }
-];
+const currentPath = Astro.url.pathname;
+const isHome = currentPath === '/';
 ---
 
-<header class="bg-[#1A1A2E] text-white fixed top-0 w-full mb-16 z-[100] h-16 flex items-center shadow-md">
-  <div class="max-w-7xl mx-auto px-4 md:px-8 w-full flex items-center justify-between">
-    <!-- Logo -->
-    <a href="/" class="text-xl md:text-2xl font-black font-playfair tracking-tight text-white hover:text-gray-200 transition-colors flex items-center gap-2">
-      {settings.siteLogo ? (
-        <img src={settings.siteLogo} alt="Unfilter Story Logo" class="h-8 w-auto object-contain" />
-      ) : (
-        <span>Unfilter Story</span>
-      )}
+<header class="app-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <img src="/images/new-logo.png" alt="UnfilterStory Logo" style="height: 40px; width: auto; object-fit: contain;" />
     </a>
 
-    <!-- Desktop Navigation -->
-    <nav class="hidden md:flex items-center space-x-6 text-sm font-medium font-inter">
-      {navLinks.map((link) => (
-        <div class="relative group">
-          <a href={link.href} class="text-[#D1D5DB] hover:text-white transition-colors flex items-center gap-1 py-4">
-            {link.label}
-            {link.children && link.children.length > 0 && (
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:rotate-180 transition-transform duration-300">
-                <path d="m6 9 6 6 6-6"/>
-              </svg>
-            )}
+    <nav class="nav-desktop">
+      <ul>
+        <li><a href="/" aria-current={isHome ? 'page' : undefined}>Home</a></li>
+        <li><a href="#" style="color:#6B7280; pointer-events:none; cursor:not-allowed;">News</a></li>
+        <li><a href="/">Articles</a></li>
+        <li><a href="#" style="color:#6B7280; pointer-events:none; cursor:not-allowed;">Interviews</a></li>
+        <li><a href="#" style="color:#6B7280; pointer-events:none; cursor:not-allowed;">Startup Stories</a></li>
+
+        <li class="dropdown">
+          <a href="#" aria-haspopup="true" aria-expanded="false" style="display:flex; align-items:center; gap:4px;">
+            More
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
           </a>
-          
-          {link.children && link.children.length > 0 && (
-            <div class="absolute left-0 top-full pt-0 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-              <div class="bg-[#1A1A2E] border border-gray-800 rounded-lg shadow-2xl py-2 mt-1 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                {link.children.map((child) => (
-                  <a href={child.href} class="block px-4 py-2 text-sm text-[#D1D5DB] hover:text-white hover:bg-white/5 transition-colors">
-                    {child.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      ))}
+          <ul class="dropdown-menu">
+            <li><a href="#">Guest Post</a></li>
+            <li><a href={`${API_URL}/feature.html`} style="color: #DC2626; font-weight: 500;">Feature Your Story</a></li>
+          </ul>
+        </li>
+      </ul>
     </nav>
 
-    <!-- Actions -->
-    <div class="flex items-center space-x-4">
-      <form action="/search" method="get" class="relative hidden sm:block">
-        <input 
-          type="search" 
-          name="q" 
-          placeholder="Search news..." 
-          class="bg-[#111122] text-white text-sm rounded-full pl-4 pr-10 py-1.5 border border-gray-700 focus:outline-none focus:border-[#E94560] transition-all duration-300 w-48 focus:w-64"
-        />
-        <button type="submit" aria-label="Search" class="absolute right-0 top-0 bottom-0 px-3 text-gray-400 hover:text-white transition-colors flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </svg>
-        </button>
-      </form>
-
-      <!-- Mobile menu toggle -->
-      <button aria-label="Menu" class="md:hidden p-2 text-gray-300 hover:text-white">
-         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" x2="20" y1="12" y2="12"></line>
-          <line x1="4" x2="20" y1="6" y2="6"></line>
-          <line x1="4" x2="20" y1="18" y2="18"></line>
+    <div class="header-actions">
+      <button id="search-toggle" class="btn-icon" aria-label="Open Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
       </button>
+
+      <a href={`${API_URL}/newsletter.html`} class="btn btn-primary">Subscribe</a>
     </div>
   </div>
 </header>
-<!-- Spacer for fixed header -->
-<div class="h-16"></div>
+
+<!-- Bottom Navigation Bar (Mobile Only) -->
+<nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+  <a href="#" class="bottom-nav-item" style="opacity:0.4; pointer-events:none; cursor:not-allowed;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+    <span>News</span>
+    <div class="active-indicator"></div>
+  </a>
+  <a href="/" class={`bottom-nav-item ${isHome ? 'active' : ''}`}>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+    <span>Articles</span>
+    <div class="active-indicator"></div>
+  </a>
+  <a href="#" class="bottom-nav-item" style="opacity:0.4; pointer-events:none; cursor:not-allowed;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+    <span>Interviews</span>
+    <div class="active-indicator"></div>
+  </a>
+  <a href="#" class="bottom-nav-item" style="opacity:0.4; pointer-events:none; cursor:not-allowed;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 22L10.5 22L12 18L13.5 22Z"></path><path d="M12 18L10 14L8 10L10 6L12 2L14 6L16 10L14 14L12 18Z"></path></svg>
+    <span>Startups</span>
+    <div class="active-indicator"></div>
+  </a>
+  <button class="bottom-nav-item" id="bottom-nav-more" aria-expanded="false" aria-controls="more-bottom-sheet">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    <span>More</span>
+  </button>
+</nav>
+
+<!-- More Bottom Sheet Modal -->
+<div id="more-bottom-sheet" class="bottom-sheet-overlay" aria-hidden="true">
+  <div class="bottom-sheet-content">
+    <div class="bottom-sheet-handle"></div>
+    <div class="bottom-sheet-menu-container">
+      <h3 class="bottom-sheet-title">Explore</h3>
+      <ul class="bottom-sheet-menu">
+        <li><a href="/about">About Us</a></li>
+        <li><a href={`${API_URL}/funding.html`}>Funding</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="#">Bookmarks</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Breaking News Ticker Strip -->
+<section aria-labelledby="trending-heading" class="ticker-feed-wrapper">
+  <h2 id="trending-heading" class="sr-only">Trending Now</h2>
+  <div class="ticker-feed">
+    <div class="ticker-track" aria-hidden="false">
+      <div class="strip-ticker"><span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Market Update</span><span style="margin: 0 0.5rem;">&middot;</span><a href="/article/nasdaq-surge" style="font-weight: 600;">Nasdaq 100 sees 5% surge on AI earnings</a><span style="margin: 0 0.5rem;">&middot;</span><span style="color: var(--color-text-mute);">2 hrs ago</span></div>
+      <div class="strip-ticker"><span style="font-weight: 700; color: var(--color-success); text-transform: uppercase;">Funding</span><span style="margin: 0 0.5rem;">&middot;</span><a href="/article/stripe-acquires" style="font-weight: 600;">Stripe acquires another checkout startup</a><span style="margin: 0 0.5rem;">&middot;</span><span style="color: var(--color-text-mute);">4 hrs ago</span></div>
+      <div class="strip-ticker"><span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">Policy</span><span style="margin: 0 0.5rem;">&middot;</span><a href="/article/eu-passes" style="font-weight: 600;">EU passes comprehensive data framework</a><span style="margin: 0 0.5rem;">&middot;</span><span style="color: var(--color-text-mute);">5 hrs ago</span></div>
+      <div class="strip-ticker"><span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Startups</span><span style="margin: 0 0.5rem;">&middot;</span><a href="/article/yc-cohort" style="font-weight: 600;">Y Combinator announces new cohort</a><span style="margin: 0 0.5rem;">&middot;</span><span style="color: var(--color-text-mute);">7 hrs ago</span></div>
+      <div class="strip-ticker"><span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">AI</span><span style="margin: 0 0.5rem;">&middot;</span><a href="/article/openai-gpt5" style="font-weight: 600;">OpenAI releases GPT-5 preview to developers</a><span style="margin: 0 0.5rem;">&middot;</span><span style="color: var(--color-text-mute);">12 hrs ago</span></div>
+    </div>
+    <div class="ticker-track" aria-hidden="true">
+      <div class="strip-ticker"><span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Market Update</span><span style="margin: 0 0.5rem;">&middot;</span><a href="/article/nasdaq-surge" style="font-weight: 600;">Nasdaq 100 sees 5% surge on AI earnings</a><span style="margin: 0 0.5rem;">&middot;</span><span style="color: var(--color-text-mute);">2 hrs ago</span></div>
+      <div class="strip-ticker"><span style="font-weight: 700; color: var(--color-success); text-transform: uppercase;">Funding</span><span style="margin: 0 0.5rem;">&middot;</span><a href="/article/stripe-acquires" style="font-weight: 600;">Stripe acquires another checkout startup</a><span style="margin: 0 0.5rem;">&middot;</span><span style="color: var(--color-text-mute);">4 hrs ago</span></div>
+      <div class="strip-ticker"><span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">Policy</span><span style="margin: 0 0.5rem;">&middot;</span><a href="/article/eu-passes" style="font-weight: 600;">EU passes comprehensive data framework</a><span style="margin: 0 0.5rem;">&middot;</span><span style="color: var(--color-text-mute);">5 hrs ago</span></div>
+      <div class="strip-ticker"><span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase;">Startups</span><span style="margin: 0 0.5rem;">&middot;</span><a href="/article/yc-cohort" style="font-weight: 600;">Y Combinator announces new cohort</a><span style="margin: 0 0.5rem;">&middot;</span><span style="color: var(--color-text-mute);">7 hrs ago</span></div>
+      <div class="strip-ticker"><span style="font-weight: 700; color: var(--color-text-main); text-transform: uppercase;">AI</span><span style="margin: 0 0.5rem;">&middot;</span><a href="/article/openai-gpt5" style="font-weight: 600;">OpenAI releases GPT-5 preview to developers</a><span style="margin: 0 0.5rem;">&middot;</span><span style="color: var(--color-text-mute);">12 hrs ago</span></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const bottomNavMore = document.getElementById('bottom-nav-more');
+    const bottomSheet = document.getElementById('more-bottom-sheet');
+    const bottomSheetContent = bottomSheet ? bottomSheet.querySelector('.bottom-sheet-content') : null;
+
+    if (bottomNavMore && bottomSheet && bottomSheetContent) {
+      const openSheet = () => {
+        bottomSheet.classList.add('is-open');
+        bottomSheet.setAttribute('aria-hidden', 'false');
+        bottomNavMore.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeSheet = () => {
+        bottomSheet.classList.remove('is-open');
+        bottomSheet.setAttribute('aria-hidden', 'true');
+        bottomNavMore.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      };
+
+      bottomNavMore.addEventListener('click', openSheet);
+
+      bottomSheet.addEventListener('click', (e) => {
+        if (e.target === bottomSheet) closeSheet();
+      });
+
+      let startY = 0;
+      let currentY = 0;
+
+      bottomSheetContent.addEventListener('touchstart', (e) => {
+        startY = e.touches[0].clientY;
+        bottomSheetContent.style.transition = 'none';
+      }, { passive: true });
+
+      bottomSheetContent.addEventListener('touchmove', (e) => {
+        currentY = e.touches[0].clientY - startY;
+        if (currentY > 0) {
+          bottomSheetContent.style.transform = `translateY(${currentY}px)`;
+        }
+      }, { passive: true });
+
+      bottomSheetContent.addEventListener('touchend', () => {
+        bottomSheetContent.style.transition = '';
+        bottomSheetContent.style.transform = '';
+        if (currentY > 100) {
+          closeSheet();
+        }
+        currentY = 0;
+      });
+    }
+  });
+</script>
